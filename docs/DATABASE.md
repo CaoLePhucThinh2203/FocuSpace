@@ -1,8 +1,8 @@
 # FocuSpace — Thiết kế Database
 
-> Trạng thái: **BẢN NHÁP — chờ duyệt** · 08/11/2026 · cập nhật 10/11/2026 theo đề bài đồ án CSB25022 (thêm bảng danh mục, seeder, truy vấn trang Thống kê) · cập nhật 12/11/2026 theo Chương 1 Phân tích hệ thống (truy vết use case, ánh xạ lớp ↔ bảng)
-> Nguồn: ERD trong `docs/ARCHITECTURE.md` (Hình 4, mục 3.3) · `docs/API.md` · `docs/PRD.md` (mục 4.2, 5.2, 6.2) · `FocuSpace_Diagrams.drawio`, Chương 1 Phân tích hệ thống (Class C1).
-> Các cột/ràng buộc có nhãn **[Bổ sung]** không có trong ERD nhưng API hoặc PRD cần — cần duyệt trước Phase 6.
+> Trạng thái: **Đã duyệt** ở buổi họp kế hoạch 13/11/2026 · bản đầu 08/11/2026 · cập nhật 10/11/2026 theo đề bài đồ án CSB25022 (thêm bảng danh mục, seeder, truy vấn trang Thống kê) · cập nhật 12/11/2026 theo Chương 1 Phân tích hệ thống (truy vết use case, ánh xạ lớp ↔ bảng)
+> Nguồn: ERD trong `docs/ARCHITECTURE.md` (Hình 4, mục 3.3; nguồn `docs/analysis/FocuSpace_Diagrams.drawio`, trang ERD) · `docs/API.md` · `docs/PRD.md` (mục 4.2, 5.2, 6.2) · `docs/analysis/FocuSpace_Diagrams.drawio`, Chương 1 Phân tích hệ thống (Class C1).
+> ERD và tài liệu này khớp từng cột. Các cột, ràng buộc từng ghi nhãn [Bổ sung] (API hoặc PRD cần, không có trong ERD v1.0) đã được duyệt ngày 13/11/2026 và đưa vào ERD; cột ghi chú vẫn giữ nguồn của từng cột.
 
 ## 1. Tổng quan
 
@@ -142,7 +142,7 @@ erDiagram
 | family_id | uuid | Không | | Chuỗi xoay vòng; dùng lại token đã thu hồi → thu hồi cả family |
 | expires_at | timestamptz | Không | | created_at + 30 ngày |
 | revoked_at | timestamptz | Có | | Khác NULL = đã thu hồi |
-| created_at | timestamptz | Không | `now()` | **[Bổ sung]** để audit |
+| created_at | timestamptz | Không | `now()` | để audit |
 
 Index: `(user_id)`, `(family_id)`.
 
@@ -152,7 +152,7 @@ Index: `(user_id)`, `(family_id)`.
 |---|---|---|---|---|
 | user_id | uuid | Không | | PK, FK → users.id, `ON DELETE CASCADE` (1 dòng/người dùng) |
 | schema_ver | smallint | Không | | Hiện là 4 |
-| data | jsonb | Không | | RoomState (API Phụ lục A); **[Bổ sung]** `CHECK (octet_length(data::text) <= 65536)` (BR-06) |
+| data | jsonb | Không | | RoomState (API Phụ lục A); `CHECK (octet_length(data::text) <= 65536)` (BR-06) |
 | revision | int | Không | | ≥ 1; tăng 1 mỗi lần ghi (optimistic concurrency) |
 | updated_from | varchar(64) | Không | | `deviceId` của lần ghi cuối |
 | updated_at | timestamptz | Không | `now()` | |
@@ -179,11 +179,11 @@ RETURNING revision, updated_at;
 | ended_at | timestamptz | Có | | NULL = chưa kết thúc |
 | setup_ms | int | Có | | ≥ 0; KPI thiết lập < 15 giây |
 | interaction_count | int | Không | 0 | ≥ 0 |
-| visited_study | boolean | Không | false | **[Bổ sung]** từ `sessions[].visited` |
-| visited_bed | boolean | Không | false | **[Bổ sung]** |
-| visited_out | boolean | Không | false | **[Bổ sung]** — PRD 4.2 dùng `usage_sessions.visited_out` |
-| sleep_timer_set | boolean | Không | false | **[Bổ sung]** — PRD 4.2 `sleep_timer_*` |
-| sleep_timer_completed | boolean | Không | false | **[Bổ sung]** |
+| visited_study | boolean | Không | false | từ `sessions[].visited` |
+| visited_bed | boolean | Không | false | từ `sessions[].visited` |
+| visited_out | boolean | Không | false | PRD 4.2 dùng `usage_sessions.visited_out` |
+| sleep_timer_set | boolean | Không | false | PRD 4.2 `sleep_timer_*` |
+| sleep_timer_completed | boolean | Không | false | PRD 4.2 `sleep_timer_*` |
 
 Index: `(client_id, started_at)`, `(user_id, started_at)`, `(started_at)`.
 
@@ -197,8 +197,8 @@ Ghi chú: `user_id` NULL khi Khách; gắn khi gửi lô kèm access token; đ�
 | usage_session_id | uuid | Không | | FK → usage_sessions.id, `ON DELETE CASCADE` |
 | mode | varchar(8) | Không | | `CHECK (mode IN ('focus','break'))` |
 | planned_sec | int | Không | | > 0 (focus 1500, break 300) |
-| started_at | timestamptz | Không | | **[Bổ sung]** — API `pomodoros[].startedAt` |
-| ended_at | timestamptz | Có | | **[Bổ sung]** — API `pomodoros[].endedAt` |
+| started_at | timestamptz | Không | | API `pomodoros[].startedAt` |
+| ended_at | timestamptz | Có | | API `pomodoros[].endedAt` |
 | outcome | varchar(12) | Không | | `CHECK (outcome IN ('completed','reset','abandoned'))` |
 
 Index: `(usage_session_id)`.
@@ -212,11 +212,11 @@ Index: `(usage_session_id)`.
 | id | bigserial | Không | | PK |
 | usage_session_id | uuid | Không | | FK → usage_sessions.id, `ON DELETE CASCADE` |
 | kind | varchar(32) | Không | | `CHECK (kind IN ('audio_context_create','audio_context_resume','storage_write'))` |
-| message | varchar(500) | Có | | **[Bổ sung]** — API `errors[].message ≤ 500` |
+| message | varchar(500) | Có | | API `errors[].message ≤ 500` |
 | occurred_at | timestamptz | Không | | |
 
 Index: `(usage_session_id)`, `(occurred_at)`.
-**[Bổ sung]** `UNIQUE (usage_session_id, kind, occurred_at)` để gửi trùng lô không ghi trùng lỗi (API không gửi id cho lỗi).
+`UNIQUE (usage_session_id, kind, occurred_at)` để gửi trùng lô không ghi trùng lỗi (API không gửi id cho lỗi).
 
 ### 3.7 `item_types` (danh mục đồ vật — có seeder)
 
@@ -359,3 +359,4 @@ WHERE u.user_id = $uid
 | 08/11/2026 | Bản nháp đầu. |
 | 10/11/2026 | Thêm bảng danh mục, seeder, truy vấn trang Thống kê theo đề bài đồ án. |
 | 12/11/2026 | Đồng bộ với Chương 1 Phân tích hệ thống: thêm bảng ánh xạ lớp thực thể (Class C1) ↔ bảng sau ERD; ghi chú `usage_sessions.user_id` và ý nghĩa `pomodoro_sessions.outcome`; mục 4 thêm cột Use case; truy vấn `/me/stats` ghi chú UC.10. Không đổi bảng, cột, ràng buộc. |
+| 13/11/2026 | Đã duyệt ở buổi họp kế hoạch: bỏ nhãn [Bổ sung] (giữ nguồn trong cột ghi chú); ERD vẽ lại trong drawio (trang ERD), khớp từng cột. |

@@ -8,9 +8,9 @@ Tài liệu API REST — FocuSpace bản chính thức
 |------------------------|-------------------------------------------------------------------------|
 | **Sản phẩm**           | FocuSpace — web app pixel art Lo-fi Semi-Sandbox                        |
 | **Phiên bản API**      | v1                                                                      |
-| **Phiên bản tài liệu** | v1.2 · v1.0 đã phê duyệt 07/11/2026; phần bổ sung v1.1 (danh mục, thống kê) và v1.2 (truy vết use case) chờ duyệt                                          |
-| **Ngày cập nhật**      | 12/11/2026 (v1.2)                                                              |
-| **Nguồn**              | docs/API.md · docs/DATABASE.md · docs/PRD.md · prototype/FocuSpace-Semi-Sandbox.html · FocuSpace_Diagrams.drawio, Chương 1 Phân tích hệ thống |
+| **Phiên bản tài liệu** | v1.2 · v1.0 đã phê duyệt 07/11/2026; v1.1 (danh mục, thống kê) và v1.2 (truy vết use case) đã duyệt ở buổi họp kế hoạch 13/11/2026 |
+| **Ngày cập nhật**      | 13/11/2026 (duyệt v1.1 – v1.2) |
+| **Nguồn**              | docs/API.md · docs/DATABASE.md · docs/PRD.md · prototype/FocuSpace-Semi-Sandbox.html · docs/analysis/FocuSpace_Diagrams.drawio, Chương 1 Phân tích hệ thống |
 
 # 1. Tổng quan & Giới thiệu
 
@@ -1267,3 +1267,4 @@ Dùng trong GET /room-state (trường data) và PUT /room-state (trường data
 | v1.0 | 07/11/2026 | Bản đã phê duyệt. |
 | v1.1 | 10/11/2026 | Bổ sung endpoint danh mục (4.12, 4.13) và thống kê (4.14). |
 | v1.2 | 12/11/2026 | Đồng bộ với Chương 1 Phân tích hệ thống: mỗi endpoint 4.1–4.14 thêm dòng “Use case” và “Phương thức service”; mục 1 thêm bảng tóm tắt endpoint ↔ use case ↔ service. Không đổi schema request/response, mã lỗi, rate limit. |
+| v1.2 (duyệt) | 13/11/2026 | Nội dung không đổi; v1.1 – v1.2 đã duyệt ở buổi họp kế hoạch 13/11/2026. |

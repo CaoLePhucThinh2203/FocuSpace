@@ -71,7 +71,7 @@ Quy trình bắt buộc theo `docs/references/PlanDesignWeb.docx` (Role + Skill 
 - `docs/references/` — đề bài và quy trình, chỉ đọc.
 - `docs/analysis/FocuSpace_Chuong2_PhanTich.docx` — chỉ sửa khi người dùng yêu cầu.
 - `Focus_Space .mp4`.
-- `docs/analysis/FocuSpace_Diagrams.drawio` là nguồn của mọi biểu đồ phân tích; ảnh trong `docs/images/` được xuất từ file này, không sửa ảnh bằng tay.
+- `docs/analysis/FocuSpace_Diagrams.drawio` là nguồn của mọi biểu đồ (use case, Activity, Sequence, Class, ERD); ảnh trong `docs/images/` được xuất từ file này, không sửa ảnh bằng tay.
 
 ## Lịch sử thay đổi
 
@@ -81,3 +81,4 @@ Quy trình bắt buộc theo `docs/references/PlanDesignWeb.docx` (Role + Skill 
 | 13/11/2026 | Thêm mục Skills (đủ bộ Role + Skill + Constraint theo PlanDesignWeb); Role thêm vai theo khu vực 4 thành viên; bảng tài liệu thêm `docs/TASKS.md`, PRD 5.4 AC, wireframe drawio. |
 | 13/11/2026 (lần 2) | Đường dẫn 2 file phân tích chuyển vào `docs/`. |
 | 13/11/2026 (lần 3) | Chuyển từ `docs/` ra thư mục gốc; bỏ bản Word song song (chỉ giữ `.md`); đường dẫn mới: `docs/analysis/`, `docs/references/`, `docs/images/`, `prototype/web/`. |
+| 13/11/2026 (lần 4) | drawio thêm trang ERD; ảnh Kiến trúc Hình 2, 4 xuất từ drawio. |

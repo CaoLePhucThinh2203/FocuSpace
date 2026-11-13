@@ -1,6 +1,6 @@
 # FocuSpace — Kế hoạch triển khai (PLAN.md)
 
-> Trạng thái: **BẢN NHÁP — chờ duyệt** · 08/11/2026 · cập nhật 13/11/2026 (lần 2): lịch tính từ 27/10/2026, S1–S2 đã xong (họp, Figma, prototype, tài liệu kế hoạch) · cập nhật 13/11/2026: phân vai 4 thành viên, lịch 2 tuần (hạn 27/11/2026), Phase 0 test-first · cập nhật 10/11/2026 theo đề bài đồ án `docs/Web Basic - Final Project Brief - CSB25022 - VNUK.docx` · cập nhật 12/11/2026 theo Chương 1 Phân tích hệ thống
+> Trạng thái: **Đã duyệt** ở buổi họp kế hoạch 13/11/2026 · bản đầu 08/11/2026 · cập nhật 13/11/2026 (lần 2): lịch tính từ 27/10/2026, S1–S2 đã xong (họp, Figma, prototype, tài liệu kế hoạch) · cập nhật 13/11/2026: phân vai 4 thành viên, lịch 2 tuần (hạn 27/11/2026), Phase 0 test-first · cập nhật 10/11/2026 theo đề bài đồ án `docs/Web Basic - Final Project Brief - CSB25022 - VNUK.docx` · cập nhật 12/11/2026 theo Chương 1 Phân tích hệ thống
 > Nguồn: `docs/PRD.md` · `docs/ARCHITECTURE.md` · `docs/API.md` · `docs/DATABASE.md` · `prototype/FocuSpace-Semi-Sandbox.html` · `FocuSpace_Diagrams.drawio`, `FocuSpace_Chuong2_PhanTich.docx` (Chương 1 Phân tích hệ thống)
 > Quy tắc nguồn: đề bài đồ án > PRD > prototype > tài liệu cũ. Hành vi giao diện của Căn phòng lấy theo prototype.
 
@@ -18,7 +18,7 @@
 | 2b | Tailwind CSS (0,5) | PRD 6.3, Kiến trúc 3.2 | Tailwind cấu hình trong `frontend/`, giao diện dùng utility class | S4 · P5 |
 | 2c | Tương tác bằng JavaScript (1) | PRD Tính năng A–L | Kéo thả, popover, mixer, Pomodoro, form có kiểm tra dữ liệu, bộ lọc Thư viện, hộp thoại xác nhận | S4, S5 |
 | 2d | Responsive (0,5) | PRD 6.3 | E2E chụp màn hình ở 375, 768, 1280 px | S4 → S5 · P8 |
-| 3a | Thiết kế schema (0,5) | DATABASE §2–3, Kiến trúc Hình 4 | ERD trong README, `schema.prisma` | S3 · P6 |
+| 3a | Thiết kế schema (0,5) | DATABASE §2–3, Kiến trúc Hình 4 (drawio trang ERD) | ERD trong README, `schema.prisma` | S3 · P6 |
 | 3b | Tích hợp PostgreSQL, CRUD (0,5) | API 4.2–4.11, DATABASE §4 | Tạo/đọc/sửa/xóa tài khoản và trạng thái phòng chạy thật | S3 → S5 · P6 |
 | 3c | ≥ 2 trang động từ CSDL (1) | PRD Tính năng K, L; API 4.12–4.14 | Thư viện (lọc theo phòng, nhóm), Thống kê (theo khoảng thời gian) | S5 · P7 |
 | Nộp | Migration + seeder | DATABASE §3.7, 3.8, §6 | `prisma/migrations/`, `prisma/seed.ts` nạp 17 đồ vật, 5 khung cảnh | S3 · P6 |
@@ -111,7 +111,7 @@ D:\du an FocuSpace\
 ├── docs/
 │   ├── PRD.md · ARCHITECTURE.md · API.md · DATABASE.md   # bản chính thức duy nhất (không còn bản Word song song)
 │   ├── PLAN.md · TASKS.md       # kế hoạch, task theo người/sprint
-│   ├── analysis/                # FocuSpace_Diagrams.drawio (nguồn biểu đồ UC-TQ, A1–A12, S1–S12, C1–C3) · FocuSpace_Chuong2_PhanTich.docx (Chương 1)
+│   ├── analysis/                # FocuSpace_Diagrams.drawio (nguồn biểu đồ UC-TQ, A1–A12, S1–S12, C1–C3, ERD) · FocuSpace_Chuong2_PhanTich.docx (Chương 1)
 │   ├── images/                  # hình dùng trong PRD.md, ARCHITECTURE.md (uc-tong-quat, class-* xuất từ drawio)
 │   ├── wireframes/              # FocuSpace_Wireframes.drawio + PNG (bản bổ sung cho Figma)
 │   ├── meetings/                # biên bản họp (2026-10-27 khởi động, 2026-11-13 kế hoạch)
@@ -255,7 +255,7 @@ D:\du an FocuSpace\
   6. `telemetry.ts`: gom sự kiện, gửi lô mỗi 60 s, khi ẩn tab và khi mở trang Thống kê.
   7. Trang Thư viện: 2 thẻ, bộ lọc gọi lại API, tham số lọc trên URL, trạng thái đang tải / lỗi / rỗng.
   8. Trang Thống kê: chọn khoảng thời gian, 4 ô số liệu, biểu đồ cột SVG, bảng 10 phiên gần nhất, trạng thái chưa đăng nhập / rỗng.
-- **Tham chiếu:** ① · ② Tính năng H, I, K, L · ③ Hình 2, 3 · ⑤.
+- **Tham chiếu:** ① · ② Tính năng H, I, K, L · ③ Hình 2 (Sequence UC.09) · ⑤.
 - **Kiểm tra:** E2E US-11, US-14, US-15 với hai browser context; mất mạng; phiên hết hạn; 409; bộ lọc Thư viện ra 7 đồ cho Phòng ngủ + Phát âm thanh.
 - **Use case hoàn thành:** UC.08, UC.09, UC.10, UC.11, UC.07 (trang Thư viện)
 
@@ -302,3 +302,4 @@ D:\du an FocuSpace\
 | 13/11/2026 | §2 điền 4 thành viên theo khu vực (Tuấn Hưng: đồ vật, âm thanh; Đình Nhiên: Sân vườn; Tuấn Lộc: Phòng ngủ; Phúc Thịnh: Phòng học, repo, các trang còn lại), phần backend và việc chung ghi [Đề xuất]; §3 rút lịch còn 2 tuần, 5 sprint × 3 ngày (13/11 → 27/11) có cột việc từng người; Phase 0 đổi thành "Khởi tạo & khung test" (test-first theo PlanDesignWeb); R11 cập nhật. |
 | 13/11/2026 (lần 2) | Lịch tính lại từ 27/10/2026: S1 ✅ 27/10–07/11 (họp khởi động, wireframe Figma, prototype, PRD duyệt), S2 ✅ 08–12/11 (PLAN, tài liệu, phân tích hệ thống), S3 13–17/11, S4 18–22/11, S5 23–27/11; §1 cập nhật cột sprint; Phase 0–7 đổi sprint; đường dẫn 2 file phân tích chuyển vào `docs/`. |
 | 13/11/2026 (lần 3) | Gọn cấu trúc thư mục: bỏ 3 bản Word trùng PRD/Kiến trúc/API, bỏ `docs/github-templates/` (trùng `.github/`), gộp prototype phương án 1 & 2 thành `prototype/web/` (chọn phương án 2); `CLAUDE.md` ra thư mục gốc; `images/` → `docs/images/`; thêm `docs/analysis/`, `docs/references/`; sửa `.gitignore`. |
+| 13/11/2026 (lần 4) | Trạng thái: đã duyệt ở buổi họp kế hoạch 13/11/2026; Phase 7 tham chiếu Kiến trúc Hình 2 (Sequence UC.09, Hình 3 đã gộp); drawio thêm trang ERD. |

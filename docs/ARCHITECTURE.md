@@ -7,10 +7,10 @@ Solution Architecture Document — FocuSpace bản chính thức
 |                   |                                                                                                                    |
 |-------------------|--------------------------------------------------------------------------------------------------------------------|
 | **Sản phẩm**      | FocuSpace — web app pixel art Lo-fi Semi-Sandbox                                                                   |
-| **Phiên bản**     | v1.2 (đồng bộ với Chương 1 Phân tích hệ thống; thay v1.1)                                                                                                               |
-| **Trạng thái**    | v1.0 đã phê duyệt phần kiến trúc ứng dụng và dữ liệu (07/11/2026); phần hạ tầng, giám sát, chi phí là đề xuất chờ duyệt; phần bổ sung v1.1 (đa trang, Tailwind, danh mục, Google Analytics, Sentry, quy trình GitHub) và v1.2 (truy vết use case, mô hình lớp) chờ duyệt |
-| **Ngày cập nhật** | 12/11/2026 (v1.2)                                                                                                         |
-| **Nguồn**         | prototype/FocuSpace-Semi-Sandbox.html · docs/PRD.md · docs/ARCHITECTURE.md · docs/DATABASE.md · docs/API.md · docs/PLAN.md · FocuSpace_Diagrams.drawio, Chương 1 Phân tích hệ thống      |
+| **Phiên bản**     | v1.3 (Hình 2 thay bằng Sequence UC.09, ERD vẽ trong drawio, mã FR chi tiết; thay v1.2) |
+| **Trạng thái**    | v1.0 đã phê duyệt phần kiến trúc ứng dụng và dữ liệu (07/11/2026); v1.1 – v1.3 đã duyệt ở buổi họp kế hoạch 13/11/2026. Phần hạ tầng, giám sát, chi phí giữ nhãn [Đề xuất] vì ngoài phạm vi chấm đồ án |
+| **Ngày cập nhật** | 13/11/2026 (v1.3) |
+| **Nguồn**         | prototype/FocuSpace-Semi-Sandbox.html · docs/PRD.md · docs/ARCHITECTURE.md · docs/DATABASE.md · docs/API.md · docs/PLAN.md · docs/analysis/FocuSpace_Diagrams.drawio, Chương 1 Phân tích hệ thống      |
 
 > **Cách đọc:** Mục có nhãn \[Đề xuất\] là phương án kiến trúc sư đưa ra khi tài liệu nguồn chưa quyết định (nơi triển khai, SLA, công cụ giám sát, chi phí). Mục có nhãn \[Cần xác nhận\] cần số liệu từ đội dự án.
 
@@ -74,17 +74,17 @@ Tài liệu mô tả thiết kế giải pháp CNTT cho FocuSpace bản chính t
 
 | **Nhóm**               | **Nghiệp vụ cốt lõi**                                      | **Mã PRD**                | **Use case** |
 |------------------------|------------------------------------------------------------|---------------------------|---|
-| Giao diện & điều hướng | Bố cục, thanh công cụ, popover, chuyển ba không gian       | FR-UI-01→06, FR-NAV-01→03 | UC.01, UC.12 |
-| Ba không gian          | Phòng học, Phòng ngủ, Sân vườn với 5 khung cảnh            | FR-STUDY, FR-BED, FR-OUT  | UC.02 |
-| Đồ vật                 | Danh mục 17 loại, thêm/xóa/kéo, quy tắc đặt, giường mèo    | FR-ITEM-01→08             | UC.04 |
+| Giao diện & điều hướng | Bố cục, thanh công cụ, popover, chuyển ba không gian       | FR-UI-01→06, FR-NAV-01→03, FR-PAGE-03 | UC.01, UC.12 |
+| Ba không gian          | Phòng học, Phòng ngủ, Sân vườn với 5 khung cảnh            | FR-STUDY-01→08, FR-BED-01→07, FR-OUT-01→04 | UC.02 |
+| Đồ vật                 | Danh mục 17 loại, thêm/xóa/kéo, quy tắc đặt, giường mèo    | FR-ITEM-01→08 | UC.04 |
 | Âm thanh               | Chuỗi xử lý, công thức gain/pan, mixer, Master, mèo        | FR-AUD-01→07              | UC.03 |
 | Thời gian              | Pomodoro, Hẹn giờ ngủ                                      | FR-TIME-01→03             | UC.05, UC.06 |
 | Lưu trữ                | LocalStorage, migrate dữ liệu cũ                           | FR-SAVE-01→04             | include Tự động lưu cục bộ |
-| Tài khoản & đồng bộ    | Khách, đăng ký/đăng nhập, đồng bộ, hợp nhất, xung đột, xóa | FR-ACC-01→07              | UC.08, UC.09, UC.11 |
+| Tài khoản & đồng bộ    | Khách, đăng ký/đăng nhập, đồng bộ, hợp nhất, xung đột, xóa | FR-ACC-01→08 | UC.08, UC.09, UC.11 |
 | Đo lường               | Phiên, Pomodoro, lỗi                                       | FR-TEL-01→03              | include Ghi nhận số liệu sử dụng |
-| Website nhiều trang | 6 trang, thanh điều hướng chung, trang 404 | FR-PAGE | UC.12 |
-| Trang động | Thư viện lọc theo phòng và nhóm; Thống kê theo khoảng thời gian | FR-LIB, FR-STAT | UC.07, UC.10 |
-| Theo dõi và ghi lỗi | Google Analytics 4, Sentry | FR-OBS | UC.12, UC.03 |
+| Website nhiều trang | 6 trang, thanh điều hướng chung, trang 404 | FR-PAGE-01→08 | UC.12 |
+| Trang động | Thư viện lọc theo phòng và nhóm; Thống kê theo khoảng thời gian | FR-LIB-01→06, FR-STAT-01→06 | UC.07, UC.10 |
+| Theo dõi và ghi lỗi | Google Analytics 4, Sentry | FR-OBS-01→04 | UC.12, UC.03 |
 
 ## 2.2 Yêu cầu phi chức năng (Quality Attributes)
 
@@ -190,23 +190,24 @@ Thông điệp trong biểu đồ Sequence (Chương 1 §1.4) dùng đúng tên 
 
 ### Luồng chính
 
-![Hình 2](images/architecture-hinh-2.png)
+![Hình 2](images/seq-uc09-dong-bo.png)
 
-*Hình 2 — Mở ứng dụng: tải cục bộ, kiểm tra phiên, đồng bộ*
+*Hình 2 — Mở ứng dụng, đồng bộ và xử lý xung đột (Sequence UC.09; cùng hình với Chương 1, Hình 1.22; nguồn: `docs/analysis/FocuSpace_Diagrams.drawio`, trang S9)*
 
-Chi tiết: Biểu đồ Sequence UC.09 (Chương 1, Hình 1.22). Sequence UC.09 mô tả thêm hai nhánh mà Hình 2 gộp trong bước “Áp bản mới hơn / hỏi giữ bản nào”: tài khoản chưa có phòng (404) thì tải phòng của máy lên bằng `PUT /room-state` với baseRevision = 0; lần đầu đăng nhập trên máy có dữ liệu khách thì hiện hộp thoại hợp nhất và ghi bản được chọn với `force = true` (extend Hợp nhất phòng lần đầu).
+Hình 2 gồm hai luồng chính của hệ thống:
 
-![Hình 3](images/architecture-hinh-3.png)
+- **Mở ứng dụng:** đọc LocalStorage và `migrate()` về RoomState v4; `POST /auth/refresh` bằng cookie — không có phiên (401) thì thoát sang chế độ khách (khối `break`); có phiên thì `GET /room-state`. Tài khoản chưa có phòng (404) thì tải phòng của máy lên với baseRevision = 0; lần đầu đăng nhập trên máy có dữ liệu khách thì hiện hộp thoại hợp nhất và ghi bản được chọn với `force = true`.
+- **Lưu thay đổi:** áp ngay vào hình và âm, lưu LocalStorage sau 250 ms, đẩy `PUT /room-state` sau 2 giây; backend kiểm tra Zod rồi `UPDATE … WHERE revision = baseRevision`. Khớp thì trả revision mới; máy khác đã ghi trước thì trả 409 REVISION_CONFLICT kèm bản hiện có, client áp bản server và báo “Phòng đã được cập nhật từ thiết bị khác”. Mất mạng thì thử lại khi có mạng, chip báo ngoại tuyến.
 
-*Hình 3 — Lưu thay đổi và xử lý xung đột giữa hai thiết bị*
+AudioContext được tạo ở trạng thái tạm dừng và chỉ bật sau cú nhấp/phím đầu tiên (PRD FR-AUD-07): xem Sequence UC.03 (Chương 1, Hình 1.16).
 
-Chi tiết: Biểu đồ Sequence UC.09 (Chương 1, Hình 1.22), phần sau khi thay đổi phòng (extend Xử lý xung đột phiên bản).
+*Hình 3 của v1.2 (lưu thay đổi và xung đột) đã gộp vào Hình 2 từ v1.3; số Hình 4, 5 giữ nguyên để không đổi tham chiếu.*
 
 ## 3.3 Kiến trúc dữ liệu (Data Architecture)
 
-![Hình 4](images/architecture-hinh-4.png)
+![Hình 4](images/erd.png)
 
-*Hình 4 — Sơ đồ quan hệ dữ liệu (ERD), gồm hai bảng danh mục item_types và scenes*
+*Hình 4 — Sơ đồ quan hệ dữ liệu (ERD), gồm hai bảng danh mục item_types và scenes (nguồn: `docs/analysis/FocuSpace_Diagrams.drawio`, trang ERD; khớp từng cột với `docs/DATABASE.md` §3)*
 
 ### Ánh xạ lớp thực thể ↔ bảng (Chương 1, Class C1)
 
@@ -325,7 +326,7 @@ Mã nguồn là monorepo npm workspaces (shared, backend, frontend). Quy trình 
 
 - **Nhánh:** main luôn chạy được và được bảo vệ (chỉ merge qua Pull Request, CI phải xanh, ít nhất 1 người duyệt). Mỗi việc một nhánh chủ đề tách từ main: feat/\<số-issue\>-\<mô-tả\>, fix/…, docs/…, test/…, chore/….
 
-- **Ticket:** mỗi việc là một GitHub Issue theo mẫu (Tính năng, Lỗi), gắn nhãn loại, khu vực (frontend, backend, docs) và ưu tiên (P0, P1), gắn milestone theo sprint; theo dõi trên bảng GitHub Projects: Backlog → To do → In progress → Review → Done.
+- **Ticket:** mỗi việc là một GitHub Issue theo mẫu (Tính năng, Lỗi), gắn nhãn loại (`type:*`), khu vực (`area:items-audio`, `area:garden`, `area:bedroom`, `area:study`, `area:pages`, `area:repo`, `area:backend`, `area:shared` — theo `docs/TASKS.md`) và ưu tiên (P0, P1), gắn milestone theo sprint; theo dõi trên bảng GitHub Projects: Backlog → To do → In progress → Review → Done.
 
 - **Commit:** theo Conventional Commits, mỗi commit một thay đổi, kèm số issue: \<type\>(\<phạm vi\>): \<mô tả ngắn\> (#\<số\>), ví dụ feat(library): lọc đồ vật theo phòng (#24). type gồm feat, fix, docs, test, refactor, chore.
 
@@ -379,3 +380,4 @@ Các lớp trang (TrangChu, TrangGioiThieu, TrangThuVien, TrangThongKe, TrangTai
 | v1.0 | 07/11/2026 | Bản đã phê duyệt phần kiến trúc ứng dụng và dữ liệu. |
 | v1.1 | 10/11/2026 | Bổ sung theo đề bài đồ án CSB25022. |
 | v1.2 | 12/11/2026 | Đồng bộ với Chương 1 Phân tích hệ thống: 2.1 thêm cột Use case; 3.2 bổ sung tên 5 lớp service, bảng ánh xạ lớp thiết kế ↔ module, ghi chú chi tiết dưới Hình 2, Hình 3; 3.3 thêm bảng ánh xạ lớp thực thể ↔ bảng; thêm Phụ lục A (Hình A1–A3, biểu đồ lớp). |
+| v1.3 | 13/11/2026 | Hình 2 thay bằng Sequence UC.09 xuất từ drawio (trang S9), Hình 3 gộp vào Hình 2; Hình 4 (ERD) vẽ lại trong drawio (trang ERD); 2.1 ghi mã FR chi tiết theo PRD v5.4; 4.2 nhãn khu vực theo `docs/TASKS.md`; trạng thái: v1.1 – v1.3 đã duyệt ở buổi họp kế hoạch 13/11/2026. |

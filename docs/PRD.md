@@ -7,9 +7,9 @@ Căn phòng Semi-Sandbox · Phòng học · Phòng ngủ · Sân vườn
 |                   |                                                                                                  |
 |-------------------|--------------------------------------------------------------------------------------------------|
 | **Sản phẩm**      | FocuSpace — web app pixel art Lo-fi Semi-Sandbox                                                 |
-| **Phiên bản**     | v5.3 (bổ sung Tiêu chí nghiệm thu, lịch 27/10 → 27/11, phân vai; thay v5.2) |
-| **Trạng thái**    | v5.0 đã phê duyệt 07/11/2026 · phần bổ sung v5.1 – v5.3 chờ duyệt |
-| **Ngày cập nhật** | 13/11/2026 (v5.3 — Tiêu chí nghiệm thu, lịch 27/10 → 27/11, phân vai) |
+| **Phiên bản**     | v5.4 (bảng mã FR đầy đủ, bỏ mốc Go-live; thay v5.3) |
+| **Trạng thái**    | v5.0 đã phê duyệt 07/11/2026 · v5.1 – v5.4 đã duyệt ở buổi họp kế hoạch 13/11/2026 |
+| **Ngày cập nhật** | 13/11/2026 (v5.4 — bảng mã FR, bỏ Go-live) |
 | **Nguồn**         | prototype/FocuSpace-Semi-Sandbox.html (tiêu đề trang “FocuSpace Semi-Sandbox 9”) · docs/PRD.md · PRD v2–v4 · FocuSpace_Semi_Sandbox_PRD · đề bài Final Project Brief CSB25022 · FocuSpace_Diagrams.drawio, Chương 1 Phân tích hệ thống |
 
 # 1. Thông tin chung (Metadata)
@@ -18,9 +18,9 @@ Căn phòng Semi-Sandbox · Phòng học · Phòng ngủ · Sân vườn
 |---|---|
 | **Chủ sở hữu (Product Owner / PM)** | Cao Lê Phúc Thịnh (theo PRD Semi-Sandbox gốc) |
 | **Đội ngũ tham gia** | Tuấn Hưng (đồ vật, âm thanh) · Đình Nhiên (Sân vườn) · Tuấn Lộc (Phòng ngủ) · Phúc Thịnh (Phòng học, quản lý repo, các trang còn lại) · chi tiết docs/PLAN.md mục 2 |
-| **Trạng thái tài liệu** | v5.0 đã phê duyệt 07/11/2026 · phần bổ sung v5.1 – v5.3 chờ duyệt |
-| **Ngày cập nhật** | 13/11/2026 (v5.3 — Tiêu chí nghiệm thu, lịch 27/10 → 27/11) |
-| **Phiên bản** | v5.3 |
+| **Trạng thái tài liệu** | v5.0 đã phê duyệt 07/11/2026 · v5.1 – v5.4 đã duyệt ở buổi họp kế hoạch 13/11/2026 |
+| **Ngày cập nhật** | 13/11/2026 (v5.4 — bảng mã FR, bỏ Go-live) |
+| **Phiên bản** | v5.4 |
 | **Tài liệu liên quan** | Tài liệu Kiến trúc giải pháp · API Docs · docs/DATABASE.md · docs/PLAN.md · Final Project Brief CSB25022 · FocuSpace_Diagrams.drawio · Chương 1 Phân tích hệ thống (FocuSpace_Chuong2_PhanTich.docx) |
 
 > **Quy tắc nguồn:** Khi hai nguồn mâu thuẫn, nguồn mới hơn thắng: tài liệu này \> prototype FocuSpace-Semi-Sandbox.html \> PRD .docx cũ. Mọi hành vi giao diện mô tả theo prototype FocuSpace-Semi-Sandbox.html. Yêu cầu của đề bài đồ án môn Web (CSB25022) đứng trên mọi nguồn.
@@ -41,7 +41,7 @@ FocuSpace giải quyết bốn vấn đề của người học và làm việc 
 
 **Lời giải Semi-Sandbox:** cho sẵn ba không gian pixel art dựng hoàn chỉnh; người dùng chỉ tùy biến âm thanh không gian 2D, môi trường (thời tiết, rèm, khung cảnh) và vài đồ vật kéo thả. Mục tiêu: vào phòng là học được ngay, thiết lập dưới 15 giây.
 
-**Vì sao làm ngay lúc này:** prototype đã qua 10 vòng chỉnh sửa và được duyệt ngày 07/11/2026 (FocuSpace-Semi-Sandbox.html); tài liệu kỹ thuật đã duyệt cùng ngày; mốc ra mắt dự kiến 10/12/2026 theo PRD gốc (chờ xác nhận, Q-08).
+**Vì sao làm ngay lúc này:** prototype đã qua 10 vòng chỉnh sửa và được duyệt ngày 07/11/2026 (FocuSpace-Semi-Sandbox.html); tài liệu kỹ thuật đã duyệt cùng ngày; mốc cuối là nộp đồ án ngày 27/11/2026 (không có mốc ra mắt riêng, Q-08).
 
 ## 2.2 Tầm nhìn (Vision)
 
@@ -106,7 +106,7 @@ FocuSpace hướng tới trở thành “người bạn học ảo” (Virtual B
 
 ## 2.4 Bối cảnh đồ án môn học
 
-FocuSpace là đồ án cuối kỳ làm theo nhóm của môn Web Design and Development (CSB25022, VNUK), chiếm 50% điểm, thời gian 3 tuần chia 5 sprint. Bảng dưới là các ràng buộc của đề bài và cách sản phẩm đáp ứng; bảng đối chiếu đầy đủ từng tiêu chí chấm với tài liệu và phase nằm trong docs/PLAN.md mục 1.
+FocuSpace là đồ án cuối kỳ làm theo nhóm của môn Web Design and Development (CSB25022, VNUK), chiếm 50% điểm, làm từ 27/10 đến 27/11/2026, chia 5 sprint (S1–S2 thiết kế và lập kế hoạch, S3–S5 lập trình). Bảng dưới là các ràng buộc của đề bài và cách sản phẩm đáp ứng; bảng đối chiếu đầy đủ từng tiêu chí chấm với tài liệu và phase nằm trong docs/PLAN.md mục 1.
 
 | **Ràng buộc của đề bài** | **Cách FocuSpace đáp ứng** | **Mục trong PRD** |
 |---|---|---|
@@ -149,11 +149,11 @@ FocuSpace là đồ án cuối kỳ làm theo nhóm của môn Web Design and De
 | US-10  | Với tư cách là người dùng, tôi muốn một bảng chỉnh âm lượng tất cả nguồn âm, để cân bằng nhanh mà không phải bấm từng đồ vật.                               | FR-AUD-04              | UC.03 |
 | US-11  | Với tư cách là người dùng nhiều thiết bị, tôi muốn đăng nhập để thấy cùng một căn phòng ở laptop và máy tính bàn.                                           | FR-ACC-02, 03          | UC.08, UC.09 |
 | US-12  | Với tư cách là người dùng mới, tôi muốn dùng thử không cần tài khoản, để biết sản phẩm có hợp không trước khi đăng ký.                                      | FR-ACC-01              | UC.01–UC.07 (chế độ khách), UC.08 |
-| US-13 | Với tư cách là người dùng mới, tôi muốn xem trang chủ giới thiệu FocuSpace và hình ba không gian, để quyết định có vào thử không. | FR-PAGE | UC.12 |
-| US-14 | Với tư cách là người dùng, tôi muốn xem thư viện đồ vật và khung cảnh, lọc theo phòng, để biết có gì trước khi bày phòng. | FR-LIB | UC.07 |
-| US-15 | Với tư cách là người dùng đã đăng nhập, tôi muốn xem số phút tập trung và số Pomodoro hoàn thành theo ngày, để theo dõi tiến bộ. | FR-STAT | UC.10 |
-| US-16 | Với tư cách là người dùng, tôi muốn có trang Giới thiệu & Liên hệ, để biết nhóm phát triển và cách gửi góp ý. | FR-PAGE | UC.12 |
-| US-17 | Với tư cách là thành viên, tôi muốn đổi tên hiển thị, đăng xuất hoặc xóa tài khoản cùng dữ liệu, để tự quản lý thông tin của mình. | FR-ACC (đổi tên hiển thị, đăng xuất, xóa tài khoản; chưa có mã chi tiết, Q-17) | UC.11 |
+| US-13 | Với tư cách là người dùng mới, tôi muốn xem trang chủ giới thiệu FocuSpace và hình ba không gian, để quyết định có vào thử không. | FR-PAGE-01, 04 | UC.12 |
+| US-14 | Với tư cách là người dùng, tôi muốn xem thư viện đồ vật và khung cảnh, lọc theo phòng, để biết có gì trước khi bày phòng. | FR-LIB-01→06 | UC.07 |
+| US-15 | Với tư cách là người dùng đã đăng nhập, tôi muốn xem số phút tập trung và số Pomodoro hoàn thành theo ngày, để theo dõi tiến bộ. | FR-STAT-01→06 | UC.10 |
+| US-16 | Với tư cách là người dùng, tôi muốn có trang Giới thiệu & Liên hệ, để biết nhóm phát triển và cách gửi góp ý. | FR-PAGE-05 | UC.12 |
+| US-17 | Với tư cách là thành viên, tôi muốn đổi tên hiển thị, đăng xuất hoặc xóa tài khoản cùng dữ liệu, để tự quản lý thông tin của mình. | FR-ACC-07, 08 | UC.11 |
 
 ## 3.3 Mô hình use case
 
@@ -165,20 +165,20 @@ Hệ thống có hai tác nhân. **Khách** là người dùng chưa đăng nh�
 
 | **Mã** | **Tên use case** | **Tác nhân** | **User story** | **FR / BR** | **Ưu tiên** |
 |---|---|---|---|---|---|
-| UC.01 | Chuyển không gian | Khách, Thành viên | US-01, US-09 | FR-UI-01→06, FR-NAV-01→03; BR-02 | High |
-| UC.02 | Tùy biến môi trường phòng | Khách, Thành viên | US-02, US-04, US-09 | FR-STUDY-01, 02, 03, 08; FR-BED-02; FR-OUT-02, 03 | High |
+| UC.01 | Chuyển không gian | Khách, Thành viên | US-01, US-09 | FR-UI-01→06, FR-NAV-01→03, FR-STUDY-01, 08, FR-BED-01, 07, FR-OUT-01, 04, FR-PAGE-03; BR-02 | High |
+| UC.02 | Tùy biến môi trường phòng | Khách, Thành viên | US-02, US-04, US-09 | FR-STUDY-02→05, FR-BED-02→05, FR-OUT-02, 03, FR-ITEM-07, FR-SAVE-01, 03 | High |
 | UC.03 | Điều chỉnh âm thanh | Khách, Thành viên | US-03, US-04, US-10 | FR-AUD-01→07; BR-07 | High |
-| UC.04 | Sắp xếp đồ vật | Khách, Thành viên | US-03, US-05 | FR-ITEM-01→08; BR-03, BR-04, BR-05, BR-06 | High |
-| UC.05 | Sử dụng bộ đếm Pomodoro | Khách, Thành viên | US-07 | FR-TIME-01, 02; FR-TEL-01→03; BR-01 | High |
-| UC.06 | Hẹn giờ ngủ | Khách, Thành viên | US-08 | FR-TIME-03; FR-TEL-01→03; BR-02 | High |
-| UC.07 | Xem Thư viện đồ vật & khung cảnh | Khách, Thành viên | US-14 | FR-LIB; BR-12 | High |
+| UC.04 | Sắp xếp đồ vật | Khách, Thành viên | US-03, US-05 | FR-ITEM-01→06, 08, FR-STUDY-06, 07, FR-BED-06; BR-03, BR-04, BR-05, BR-06 | High |
+| UC.05 | Sử dụng bộ đếm Pomodoro | Khách, Thành viên | US-07 | FR-TIME-01, 02, FR-SAVE-04, FR-TEL-01→03; BR-01 | High |
+| UC.06 | Hẹn giờ ngủ | Khách, Thành viên | US-08 | FR-TIME-03, FR-SAVE-04, FR-TEL-01, 03; BR-02 | High |
+| UC.07 | Xem Thư viện đồ vật & khung cảnh | Khách, Thành viên | US-14 | FR-LIB-01→06; BR-12 | High |
 | UC.08 | Đăng ký / Đăng nhập | Khách | US-11, US-12 | FR-ACC-01, 02; BR-08, BR-09 | High |
-| UC.09 | Đồng bộ phòng giữa các thiết bị | Thành viên | US-06, US-11 | FR-SAVE-01→04; FR-ACC-03; BR-06, BR-10 | High |
-| UC.10 | Xem Thống kê học tập | Thành viên | US-15 | FR-STAT; BR-11 | High |
-| UC.11 | Quản lý tài khoản | Thành viên | US-17 | FR-ACC (đổi tên, đăng xuất, xóa tài khoản — mã cụ thể trong FR-ACC-01→07 chưa xác định, Q-17); BR-11, BR-13 | Medium |
-| UC.12 | Xem Trang chủ và Giới thiệu & Liên hệ | Khách, Thành viên | US-13, US-16 | FR-PAGE, FR-OBS | High |
+| UC.09 | Đồng bộ phòng giữa các thiết bị | Thành viên | US-06, US-11 | FR-SAVE-01, 02, FR-ACC-03→05; BR-06, BR-10 | High |
+| UC.10 | Xem Thống kê học tập | Thành viên | US-15 | FR-STAT-01→06; BR-11 | High |
+| UC.11 | Quản lý tài khoản | Thành viên | US-17 | FR-ACC-07, 08; BR-11, BR-13 | Medium |
+| UC.12 | Xem Trang chủ và Giới thiệu & Liên hệ | Khách, Thành viên | US-13, US-16 | FR-PAGE-01→08, FR-OBS-01→04 | High |
 
-Mã FR lấy từ bảng 3.2 và dải mã trong Kiến trúc giải pháp 2.1; nhóm chưa có mã đánh số (FR-LIB, FR-STAT, FR-PAGE, FR-OBS) ghi theo tên nhóm (Q-17). Đặc tả chi tiết, biểu đồ Activity và Sequence của từng use case: xem *Chương 1 – Phân tích hệ thống*.
+Mã FR theo bảng mã yêu cầu chức năng ở cuối mục 5.1 (85 mã, 15 nhóm). Đặc tả chi tiết, biểu đồ Activity và Sequence của từng use case: xem *Chương 1 – Phân tích hệ thống*.
 
 # 4. Chỉ số thành công (Success Metrics / KPIs)
 
@@ -207,7 +207,7 @@ Mã FR lấy từ bảng 3.2 và dải mã trong Kiến trúc giải pháp 2.1; 
 
 # 5. Yêu cầu tính năng chi tiết (Functional Requirements)
 
-Mức ưu tiên: **P0** bắt buộc khi ra mắt, **P1** nên có, **P2** sau ra mắt. Toạ độ dùng hệ logic 320×180 điểm ảnh. Mã FR khớp với docs/PRD.md.
+Mức ưu tiên: **P0** bắt buộc trong bản nộp, **P1** nên có, **P2** sau đồ án. Toạ độ dùng hệ logic 320×180 điểm ảnh. Mã từng yêu cầu (FR-xx-NN) ở bảng cuối mục 5.1.
 
 ## 5.1 Mô tả tính năng (Feature Breakdown)
 
@@ -651,6 +651,98 @@ Mức ưu tiên: **P0** bắt buộc khi ra mắt, **P1** nên có, **P2** sau r
 
 - Không có mã đo lường hoặc DSN (máy dev): không tải script theo dõi.
 
+### Bảng mã yêu cầu chức năng (FR)
+
+Mỗi gạch đầu dòng ở Tính năng A–M ứng với một hoặc vài mã dưới đây. Mã dùng để truy vết: User Story (3.2) → Use case (3.3) → FR → AC (5.4) → test (`docs/PLAN.md` Phase 0). Mã đã dùng từ v5.0 giữ nguyên nghĩa; FR-ACC-08 và các nhóm FR-PAGE, FR-LIB, FR-STAT, FR-OBS đánh mã mới ở v5.4.
+
+| Mã | Yêu cầu | Ưu tiên | Use case | AC |
+|---|---|---|---|---|
+| FR-UI-01 | Bố cục ba hàng: thanh đầu trang · thanh công cụ · sân khấu 16:9 phóng nguyên tỷ lệ 320×180 | P0 | UC.01 | AC-NF.3 |
+| FR-UI-02 | Thanh đầu trang: logo, tên phòng, Pomodoro mini, Hẹn giờ ngủ, chip âm thanh, chip lưu | P0 | UC.01 | AC-03.1 |
+| FR-UI-03 | Thanh công cụ theo không gian (Đồ vật phát âm, Trang trí, Volume mixer, Khung cảnh) và chip số nguồn âm cập nhật 0,7 giây | P0 | UC.01 | — |
+| FR-UI-04 | Popover và khay: mở một cái mỗi lần; Escape hoặc bấm ra ngoài thì đóng, trạng thái không đổi | P0 | UC.01, UC.02 | AC-02.2 |
+| FR-UI-05 | Tone màu theo phòng: Phòng học nâu gỗ, Phòng ngủ tím than, Sân vườn xanh rêu | P0 | UC.01 | AC-01.1 |
+| FR-UI-06 | Màn hình < 720 px: sân khấu chiếm hết chiều rộng, mũi tên 40–44 px, khay toàn màn hình trừ lề 16 px | P0 | UC.01 | AC-NF.3 |
+| FR-NAV-01 | Chuyển ba không gian: mũi tên ở Phòng học, Phòng ngủ; cửa nhà ở Sân vườn luôn vào Phòng học | P0 | UC.01 | AC-01.1, AC-01.3 |
+| FR-NAV-02 | Khi chuyển: đóng popover/khay, hủy Hẹn giờ ngủ, mờ 0,3 giây, cross-fade âm nền 0,3 giây; bỏ qua lệnh mới khi đang chuyển | P0 | UC.01 | AC-01.1, AC-01.2, AC-01.4 |
+| FR-NAV-03 | Ghi nhớ phòng đang ở, mở lại vào đúng phòng | P0 | UC.01 | — |
+| FR-STUDY-01 | Cảnh tĩnh Phòng học: tường gỗ, bàn, nhân vật ngồi học có hoạt ảnh, tranh, giá 3 tầng; điểm nghe (160, 100) | P0 | UC.01 | — |
+| FR-STUDY-02 | Cửa sổ 4 thời tiết, rèm 3 mức, công tắc và âm lượng âm ngoài trời | P0 | UC.02 | AC-02.1 |
+| FR-STUDY-03 | Lò sưởi: bật/tắt lửa và tiếng củi, âm lượng, vị trí Trái/Phải (tranh tự dời); mặt lò là bề mặt đặt đồ | P0 | UC.02, UC.03 | AC-02.4 |
+| FR-STUDY-04 | Thảm dưới bàn 4 họa tiết | P0 | UC.02 | — |
+| FR-STUDY-05 | Tai nghe nhân vật: bật/tắt, âm lượng, 3 bài Lo-fi, dùng chung với Sân vườn | P0 | UC.02, UC.03 | — |
+| FR-STUDY-06 | Đèn bàn, ly cà phê chỉ trượt dọc mặt bàn, không xóa được | P0 | UC.04 | AC-04.3 |
+| FR-STUDY-07 | Khay Âm thanh Phòng học: Tivi CRT, Mèo ngủ, Đồng hồ Pomodoro | P0 | UC.04 | — |
+| FR-STUDY-08 | Trạng thái mặc định lần đầu của Phòng học (Mưa rơi, lò sưởi phải 50%, thảm Đỏ rượu, đèn bàn, ly, chậu cây lớn) | P0 | UC.01 | — |
+| FR-BED-01 | Cảnh tĩnh Phòng ngủ: giường, tủ đầu giường, giá treo tường 3 tầng, dây đèn, người ngủ có nhịp thở; điểm nghe (286, 92) | P0 | UC.01 | — |
+| FR-BED-02 | Cửa sổ 3 thời tiết (Đêm sao, Mưa đêm, Tuyết rơi), rèm 3 mức, công tắc và âm lượng | P0 | UC.02 | — |
+| FR-BED-03 | Đèn ngủ bật/tắt; tắt thì chỉ còn ánh trăng | P0 | UC.02 | — |
+| FR-BED-04 | Đồng hồ treo tường trang trí: bật/tắt tiếng tích tắc, âm lượng; không có Pomodoro | P0 | UC.02, UC.03 | — |
+| FR-BED-05 | Thảm dưới giường 4 họa tiết | P0 | UC.02 | — |
+| FR-BED-06 | Chỗ đặt đồ (3 tầng giá, ngăn tủ hút ±9 px, mặt tủ, mặt chăn) và khay Âm thanh 7 đồ của Phòng ngủ | P0 | UC.04 | AC-04.4 |
+| FR-BED-07 | Trạng thái mặc định lần đầu của Phòng ngủ (Đêm sao, đèn ngủ bật, Radio, máy xông, mèo trên chăn) | P0 | UC.01 | — |
+| FR-OUT-01 | Cảnh Sân vườn: xích đu dưới cây, nhà gỗ, ống khói; hiệu ứng lá rơi/tuyết theo khung cảnh | P0 | UC.01 | — |
+| FR-OUT-02 | 5 khung cảnh, mỗi cảnh một âm nền lặp riêng; Khu rừng mặc định; đổi cảnh thì cross-fade, không chồng lớp | P0 | UC.02 | AC-02.3 |
+| FR-OUT-03 | Khay Khung cảnh: lưới ảnh xem trước 16:9 kèm tên và mô tả âm, bấm là đổi ngay; công tắc và âm lượng chung | P0 | UC.02 | AC-02.3 |
+| FR-OUT-04 | Tai nghe và Pomodoro mini dùng chung trạng thái với Phòng học | P0 | UC.01, UC.05 | AC-05.1 |
+| FR-ITEM-01 | Danh mục 17 loại đồ vật, mỗi loại thuộc nhóm (phát âm / trang trí / trên bàn) và phòng dùng được | P0 | UC.04, UC.07 | AC-07.1 |
+| FR-ITEM-02 | Thêm đồ: kéo thẻ từ khay thả vào phòng, hoặc bấm/Enter/Space để đặt xuống sàn | P0 | UC.04 | AC-04.1 |
+| FR-ITEM-03 | Xóa đồ: thả lên thanh công cụ, nút “Xóa khỏi phòng”, phím Delete/Backspace | P0 | UC.04 | AC-04.5 |
+| FR-ITEM-04 | Di chuyển đồ: kéo thả, phím mũi tên 2 đơn vị (Shift: 8); khớp tầng giá; thứ tự vẽ theo toạ độ Y | P0 | UC.04 | AC-04.4, AC-04.5 |
+| FR-ITEM-05 | Quy tắc đặt: giữ trong khung phòng, chậu cây lớn chỉ đứng sàn, tối đa 40 đồ mỗi phòng (BR-03→06) | P0 | UC.04 | AC-04.2, AC-04.4 |
+| FR-ITEM-06 | Popover đồ phát âm: công tắc, âm lượng, chọn bài (Radio, Đĩa than), thanh Trái/Phải, hệ số suy giảm, nút Xóa; Đồng hồ có bảng Pomodoro | P0 | UC.03, UC.04 | AC-03.4 |
+| FR-ITEM-07 | Khung ảnh: “Đổi bức tranh khác” (10 tranh pixel) | P0 | UC.02 | — |
+| FR-ITEM-08 | Giường mèo: mèo lại gần thì tự nằm vào, kéo giường thì mèo đi theo | P1 | UC.04 | AC-04.4 |
+| FR-AUD-01 | Chuỗi xử lý mỗi nguồn âm: nguồn lặp → highpass (nếu có) → âm lượng → suy giảm khoảng cách → pan → chuyển phòng → hẹn giờ ngủ → Master | P0 | UC.03 | — |
+| FR-AUD-02 | Âm thanh không gian 2D: gain và pan theo vị trí đồ so với điểm nghe; góc xa nhất gain ≥ 0,15 | P0 | UC.03 | AC-03.3, AC-03.4 |
+| FR-AUD-03 | Mọi thay đổi bật/tắt, âm lượng chuyển mượt 0,2 giây (Master 0,1 giây), không tiếng nổ | P0 | UC.03 | AC-03.2 |
+| FR-AUD-04 | Volume mixer: hàng Master (mặc định 80%) và mọi nguồn âm của phòng hiện tại, mỗi hàng có công tắc và thanh trượt | P0 | UC.03 | AC-03.2 |
+| FR-AUD-05 | Tiếng mèo rù rù liên tục; bấm vào mèo thì mở mắt, kêu “meo”, rồi ngủ tiếp | P0 | UC.03, UC.04 | AC-04.1 |
+| FR-AUD-06 | Âm thanh tổng hợp bằng code; nhạc Lo-fi và âm khung cảnh dựng nền, cảnh đổi hình ngay cả khi âm chưa dựng xong | P0 | UC.03 | — |
+| FR-AUD-07 | AudioContext chỉ bật sau cú nhấp/phím đầu tiên; không tạo được thì app vẫn chạy phần hình và ghi lỗi | P0 | UC.03 | AC-03.1 |
+| FR-TIME-01 | Pomodoro Focus 25 phút / Nghỉ 5 phút; Bắt đầu, Tạm dừng, Đặt lại; chuông khi hết phiên rồi tự chuyển chế độ | P0 | UC.05 | AC-05.3, AC-05.4 |
+| FR-TIME-02 | Một bộ đếm dùng chung cho ba không gian (Pomodoro mini, popover Đồng hồ); tính theo thời điểm kết thúc nên không trôi khi tab ẩn | P0 | UC.05 | AC-05.1, AC-05.2 |
+| FR-TIME-03 | Hẹn giờ ngủ (chỉ Phòng ngủ): Tắt / 15 / 30 / 45 / 60 phút; 2 phút cuối âm tổng giảm dần; hết giờ hiện thông báo chạm để bật lại | P0 | UC.06 | AC-06.1, AC-06.2 |
+| FR-SAVE-01 | Tự lưu LocalStorage sau 250 ms; chip lưu hiện “Đang lưu…” / “Đã lưu HH:MM” | P0 | UC.02–UC.04, UC.09 | AC-02.1 |
+| FR-SAVE-02 | Tải dữ liệu cũ không lỗi, không mất đồ (migrate về RoomState v4; giá trị lạ về mặc định) | P0 | UC.09 | — |
+| FR-SAVE-03 | LocalStorage bị chặn: app vẫn chạy, chip báo “Trình duyệt chặn lưu cục bộ” | P0 | UC.02–UC.04 | — |
+| FR-SAVE-04 | Pomodoro và Hẹn giờ ngủ không giữ qua lần tải lại; phiên đang chạy ghi `abandoned` | P0 | UC.05, UC.06 | — |
+| FR-ACC-01 | Chế độ khách dùng đầy đủ Căn phòng, không cần tài khoản | P0 | UC.01–UC.07, UC.08 | AC-11.2 |
+| FR-ACC-02 | Đăng ký / đăng nhập bằng email + mật khẩu (≥ 8 ký tự) và tên hiển thị (1–40 ký tự); form kiểm tra ngay khi nhập | P0 | UC.08 | AC-08.1→08.4 |
+| FR-ACC-03 | Đồng bộ phòng: tải khi mở app, đẩy lên 2 giây sau thay đổi và khi đóng tab; mất mạng thì chờ, có mạng tự đẩy; phiên hết hạn thì làm mới, thất bại về chế độ khách | P0 | UC.09 | AC-09.1, AC-09.4 |
+| FR-ACC-04 | Hợp nhất lần đầu trên máy có dữ liệu khách: tài khoản chưa có phòng thì tải lên; cả hai có thì hỏi giữ bản nào | P0 | UC.09 | AC-08.1, AC-09.3 |
+| FR-ACC-05 | Xử lý xung đột hai thiết bị theo revision: 409 REVISION_CONFLICT, áp bản server và báo người dùng | P1 | UC.09 | AC-09.2 |
+| FR-ACC-06 | Quên mật khẩu qua email | P2 | — | — |
+| FR-ACC-07 | Xóa tài khoản và toàn bộ dữ liệu trên server, có hộp thoại xác nhận bằng mật khẩu | P1 | UC.11 | AC-11.3 |
+| FR-ACC-08 | Trang Tài khoản khi đã đăng nhập: xem email, ngày tạo; đổi tên hiển thị; đăng xuất (phòng cục bộ giữ nguyên) | P0 | UC.11 | AC-11.1, AC-11.2 |
+| FR-TEL-01 | Ghi phiên sử dụng: bắt đầu/kết thúc, thời gian tới thao tác đầu, số tương tác, không gian đã ghé, hẹn giờ ngủ chạy hết hay không | P1 | UC.05, UC.06 | — |
+| FR-TEL-02 | Ghi phiên Pomodoro: chế độ, thời lượng, kết quả `completed` / `reset` / `abandoned` | P1 | UC.05 | AC-05.3, AC-05.4 |
+| FR-TEL-03 | Ghi lỗi AudioContext; gửi theo lô mỗi 60 giây hoặc khi ẩn tab, id ẩn danh cho khách, server bỏ trùng theo id | P1 | UC.03, UC.05, UC.06 | — |
+| FR-PAGE-01 | 6 trang có URL và tiêu đề riêng (/, /room, /library, /stats, /account, /about); định tuyến phía client, mở thẳng URL vẫn đúng trang | P0 | UC.12 | AC-12.1 |
+| FR-PAGE-02 | Thanh điều hướng chung (trừ Căn phòng): logo, liên kết, trạng thái đăng nhập, đánh dấu trang hiện tại; < 640 px thu thành nút menu | P0 | UC.12 | AC-12.4 |
+| FR-PAGE-03 | Căn phòng giữ bố cục prototype; bấm logo mở menu tới các trang khác | P0 | UC.01, UC.12 | — |
+| FR-PAGE-04 | Trang chủ: giới thiệu, hình xem trước ba không gian vẽ bằng code, nút “Vào phòng”, ba điểm nổi bật, liên kết Thư viện | P0 | UC.12 | AC-12.1 |
+| FR-PAGE-05 | Giới thiệu & Liên hệ: mục tiêu, cách dùng nhanh, thành viên và vai trò, email liên hệ, link GitHub | P0 | UC.12 | AC-12.2 |
+| FR-PAGE-06 | Chân trang (trừ Căn phòng): tên dự án, môn học, năm học, link GitHub | P0 | UC.12 | — |
+| FR-PAGE-07 | URL không tồn tại: trang “Không tìm thấy” kèm liên kết về Trang chủ | P0 | UC.12 | AC-12.3 |
+| FR-PAGE-08 | Rời Căn phòng: âm tắt dần 0,3 giây, phòng đã tự lưu, Pomodoro vẫn đếm trong cùng tab | P0 | UC.12, UC.05 | — |
+| FR-LIB-01 | Thư viện lấy dữ liệu từ CSDL qua GET /catalog/items, GET /catalog/scenes (bảng do seeder nạp) | P0 | UC.07 | AC-07.1, AC-07.3 |
+| FR-LIB-02 | Hai thẻ “Đồ vật” (17 loại) và “Khung cảnh” (5 cảnh) | P0 | UC.07 | AC-07.1, AC-07.3 |
+| FR-LIB-03 | Thẻ đồ vật: hình pixel vẽ bằng code, tên, mô tả âm, kích thước, phòng dùng được, nhóm | P0 | UC.07 | AC-07.1 |
+| FR-LIB-04 | Bộ lọc theo phòng và nhóm; gọi lại API theo tham số; URL giữ tham số lọc | P0 | UC.07 | AC-07.2 |
+| FR-LIB-05 | Thẻ khung cảnh: hình xem trước vẽ bằng code, tên, mô tả âm nền | P0 | UC.07 | AC-07.3 |
+| FR-LIB-06 | Trạng thái đang tải (khung giữ chỗ), lỗi (“Không tải được thư viện” + Thử lại), rỗng (“Không có đồ vật phù hợp”) | P0 | UC.07 | AC-07.4 |
+| FR-STAT-01 | Chỉ người đã đăng nhập, chỉ dữ liệu của chính mình, qua GET /me/stats; chưa đăng nhập thì mời đăng nhập | P0 | UC.10 | AC-10.3 |
+| FR-STAT-02 | Chọn khoảng thời gian: 7 ngày (mặc định), 30 ngày, Tất cả | P0 | UC.10 | AC-10.2 |
+| FR-STAT-03 | 4 ô số liệu: tổng phút tập trung, số Focus hoàn thành, tỷ lệ hoàn thành, số phiên sử dụng | P0 | UC.10 | AC-10.1 |
+| FR-STAT-04 | Biểu đồ cột phút tập trung theo ngày, vẽ bằng SVG | P0 | UC.10 | AC-10.1 |
+| FR-STAT-05 | Bảng 10 phiên Pomodoro gần nhất: bắt đầu, chế độ, thời lượng dự kiến, kết quả | P0 | UC.10 | AC-10.1 |
+| FR-STAT-06 | Gửi ngay lô telemetry đang chờ trước khi tải; chưa có dữ liệu thì hiện lời mời vào phòng; phiên hết hạn thì về form đăng nhập | P0 | UC.10 | — |
+| FR-OBS-01 | Google Analytics 4 ghi lượt xem mỗi trang (cả chuyển trang phía client) và 8 sự kiện chính | P0 | UC.12 | AC-NF.2 |
+| FR-OBS-02 | Không gửi email, tên, nội dung phòng lên GA4 (BR-13); chỉ bật ở production khi có mã đo lường | P0 | UC.12 | AC-NF.2 |
+| FR-OBS-03 | Sentry bắt lỗi JavaScript, lỗi gọi API ở frontend và lỗi 5xx ở backend, gắn phiên bản và môi trường, không gửi dữ liệu cá nhân | P0 | UC.03, UC.12 | AC-NF.2 |
+| FR-OBS-04 | Bị trình chặn quảng cáo chặn hoặc thiếu mã/DSN: app chạy bình thường, không tải script theo dõi | P0 | UC.12 | — |
+
 ## 5.2 Quy tắc nghiệp vụ (Business Rules)
 
 | **Mã** | **Quy tắc**                                                                                                                                                                                                                                                                                                                                                           |
@@ -814,7 +906,6 @@ Mỗi tiêu chí viết theo dạng **Cho trước – Khi – Thì**, kiểm đ
 | M3 · Sprint 3: repo GitHub, monorepo, CI, khung test; dữ liệu dùng chung, logic engine, cơ sở dữ liệu (migration, seeder) | 13 – 17/11/2026 | Đang làm (phân vai chốt 13/11) |
 | M4 · Sprint 4: render, âm thanh; Căn phòng, Trang chủ, Giới thiệu bằng Tailwind; API auth, catalog, telemetry | 18 – 22/11/2026 | Chưa bắt đầu |
 | M5 · Sprint 5: API còn lại, Tài khoản, Thư viện, Thống kê, đồng bộ; review chéo + sửa theo góp ý; Lighthouse, Google Analytics, Sentry, README, video, nộp bài | 23 – 27/11/2026 (hạn nộp 27/11) | Chưa bắt đầu |
-| Go-live | 10/12/2026 (theo PRD gốc, Q-08) | Chờ xác nhận |
 
 Thứ tự phát triển theo docs/PLAN.md: Phase 0 Khởi tạo → 1 Dữ liệu dùng chung → 2 Logic engine → 3 Render → 4 Âm thanh → 5 Giao diện & lưu cục bộ → 6 Backend → 7 Đăng nhập & đồng bộ → 8 Phi chức năng & phát hành. Ngày bắt đầu và hạn nộp theo lịch giảng viên (Q-11); lịch sprint chi tiết, phân vai và bảng đối chiếu tiêu chí chấm nằm trong docs/PLAN.md.
 
@@ -829,9 +920,9 @@ Thứ tự phát triển theo docs/PLAN.md: Phase 0 Khởi tạo → 1 Dữ li�
 | Q-03   | Âm thanh tổng hợp bằng code hay file OGG/MP3?                                       | Đã chốt: tổng hợp bằng code |
 | Q-04   | Có cần đăng nhập Google/OAuth?                                                      | Đã chốt: chỉ email/mật khẩu |
 | Q-05   | Ngưỡng KPI phiên ngủ chạy hết và tỷ lệ ghé Sân vườn.                                | Mở                          |
-| Q-06   | Có làm chụp/chia sẻ ảnh góc pixel ở bản ra mắt?                                     | Mở                          |
+| Q-06   | Có làm chụp/chia sẻ ảnh góc pixel trong bản nộp?                                     | Mở                          |
 | Q-07   | Cửa nhà ở Sân vườn vào Phòng học hay phòng trong nhà gần nhất?                      | Đã chốt: luôn vào Phòng học (căn cứ của UC.01 luồng phụ 1) |
-| Q-08   | Ngày ra mắt vẫn là 10/12/2026?                                                      | Mở                          |
+| Q-08   | Ngày ra mắt vẫn là 10/12/2026? | Đã chốt 13/11: bỏ mốc ra mắt riêng; mốc cuối là nộp đồ án 27/11/2026 |
 | Q-09   | Giữ độ lệch trái/phải của cửa sổ Phòng ngủ (≈ −0,44)?                               | Mở                          |
 | Q-10   | Số người dùng đồng thời dự kiến và quy định dữ liệu cá nhân áp dụng.                | Mở                          |
 | Q-11 | Ngày bắt đầu và hạn nộp đồ án theo lịch giảng viên (lịch sprint ở 7.2 đang là đề xuất). | Đã chốt 13/11: bắt đầu 27/10/2026 (họp khởi động), hoàn thành 27/11/2026 |
@@ -840,7 +931,7 @@ Thứ tự phát triển theo docs/PLAN.md: Phase 0 Khởi tạo → 1 Dữ li�
 | Q-14 | Có cần banner xin đồng ý trước khi bật Google Analytics không? | Mở |
 | Q-15 | Email liên hệ và địa chỉ repo GitHub hiển thị ở trang Giới thiệu & Liên hệ. | Mở |
 | Q-16 | Câu thông báo khi phòng đủ 40 đồ vật (đề xuất: “Phòng đã đủ 40 đồ vật”). | Mở |
-| Q-17 | PRD hiện không có bảng liệt kê từng mã FR (Kiến trúc 2.1 dùng dải FR-UI-01→06, FR-ACC-01→07…). Cần khôi phục bảng mã FR chi tiết, đánh mã cho FR-LIB, FR-STAT, FR-PAGE, FR-OBS và xác định mã FR-ACC của đổi tên hiển thị, đăng xuất, xóa tài khoản (US-17). | Mở |
+| Q-17 | PRD hiện không có bảng liệt kê từng mã FR (Kiến trúc 2.1 dùng dải FR-UI-01→06, FR-ACC-01→07…). Cần khôi phục bảng mã FR chi tiết, đánh mã cho FR-LIB, FR-STAT, FR-PAGE, FR-OBS và xác định mã FR-ACC của đổi tên hiển thị, đăng xuất, xóa tài khoản (US-17). | Đã giải quyết 13/11: bảng mã FR cuối mục 5.1 (85 mã); đổi tên hiển thị, đăng xuất = FR-ACC-08; xóa tài khoản = FR-ACC-07 |
 
 ## 8.2 Rủi ro và phương án dự phòng
 
@@ -855,7 +946,7 @@ Thứ tự phát triển theo docs/PLAN.md: Phase 0 Khởi tạo → 1 Dữ li�
 | Hai thiết bị ghi đè lẫn nhau                                        | Mất chỉnh sửa                  | Số phiên bản + mã 409; client tải bản mới và thông báo                                           |
 | API hoặc database ngừng hoạt động                                   | Không đồng bộ được             | Kiến trúc local-first: app vẫn chạy và lưu cục bộ, tự đồng bộ lại khi có mạng                    |
 | Giả định “người bạn học ảo” không tạo động lực như kỳ vọng          | KPI phiên thấp                 | Thu phản hồi UAT về nhân vật, nhịp thở/lật sách để chỉnh hoạt ảnh                                |
-| Phạm vi lớn so với 3 tuần | Trễ hạn nộp | Làm P0 trước theo thứ tự sprint; dời P1 (xung đột hai thiết bị, xóa tài khoản) nếu trễ; cuối mỗi sprint luôn có bản chạy được |
+| Phạm vi lớn so với 2 tuần lập trình (S3–S5) | Trễ hạn nộp | Làm P0 trước theo thứ tự sprint; dời P1 (xung đột hai thiết bị, xóa tài khoản) nếu trễ; cuối mỗi sprint luôn có bản chạy được |
 | Trang Căn phòng tải nặng làm điểm Lighthouse thấp | Mất điểm tối ưu | Tách mã theo trang, dựng nhạc Lo-fi sau cú nhấp đầu, đo Lighthouse mỗi sprint |
 | Trình chặn quảng cáo chặn Google Analytics | Thiếu số liệu hành vi | Telemetry riêng vẫn ghi KPI; không chức năng nào phụ thuộc Google Analytics |
 
@@ -867,3 +958,4 @@ Thứ tự phát triển theo docs/PLAN.md: Phase 0 Khởi tạo → 1 Dữ li�
 | v5.1 | 10/11/2026 | Bổ sung theo đề bài đồ án CSB25022. |
 | v5.2 | 12/11/2026 | Đồng bộ với Chương 1 Phân tích hệ thống và FocuSpace_Diagrams.drawio: thêm 3.3 Mô hình use case (Hình 1, bảng 12 use case), đánh lại số Hình 2–7; thêm cột Use case vào bảng 3.2 và US-17; thêm dòng “Use case liên quan” cho Tính năng A–M; Tính năng E thêm ngoại lệ đủ 40 đồ vật [Đề xuất]; Tính năng G, I thêm quy tắc kết quả phiên Pomodoro (`completed` / `reset` / `abandoned`); Tính năng H, L viết thống nhất cách xử lý phiên hết hạn theo trang; Tính năng H thêm quy tắc revision và 409; 5.3 thêm cột Use case; Q-07 ghi căn cứ UC.01; thêm Q-16, Q-17. **BR-09 thay nội dung cũ** (“Đăng nhập / đăng ký tối đa 10 lần mỗi 15 phút cho mỗi IP”) vì mâu thuẫn với API 4.2–4.3 (đăng nhập tính theo IP + email). |
 | v5.3 | 13/11/2026 | Thêm 5.4 Tiêu chí nghiệm thu (48 AC theo use case và phi chức năng) để PRD đủ Problem / Context / FR / AC; 7.2 lịch 5 sprint từ 27/10 → 27/11/2026 (S1, S2 đã xong: Figma, prototype, tài liệu kế hoạch); 5.3 wireframe Figma (bản draw.io bổ sung); Q-11, Q-12 đã chốt. |
+| v5.4 | 13/11/2026 | Thêm bảng mã yêu cầu chức năng cuối mục 5.1 (85 mã FR, đóng Q-17): giữ nguyên mã cũ, thêm FR-ACC-08 (đổi tên, đăng xuất) và đánh mã FR-PAGE-01→08, FR-LIB-01→06, FR-STAT-01→06, FR-OBS-01→04; bảng 3.2, 3.3 tham chiếu mã cụ thể. Bỏ mốc Go-live 10/12/2026, mốc cuối là nộp đồ án 27/11/2026 (Q-08). 2.4, 8.2 sửa thời gian theo lịch 27/10 → 27/11. Trạng thái: v5.1 – v5.4 đã duyệt ở buổi họp kế hoạch 13/11/2026. |
