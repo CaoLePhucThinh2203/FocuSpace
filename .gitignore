@@ -1,9 +1,17 @@
-cd D:\Web_basic\FocuSpace
-@"
-PROMPT_DongBo_TaiLieu_FocuSpace.md
-~`$*
+# Tệp tạm của Word/Excel
+~$*
+
+# Node
 node_modules/
 dist/
+coverage/
+
+# Môi trường, log
 .env
+.env.*
+!.env.example
 *.log
-"@ | Out-File -Encoding utf8 .gitignore
+
+# Kết quả test
+playwright-report/
+test-results/

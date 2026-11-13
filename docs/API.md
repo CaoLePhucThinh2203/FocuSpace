@@ -1,4 +1,4 @@
-> Bản Markdown của `docs/FocuSpace_API_Docs.docx` — hai bản cùng nội dung, sửa bản này thì sửa cả bản kia. Đối chiếu lần cuối với `prototype/FocuSpace-Semi-Sandbox.html` ngày 10/11/2026.
+> Bản chính thức duy nhất (bản Word cũ `docs/FocuSpace_API_Docs.docx` đã gộp vào file này ngày 13/11/2026; cần bản Word thì xuất bằng `pandoc docs/API.md -o FocuSpace_API_Docs.docx`). Đối chiếu lần cuối với `prototype/FocuSpace-Semi-Sandbox.html` ngày 10/11/2026.
 
 # FocuSpace — API Docs
 

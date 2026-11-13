@@ -1,38 +1,38 @@
 # FocuSpace — Kế hoạch triển khai (PLAN.md)
 
-> Trạng thái: **BẢN NHÁP — chờ duyệt** · 08/11/2026 · cập nhật 13/11/2026: phân vai 4 thành viên, lịch 2 tuần (hạn 27/11/2026), Phase 0 test-first · cập nhật 10/11/2026 theo đề bài đồ án `docs/Web Basic - Final Project Brief - CSB25022 - VNUK.docx` · cập nhật 12/11/2026 theo Chương 1 Phân tích hệ thống
-> Nguồn: `docs/FocuSpace_PRD.docx` (v5.1) · `docs/FocuSpace_Kien_truc_giai_phap.docx` (v1.1) · `docs/FocuSpace_API_Docs.docx` (v1.1) · `docs/DATABASE.md` · `prototype/FocuSpace-Semi-Sandbox.html` · `FocuSpace_Diagrams.drawio`, `FocuSpace_Chuong2_PhanTich.docx` (Chương 1 Phân tích hệ thống)
+> Trạng thái: **BẢN NHÁP — chờ duyệt** · 08/11/2026 · cập nhật 13/11/2026 (lần 2): lịch tính từ 27/10/2026, S1–S2 đã xong (họp, Figma, prototype, tài liệu kế hoạch) · cập nhật 13/11/2026: phân vai 4 thành viên, lịch 2 tuần (hạn 27/11/2026), Phase 0 test-first · cập nhật 10/11/2026 theo đề bài đồ án `docs/Web Basic - Final Project Brief - CSB25022 - VNUK.docx` · cập nhật 12/11/2026 theo Chương 1 Phân tích hệ thống
+> Nguồn: `docs/PRD.md` · `docs/ARCHITECTURE.md` · `docs/API.md` · `docs/DATABASE.md` · `prototype/FocuSpace-Semi-Sandbox.html` · `FocuSpace_Diagrams.drawio`, `FocuSpace_Chuong2_PhanTich.docx` (Chương 1 Phân tích hệ thống)
 > Quy tắc nguồn: đề bài đồ án > PRD > prototype > tài liệu cũ. Hành vi giao diện của Căn phòng lấy theo prototype.
 
 ## 1. Đối chiếu tiêu chí chấm điểm
 
 | Task | Tiêu chí (điểm) | Đáp ứng trong tài liệu | Sản phẩm phải có khi nộp | Sprint · Phase |
 |---|---|---|---|---|
-| — | Phân tích hệ thống: UC, đặc tả, Activity, Sequence, Class (không có trong đề bài CSB25022, dùng cho báo cáo) | Chương 1 Phân tích hệ thống | `FocuSpace_Diagrams.drawio`, `FocuSpace_Chuong2_PhanTich.docx` (thư mục gốc) | S1 · P0 |
-| 1a | Họp phân vai (0) | PLAN §2 | Biên bản họp `docs/meetings/` | S1 · P0 |
-| 1b | Wireframe (0,5) | PRD 5.3 (bố cục 6 trang) | Wireframe Figma 6 trang, desktop + mobile; PNG trong `docs/wireframes/` | S1 · P0 |
-| 1c | Kế hoạch, mốc, deadline (0,5) | PLAN §3, PRD 7.2 | Bảng sprint có ngày, người phụ trách; milestone trên GitHub | S1 · P0 |
-| 1d | Repo GitHub, nhánh, ticket (0,5) | Kiến trúc 4.2, PLAN §4 | Repo, nhánh chủ đề, Issues, bảng GitHub Projects, mọi thành viên commit đều | S1 → S5 |
-| 1e | GitHub Workflow, commit đúng chuẩn (0,5) | Kiến trúc 4.2, PLAN §4 | Conventional Commits có số issue, PR liên kết issue, CI GitHub Actions | S1 → S5 |
-| 2a | ≥ 3 trang theo wireframe, liên kết với nhau (1) | PRD Tính năng J | 6 trang: Trang chủ, Căn phòng, Thư viện, Thống kê, Tài khoản, Giới thiệu & Liên hệ | S3, S4 · P5, P7 |
-| 2b | Tailwind CSS (0,5) | PRD 6.3, Kiến trúc 3.2 | Tailwind cấu hình trong `frontend/`, giao diện dùng utility class | S3 · P5 |
-| 2c | Tương tác bằng JavaScript (1) | PRD Tính năng A–L | Kéo thả, popover, mixer, Pomodoro, form có kiểm tra dữ liệu, bộ lọc Thư viện, hộp thoại xác nhận | S3, S4 |
-| 2d | Responsive (0,5) | PRD 6.3 | E2E chụp màn hình ở 375, 768, 1280 px | S3 → S5 · P8 |
-| 3a | Thiết kế schema (0,5) | DATABASE §2–3, Kiến trúc Hình 4 | ERD trong README, `schema.prisma` | S2 · P6 |
-| 3b | Tích hợp PostgreSQL, CRUD (0,5) | API 4.2–4.11, DATABASE §4 | Tạo/đọc/sửa/xóa tài khoản và trạng thái phòng chạy thật | S2, S4 · P6 |
-| 3c | ≥ 2 trang động từ CSDL (1) | PRD Tính năng K, L; API 4.12–4.14 | Thư viện (lọc theo phòng, nhóm), Thống kê (theo khoảng thời gian) | S4 · P7 |
-| Nộp | Migration + seeder | DATABASE §3.7, 3.8, §6 | `prisma/migrations/`, `prisma/seed.ts` nạp 17 đồ vật, 5 khung cảnh | S2 · P6 |
+| — | Phân tích hệ thống: UC, đặc tả, Activity, Sequence, Class (không có trong đề bài CSB25022, dùng cho báo cáo) | Chương 1 Phân tích hệ thống | `docs/analysis/FocuSpace_Diagrams.drawio`, `docs/analysis/FocuSpace_Chuong2_PhanTich.docx` | ✅ S2 |
+| 1a | Họp phân vai (0) | PLAN §2 | Biên bản họp `docs/meetings/` (27/10, 13/11) | ✅ S1 |
+| 1b | Wireframe (0,5) | PRD 5.3 (bố cục 6 trang) | Wireframe Figma 6 trang, desktop + mobile (link Figma [Cần bổ sung]); bản xuất PNG + bản draw.io bổ sung trong `docs/wireframes/` | ✅ S1 |
+| 1c | Kế hoạch, mốc, deadline (0,5) | PLAN §3, PRD 7.2 | Bảng sprint có ngày, người phụ trách; milestone trên GitHub | ✅ S2 (cập nhật 13/11) |
+| 1d | Repo GitHub, nhánh, ticket (0,5) | Kiến trúc 4.2, PLAN §4 | Repo, nhánh chủ đề, Issues, bảng GitHub Projects, mọi thành viên commit đều | S3 → S5 |
+| 1e | GitHub Workflow, commit đúng chuẩn (0,5) | Kiến trúc 4.2, PLAN §4 | Conventional Commits có số issue, PR liên kết issue, CI GitHub Actions | S3 → S5 |
+| 2a | ≥ 3 trang theo wireframe, liên kết với nhau (1) | PRD Tính năng J | 6 trang: Trang chủ, Căn phòng, Thư viện, Thống kê, Tài khoản, Giới thiệu & Liên hệ | S4, S5 · P5, P7 |
+| 2b | Tailwind CSS (0,5) | PRD 6.3, Kiến trúc 3.2 | Tailwind cấu hình trong `frontend/`, giao diện dùng utility class | S4 · P5 |
+| 2c | Tương tác bằng JavaScript (1) | PRD Tính năng A–L | Kéo thả, popover, mixer, Pomodoro, form có kiểm tra dữ liệu, bộ lọc Thư viện, hộp thoại xác nhận | S4, S5 |
+| 2d | Responsive (0,5) | PRD 6.3 | E2E chụp màn hình ở 375, 768, 1280 px | S4 → S5 · P8 |
+| 3a | Thiết kế schema (0,5) | DATABASE §2–3, Kiến trúc Hình 4 | ERD trong README, `schema.prisma` | S3 · P6 |
+| 3b | Tích hợp PostgreSQL, CRUD (0,5) | API 4.2–4.11, DATABASE §4 | Tạo/đọc/sửa/xóa tài khoản và trạng thái phòng chạy thật | S3 → S5 · P6 |
+| 3c | ≥ 2 trang động từ CSDL (1) | PRD Tính năng K, L; API 4.12–4.14 | Thư viện (lọc theo phòng, nhóm), Thống kê (theo khoảng thời gian) | S5 · P7 |
+| Nộp | Migration + seeder | DATABASE §3.7, 3.8, §6 | `prisma/migrations/`, `prisma/seed.ts` nạp 17 đồ vật, 5 khung cảnh | S3 · P6 |
 | 4a | Google Lighthouse (0,5) | PRD 6.1 | Báo cáo trước/sau tối ưu trong `docs/reports/lighthouse/`, ≥ 90 | S5 · P8 |
 | 4b | Tracking & logging (0,5) | PRD Tính năng M, Kiến trúc 4.1 | Google Analytics 4, Sentry frontend + backend, log JSON | S5 · P8 |
-| 5a | Góp ý cho ≥ 2 nhóm khác (1) | PLAN §5 | Báo cáo góp ý trong `docs/reviews/given/` | S4 |
+| 5a | Góp ý cho ≥ 2 nhóm khác (1) | PLAN §5 | Báo cáo góp ý trong `docs/reviews/given/` | S5 |
 | 5b | Sửa theo góp ý nhận được (1) | PLAN §5 | `docs/reviews/received.md`: góp ý → quyết định → PR hoặc lý do | S5 |
 | Nộp | README ở thư mục gốc | PLAN Phase 8 | Cách chạy, tổng quan và công cụ, tính năng + ảnh, ERD, thông tin khác | S5 · P8 |
 | Nộp | Video demo ≤ 10 phút, MP4 ≥ 720p | PLAN Phase 8 | Video trên YouTube (unlisted/public) thể hiện mọi tiêu chí | S5 · P8 |
-| Cá nhân | Self-report 5 sprint (thiếu −10%) | PLAN §3 | `docs/reports/sprint-N/<tên>.md` mỗi sprint, mỗi người | S1 → S5 |
+| Cá nhân | Self-report 5 sprint (thiếu −10%) | PLAN §3 | `docs/reports/sprint-N/<tên>.md` mỗi sprint, mỗi người (S1, S2 viết bù) | S1 → S5 |
 
 ## 2. Phân vai (Task 1a)
 
-Nhóm 4 người, chốt ở buổi họp khởi động 13/11/2026 (biên bản: `docs/meetings/2026-11-13-khoi-dong.md`). Phân công theo **khu vực sản phẩm**: mỗi người làm trọn khu vực của mình từ giao diện, engine tới backend liên quan, để ai cũng có commit ở cả frontend lẫn backend (đề bài Task 2, Task 3 yêu cầu mỗi thành viên làm một phần UI và một module backend).
+Nhóm 4 người, họp khởi động 27/10/2026 (biên bản: `docs/meetings/2026-10-27-khoi-dong.md`); phân vai khu vực chốt lại ở buổi họp kế hoạch 13/11/2026 (`docs/meetings/2026-11-13-hop-ke-hoach.md`). Phân công theo **khu vực sản phẩm**: mỗi người làm trọn khu vực của mình từ giao diện, engine tới backend liên quan, để ai cũng có commit ở cả frontend lẫn backend (đề bài Task 2, Task 3 yêu cầu mỗi thành viên làm một phần UI và một module backend).
 
 | Thành viên | Khu vực phụ trách (nhóm đã chốt) | Frontend / engine | Backend & CSDL **[Đề xuất — nhóm xác nhận]** | Việc chung **[Đề xuất]** |
 |---|---|---|---|---|
@@ -44,23 +44,23 @@ Nhóm 4 người, chốt ở buổi họp khởi động 13/11/2026 (biên bản
 Quy ước phối hợp:
 
 - **Chủ sở hữu thư mục:** mỗi người chỉ sửa thư mục của mình; sửa phần của người khác thì mở PR và gán người đó duyệt. Phần dùng chung (`shared/`, `store/`, `ui/Header`, `ui/Toolbar`, `persistence/local.ts`) do Phúc Thịnh giữ.
-- **Giao diện giữa các khu vực** (chốt trong S1, trước khi code song song): `RoomState` (`shared/roomState.ts`), hàm vẽ mỗi phòng `drawStudy/drawBed/drawOut(ctx, state, t)`, đăng ký nguồn âm `audio.register(sourceId, node)`, sự kiện telemetry `telemetry.track(name, data)`.
+- **Giao diện giữa các khu vực** (chốt đầu S3, trước khi code song song): `RoomState` (`shared/roomState.ts`), hàm vẽ mỗi phòng `drawStudy/drawBed/drawOut(ctx, state, t)`, đăng ký nguồn âm `audio.register(sourceId, node)`, sự kiện telemetry `telemetry.track(name, data)`.
 - Mỗi người: ≥ 1 commit mỗi ngày làm việc, self-report cuối mỗi sprint (`docs/reports/sprint-N/<tên>.md`).
 - Danh sách task chi tiết theo người và sprint: `docs/TASKS.md` (mỗi dòng = 1 GitHub Issue).
 
 ## 3. Lịch sprint và mốc (Task 1c)
 
-Còn **2 tuần**: bắt đầu 13/11/2026, **hạn hoàn thành 27/11/2026** (nhóm xác nhận 13/11; đề bài yêu cầu 5 sprint nên mỗi sprint 3 ngày). Mỗi sprint là một milestone trên GitHub; cuối sprint mỗi thành viên nộp self-report (`docs/reports/sprint-N/<tên>.md`: việc đã làm kèm link issue/PR, khó khăn, việc sprint sau). Họp ngắn 15 phút mỗi tối (online) và họp tổng kết cuối mỗi sprint.
+Dự án bắt đầu **27/10/2026** (họp khởi động), **hạn hoàn thành 27/11/2026**. Đề bài yêu cầu 5 sprint: S1–S2 là giai đoạn thiết kế và lập kế hoạch (**đã xong**), S3–S5 là giai đoạn lập trình, mỗi sprint 5 ngày. Mỗi sprint là một milestone trên GitHub; cuối sprint mỗi thành viên nộp self-report (`docs/reports/sprint-N/<tên>.md`: việc đã làm kèm link issue/PR hoặc file, khó khăn, việc sprint sau). Self-report S1, S2 viết bù trong S3 (link tới file Figma, prototype, tài liệu trong `docs/`). Họp ngắn 15 phút mỗi tối (online) và họp tổng kết cuối mỗi sprint.
 
 | Sprint | Ngày | Phase | Kết quả cuối sprint (mốc) | Hưng | Nhiên | Lộc | Thịnh |
 |---|---|---|---|---|---|---|---|
-| S1 | 13–15/11 | 0 | Biên bản phân vai; wireframe 6 trang; repo + Projects + mẫu issue/PR + bảo vệ nhánh; monorepo chạy, CI lint/test; khung test của mọi phase (test-first) | Khung test đồ vật, âm thanh | Wireframe Trang chủ, Giới thiệu; khung test telemetry | Wireframe Thống kê, Tài khoản; khung test auth | Repo, CI, monorepo; wireframe Căn phòng, Thư viện; chốt giao diện giữa các khu vực |
-| S2 | 16–18/11 | 1, 2, 6 (bước 1–2) | `shared/` có test; logic engine có test; `schema.prisma`, migration đầu, seeder 17 + 5 | `catalog.ts`, `placement.ts`, `spatial.ts`; seeder đồ vật | `defaults.ts` Sân vườn; seeder khung cảnh | `sleepTimer.ts`; `migrate.ts` | `roomState.ts`, `rooms.ts`, `pomodoro.ts`; `schema.prisma`, migration |
-| S3 | 19–21/11 | 3, 4, 5 | Ba không gian giống prototype ở chế độ khách; âm thanh không gian; Trang chủ, Giới thiệu bằng Tailwind; điều hướng 6 trang | Âm thanh, khay, kéo thả, mixer | Render Sân vườn, ScenePicker, âm cảnh | Render Phòng ngủ, Hẹn giờ ngủ | Render Phòng học, Header/Toolbar, lưu cục bộ, Trang chủ, Giới thiệu, NavBar/Footer |
-| S4 | 22–24/11 | 6, 7 | 14 endpoint có test tích hợp; Tài khoản, Thư viện, Thống kê lấy dữ liệu thật; đồng bộ; góp ý cho 2 nhóm khác | `/catalog/items`; review nhóm A | `/catalog/scenes`, telemetry; review nhóm A | Auth, `/me`, `/me/stats`; review nhóm B | `/room-state`, sync, hộp thoại hợp nhất; trang Thư viện, Thống kê, Tài khoản; review nhóm B |
-| S5 | 25–27/11 | 8 | Lighthouse ≥ 90; Google Analytics, Sentry; sửa theo góp ý; README; video; **nộp bài 27/11** | Tối ưu Căn phòng | GA4, Sentry | Báo cáo Lighthouse, E2E responsive | README, video, `received.md`, nộp bài |
+| S1 ✅ | 27/10–07/11 | Thiết kế | Họp khởi động 27/10; wireframe Figma 6 trang; prototype Căn phòng (`prototype/FocuSpace-Semi-Sandbox.html`); PRD v5.0 duyệt 07/11 | Thiết kế đồ vật, bảng đồ vật, âm thanh trên Figma/prototype | Thiết kế Sân vườn | Thiết kế Phòng ngủ | Thiết kế Phòng học, các trang còn lại; dựng prototype |
+| S2 ✅ | 08/11–12/11 | Kế hoạch | PLAN, Kiến trúc, API, DATABASE; Chương 1 Phân tích hệ thống (UC, đặc tả, Activity, Sequence, Class); prototype 6 trang | Góp nội dung đồ vật, âm thanh cho PRD/API | Góp nội dung Sân vườn | Góp nội dung Phòng ngủ | Viết PLAN, tài liệu, phân tích hệ thống |
+| S3 | 13–17/11 | 0, 1, 2, 6 (bước 1–2) | Repo + Projects + mẫu issue/PR + bảo vệ nhánh; monorepo chạy, CI lint/test; khung test (test-first); `shared/`, logic engine có test; `schema.prisma`, migration đầu, seeder 17 + 5 | Khung test đồ vật, âm thanh; `catalog.ts`, `placement.ts`, `spatial.ts`; seeder đồ vật | Khung test telemetry; `defaults.ts` Sân vườn; seeder khung cảnh | Khung test auth; `sleepTimer.ts`; `migrate.ts` | Repo, CI, monorepo; chốt giao diện giữa các khu vực; `roomState.ts`, `rooms.ts`, `pomodoro.ts`; `schema.prisma`, migration |
+| S4 | 18–22/11 | 3, 4, 5, 6 (bắt đầu) | Ba không gian giống prototype ở chế độ khách; âm thanh không gian; Trang chủ, Giới thiệu bằng Tailwind; điều hướng 6 trang; endpoint auth, catalog, telemetry có test | Âm thanh, khay, kéo thả, mixer; `/catalog/items` | Render Sân vườn, ScenePicker, âm cảnh; `/catalog/scenes`, telemetry | Render Phòng ngủ, Hẹn giờ ngủ; auth | Render Phòng học, Header/Toolbar, lưu cục bộ, Trang chủ, Giới thiệu, NavBar/Footer |
+| S5 | 23–27/11 | 6 (còn lại), 7, 8 | Đủ 14 endpoint; Tài khoản, Thư viện, Thống kê lấy dữ liệu thật; đồng bộ; góp ý 2 nhóm khác + sửa theo góp ý; Lighthouse ≥ 90; GA4, Sentry; README; video; **nộp bài 27/11** | Review nhóm A; tối ưu Căn phòng | Gửi telemetry; review nhóm A; GA4, Sentry | `/me`, `/me/stats`; review nhóm B; Lighthouse, E2E responsive | `/room-state`, sync, hộp thoại hợp nhất; trang Thư viện, Thống kê, Tài khoản; review nhóm B; README, video, `received.md`, nộp bài |
 
-Đường găng (critical path): giao diện giữa các khu vực (S1) → `shared/roomState.ts` (S2) → render từng phòng (S3) → sync (S4). Nếu trễ, cắt theo PRD §8.2: dời P1 (xung đột hai thiết bị, xóa tài khoản) trước, giữ đủ tiêu chí chấm điểm.
+Đường găng (critical path): giao diện giữa các khu vực (đầu S3) → `shared/roomState.ts` (S3) → render từng phòng (S4) → sync (S5). S5 nặng nhất, nên review chéo bắt đầu ngay khi có bản chạy được ở cuối S4. Nếu trễ, cắt theo PRD §8.2: dời P1 (xung đột hai thiết bị, xóa tài khoản) trước, giữ đủ tiêu chí chấm điểm.
 
 ## 4. Quy trình GitHub (Task 1d, 1e)
 
@@ -73,8 +73,8 @@ Chi tiết ở Kiến trúc 4.2. Tóm tắt:
 
 ## 5. Review chéo UI/UX (Task 5)
 
-- S4: mỗi nhóm review ≥ 2 nhóm khác theo 3 tiêu chí của đề bài (usability, aesthetics, user-friendliness); báo cáo `docs/reviews/given/<tên-nhóm>.md` gồm điểm mạnh, đề xuất cải thiện, ảnh minh họa.
-- S5: gom góp ý nhận được vào `docs/reviews/received.md`, bảng: góp ý · người góp ý · quyết định (làm / không làm) · PR hoặc lý do không làm. Mỗi góp ý được làm có issue riêng.
+- S5 (ngày đầu): mỗi nhóm review ≥ 2 nhóm khác theo 3 tiêu chí của đề bài (usability, aesthetics, user-friendliness); báo cáo `docs/reviews/given/<tên-nhóm>.md` gồm điểm mạnh, đề xuất cải thiện, ảnh minh họa.
+- S5 (cuối): gom góp ý nhận được vào `docs/reviews/received.md`, bảng: góp ý · người góp ý · quyết định (làm / không làm) · PR hoặc lý do không làm. Mỗi góp ý được làm có issue riêng.
 
 ## Nguyên tắc chung
 
@@ -83,7 +83,7 @@ Chi tiết ở Kiến trúc 4.2. Tóm tắt:
 - YAGNI · KISS · DRY: chỉ làm P0/P1 của PRD §7.1 Phase 1. Không làm hạng mục Phase 2 (quên mật khẩu, Q-01, Q-02, Q-06).
 - Mỗi phase: Planning → Review → Code → Test → dừng cho người dùng duyệt.
 - Mỗi PR tính năng ghi mã UC trong mô tả; test E2E đặt tên theo UC (ví dụ `uc04-sap-xep-do-vat.spec.ts`).
-- Không sửa `prototype/`. Bản Word (`docs/*.docx`) và bản Markdown tương ứng luôn cùng nội dung: chỉ sửa khi người dùng yêu cầu và sửa cả hai.
+- Không sửa `prototype/`. Tài liệu chỉ giữ bản `.md` (cần Word thì xuất bằng pandoc).
 
 ## Tech stack (theo Kiến trúc §3.2)
 
@@ -107,18 +107,21 @@ D:\du an FocuSpace\
 │   ├── ISSUE_TEMPLATE/          # feature.md, bug.md
 │   ├── pull_request_template.md
 │   └── workflows/ci.yml
+├── CLAUDE.md                    # Role · Skill · Constraint cho Claude Code
 ├── docs/
-│   ├── CLAUDE.md
-│   ├── FocuSpace_PRD.docx · FocuSpace_Kien_truc_giai_phap.docx · FocuSpace_API_Docs.docx   # bản Word, cùng nội dung với bản .md
-│   ├── PRD.md · ARCHITECTURE.md · DATABASE.md · API.md · PLAN.md · TASKS.md (task theo người/sprint)
-│   ├── wireframes/              # FocuSpace_Wireframes.drawio + PNG (desktop, mobile)
-│   ├── meetings/                # biên bản họp
+│   ├── PRD.md · ARCHITECTURE.md · API.md · DATABASE.md   # bản chính thức duy nhất (không còn bản Word song song)
+│   ├── PLAN.md · TASKS.md       # kế hoạch, task theo người/sprint
+│   ├── analysis/                # FocuSpace_Diagrams.drawio (nguồn biểu đồ UC-TQ, A1–A12, S1–S12, C1–C3) · FocuSpace_Chuong2_PhanTich.docx (Chương 1)
+│   ├── images/                  # hình dùng trong PRD.md, ARCHITECTURE.md (uc-tong-quat, class-* xuất từ drawio)
+│   ├── wireframes/              # FocuSpace_Wireframes.drawio + PNG (bản bổ sung cho Figma)
+│   ├── meetings/                # biên bản họp (2026-10-27 khởi động, 2026-11-13 kế hoạch)
 │   ├── reports/                 # sprint-1 … sprint-5 (self-report), lighthouse/
-│   └── reviews/                 # given/, received.md
-├── FocuSpace_Diagrams.drawio    # nguồn mọi biểu đồ phân tích (UC-TQ, A1–A12, S1–S12, C1–C3)
-├── FocuSpace_Chuong2_PhanTich.docx  # Chương 1 Phân tích hệ thống (tên file giữ nguyên)
-├── images/                      # hình của PRD và Kiến trúc; uc-tong-quat.png, class-thuc-the.png, class-dieu-khien.png, class-dich-vu.png xuất từ drawio
-├── prototype/FocuSpace-Semi-Sandbox.html     # không sửa
+│   ├── reviews/                 # given/, received.md
+│   └── references/              # đề bài CSB25022, PlanDesignWeb.docx — chỉ đọc
+├── prototype/                   # không sửa
+│   ├── FocuSpace-Semi-Sandbox.html   # bản gốc Căn phòng (đã duyệt 07/11)
+│   ├── web/                     # prototype 6 trang, Căn phòng viết bằng Tailwind (phương án 2)
+│   └── so-sanh-lighthouse/      # 2 cách sửa để đo Lighthouse trước/sau
 ├── shared/src/
 │   ├── catalog.ts               # 17 loại đồ vật, 5 khung cảnh — nguồn cho engine và seeder
 │   ├── constants.ts             # 320×180, DESK, SLOTS, SHELF_SLOTS, điểm nghe
@@ -143,24 +146,24 @@ D:\du an FocuSpace\
 
 ---
 
-## Phase 0 — Khởi tạo & khung test (S1, 13–15/11) — test-first
+## Phase 0 — Khởi tạo & khung test (S3, 13–15/11) — test-first
 
 - **Mục tiêu:** khung monorepo chạy được, repo GitHub và quy trình nhóm sẵn sàng; **viết khung test trước khi code** (theo quy trình PlanDesignWeb: Phase 0 là Test, thiên hướng TDD) để mỗi phase sau chỉ việc làm cho test xanh.
 - **Bước:**
-  1. ✅ Họp khởi động, ghi biên bản và điền bảng phân vai (§2) — 13/11/2026.
-  2. Wireframe 6 trang, desktop + mobile: bản low-fi ở `docs/wireframes/FocuSpace_Wireframes.drawio` (PNG cùng thư mục); nhóm duyệt rồi dựng lại trên Figma nếu giảng viên yêu cầu đúng công cụ (PRD 5.3).
-  3. (Thịnh) Tạo repo GitHub, mời thành viên; bật bảo vệ `main`; tạo nhãn, milestone S1–S5, bảng Projects; thêm `.github/` (mẫu issue, PR đã có sẵn trong thư mục dự án, CI); tạo Issues theo `docs/TASKS.md`.
+  1. ✅ Họp khởi động 27/10/2026; họp kế hoạch 13/11/2026 chốt phân vai (§2).
+  2. ✅ Wireframe 6 trang, desktop + mobile trên Figma (S1, link [Cần bổ sung] vào PRD 5.3); bản draw.io bổ sung ở `docs/wireframes/FocuSpace_Wireframes.drawio`.
+  3. (Thịnh) Tạo repo GitHub, mời thành viên; bật bảo vệ `main`; tạo nhãn, milestone S1–S5 (đóng sẵn S1, S2), bảng Projects; thêm `.github/` (mẫu issue, PR đã có sẵn trong thư mục dự án, CI); tạo Issues theo `docs/TASKS.md`.
   4. (Thịnh) Tạo `package.json` gốc (workspaces), `tsconfig.base.json`, ESLint, Prettier, Vitest, Playwright config.
   5. (Thịnh) Khởi tạo `frontend` (Vite React TS, Tailwind, React Router, proxy `/api` → `localhost:3000`) và `backend` (Express TS).
   6. **Khung test (mỗi người cho khu vực của mình, mỗi test ứng với 1 BR hoặc 1 AC ở PRD 5.4, để ở trạng thái `it.todo` / `test.fixme`):**
      - Unit (Vitest): `shared/` (migrate, roomState, catalog), `engine/logic/*` (placement BR-03→06, spatial BR-07, pomodoro BR-01, sleepTimer BR-02, rooms).
      - Integration (Vitest + Supertest): một file cho mỗi nhóm endpoint (`auth`, `me`, `roomState`, `telemetry`, `catalog`, `stats`), liệt kê đủ mã trạng thái trong API §3.2.
      - E2E (Playwright): một file cho mỗi use case, đặt tên `ucXX-<tên>.spec.ts` (UC.01 → UC.12), mỗi AC là một `test`.
-  7. ✅ Viết `CLAUDE.md` (Role · Skill · Constraint). ✅ Chuyển `docs/*.docx` → `docs/PRD.md`, `docs/ARCHITECTURE.md`, `docs/API.md` (ảnh trong `images/`). ✅ Viết `docs/DATABASE.md`. ✅ PRD 5.4 Tiêu chí nghiệm thu.
+  7. ✅ Viết `CLAUDE.md` (Role · Skill · Constraint). ✅ Chuyển `docs/*.docx` → `docs/PRD.md`, `docs/ARCHITECTURE.md`, `docs/API.md` (ảnh trong `docs/images/`; bản Word đã bỏ ngày 13/11). ✅ Viết `docs/DATABASE.md`. ✅ PRD 5.4 Tiêu chí nghiệm thu.
 - **Tham chiếu:** Kiến trúc §3.2, §4.2; PLAN §2–4; PRD 5.4; `docs/TASKS.md`.
 - **Kiểm tra:** `npm run lint`, `npm test` chạy qua (test ở trạng thái todo được báo "skipped", không lỗi); `npm run dev` mở trang trắng và `GET /api/v1/health` trả 200 (khi chưa có DB: 503); CI chạy xanh trên PR đầu tiên; đếm được ≥ 1 test todo cho mỗi BR-01→13 và mỗi AC.
 
-## Phase 1 — Dữ liệu dùng chung (`shared`) (S2)
+## Phase 1 — Dữ liệu dùng chung (`shared`) (S3)
 
 - **Mục tiêu:** một nguồn duy nhất cho schema, danh mục, mặc định, migrate — dùng ở client, server và seeder.
 - **Bước:**
@@ -171,7 +174,7 @@ D:\du an FocuSpace\
 - **Tham chiếu:** API Phụ lục A, PRD FR-SAVE-02, BR-03/05/06/12, prototype `loadState()`.
 - **Kiểm tra:** unit test migrate với: rỗng, JSON hỏng, bản prototype hiện tại, bản có `shelf`/`slot` cũ, giá trị ngoài khoảng, > 40 đồ; test `catalog` đủ 17 loại, 5 cảnh.
 
-## Phase 2 — Logic engine (TypeScript thuần) (S2)
+## Phase 2 — Logic engine (TypeScript thuần) (S3)
 
 - **Mục tiêu:** toàn bộ quy tắc nghiệp vụ tách khỏi UI, có unit test.
 - **Bước:**
@@ -184,7 +187,7 @@ D:\du an FocuSpace\
 - **Kiểm tra:** unit test cho từng BR (gain ≥ 0,15 ở góc xa; pan đúng dấu; mỗi nhánh BR-04; tab ẩn không trôi giờ).
 - **Use case hoàn thành:** UC.04 (quy tắc đặt), UC.05, UC.06
 
-## Phase 3 — Render (S3)
+## Phase 3 — Render (S4)
 
 - **Mục tiêu:** ba không gian hiển thị giống prototype.
 - **Bước:**
@@ -196,7 +199,7 @@ D:\du an FocuSpace\
 - **Kiểm tra:** Playwright chụp từng phòng ở trạng thái mặc định, so với ảnh chụp prototype cùng kích thước (sai khác pixel ≈ 0).
 - **Use case hoàn thành:** UC.01, UC.02, UC.03 (cùng Phase 4)
 
-## Phase 4 — Âm thanh (S3)
+## Phase 4 — Âm thanh (S4)
 
 - **Mục tiêu:** âm thanh không gian 2D giống prototype.
 - **Bước:**
@@ -208,7 +211,7 @@ D:\du an FocuSpace\
 - **Kiểm tra:** unit test đồ thị âm với AudioContext giả; đo cập nhật pan khi kéo < 30 ms; người dùng nghe thử bằng tai nghe.
 - **Use case hoàn thành:** UC.01, UC.02, UC.03 (cùng Phase 3)
 
-## Phase 5 — Giao diện, các trang tĩnh & lưu cục bộ (S3)
+## Phase 5 — Giao diện, các trang tĩnh & lưu cục bộ (S4)
 
 - **Mục tiêu:** Căn phòng dùng đầy đủ không cần tài khoản; khung website nhiều trang bằng Tailwind.
 - **Bước:**
@@ -223,7 +226,7 @@ D:\du an FocuSpace\
 - **Kiểm tra:** E2E US-01 → US-10, US-12, US-13, US-16; tải lại trang giữ phòng; Pomodoro/Hẹn giờ ngủ không giữ (FR-SAVE-04); chụp 3 cỡ màn hình mỗi trang.
 - **Use case hoàn thành:** UC.12, include Tự động lưu cục bộ
 
-## Phase 6 — Backend & cơ sở dữ liệu (S2 bước 1–2, S4 phần còn lại)
+## Phase 6 — Backend & cơ sở dữ liệu (S3 bước 1–2, S4–S5 phần còn lại)
 
 - **Mục tiêu:** 14 endpoint đúng API Docs; CSDL có migration và seeder.
 - **Bước:**
@@ -240,7 +243,7 @@ D:\du an FocuSpace\
 - **Kiểm tra:** integration test (Supertest + PostgreSQL `focuspace_test`) cho mọi mã trạng thái trong API §3.2; seeder chạy 2 lần vẫn đúng 17 + 5 dòng; `/me/stats` đúng với dữ liệu tạo trong test.
 - **Use case hoàn thành:** API của UC.07, UC.08
 
-## Phase 7 — Tài khoản, đồng bộ & trang động (S4)
+## Phase 7 — Tài khoản, đồng bộ & trang động (S5)
 
 - **Mục tiêu:** tài khoản tùy chọn, đồng bộ nhiều thiết bị; Thư viện và Thống kê lấy dữ liệu từ CSDL.
 - **Bước:**
@@ -287,7 +290,7 @@ D:\du an FocuSpace\
 | R8 | Dữ liệu: test tích hợp tạo/xóa tài khoản tạm trong DB `focuspace_test` (theo Kiến trúc §4.2). | Xin xác nhận cho phép. |
 | R9 | Đề bài bắt buộc seeder, còn quy tắc cũ cấm thêm dữ liệu. | Seeder chỉ nạp danh mục lấy từ prototype (BR-12); tài khoản demo / số liệu mẫu cho video chỉ làm khi nhóm cung cấp (Q-13). |
 | R10 | Đề bài bắt buộc Tailwind; prototype dùng CSS viết tay. | Chuyển CSS giao diện của prototype sang class Tailwind ở Phase 5, giữ nguyên hình vẽ canvas; prototype không sửa. |
-| R11 | Chưa có tên thành viên, ngày bắt đầu, hạn nộp, email liên hệ, link GitHub (Q-11, Q-12, Q-15). | **Một phần đã chốt 13/11:** thành viên và khu vực (§2), hạn 27/11/2026 (§3). Còn thiếu: email liên hệ, link GitHub (Q-15), phân công backend [Đề xuất] ở §2 chờ nhóm xác nhận. |
+| R11 | Chưa có tên thành viên, ngày bắt đầu, hạn nộp, email liên hệ, link GitHub (Q-11, Q-12, Q-15). | **Một phần đã chốt 13/11:** thành viên và khu vực (§2), bắt đầu 27/10/2026, hạn 27/11/2026 (§3). Còn thiếu: email liên hệ, link GitHub (Q-15), phân công backend [Đề xuất] ở §2 chờ nhóm xác nhận. |
 
 ## Lịch sử thay đổi
 
@@ -297,3 +300,5 @@ D:\du an FocuSpace\
 | 10/11/2026 | Cập nhật theo đề bài đồ án CSB25022 (§1–§5). |
 | 12/11/2026 | Đồng bộ với Chương 1 Phân tích hệ thống: §1 thêm dòng Phân tích hệ thống; Cấu trúc thư mục thêm 2 file phân tích (giữ ở thư mục gốc theo quyết định của người dùng) và ảnh biểu đồ trong `images/`; Phase 2 – 8 thêm dòng “Use case hoàn thành”; Nguyên tắc chung thêm quy ước ghi mã UC trong PR và tên test E2E. |
 | 13/11/2026 | §2 điền 4 thành viên theo khu vực (Tuấn Hưng: đồ vật, âm thanh; Đình Nhiên: Sân vườn; Tuấn Lộc: Phòng ngủ; Phúc Thịnh: Phòng học, repo, các trang còn lại), phần backend và việc chung ghi [Đề xuất]; §3 rút lịch còn 2 tuần, 5 sprint × 3 ngày (13/11 → 27/11) có cột việc từng người; Phase 0 đổi thành "Khởi tạo & khung test" (test-first theo PlanDesignWeb); R11 cập nhật. |
+| 13/11/2026 (lần 2) | Lịch tính lại từ 27/10/2026: S1 ✅ 27/10–07/11 (họp khởi động, wireframe Figma, prototype, PRD duyệt), S2 ✅ 08–12/11 (PLAN, tài liệu, phân tích hệ thống), S3 13–17/11, S4 18–22/11, S5 23–27/11; §1 cập nhật cột sprint; Phase 0–7 đổi sprint; đường dẫn 2 file phân tích chuyển vào `docs/`. |
+| 13/11/2026 (lần 3) | Gọn cấu trúc thư mục: bỏ 3 bản Word trùng PRD/Kiến trúc/API, bỏ `docs/github-templates/` (trùng `.github/`), gộp prototype phương án 1 & 2 thành `prototype/web/` (chọn phương án 2); `CLAUDE.md` ra thư mục gốc; `images/` → `docs/images/`; thêm `docs/analysis/`, `docs/references/`; sửa `.gitignore`. |

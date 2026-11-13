@@ -1,4 +1,4 @@
-> Bản Markdown của `docs/FocuSpace_PRD.docx` — hai bản cùng nội dung, sửa bản này thì sửa cả bản kia. Đối chiếu lần cuối với `prototype/FocuSpace-Semi-Sandbox.html` ngày 10/11/2026.
+> Bản chính thức duy nhất (bản Word cũ `docs/FocuSpace_PRD.docx` đã gộp vào file này ngày 13/11/2026; cần bản Word thì xuất bằng `pandoc docs/PRD.md -o FocuSpace_PRD.docx`). Đối chiếu lần cuối với `prototype/FocuSpace-Semi-Sandbox.html` ngày 10/11/2026.
 
 # FocuSpace — Tài liệu yêu cầu sản phẩm (PRD)
 
@@ -7,9 +7,9 @@ Căn phòng Semi-Sandbox · Phòng học · Phòng ngủ · Sân vườn
 |                   |                                                                                                  |
 |-------------------|--------------------------------------------------------------------------------------------------|
 | **Sản phẩm**      | FocuSpace — web app pixel art Lo-fi Semi-Sandbox                                                 |
-| **Phiên bản**     | v5.3 (bổ sung Tiêu chí nghiệm thu, lịch 2 tuần, phân vai; thay v5.2) |
+| **Phiên bản**     | v5.3 (bổ sung Tiêu chí nghiệm thu, lịch 27/10 → 27/11, phân vai; thay v5.2) |
 | **Trạng thái**    | v5.0 đã phê duyệt 07/11/2026 · phần bổ sung v5.1 – v5.3 chờ duyệt |
-| **Ngày cập nhật** | 13/11/2026 (v5.3 — Tiêu chí nghiệm thu, lịch 2 tuần, phân vai) |
+| **Ngày cập nhật** | 13/11/2026 (v5.3 — Tiêu chí nghiệm thu, lịch 27/10 → 27/11, phân vai) |
 | **Nguồn**         | prototype/FocuSpace-Semi-Sandbox.html (tiêu đề trang “FocuSpace Semi-Sandbox 9”) · docs/PRD.md · PRD v2–v4 · FocuSpace_Semi_Sandbox_PRD · đề bài Final Project Brief CSB25022 · FocuSpace_Diagrams.drawio, Chương 1 Phân tích hệ thống |
 
 # 1. Thông tin chung (Metadata)
@@ -19,7 +19,7 @@ Căn phòng Semi-Sandbox · Phòng học · Phòng ngủ · Sân vườn
 | **Chủ sở hữu (Product Owner / PM)** | Cao Lê Phúc Thịnh (theo PRD Semi-Sandbox gốc) |
 | **Đội ngũ tham gia** | Tuấn Hưng (đồ vật, âm thanh) · Đình Nhiên (Sân vườn) · Tuấn Lộc (Phòng ngủ) · Phúc Thịnh (Phòng học, quản lý repo, các trang còn lại) · chi tiết docs/PLAN.md mục 2 |
 | **Trạng thái tài liệu** | v5.0 đã phê duyệt 07/11/2026 · phần bổ sung v5.1 – v5.3 chờ duyệt |
-| **Ngày cập nhật** | 13/11/2026 (v5.3 — Tiêu chí nghiệm thu, lịch 2 tuần) |
+| **Ngày cập nhật** | 13/11/2026 (v5.3 — Tiêu chí nghiệm thu, lịch 27/10 → 27/11) |
 | **Phiên bản** | v5.3 |
 | **Tài liệu liên quan** | Tài liệu Kiến trúc giải pháp · API Docs · docs/DATABASE.md · docs/PLAN.md · Final Project Brief CSB25022 · FocuSpace_Diagrams.drawio · Chương 1 Phân tích hệ thống (FocuSpace_Chuong2_PhanTich.docx) |
 
@@ -159,7 +159,7 @@ FocuSpace là đồ án cuối kỳ làm theo nhóm của môn Web Design and De
 
 Hệ thống có hai tác nhân. **Khách** là người dùng chưa đăng nhập, dùng đầy đủ căn phòng ở chế độ local-first và được định danh bằng `clientId` ẩn danh. **Thành viên** là Khách đã đăng nhập bằng email/mật khẩu; quan hệ tổng quát hóa cho Thành viên kế thừa mọi use case của Khách, cộng thêm đồng bộ phòng, thống kê học tập và quản lý tài khoản. Hai use case dùng chung: «include» Tự động lưu cục bộ (UC.02, UC.03, UC.04) và «include» Ghi nhận số liệu sử dụng (UC.05, UC.06).
 
-![Hình 1](../images/uc-tong-quat.png)
+![Hình 1](images/uc-tong-quat.png)
 
 *Hình 1 — Biểu đồ use case tổng quát (nguồn: FocuSpace_Diagrams.drawio, trang UC-TQ)*
 
@@ -249,7 +249,7 @@ Mức ưu tiên: **P0** bắt buộc khi ra mắt, **P1** nên có, **P2** sau r
 
 - Escape đóng popover và khay đang mở.
 
-![Hình 2](../images/prd-hinh-1.png)
+![Hình 2](images/prd-hinh-1.png)
 
 *Hình 2 — Góc học tập ấm áp: thanh đầu trang, thanh công cụ và hai mũi tên chuyển phòng*
 
@@ -321,7 +321,7 @@ Mức ưu tiên: **P0** bắt buộc khi ra mắt, **P1** nên có, **P2** sau r
 
 - Ngăn tủ đầu giường có độ hút ±9 px (nhỏ hơn giá 13 px) để không hút nhầm đồ đặt trên mặt tủ.
 
-![Hình 3](../images/prd-hinh-2.png)
+![Hình 3](images/prd-hinh-2.png)
 
 *Hình 3 — Phòng ngủ yên tĩnh: Hẹn giờ ngủ trên thanh đầu trang, giá treo tường, tủ đầu giường*
 
@@ -353,7 +353,7 @@ Mức ưu tiên: **P0** bắt buộc khi ra mắt, **P1** nên có, **P2** sau r
 
 - Đổi cảnh liên tục: âm cũ cross-fade ra, không chồng nhiều lớp.
 
-![Hình 4](../images/prd-hinh-3.png)
+![Hình 4](images/prd-hinh-3.png)
 
 *Hình 4 — Sân vườn: khay Khung cảnh với 5 ảnh xem trước*
 
@@ -391,7 +391,7 @@ Mức ưu tiên: **P0** bắt buộc khi ra mắt, **P1** nên có, **P2** sau r
 
 - Phòng đã có 40 đồ vật (BR-06): không thêm, hiện thông báo **[Đề xuất] “Phòng đã đủ 40 đồ vật”** (Q-16).
 
-![Hình 5](../images/prd-hinh-4.png)
+![Hình 5](images/prd-hinh-4.png)
 
 *Hình 5 — Khay Đồ vật phát âm thanh mở xuống dưới thanh công cụ*
 
@@ -429,7 +429,7 @@ Mức ưu tiên: **P0** bắt buộc khi ra mắt, **P1** nên có, **P2** sau r
 
 - Đồ ở góc xa nhất vẫn nghe được (gain ≥ 0,15).
 
-![Hình 6](../images/prd-hinh-5.png)
+![Hình 6](images/prd-hinh-5.png)
 
 *Hình 6 — Volume mixer với hàng Master ở đầu*
 
@@ -671,9 +671,9 @@ Mức ưu tiên: **P0** bắt buộc khi ra mắt, **P1** nên có, **P2** sau r
 
 ## 5.3 Trạng thái UI/UX (Wireframes & Mockups)
 
-Bản thiết kế đã duyệt là prototype tương tác prototype/FocuSpace-Semi-Sandbox.html (một file HTML, mở trực tiếp bằng trình duyệt). Các trang còn lại (Tính năng J–L) có wireframe low-fidelity bản desktop và mobile vẽ trên draw.io: docs/wireframes/FocuSpace_Wireframes.drawio (7 trang: Trang chủ, Căn phòng, Thư viện, Thống kê, Tài khoản, Giới thiệu & Liên hệ, 404), PNG cùng thư mục; nếu giảng viên yêu cầu đúng Figma thì dựng lại theo bản này (liên kết Figma: \[Cần bổ sung\]). Hình 1 là biểu đồ use case; các hình 2–6 ở trên chụp từ prototype; hình dưới là Sân vườn ở trạng thái mặc định.
+Bản thiết kế đã duyệt là prototype tương tác prototype/FocuSpace-Semi-Sandbox.html (một file HTML, mở trực tiếp bằng trình duyệt). Các trang còn lại (Tính năng J–L) có wireframe bản desktop và mobile vẽ trên Figma trong S1 (27/10 – 07/11/2026), nhóm duyệt cùng PRD v5.0 ngày 07/11/2026 (liên kết Figma: \[Cần bổ sung\]). Bản draw.io bổ sung để in vào báo cáo: docs/wireframes/FocuSpace_Wireframes.drawio (7 trang: Trang chủ, Căn phòng, Thư viện, Thống kê, Tài khoản, Giới thiệu & Liên hệ, 404), PNG cùng thư mục. Hình 1 là biểu đồ use case; các hình 2–6 ở trên chụp từ prototype; hình dưới là Sân vườn ở trạng thái mặc định.
 
-![Hình 7](../images/prd-hinh-6.png)
+![Hình 7](images/prd-hinh-6.png)
 
 *Hình 7 — Sân vườn · xích đu dưới gốc cây (cảnh Khu rừng mặc định)*
 
@@ -807,13 +807,13 @@ Mỗi tiêu chí viết theo dạng **Cho trước – Khi – Thì**, kiểm đ
 
 | **Mốc** | **Ngày** | **Trạng thái** |
 |---|---|---|
-| Thiết kế prototype Căn phòng | 07/11/2026 | Xong |
+| Họp khởi động | 27/10/2026 | Xong |
+| M1 · Sprint 1: wireframe Figma 6 trang, prototype Căn phòng, PRD | 27/10 – 07/11/2026 | Xong |
 | Duyệt PRD, kiến trúc, database, API, kế hoạch (v5.0) | 07/11/2026 | Xong |
-| M1 · Sprint 1: phân vai, wireframe 6 trang, repo GitHub, khung monorepo, CI, khung test | 13–15/11/2026 | Đang làm (phân vai xong 13/11) |
-| M2 · Sprint 2: dữ liệu dùng chung, logic engine, cơ sở dữ liệu (migration, seeder) | 16–18/11/2026 | Chưa bắt đầu |
-| M3 · Sprint 3: render, âm thanh; Căn phòng, Trang chủ, Giới thiệu bằng Tailwind | 19–21/11/2026 | Chưa bắt đầu |
-| M4 · Sprint 4: backend, Tài khoản, Thư viện, Thống kê, đồng bộ; review chéo hai nhóm | 22–24/11/2026 | Chưa bắt đầu |
-| M5 · Sprint 5: Lighthouse, Google Analytics, Sentry, sửa theo góp ý, README, video, nộp bài | 25–27/11/2026 (hạn nộp 27/11) | Chưa bắt đầu |
+| M2 · Sprint 2: PLAN, Kiến trúc, API, DATABASE, Chương 1 Phân tích hệ thống, prototype 6 trang | 08 – 12/11/2026 | Xong |
+| M3 · Sprint 3: repo GitHub, monorepo, CI, khung test; dữ liệu dùng chung, logic engine, cơ sở dữ liệu (migration, seeder) | 13 – 17/11/2026 | Đang làm (phân vai chốt 13/11) |
+| M4 · Sprint 4: render, âm thanh; Căn phòng, Trang chủ, Giới thiệu bằng Tailwind; API auth, catalog, telemetry | 18 – 22/11/2026 | Chưa bắt đầu |
+| M5 · Sprint 5: API còn lại, Tài khoản, Thư viện, Thống kê, đồng bộ; review chéo + sửa theo góp ý; Lighthouse, Google Analytics, Sentry, README, video, nộp bài | 23 – 27/11/2026 (hạn nộp 27/11) | Chưa bắt đầu |
 | Go-live | 10/12/2026 (theo PRD gốc, Q-08) | Chờ xác nhận |
 
 Thứ tự phát triển theo docs/PLAN.md: Phase 0 Khởi tạo → 1 Dữ liệu dùng chung → 2 Logic engine → 3 Render → 4 Âm thanh → 5 Giao diện & lưu cục bộ → 6 Backend → 7 Đăng nhập & đồng bộ → 8 Phi chức năng & phát hành. Ngày bắt đầu và hạn nộp theo lịch giảng viên (Q-11); lịch sprint chi tiết, phân vai và bảng đối chiếu tiêu chí chấm nằm trong docs/PLAN.md.
@@ -834,7 +834,7 @@ Thứ tự phát triển theo docs/PLAN.md: Phase 0 Khởi tạo → 1 Dữ li�
 | Q-08   | Ngày ra mắt vẫn là 10/12/2026?                                                      | Mở                          |
 | Q-09   | Giữ độ lệch trái/phải của cửa sổ Phòng ngủ (≈ −0,44)?                               | Mở                          |
 | Q-10   | Số người dùng đồng thời dự kiến và quy định dữ liệu cá nhân áp dụng.                | Mở                          |
-| Q-11 | Ngày bắt đầu và hạn nộp đồ án theo lịch giảng viên (lịch sprint ở 7.2 đang là đề xuất). | Đã chốt 13/11: làm từ 13/11, hoàn thành 27/11/2026 |
+| Q-11 | Ngày bắt đầu và hạn nộp đồ án theo lịch giảng viên (lịch sprint ở 7.2 đang là đề xuất). | Đã chốt 13/11: bắt đầu 27/10/2026 (họp khởi động), hoàn thành 27/11/2026 |
 | Q-12 | Danh sách thành viên nhóm và phân vai (docs/PLAN.md mục 2). | Đã chốt 13/11: Tuấn Hưng (đồ vật, âm thanh), Đình Nhiên (Sân vườn), Tuấn Lộc (Phòng ngủ), Phúc Thịnh (Phòng học, repo, các trang còn lại) |
 | Q-13 | Có cần tài khoản demo và số liệu mẫu cho video demo không? Nếu có, nhóm cung cấp nội dung; seeder hiện chỉ nạp danh mục. | Mở |
 | Q-14 | Có cần banner xin đồng ý trước khi bật Google Analytics không? | Mở |
@@ -866,4 +866,4 @@ Thứ tự phát triển theo docs/PLAN.md: Phase 0 Khởi tạo → 1 Dữ li�
 | v5.0 | 07/11/2026 | Bản đã phê duyệt. |
 | v5.1 | 10/11/2026 | Bổ sung theo đề bài đồ án CSB25022. |
 | v5.2 | 12/11/2026 | Đồng bộ với Chương 1 Phân tích hệ thống và FocuSpace_Diagrams.drawio: thêm 3.3 Mô hình use case (Hình 1, bảng 12 use case), đánh lại số Hình 2–7; thêm cột Use case vào bảng 3.2 và US-17; thêm dòng “Use case liên quan” cho Tính năng A–M; Tính năng E thêm ngoại lệ đủ 40 đồ vật [Đề xuất]; Tính năng G, I thêm quy tắc kết quả phiên Pomodoro (`completed` / `reset` / `abandoned`); Tính năng H, L viết thống nhất cách xử lý phiên hết hạn theo trang; Tính năng H thêm quy tắc revision và 409; 5.3 thêm cột Use case; Q-07 ghi căn cứ UC.01; thêm Q-16, Q-17. **BR-09 thay nội dung cũ** (“Đăng nhập / đăng ký tối đa 10 lần mỗi 15 phút cho mỗi IP”) vì mâu thuẫn với API 4.2–4.3 (đăng nhập tính theo IP + email). |
-| v5.3 | 13/11/2026 | Thêm 5.4 Tiêu chí nghiệm thu (48 AC theo use case và phi chức năng) để PRD đủ Problem / Context / FR / AC; 7.2 rút lịch còn 13/11 → 27/11/2026; Q-11, Q-12 đã chốt. |
+| v5.3 | 13/11/2026 | Thêm 5.4 Tiêu chí nghiệm thu (48 AC theo use case và phi chức năng) để PRD đủ Problem / Context / FR / AC; 7.2 lịch 5 sprint từ 27/10 → 27/11/2026 (S1, S2 đã xong: Figma, prototype, tài liệu kế hoạch); 5.3 wireframe Figma (bản draw.io bổ sung); Q-11, Q-12 đã chốt. |

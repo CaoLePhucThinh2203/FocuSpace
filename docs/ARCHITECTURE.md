@@ -1,4 +1,4 @@
-> Bản Markdown của `docs/FocuSpace_Kien_truc_giai_phap.docx` — hai bản cùng nội dung, sửa bản này thì sửa cả bản kia. Đối chiếu lần cuối với `prototype/FocuSpace-Semi-Sandbox.html` ngày 10/11/2026.
+> Bản chính thức duy nhất (bản Word cũ `docs/FocuSpace_Kien_truc_giai_phap.docx` đã gộp vào file này ngày 13/11/2026; cần bản Word thì xuất bằng `pandoc docs/ARCHITECTURE.md -o FocuSpace_Kien_truc_giai_phap.docx`). Đối chiếu lần cuối với `prototype/FocuSpace-Semi-Sandbox.html` ngày 10/11/2026.
 
 # FocuSpace — Tài liệu Kiến trúc giải pháp
 
@@ -129,7 +129,7 @@ Tài liệu mô tả thiết kế giải pháp CNTT cho FocuSpace bản chính t
 
 Hai khối lớn: **ứng dụng trong trình duyệt** chịu toàn bộ trải nghiệm và lưu cục bộ; **backend** chỉ lo tài khoản, đồng bộ và số liệu. Hai khối nói chuyện qua REST/JSON trên HTTPS.
 
-![Hình 1](../images/architecture-hinh-1.png)
+![Hình 1](images/architecture-hinh-1.png)
 
 *Hình 1 — Kiến trúc khái niệm*
 
@@ -190,13 +190,13 @@ Thông điệp trong biểu đồ Sequence (Chương 1 §1.4) dùng đúng tên 
 
 ### Luồng chính
 
-![Hình 2](../images/architecture-hinh-2.png)
+![Hình 2](images/architecture-hinh-2.png)
 
 *Hình 2 — Mở ứng dụng: tải cục bộ, kiểm tra phiên, đồng bộ*
 
 Chi tiết: Biểu đồ Sequence UC.09 (Chương 1, Hình 1.22). Sequence UC.09 mô tả thêm hai nhánh mà Hình 2 gộp trong bước “Áp bản mới hơn / hỏi giữ bản nào”: tài khoản chưa có phòng (404) thì tải phòng của máy lên bằng `PUT /room-state` với baseRevision = 0; lần đầu đăng nhập trên máy có dữ liệu khách thì hiện hộp thoại hợp nhất và ghi bản được chọn với `force = true` (extend Hợp nhất phòng lần đầu).
 
-![Hình 3](../images/architecture-hinh-3.png)
+![Hình 3](images/architecture-hinh-3.png)
 
 *Hình 3 — Lưu thay đổi và xử lý xung đột giữa hai thiết bị*
 
@@ -204,7 +204,7 @@ Chi tiết: Biểu đồ Sequence UC.09 (Chương 1, Hình 1.22), phần sau khi
 
 ## 3.3 Kiến trúc dữ liệu (Data Architecture)
 
-![Hình 4](../images/architecture-hinh-4.png)
+![Hình 4](images/architecture-hinh-4.png)
 
 *Hình 4 — Sơ đồ quan hệ dữ liệu (ERD), gồm hai bảng danh mục item_types và scenes*
 
@@ -263,7 +263,7 @@ Chi tiết: Biểu đồ Sequence UC.09 (Chương 1, Hình 1.22), phần sau khi
 
 Nơi triển khai chưa được quyết định (ARCHITECTURE D-04). Kiến trúc tham chiếu dưới đây không phụ thuộc nhà cung cấp; áp dụng được trên AWS, GCP, Azure hoặc nhà cung cấp trong nước.
 
-![Hình 5](../images/architecture-hinh-5.png)
+![Hình 5](images/architecture-hinh-5.png)
 
 *Hình 5 — Kiến trúc hạ tầng tham chiếu*
 
@@ -354,19 +354,19 @@ Mã nguồn là monorepo npm workspaces (shared, backend, frontend). Quy trình 
 
 Ba biểu đồ lớp xuất từ FocuSpace_Diagrams.drawio (trang C1–C3), cùng nội dung với Chương 1 §1.5. Đặt ở phụ lục để không đổi số Hình 1–5 đang được các tài liệu khác tham chiếu.
 
-![Hình A1](../images/class-thuc-the.png)
+![Hình A1](images/class-thuc-the.png)
 
 *Hình A1 — Lớp thực thể (Class C1)*
 
 Lớp thực thể ánh xạ với bảng dữ liệu (users, refresh_tokens, room_states, item_types, scenes, ba bảng telemetry) và với đối tượng RoomState lưu dạng JSONB. Khach chỉ tồn tại phía trình duyệt; ThanhVien liên kết 0..1 với PhienSuDung khi đăng nhập. Bảng ánh xạ thuộc tính ở mục 3.3.
 
-![Hình A2](../images/class-dieu-khien.png)
+![Hình A2](images/class-dieu-khien.png)
 
 *Hình A2 — Lớp giao diện và điều khiển trang Căn phòng (Class C2)*
 
 GiaoDienCanPhong là lớp giao diện (boundary) của trang Căn phòng; các lớp điều khiển RoomEngine, QuanLyDoVat, AmThanhKhongGian, BoDemPomodoro, HenGioNgu, BoLuuTruCucBo, DongBoClient, TelemetryQueue tạo thành Room Engine và tầng lưu trữ chạy trong trình duyệt. DongBoClient phụ thuộc AuthService (Class C3) để làm mới phiên khi mở app.
 
-![Hình A3](../images/class-dich-vu.png)
+![Hình A3](images/class-dich-vu.png)
 
 *Hình A3 — Lớp trang động và dịch vụ backend (Class C3)*
 
