@@ -1,0 +1,9 @@
+cd D:\Web_basic\FocuSpace
+@"
+PROMPT_DongBo_TaiLieu_FocuSpace.md
+~`$*
+node_modules/
+dist/
+.env
+*.log
+"@ | Out-File -Encoding utf8 .gitignore

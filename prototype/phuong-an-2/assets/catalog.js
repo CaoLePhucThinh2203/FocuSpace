@@ -1,0 +1,30 @@
+/* Danh mục đồ vật và khung cảnh — cùng nội dung với dữ liệu seeder (docs/DATABASE.md 3.7, 3.8),
+   lấy từ hằng số TYPES / SCENES của prototype. Trong prototype thay cho GET /catalog/items và GET /catalog/scenes. */
+window.FS_CATALOG = {
+  items: [
+    { code: "tv", name: "Tivi CRT", description: "Nhiễu sóng trắng", group: "sound", width: 26, height: 26, rooms: ["study"], defaultVol: 0.35, removable: true },
+    { code: "cat", name: "Mèo ngủ", description: "Rù rù khẽ, êm dịu", group: "sound", width: 24, height: 13, rooms: ["study", "bed"], defaultVol: 0.6, removable: true },
+    { code: "clock", name: "Đồng hồ Pomodoro", description: "Tích tắc nhẹ, đếm giờ Pomodoro", group: "sound", width: 24, height: 12, rooms: ["study", "bed"], defaultVol: 0.4, removable: true },
+    { code: "radio", name: "Radio", description: "Nhạc Lo-fi", group: "sound", width: 20, height: 12, rooms: ["bed"], defaultVol: 0.5, removable: true },
+    { code: "diffuser", name: "Máy xông tinh dầu", description: "Nước sủi bọt lăn tăn", group: "sound", width: 14, height: 16, rooms: ["bed"], defaultVol: 0.4, removable: true },
+    { code: "vinyl", name: "Đĩa than", description: "Lofi Sleep, rãnh đĩa", group: "sound", width: 26, height: 16, rooms: ["bed"], defaultVol: 0.5, removable: true },
+    { code: "musicbox", name: "Hộp nhạc", description: "Nhạc chuông ru ngủ", group: "sound", width: 14, height: 16, rooms: ["bed"], defaultVol: 0.45, removable: true },
+    { code: "fan", name: "Quạt bàn", description: "Gió nhẹ ru ngủ", group: "sound", width: 18, height: 22, rooms: ["bed"], defaultVol: 0.35, removable: true },
+    { code: "bigplant", name: "Chậu cây lớn", description: null, group: "decor", width: 24, height: 50, rooms: ["study", "bed"], defaultVol: null, removable: true },
+    { code: "catbed", name: "Giường mèo", description: null, group: "decor", width: 30, height: 10, rooms: ["bed"], defaultVol: null, removable: true },
+    { code: "plant", name: "Chậu cây", description: null, group: "decor", width: 12, height: 16, rooms: ["study", "bed"], defaultVol: null, removable: true },
+    { code: "cactus", name: "Xương rồng", description: null, group: "decor", width: 10, height: 14, rooms: ["study", "bed"], defaultVol: null, removable: true },
+    { code: "books", name: "Chồng sách", description: null, group: "decor", width: 14, height: 10, rooms: ["study", "bed"], defaultVol: null, removable: true },
+    { code: "frame", name: "Khung ảnh", description: null, group: "decor", width: 14, height: 12, rooms: ["study", "bed"], defaultVol: null, removable: true },
+    { code: "candle", name: "Nến", description: null, group: "decor", width: 6, height: 12, rooms: ["study", "bed"], defaultVol: null, removable: true },
+    { code: "lamp", name: "Đèn bàn", description: "Ánh sáng vàng ấm", group: "desk", width: 20, height: 24, rooms: ["study"], defaultVol: null, removable: false },
+    { code: "cup", name: "Ly cà phê", description: "Kéo để di chuyển", group: "desk", width: 12, height: 14, rooms: ["study"], defaultVol: null, removable: false },
+  ],
+  scenes: [
+    { code: "city", name: "Thành phố", description: "Buổi tối, xe cộ lofi chill êm dịu", isDefault: false },
+    { code: "forest", name: "Khu rừng", description: "Gió xào xạc lá, chim hót", isDefault: true },
+    { code: "beach", name: "Bãi biển", description: "Sóng vỗ bờ, hải âu", isDefault: false },
+    { code: "glacier", name: "Núi băng", description: "Hồ núi, suối băng róc rách êm", isDefault: false },
+    { code: "hill", name: "Đồi ven biển", description: "Biển xa, mây trôi, gió nhẹ", isDefault: false },
+  ],
+};
