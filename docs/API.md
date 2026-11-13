@@ -1196,18 +1196,18 @@ range hoặc tz không hợp lệ; cấu trúc lỗi như mục 4.12.
 | POST /auth/register                 | 10 request / 15 phút | IP           |
 | POST /auth/login                    | 10 request / 15 phút | IP + email   |
 | POST /telemetry/batch               | 60 request / giờ     | clientId     |
-| POST /auth/refresh \[Đề xuất\]      | 30 request / 15 phút | IP           |
-| Các endpoint 🔒 còn lại \[Đề xuất\] | 120 request / phút   | user id      |
+| POST /auth/refresh                  | 30 request / 15 phút | IP           |
+| Các endpoint 🔒 còn lại             | 120 request / phút   | user id      |
 | GET /health                         | Không giới hạn       | —            |
-| GET /catalog/items, GET /catalog/scenes [Đề xuất] | 120 request / phút | IP |
+| GET /catalog/items, GET /catalog/scenes | 120 request / phút | IP |
 
 Mọi response của endpoint có giới hạn kèm header:
 
 | **Header**            | **Ý nghĩa**                                                 |
 |-----------------------|-------------------------------------------------------------|
-| X-RateLimit-Limit     | Số request tối đa trong cửa sổ hiện tại \[Đề xuất bổ sung\] |
-| X-RateLimit-Remaining | Số request còn lại \[Đề xuất bổ sung\]                      |
-| X-RateLimit-Reset     | Số giây đến khi cửa sổ mới bắt đầu \[Đề xuất bổ sung\]      |
+| X-RateLimit-Limit     | Số request tối đa trong cửa sổ hiện tại |
+| X-RateLimit-Remaining | Số request còn lại                      |
+| X-RateLimit-Reset     | Số giây đến khi cửa sổ mới bắt đầu      |
 | Retry-After           | Chỉ có ở response 429: số giây nên chờ trước khi thử lại    |
 
 ## 5.2 Versioning
@@ -1268,3 +1268,4 @@ Dùng trong GET /room-state (trường data) và PUT /room-state (trường data
 | v1.1 | 10/11/2026 | Bổ sung endpoint danh mục (4.12, 4.13) và thống kê (4.14). |
 | v1.2 | 12/11/2026 | Đồng bộ với Chương 1 Phân tích hệ thống: mỗi endpoint 4.1–4.14 thêm dòng “Use case” và “Phương thức service”; mục 1 thêm bảng tóm tắt endpoint ↔ use case ↔ service. Không đổi schema request/response, mã lỗi, rate limit. |
 | v1.2 (duyệt) | 13/11/2026 | Nội dung không đổi; v1.1 – v1.2 đã duyệt ở buổi họp kế hoạch 13/11/2026. |
+| v1.2 (chốt) | 13/11/2026 | 5.1: chốt giới hạn cho /auth/refresh (30 / 15 phút), endpoint 🔒 còn lại và danh mục (120 / phút), cùng 3 header X-RateLimit-*. |

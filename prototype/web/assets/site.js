@@ -91,8 +91,8 @@
     host.className = "mt-16 border-t border-line";
     host.innerHTML =
       '<div class="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-6 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">' +
-        "<p><span class=\"font-display text-ink\">FocuSpace</span> · Đồ án môn Web Design and Development (CSB25022) · VNUK · 2026</p>" +
-        '<p>GitHub: <span class="text-ink">[Cần bổ sung]</span> · <a class="underline hover:text-amber" href="about.html#lien-he">Liên hệ</a></p>' +
+        "<p><span class=\"font-display text-ink\">FocuSpace</span> · Đồ án môn Web Design and Development (CSB25022) · VNUK · Học kỳ 1, năm học 2026–2027</p>" +
+        '<p>GitHub: <a class="text-ink underline hover:text-amber" href="https://github.com/CaoLePhucThinh2203/FocuSpace" target="_blank" rel="noopener">CaoLePhucThinh2203/FocuSpace</a> · <a class="underline hover:text-amber" href="about.html#lien-he">Liên hệ</a></p>' +
       "</div>";
   }
 

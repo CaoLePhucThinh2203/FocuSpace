@@ -10,7 +10,7 @@ Căn phòng pixel art Lo-fi giúp tập trung: Phòng học, Phòng ngủ, Sân 
 |---|---|
 | Tuấn Hưng | Đồ vật, bảng đồ vật, âm thanh |
 | Đình Nhiên | Sân vườn |
-| Tuấn Lộc | Phòng ngủ |
+| Tuấn Lộc | Phòng ngủ, trang Thống kê |
 | Phúc Thịnh | Phòng học, quản lý repo, các trang còn lại |
 
 ## Cấu trúc thư mục
@@ -33,5 +33,7 @@ FocuSpace/
     ├── web/                          # prototype 6 trang (mở index.html), Lighthouse theo cách 2
     └── so-sanh-lighthouse/           # đo Lighthouse: cách 1 vs cách 2 (đã chọn cách 2)
 ```
+
+Repo: https://github.com/CaoLePhucThinh2203/FocuSpace · Triển khai: Vercel + Render + Neon (link ghi khi hoàn tất ở S5).
 
 Lịch: bắt đầu 27/10/2026, hạn nộp 27/11/2026 (5 sprint, chi tiết `docs/PLAN.md` §3).

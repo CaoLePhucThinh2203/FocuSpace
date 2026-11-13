@@ -24,11 +24,13 @@
 
 Chi tiết từng việc theo khu vực: `docs/PLAN.md` §2 và `docs/TASKS.md`.
 
-## 3. Đề xuất cần chốt ở buổi họp giữa S3 (15/11)
+## 3. Đã chốt sau buổi họp (13/11)
 
 - Phân công backend và việc chung (đánh dấu ⓓ trong `docs/TASKS.md`): Hưng — `item_types`, `/catalog/items`; Nhiên — `scenes`, `/catalog/scenes`, telemetry, GA4/Sentry; Lộc — auth, `/me`, `/me/stats`, Lighthouse, E2E responsive; Thịnh — `schema.prisma`, `/room-state`, đồng bộ, README, video.
 - Ghép cặp review chéo: Hưng + Nhiên → nhóm A, Lộc + Thịnh → nhóm B (tên nhóm: [Cần bổ sung]).
-- Phúc Thịnh đang nhận nhiều việc nhất (19 issue): cân nhắc chuyển trang Thống kê hoặc Thư viện sang người xong sớm ở S4.
+- Trang Thống kê chuyển từ Phúc Thịnh sang Tuấn Lộc (Lộc đã làm API `/me/stats`); Thịnh còn 18 issue.
+- Phúc Thịnh tạo tài khoản GA4, Sentry rồi gửi mã cho Đình Nhiên; triển khai lên Vercel + Render + Neon ở S5.
+- Không tạo tài khoản demo/số liệu mẫu; nhóm tự dùng thật vài ngày trước khi quay video.
 
 ## 4. Quy ước làm việc
 

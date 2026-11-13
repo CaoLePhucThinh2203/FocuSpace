@@ -389,7 +389,7 @@ Mức ưu tiên: **P0** bắt buộc trong bản nộp, **P1** nên có, **P2** 
 
 - Hai đồ trên cùng tầng giá có thể chồng nhau (Q-01).
 
-- Phòng đã có 40 đồ vật (BR-06): không thêm, hiện thông báo **[Đề xuất] “Phòng đã đủ 40 đồ vật”** (Q-16).
+- Phòng đã có 40 đồ vật (BR-06): không thêm, hiện thông báo **“Phòng đã đầy — hãy xóa bớt đồ để thêm mới”** (Q-16).
 
 ![Hình 5](images/prd-hinh-4.png)
 
@@ -535,9 +535,9 @@ Mức ưu tiên: **P0** bắt buộc trong bản nộp, **P1** nên có, **P2** 
 
 - Trang chủ: tên và câu giới thiệu sản phẩm, hình xem trước ba không gian vẽ bằng code, nút “Vào phòng”, ba điểm nổi bật (Semi-Sandbox, âm thanh không gian 2D, Pomodoro và Hẹn giờ ngủ), liên kết tới Thư viện.
 
-- Giới thiệu & Liên hệ: mục tiêu dự án, cách dùng nhanh, thành viên nhóm và vai trò, email liên hệ, liên kết repo GitHub [Cần bổ sung, Q-15].
+- Giới thiệu & Liên hệ: mục tiêu dự án, cách dùng nhanh, thành viên nhóm và vai trò, email liên hệ của 4 thành viên, liên kết repo GitHub (https://github.com/CaoLePhucThinh2203/FocuSpace); mục Quyền riêng tư nói rõ GA4 và Sentry không nhận dữ liệu cá nhân (Q-14).
 
-- Chân trang ở mọi trang trừ Căn phòng: tên dự án, môn học, năm học, liên kết GitHub.
+- Chân trang ở mọi trang trừ Căn phòng: tên dự án, môn học (CSB25022, VNUK), “Học kỳ 1, năm học 2026–2027”, liên kết GitHub.
 
 - Chuyển trang không tải lại toàn bộ (định tuyến phía client); mở thẳng một URL vẫn ra đúng trang.
 
@@ -722,7 +722,7 @@ Mỗi gạch đầu dòng ở Tính năng A–M ứng với một hoặc vài m�
 | FR-PAGE-02 | Thanh điều hướng chung (trừ Căn phòng): logo, liên kết, trạng thái đăng nhập, đánh dấu trang hiện tại; < 640 px thu thành nút menu | P0 | UC.12 | AC-12.4 |
 | FR-PAGE-03 | Căn phòng giữ bố cục prototype; bấm logo mở menu tới các trang khác | P0 | UC.01, UC.12 | — |
 | FR-PAGE-04 | Trang chủ: giới thiệu, hình xem trước ba không gian vẽ bằng code, nút “Vào phòng”, ba điểm nổi bật, liên kết Thư viện | P0 | UC.12 | AC-12.1 |
-| FR-PAGE-05 | Giới thiệu & Liên hệ: mục tiêu, cách dùng nhanh, thành viên và vai trò, email liên hệ, link GitHub | P0 | UC.12 | AC-12.2 |
+| FR-PAGE-05 | Giới thiệu & Liên hệ: mục tiêu, cách dùng nhanh, thành viên và vai trò, email từng thành viên, link GitHub, mục Quyền riêng tư | P0 | UC.12 | AC-12.2 |
 | FR-PAGE-06 | Chân trang (trừ Căn phòng): tên dự án, môn học, năm học, link GitHub | P0 | UC.12 | — |
 | FR-PAGE-07 | URL không tồn tại: trang “Không tìm thấy” kèm liên kết về Trang chủ | P0 | UC.12 | AC-12.3 |
 | FR-PAGE-08 | Rời Căn phòng: âm tắt dần 0,3 giây, phòng đã tự lưu, Pomodoro vẫn đếm trong cùng tab | P0 | UC.12, UC.05 | — |
@@ -799,7 +799,7 @@ Mỗi tiêu chí viết theo dạng **Cho trước – Khi – Thì**, kiểm đ
 | AC-03.3 | UC.03 *(unit)* | Một nguồn âm bật, âm lượng v, Master 80% | Tính gain | gain = v / 0,8 × 0,75 (BR-07); đồ ở góc xa nhất có gain khoảng cách ≥ 0,15 |
 | AC-03.4 | UC.03 | Đặt Tivi ở góc trái | Mở popover Tivi | Thanh Trái/Phải lệch trái; pan cập nhật < 30 ms khi kéo |
 | AC-04.1 | UC.04 | Khay "Đồ vật phát âm thanh" đang mở | Kéo thẻ Mèo ngủ thả vào phòng | Mèo xuất hiện ở vị trí hợp lệ, có tiếng rù rù; chip lưu cập nhật |
-| AC-04.2 | UC.04 | Phòng đã có 40 đồ vật | Thả thêm một đồ | Không thêm; hiện thông báo [Đề xuất] "Phòng đã đủ 40 đồ vật" (BR-06, Q-16) |
+| AC-04.2 | UC.04 | Phòng đã có 40 đồ vật | Thả thêm một đồ | Không thêm; hiện thông báo "Phòng đã đầy — hãy xóa bớt đồ để thêm mới" (BR-06, Q-16) |
 | AC-04.3 | UC.04 | Đèn bàn trên mặt bàn | Thả đèn lên thanh công cụ | Đèn không bị xóa, quay về mặt bàn (BR-03) |
 | AC-04.4 | UC.04 *(unit)* | Đồ cao ≤ 28 px gần tầng giá ≤ 13 px | Thả đồ | Đồ khớp vào tầng giá; chậu cây lớn chỉ đứng sàn; giường mèo chỉ đặt được ở Phòng ngủ (BR-04, BR-05) |
 | AC-04.5 | UC.04 | Một đồ vật đang được chọn | Nhấn mũi tên phải / Shift + mũi tên phải / Delete | Đồ dịch 2 / 8 đơn vị; Delete xóa đồ (trừ đèn bàn, ly cà phê) |
@@ -915,22 +915,22 @@ Thứ tự phát triển theo docs/PLAN.md: Phase 0 Khởi tạo → 1 Dữ li�
 
 | **Mã** | **Câu hỏi**                                                                         | **Trạng thái**              |
 |--------|-------------------------------------------------------------------------------------|-----------------------------|
-| Q-01   | Đồ trên cùng tầng giá chồng nhau: tự xếp cạnh nhau hay giữ như hiện tại?            | Mở                          |
-| Q-02   | Âm nền có đổi theo hình mới (tiếng thác ở Núi băng, đêm thành phố, sóng sớm) không? | Mở                          |
+| Q-01   | Đồ trên cùng tầng giá chồng nhau: tự xếp cạnh nhau hay giữ như hiện tại?            | Đã chốt 13/11: giữ như prototype (đồ trên cùng tầng giá được chồng nhau) |
+| Q-02   | Âm nền có đổi theo hình mới (tiếng thác ở Núi băng, đêm thành phố, sóng sớm) không? | Đã chốt 13/11: giữ âm nền hiện tại của 5 khung cảnh |
 | Q-03   | Âm thanh tổng hợp bằng code hay file OGG/MP3?                                       | Đã chốt: tổng hợp bằng code |
 | Q-04   | Có cần đăng nhập Google/OAuth?                                                      | Đã chốt: chỉ email/mật khẩu |
-| Q-05   | Ngưỡng KPI phiên ngủ chạy hết và tỷ lệ ghé Sân vườn.                                | Mở                          |
-| Q-06   | Có làm chụp/chia sẻ ảnh góc pixel trong bản nộp?                                     | Mở                          |
+| Q-05   | Ngưỡng KPI phiên ngủ chạy hết và tỷ lệ ghé Sân vườn.                                | Đã chốt 13/11: ngoài phạm vi đồ án; chỉ đo và báo cáo số liệu thực tế, không đặt ngưỡng |
+| Q-06   | Có làm chụp/chia sẻ ảnh góc pixel trong bản nộp?                                     | Đã chốt 13/11: không làm trong bản nộp (để ở Phase 2) |
 | Q-07   | Cửa nhà ở Sân vườn vào Phòng học hay phòng trong nhà gần nhất?                      | Đã chốt: luôn vào Phòng học (căn cứ của UC.01 luồng phụ 1) |
 | Q-08   | Ngày ra mắt vẫn là 10/12/2026? | Đã chốt 13/11: bỏ mốc ra mắt riêng; mốc cuối là nộp đồ án 27/11/2026 |
-| Q-09   | Giữ độ lệch trái/phải của cửa sổ Phòng ngủ (≈ −0,44)?                               | Mở                          |
-| Q-10   | Số người dùng đồng thời dự kiến và quy định dữ liệu cá nhân áp dụng.                | Mở                          |
+| Q-09   | Giữ độ lệch trái/phải của cửa sổ Phòng ngủ (≈ −0,44)?                               | Đã chốt 13/11: giữ như prototype (≈ −0,44) |
+| Q-10   | Số người dùng đồng thời dự kiến và quy định dữ liệu cá nhân áp dụng.                | Đã chốt 13/11: ngoài phạm vi đồ án; tham chiếu khoảng 50 người dùng đồng thời (gói miễn phí Render + Neon); dữ liệu cá nhân chỉ gồm email, tên hiển thị, mật khẩu băm |
 | Q-11 | Ngày bắt đầu và hạn nộp đồ án theo lịch giảng viên (lịch sprint ở 7.2 đang là đề xuất). | Đã chốt 13/11: bắt đầu 27/10/2026 (họp khởi động), hoàn thành 27/11/2026 |
 | Q-12 | Danh sách thành viên nhóm và phân vai (docs/PLAN.md mục 2). | Đã chốt 13/11: Tuấn Hưng (đồ vật, âm thanh), Đình Nhiên (Sân vườn), Tuấn Lộc (Phòng ngủ), Phúc Thịnh (Phòng học, repo, các trang còn lại) |
-| Q-13 | Có cần tài khoản demo và số liệu mẫu cho video demo không? Nếu có, nhóm cung cấp nội dung; seeder hiện chỉ nạp danh mục. | Mở |
-| Q-14 | Có cần banner xin đồng ý trước khi bật Google Analytics không? | Mở |
-| Q-15 | Email liên hệ và địa chỉ repo GitHub hiển thị ở trang Giới thiệu & Liên hệ. | Mở |
-| Q-16 | Câu thông báo khi phòng đủ 40 đồ vật (đề xuất: “Phòng đã đủ 40 đồ vật”). | Mở |
+| Q-13 | Có cần tài khoản demo và số liệu mẫu cho video demo không? Nếu có, nhóm cung cấp nội dung; seeder hiện chỉ nạp danh mục. | Đã chốt 13/11: không có tài khoản demo hay số liệu mẫu trong seeder; nhóm tự dùng thật vài ngày trước khi quay video để trang Thống kê có dữ liệu |
+| Q-14 | Có cần banner xin đồng ý trước khi bật Google Analytics không? | Đã chốt 13/11: không làm banner; trang Giới thiệu có mục Quyền riêng tư nói rõ GA4 và Sentry không nhận dữ liệu cá nhân (BR-13) |
+| Q-15 | Email liên hệ và địa chỉ repo GitHub hiển thị ở trang Giới thiệu & Liên hệ. | Đã chốt 13/11: email từng thành viên (thinh.cao240924, loc.dau240925, hung.nguyen240919, nhien.truong240960 @vnuk.udn.vn); repo https://github.com/CaoLePhucThinh2203/FocuSpace |
+| Q-16 | Câu thông báo khi phòng đủ 40 đồ vật (đề xuất: “Phòng đã đủ 40 đồ vật”). | Đã chốt 13/11: “Phòng đã đầy — hãy xóa bớt đồ để thêm mới” |
 | Q-17 | PRD hiện không có bảng liệt kê từng mã FR (Kiến trúc 2.1 dùng dải FR-UI-01→06, FR-ACC-01→07…). Cần khôi phục bảng mã FR chi tiết, đánh mã cho FR-LIB, FR-STAT, FR-PAGE, FR-OBS và xác định mã FR-ACC của đổi tên hiển thị, đăng xuất, xóa tài khoản (US-17). | Đã giải quyết 13/11: bảng mã FR cuối mục 5.1 (85 mã); đổi tên hiển thị, đăng xuất = FR-ACC-08; xóa tài khoản = FR-ACC-07 |
 
 ## 8.2 Rủi ro và phương án dự phòng
@@ -960,3 +960,4 @@ Thứ tự phát triển theo docs/PLAN.md: Phase 0 Khởi tạo → 1 Dữ li�
 | v5.3 | 13/11/2026 | Thêm 5.4 Tiêu chí nghiệm thu (48 AC theo use case và phi chức năng) để PRD đủ Problem / Context / FR / AC; 7.2 lịch 5 sprint từ 27/10 → 27/11/2026 (S1, S2 đã xong: Figma, prototype, tài liệu kế hoạch); 5.3 wireframe Figma (bản draw.io bổ sung); Q-11, Q-12 đã chốt. |
 | v5.4 | 13/11/2026 | Thêm bảng mã yêu cầu chức năng cuối mục 5.1 (85 mã FR, đóng Q-17): giữ nguyên mã cũ, thêm FR-ACC-08 (đổi tên, đăng xuất) và đánh mã FR-PAGE-01→08, FR-LIB-01→06, FR-STAT-01→06, FR-OBS-01→04; bảng 3.2, 3.3 tham chiếu mã cụ thể. Bỏ mốc Go-live 10/12/2026, mốc cuối là nộp đồ án 27/11/2026 (Q-08). 2.4, 8.2 sửa thời gian theo lịch 27/10 → 27/11. Trạng thái: v5.1 – v5.4 đã duyệt ở buổi họp kế hoạch 13/11/2026. |
 | v5.4 (bổ sung) | 13/11/2026 | 6.1 và 8.2: tối ưu Lighthouse theo cách 2 đã chọn (title + meta description; nhạc Lo-fi vẫn dựng nền ngay khi mở Căn phòng). |
+| v5.4 (bổ sung 2) | 13/11/2026 | Chốt Q-01, Q-02, Q-05, Q-06, Q-09, Q-10, Q-13 → Q-16; Tính năng J ghi email thành viên, link GitHub, mục Quyền riêng tư và năm học; câu thông báo đủ 40 đồ vật (Tính năng E, AC-04.2). |

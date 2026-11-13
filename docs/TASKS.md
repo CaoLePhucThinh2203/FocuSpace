@@ -4,7 +4,7 @@
 > Issue đánh dấu ✅ là việc đã làm ở S1–S2: vẫn tạo trên GitHub rồi đóng ngay (kèm link Figma/file) để milestone S1, S2 có lịch sử.
 > Mỗi dòng = **1 GitHub Issue**: tiêu đề đúng như cột "Issue", gán người, milestone = sprint, nhãn `area:*`, `type:*`, `P0/P1`. Mở nhánh `feat/<số>-<mô-tả>`, PR có `Closes #<số>` và mã UC.
 > Cột **Xong khi** là điều kiện đóng issue (Definition of Done): test liên quan xanh, PR được 1 người khác duyệt, CI xanh.
-> Phần backend và việc chung đánh dấu ⓓ là **[Đề xuất]** — nhóm xác nhận ở buổi họp giữa S3 (15/11).
+> Phần backend và việc chung (đánh dấu ⓓ) đã chốt 13/11/2026; trang Thống kê chuyển từ Thịnh (T15 cũ) sang Lộc (L13).
 
 Nhãn khu vực: `area:items-audio` (Hưng) · `area:garden` (Nhiên) · `area:bedroom` (Lộc) · `area:study` · `area:pages` · `area:repo` (Thịnh) · `area:backend` · `area:shared`.
 
@@ -14,9 +14,9 @@ Nhãn khu vực: `area:items-audio` (Hưng) · `area:garden` (Nhiên) · `area:b
 |---|---|---|
 | Tuấn Hưng | 12 | Đồ vật, bảng đồ vật, âm thanh |
 | Đình Nhiên | 11 | Sân vườn, telemetry, GA4/Sentry |
-| Tuấn Lộc | 12 | Phòng ngủ, Hẹn giờ ngủ, auth, `/me`, thống kê API |
-| Phúc Thịnh | 19 | Phòng học, repo, khung Căn phòng, 5 trang còn lại, đồng bộ |
-| Cả nhóm | 9 | Wireframe review, review chéo, self-report, video |
+| Tuấn Lộc | 13 | Phòng ngủ, Hẹn giờ ngủ, auth, `/me`, thống kê (API + trang) |
+| Phúc Thịnh | 18 | Phòng học, repo, khung Căn phòng, 4 trang còn lại, đồng bộ |
+| Cả nhóm | 11 | Wireframe review, review chéo, self-report, video, tài khoản dịch vụ, triển khai |
 
 ---
 
@@ -51,9 +51,9 @@ Nhãn khu vực: `area:items-audio` (Hưng) · `area:garden` (Nhiên) · `area:b
 | N8 | S4 | `feat(api): GET /catalog/scenes` ⓓ | UC.07 | Integration test; AC-07.3 xanh |
 | N9 | S4 | `feat(api): POST /telemetry/batch upsert idempotent` ⓓ | UC.05, UC.06 | Gửi trùng lô không nhân đôi dòng; 202/400/413/429 |
 | N10 | S5 | `feat(persistence): telemetry.ts gom sự kiện, gửi lô 60 s / khi ẩn tab` ⓓ | UC.05, UC.06 | Phiên `completed`/`reset`/`abandoned` ghi đúng |
-| N11 | S5 | `feat(obs): Google Analytics 4 + Sentry frontend/backend` ⓓ | AC-NF.2 | Realtime GA4 thấy page_view; Sentry nhận lỗi thử; không gửi PII |
+| N11 | S5 | `feat(obs): Google Analytics 4 + Sentry frontend/backend` ⓓ | AC-NF.2 | Realtime GA4 thấy page_view; Sentry nhận lỗi thử; không gửi PII; mã GA4/DSN do Thịnh tạo (G10), lưu `.env` |
 
-## Tuấn Lộc — Phòng ngủ
+## Tuấn Lộc — Phòng ngủ, tài khoản & thống kê
 
 | # | Sprint | Issue | UC / AC | Xong khi |
 |---|---|---|---|---|
@@ -69,6 +69,7 @@ Nhãn khu vực: `area:items-audio` (Hưng) · `area:garden` (Nhiên) · `area:b
 | L10 | S5 | `docs(review): góp ý UI/UX cho nhóm B` | Task 5a | `docs/reviews/given/<nhóm>.md` |
 | L11 | S5 | `test(e2e): responsive 375/768/1280 cho 6 trang` ⓓ | AC-NF.3, AC-12.4 | Ảnh chụp 3 cỡ mỗi trang |
 | L12 | S5 | `docs(lighthouse): tổng hợp báo cáo 6 trang trước/sau` ⓓ | AC-NF.1 | ≥ 90 cả 4 hạng mục |
+| L13 | S5 | `feat(pages): Thống kê — khoảng thời gian, 4 ô, biểu đồ SVG, bảng phiên` | UC.10 | AC-10.1 → AC-10.3 xanh (chuyển từ T15) |
 
 ## Phúc Thịnh — Phòng học, quản lý repo, các trang còn lại
 
@@ -88,7 +89,6 @@ Nhãn khu vực: `area:items-audio` (Hưng) · `area:garden` (Nhiên) · `area:b
 | T12 | S5 | `feat(api): GET/PUT /room-state + sync.ts + hộp thoại hợp nhất` ⓓ | UC.09 | AC-09.1 → AC-09.4 xanh |
 | T13 | S5 | `feat(pages): Tài khoản — form đăng nhập/đăng ký, đổi tên, đăng xuất, xóa` | UC.08, UC.11 | AC-08.1, AC-08.2, AC-11.1 → AC-11.3 xanh |
 | T14 | S5 | `feat(pages): Thư viện — 2 thẻ, bộ lọc, URL, đang tải/lỗi/rỗng` | UC.07 | AC-07.1 → AC-07.4 xanh |
-| T15 | S5 | `feat(pages): Thống kê — khoảng thời gian, 4 ô, biểu đồ SVG, bảng phiên` | UC.10 | AC-10.1 → AC-10.3 xanh |
 | T16 | S5 | `docs(review): góp ý UI/UX cho nhóm B` | Task 5a | `docs/reviews/given/<nhóm>.md` |
 | T17 | S5 | `docs(review): received.md + issue cho từng góp ý được làm` | Task 5b | Bảng góp ý → quyết định → PR/lý do |
 | T18 | S5 | `docs: README.md (cách chạy, tổng quan, tính năng + ảnh, ERD, khác)` | Nộp bài | Đủ 5 mục theo đề bài |
@@ -107,3 +107,5 @@ Nhãn khu vực: `area:items-audio` (Hưng) · `area:garden` (Nhiên) · `area:b
 | G7 | S5 | `chore: nộp bài` | Thịnh | Repo, README, video nộp trước hết 27/11 |
 | G8 | S1 ✅ | `feat(prototype): prototype Căn phòng + 6 trang` | Thịnh (cả nhóm góp ý) | ✅ `prototype/FocuSpace-Semi-Sandbox.html`, `prototype/web/` |
 | G9 | S2 ✅ | `docs(plan): PRD, PLAN, Kiến trúc, API, DATABASE, Chương 1 Phân tích hệ thống` | Thịnh (cả nhóm góp nội dung khu vực mình) | ✅ các file trong `docs/` |
+| G10 | S3 | `chore(obs): tạo tài khoản GA4, Sentry; gửi mã đo lường và DSN` | Thịnh | Nhiên nhận mã qua kênh riêng, không commit |
+| G11 | S5 | `chore(deploy): triển khai Vercel (frontend) + Render (backend) + Neon (PostgreSQL)` | Thịnh | Link chạy được ghi trong README; migrate + seed trên Neon |

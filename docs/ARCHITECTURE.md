@@ -260,9 +260,22 @@ AudioContext được tạo ở trạng thái tạm dừng và chỉ bật sau c
 | Google Analytics 4 (gtag.js) | Có | Lượt xem trang và sự kiện; chỉ ở bản production; không gửi dữ liệu cá nhân |
 | Sentry | Có | SDK frontend và backend gửi lỗi qua HTTPS; DSN đặt trong biến môi trường |
 
-## 3.5 Kiến trúc hạ tầng & Cloud \[Đề xuất\]
+## 3.5 Kiến trúc hạ tầng & Cloud
 
-Nơi triển khai chưa được quyết định (ARCHITECTURE D-04). Kiến trúc tham chiếu dưới đây không phụ thuộc nhà cung cấp; áp dụng được trên AWS, GCP, Azure hoặc nhà cung cấp trong nước.
+### Triển khai cho đồ án (đã chốt 13/11/2026, D-04)
+
+| **Lớp** | **Dịch vụ (gói miễn phí)** | **Cấu hình** |
+|---|---|---|
+| Frontend | Vercel | Build `vite build` từ thư mục `frontend/`; rewrite mọi đường dẫn về `index.html`; biến `VITE_API_URL`, `VITE_GA_ID`, `VITE_SENTRY_DSN` |
+| Backend | Render — Web Service Node 20 | Lệnh chạy `npm run start -w backend`; health check `GET /api/v1/health`; biến `DATABASE_URL`, `JWT_SECRET`, `SENTRY_DSN`, `CORS_ORIGIN` (domain Vercel). Gói miễn phí ngủ sau 15 phút không dùng: mở link trước khi demo khoảng 1 phút |
+| Database | Neon — PostgreSQL 16 | `prisma migrate deploy` và `prisma db seed` chạy một lần sau mỗi migration mới; dùng chuỗi kết nối có `sslmode=require` |
+| Theo dõi | Google Analytics 4, Sentry | Tài khoản do Phúc Thịnh tạo; mã chỉ đặt trong biến môi trường của Vercel/Render và `.env` máy cá nhân |
+
+Cookie refresh token đặt `SameSite=None; Secure` vì frontend và backend khác domain; CORS chỉ cho domain Vercel. Chi phí: 0 đồng trong thời gian đồ án.
+
+### Kiến trúc tham chiếu khi mở rộng \[Đề xuất\]
+
+Ngoài phạm vi đồ án. Kiến trúc dưới đây không phụ thuộc nhà cung cấp; áp dụng được trên AWS, GCP, Azure hoặc nhà cung cấp trong nước.
 
 ![Hình 5](images/architecture-hinh-5.png)
 
@@ -336,7 +349,7 @@ Mã nguồn là monorepo npm workspaces (shared, backend, frontend). Quy trình 
 
 ## 4.3 Ước tính chi phí (Cost Estimation)
 
-> **Cần xác nhận:** Chưa chọn nhà cung cấp và chưa có số người dùng dự kiến nên chưa thể đưa ra số tiền. Bảng dưới liệt kê hạng mục và cấu hình khởi điểm để báo giá khi có quyết định D-04.
+> Trong thời gian đồ án chi phí là 0 đồng (Vercel, Render, Neon, GA4, Sentry đều dùng gói miễn phí, §3.5). Bảng dưới chỉ dùng để báo giá khi mở rộng theo kiến trúc tham chiếu; số người dùng tham chiếu khoảng 50 đồng thời (PRD Q-10).
 
 | **Hạng mục**          | **Cấu hình khởi điểm**                                  | **Cách tối ưu**                                         | **Chi phí/tháng** |
 |-----------------------|---------------------------------------------------------|---------------------------------------------------------|-------------------|
@@ -381,3 +394,4 @@ Các lớp trang (TrangChu, TrangGioiThieu, TrangThuVien, TrangThongKe, TrangTai
 | v1.1 | 10/11/2026 | Bổ sung theo đề bài đồ án CSB25022. |
 | v1.2 | 12/11/2026 | Đồng bộ với Chương 1 Phân tích hệ thống: 2.1 thêm cột Use case; 3.2 bổ sung tên 5 lớp service, bảng ánh xạ lớp thiết kế ↔ module, ghi chú chi tiết dưới Hình 2, Hình 3; 3.3 thêm bảng ánh xạ lớp thực thể ↔ bảng; thêm Phụ lục A (Hình A1–A3, biểu đồ lớp). |
 | v1.3 | 13/11/2026 | Hình 2 thay bằng Sequence UC.09 xuất từ drawio (trang S9), Hình 3 gộp vào Hình 2; Hình 4 (ERD) vẽ lại trong drawio (trang ERD); 2.1 ghi mã FR chi tiết theo PRD v5.4; 4.2 nhãn khu vực theo `docs/TASKS.md`; trạng thái: v1.1 – v1.3 đã duyệt ở buổi họp kế hoạch 13/11/2026. |
+| v1.3 (bổ sung) | 13/11/2026 | 3.5 chốt nơi triển khai cho đồ án (D-04): Vercel + Render + Neon, gói miễn phí; kiến trúc cloud cũ giữ làm tham chiếu khi mở rộng; 4.3 ghi chi phí 0 đồng. |
