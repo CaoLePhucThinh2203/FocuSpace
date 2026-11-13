@@ -67,7 +67,7 @@ Quy trình bắt buộc theo `docs/references/PlanDesignWeb.docx` (Role + Skill 
 
 ### Không được sửa
 
-- `prototype/` — bản thiết kế đã duyệt (`FocuSpace-Semi-Sandbox.html` bản gốc; `web/` prototype 6 trang, Căn phòng viết bằng Tailwind).
+- `prototype/` — bản thiết kế đã duyệt (`FocuSpace-Semi-Sandbox.html` bản gốc, nguồn logic và hằng số; `web/` prototype 6 trang, Căn phòng viết bằng Tailwind, tối ưu Lighthouse theo cách 2: chỉ thêm title + meta, nhạc Lo-fi vẫn dựng nền khi mở trang; `so-sanh-lighthouse/` bằng chứng đo trước/sau).
 - `docs/references/` — đề bài và quy trình, chỉ đọc.
 - `docs/analysis/FocuSpace_Chuong2_PhanTich.docx` — chỉ sửa khi người dùng yêu cầu.
 - `Focus_Space .mp4`.

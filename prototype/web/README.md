@@ -1,4 +1,4 @@
-# Prototype 6 trang (phương án 2, nhóm chọn 13/11/2026) — Tailwind cho cả Căn phòng. room.html viết lại toàn bộ CSS bằng Tailwind CSS v4 (@theme + @apply + class tiện ích), giao diện giữ như bản gốc; thêm title, meta description và menu trang ở logo.
+# Prototype 6 trang (phương án 2, nhóm chọn 13/11/2026) — Tailwind cho cả Căn phòng. room.html viết lại toàn bộ CSS bằng Tailwind CSS v4 (@theme + @apply + class tiện ích), giao diện giữ như bản gốc; thêm title, meta description và menu trang ở logo. Tối ưu Lighthouse theo **cách 2** (nhóm chọn 13/11/2026): chỉ thêm title và meta description, nhạc Lo-fi vẫn dựng nền ngay khi mở trang như bản gốc.
 
 Mở `index.html` bằng trình duyệt (cần Internet để tải Tailwind CDN và font). Các trang: Trang chủ, Căn phòng, Thư viện, Thống kê, Tài khoản, Giới thiệu & Liên hệ.
 

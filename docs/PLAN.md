@@ -1,7 +1,7 @@
 # FocuSpace — Kế hoạch triển khai (PLAN.md)
 
 > Trạng thái: **Đã duyệt** ở buổi họp kế hoạch 13/11/2026 · bản đầu 08/11/2026 · cập nhật 13/11/2026 (lần 2): lịch tính từ 27/10/2026, S1–S2 đã xong (họp, Figma, prototype, tài liệu kế hoạch) · cập nhật 13/11/2026: phân vai 4 thành viên, lịch 2 tuần (hạn 27/11/2026), Phase 0 test-first · cập nhật 10/11/2026 theo đề bài đồ án `docs/Web Basic - Final Project Brief - CSB25022 - VNUK.docx` · cập nhật 12/11/2026 theo Chương 1 Phân tích hệ thống
-> Nguồn: `docs/PRD.md` · `docs/ARCHITECTURE.md` · `docs/API.md` · `docs/DATABASE.md` · `prototype/FocuSpace-Semi-Sandbox.html` · `FocuSpace_Diagrams.drawio`, `FocuSpace_Chuong2_PhanTich.docx` (Chương 1 Phân tích hệ thống)
+> Nguồn: `docs/PRD.md` · `docs/ARCHITECTURE.md` · `docs/API.md` · `docs/DATABASE.md` · `prototype/FocuSpace-Semi-Sandbox.html` · `prototype/web/` · `docs/analysis/FocuSpace_Diagrams.drawio`, `docs/analysis/FocuSpace_Chuong2_PhanTich.docx` (Chương 1 Phân tích hệ thống)
 > Quy tắc nguồn: đề bài đồ án > PRD > prototype > tài liệu cũ. Hành vi giao diện của Căn phòng lấy theo prototype.
 
 ## 1. Đối chiếu tiêu chí chấm điểm
@@ -119,9 +119,9 @@ D:\du an FocuSpace\
 │   ├── reviews/                 # given/, received.md
 │   └── references/              # đề bài CSB25022, PlanDesignWeb.docx — chỉ đọc
 ├── prototype/                   # không sửa
-│   ├── FocuSpace-Semi-Sandbox.html   # bản gốc Căn phòng (đã duyệt 07/11)
-│   ├── web/                     # prototype 6 trang, Căn phòng viết bằng Tailwind (phương án 2)
-│   └── so-sanh-lighthouse/      # 2 cách sửa để đo Lighthouse trước/sau
+│   ├── FocuSpace-Semi-Sandbox.html   # bản gốc Căn phòng (đã duyệt 07/11) — nguồn logic, hằng số khi chuyển sang React
+│   ├── web/                     # prototype 6 trang: Căn phòng viết bằng Tailwind (phương án 2) + tối ưu Lighthouse cách 2 (title, meta)
+│   └── so-sanh-lighthouse/      # bằng chứng đo trước/sau: cách 1 (dựng Lo-fi sau cú nhấp) và cách 2 (title + meta, đã chọn)
 ├── shared/src/
 │   ├── catalog.ts               # 17 loại đồ vật, 5 khung cảnh — nguồn cho engine và seeder
 │   ├── constants.ts             # 320×180, DESK, SLOTS, SHELF_SLOTS, điểm nghe
@@ -205,7 +205,7 @@ D:\du an FocuSpace\
 - **Bước:**
   1. AudioContext chỉ tạo sau cú nhấp/phím đầu; lỗi tạo → ghi telemetry, app vẫn chạy.
   2. Chuỗi mỗi nguồn: nguồn lặp → (highpass 120 Hz cho âm ngoài cửa sổ, tivi) → âm lượng → suy giảm → pan → chuyển phòng → hẹn giờ ngủ → Master.
-  3. Chuyển âm tổng hợp và nhạc Lo-fi (OfflineAudioContext, dựng lần lượt, bắt đầu sau cú nhấp đầu) từ prototype.
+  3. Chuyển âm tổng hợp và nhạc Lo-fi (OfflineAudioContext, dựng nền lần lượt ngay khi mở Căn phòng như `prototype/web/room.html`; chỉ AudioContext phát âm chờ cú nhấp đầu) từ prototype.
   4. Cross-fade 0,3 s khi chuyển phòng/khung cảnh; ramp 0,2 s (Master 0,1 s); hủy node khi rời phòng/xóa đồ/rời trang Căn phòng.
 - **Tham chiếu:** PRD Tính năng F, Kiến trúc §3.2, prototype “AUDIO ENGINE”, “ĐỊNH TUYẾN ÂM THANH”.
 - **Kiểm tra:** unit test đồ thị âm với AudioContext giả; đo cập nhật pan khi kéo < 30 ms; người dùng nghe thử bằng tai nghe.
@@ -263,7 +263,7 @@ D:\du an FocuSpace\
 
 - **Mục tiêu:** đạt NFR PRD §6 và đủ hồ sơ nộp bài.
 - **Bước:**
-  1. Lighthouse (mobile) cho 6 trang → lưu báo cáo “trước”; tối ưu (tách mã, dựng nhạc sau cú nhấp đầu, vẽ hình xem trước khi cuộn tới, meta, nhãn truy cập, tương phản) → báo cáo “sau”, mục tiêu ≥ 90; thêm Lighthouse CI.
+  1. Lighthouse (mobile) cho 6 trang → lưu báo cáo “trước”; tối ưu (tách mã, title + meta description từng trang theo cách 2 đã chọn, vẽ hình xem trước khi cuộn tới, nhãn truy cập, tương phản) → báo cáo “sau”, mục tiêu ≥ 90; thêm Lighthouse CI.
   2. Google Analytics 4: lượt xem theo route và 8 sự kiện (PRD Tính năng M), chỉ khi có `VITE_GA_ID`; Sentry frontend (`VITE_SENTRY_DSN`) và backend (`SENTRY_DSN`), `sendDefaultPii: false`, gắn release theo commit.
   3. Đo gói JS nén < 300 KB, FCP < 2 s; test phiên dài 6 giờ tăng tốc (không rò bộ nhớ, số node âm không tăng).
   4. E2E Chromium, Firefox, WebKit ở 375, 768, 1280 px; kiểm tra bàn phím.
@@ -303,3 +303,4 @@ D:\du an FocuSpace\
 | 13/11/2026 (lần 2) | Lịch tính lại từ 27/10/2026: S1 ✅ 27/10–07/11 (họp khởi động, wireframe Figma, prototype, PRD duyệt), S2 ✅ 08–12/11 (PLAN, tài liệu, phân tích hệ thống), S3 13–17/11, S4 18–22/11, S5 23–27/11; §1 cập nhật cột sprint; Phase 0–7 đổi sprint; đường dẫn 2 file phân tích chuyển vào `docs/`. |
 | 13/11/2026 (lần 3) | Gọn cấu trúc thư mục: bỏ 3 bản Word trùng PRD/Kiến trúc/API, bỏ `docs/github-templates/` (trùng `.github/`), gộp prototype phương án 1 & 2 thành `prototype/web/` (chọn phương án 2); `CLAUDE.md` ra thư mục gốc; `images/` → `docs/images/`; thêm `docs/analysis/`, `docs/references/`; sửa `.gitignore`. |
 | 13/11/2026 (lần 4) | Trạng thái: đã duyệt ở buổi họp kế hoạch 13/11/2026; Phase 7 tham chiếu Kiến trúc Hình 2 (Sequence UC.09, Hình 3 đã gộp); drawio thêm trang ERD. |
+| 13/11/2026 (lần 5) | Prototype: chốt cách 2 cho Lighthouse (title + meta description; nhạc Lo-fi dựng nền ngay khi mở Căn phòng); Phase 4 bước 3, Phase 8 bước 1 và cây thư mục cập nhật theo. |

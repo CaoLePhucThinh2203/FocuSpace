@@ -851,7 +851,7 @@ Mỗi tiêu chí viết theo dạng **Cho trước – Khi – Thì**, kiểm đ
 
 - Google Lighthouse (cấu hình mobile): Performance, Accessibility, Best Practices và SEO đều ≥ 90 ở cả 6 trang; đo trước và sau khi tối ưu, lưu báo cáo vào docs/reports/lighthouse/.
 
-- Tách mã theo trang: engine vẽ và âm thanh chỉ tải ở Căn phòng; nhạc Lo-fi dựng sau cú nhấp đầu tiên; hình xem trước ở Trang chủ chỉ vẽ khi cuộn tới; Tailwind chỉ giữ các class được dùng.
+- Tách mã theo trang: engine vẽ và âm thanh chỉ tải ở Căn phòng; nhạc Lo-fi dựng nền ngay khi mở Căn phòng như prototype (đã đo, nhóm chọn cách 2 ngày 13/11/2026: chỉ thêm title và meta description, không dời việc dựng nhạc); hình xem trước ở Trang chủ chỉ vẽ khi cuộn tới; Tailwind chỉ giữ các class được dùng.
 
 - Mỗi trang có thẻ title và meta description riêng; html lang="vi"; mọi nút và hình có nhãn truy cập.
 
@@ -947,7 +947,7 @@ Thứ tự phát triển theo docs/PLAN.md: Phase 0 Khởi tạo → 1 Dữ li�
 | API hoặc database ngừng hoạt động                                   | Không đồng bộ được             | Kiến trúc local-first: app vẫn chạy và lưu cục bộ, tự đồng bộ lại khi có mạng                    |
 | Giả định “người bạn học ảo” không tạo động lực như kỳ vọng          | KPI phiên thấp                 | Thu phản hồi UAT về nhân vật, nhịp thở/lật sách để chỉnh hoạt ảnh                                |
 | Phạm vi lớn so với 2 tuần lập trình (S3–S5) | Trễ hạn nộp | Làm P0 trước theo thứ tự sprint; dời P1 (xung đột hai thiết bị, xóa tài khoản) nếu trễ; cuối mỗi sprint luôn có bản chạy được |
-| Trang Căn phòng tải nặng làm điểm Lighthouse thấp | Mất điểm tối ưu | Tách mã theo trang, dựng nhạc Lo-fi sau cú nhấp đầu, đo Lighthouse mỗi sprint |
+| Trang Căn phòng tải nặng làm điểm Lighthouse thấp | Mất điểm tối ưu | Tách mã theo trang, title và meta description cho từng trang (cách 2, `prototype/so-sanh-lighthouse/`), đo Lighthouse mỗi sprint |
 | Trình chặn quảng cáo chặn Google Analytics | Thiếu số liệu hành vi | Telemetry riêng vẫn ghi KPI; không chức năng nào phụ thuộc Google Analytics |
 
 # 9. Lịch sử thay đổi
@@ -959,3 +959,4 @@ Thứ tự phát triển theo docs/PLAN.md: Phase 0 Khởi tạo → 1 Dữ li�
 | v5.2 | 12/11/2026 | Đồng bộ với Chương 1 Phân tích hệ thống và FocuSpace_Diagrams.drawio: thêm 3.3 Mô hình use case (Hình 1, bảng 12 use case), đánh lại số Hình 2–7; thêm cột Use case vào bảng 3.2 và US-17; thêm dòng “Use case liên quan” cho Tính năng A–M; Tính năng E thêm ngoại lệ đủ 40 đồ vật [Đề xuất]; Tính năng G, I thêm quy tắc kết quả phiên Pomodoro (`completed` / `reset` / `abandoned`); Tính năng H, L viết thống nhất cách xử lý phiên hết hạn theo trang; Tính năng H thêm quy tắc revision và 409; 5.3 thêm cột Use case; Q-07 ghi căn cứ UC.01; thêm Q-16, Q-17. **BR-09 thay nội dung cũ** (“Đăng nhập / đăng ký tối đa 10 lần mỗi 15 phút cho mỗi IP”) vì mâu thuẫn với API 4.2–4.3 (đăng nhập tính theo IP + email). |
 | v5.3 | 13/11/2026 | Thêm 5.4 Tiêu chí nghiệm thu (48 AC theo use case và phi chức năng) để PRD đủ Problem / Context / FR / AC; 7.2 lịch 5 sprint từ 27/10 → 27/11/2026 (S1, S2 đã xong: Figma, prototype, tài liệu kế hoạch); 5.3 wireframe Figma (bản draw.io bổ sung); Q-11, Q-12 đã chốt. |
 | v5.4 | 13/11/2026 | Thêm bảng mã yêu cầu chức năng cuối mục 5.1 (85 mã FR, đóng Q-17): giữ nguyên mã cũ, thêm FR-ACC-08 (đổi tên, đăng xuất) và đánh mã FR-PAGE-01→08, FR-LIB-01→06, FR-STAT-01→06, FR-OBS-01→04; bảng 3.2, 3.3 tham chiếu mã cụ thể. Bỏ mốc Go-live 10/12/2026, mốc cuối là nộp đồ án 27/11/2026 (Q-08). 2.4, 8.2 sửa thời gian theo lịch 27/10 → 27/11. Trạng thái: v5.1 – v5.4 đã duyệt ở buổi họp kế hoạch 13/11/2026. |
+| v5.4 (bổ sung) | 13/11/2026 | 6.1 và 8.2: tối ưu Lighthouse theo cách 2 đã chọn (title + meta description; nhạc Lo-fi vẫn dựng nền ngay khi mở Căn phòng). |

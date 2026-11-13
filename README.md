@@ -30,8 +30,8 @@ FocuSpace/
 │   └── references/    # đề bài, quy trình
 └── prototype/
     ├── FocuSpace-Semi-Sandbox.html   # bản gốc Căn phòng
-    ├── web/                          # prototype 6 trang (mở index.html)
-    └── so-sanh-lighthouse/
+    ├── web/                          # prototype 6 trang (mở index.html), Lighthouse theo cách 2
+    └── so-sanh-lighthouse/           # đo Lighthouse: cách 1 vs cách 2 (đã chọn cách 2)
 ```
 
 Lịch: bắt đầu 27/10/2026, hạn nộp 27/11/2026 (5 sprint, chi tiết `docs/PLAN.md` §3).
