@@ -16,8 +16,8 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "typecheck": "tsc -b shared backend frontend",
-    "db:migrate": "npm run db:migrate -w backend",
-    "db:seed": "npm run db:seed -w backend"
+    "db:migrate": "npm run db:migrate -w backend --",
+    "db:seed": "npm run db:seed -w backend --"
   },
   "devDependencies": {
     "@eslint/js": "^9.14.0",
@@ -31,5 +31,9 @@
   },
   "engines": {
     "node": ">=20"
+  },
+  "dependencies": {
+    "@neon/config": "^1.14.0",
+    "@neon/env": "^2.1.3"
   }
 }
