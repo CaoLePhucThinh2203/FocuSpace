@@ -1,0 +1,35 @@
+{
+  "name": "focuspace",
+  "private": true,
+  "version": "0.1.0",
+  "description": "FocuSpace — căn phòng pixel art Lo-fi để học tập (đồ án CSB25022, VNUK)",
+  "workspaces": [
+    "shared",
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "concurrently -n api,web -c blue,green \"npm run dev -w backend\" \"npm run dev -w frontend\"",
+    "build": "npm run build -w shared && npm run build -w backend && npm run build -w frontend",
+    "test": "npm run test -w shared && npm run test -w backend && npm run test -w frontend",
+    "test:e2e": "npm run test:e2e -w frontend",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "typecheck": "tsc -b shared backend frontend",
+    "db:migrate": "npm run db:migrate -w backend",
+    "db:seed": "npm run db:seed -w backend"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.14.0",
+    "concurrently": "^9.1.0",
+    "eslint": "^9.14.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "globals": "^15.12.0",
+    "prettier": "^3.3.3",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.14.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

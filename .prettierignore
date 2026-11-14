@@ -1,0 +1,4 @@
+prototype/
+docs/
+**/dist/
+frontend/src/engine/legacy/

@@ -15,3 +15,6 @@ coverage/
 # Kết quả test
 playwright-report/
 test-results/
+
+# Gói zip chia theo người
+_packages/
