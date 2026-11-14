@@ -46,7 +46,7 @@ Quy trình bắt buộc theo `docs/references/PlanDesignWeb.docx` (Role + Skill 
 
 - Monorepo npm workspaces: `shared/`, `frontend/`, `backend/`.
 - Shared: TypeScript, Zod (schema RoomState, migrate) — dùng chung cho client và server.
-- Frontend: Vite, React 18, TypeScript, React Router 6, Zustand, Tailwind CSS 3, Canvas 2D, Web Audio API.
+- Frontend: Vite, React 18, TypeScript, React Router 6, Zustand, Tailwind CSS 4 (`@tailwindcss/vite`), Canvas 2D, Web Audio API.
 - Backend: Node.js 20, Express, Prisma (migrate + seed), Zod, Argon2id, JWT HS256, pino.
 - Database: PostgreSQL 16.
 - Theo dõi: Google Analytics 4, Sentry (frontend + backend).
@@ -60,7 +60,7 @@ Quy trình bắt buộc theo `docs/references/PlanDesignWeb.docx` (Role + Skill 
 - Toạ độ phòng: hệ logic 320×180.
 - Room Engine (`frontend/src/engine/`) là TypeScript thuần, không import React.
 - Backend phân lớp routes → services → Prisma; `createApp({ db })` để test được.
-- Giao diện ngoài canvas dùng utility class Tailwind; màu và font khai báo trong `tailwind.config.ts`, lấy từ prototype.
+- Giao diện ngoài canvas dùng utility class Tailwind; màu và font khai báo bằng `@theme` trong `frontend/src/styles/index.css`, lấy từ prototype.
 - Đồ họa và âm thanh tạo bằng code, chuyển từ prototype — không thêm file ảnh/âm thanh.
 - Không gửi dữ liệu cá nhân tới Google Analytics và Sentry (PRD BR-13).
 - LocalStorage key: `focuspace.room.v4`. Secret chỉ để trong `.env` (không commit); `VITE_GA_ID`, `VITE_SENTRY_DSN`, `SENTRY_DSN` qua biến môi trường.

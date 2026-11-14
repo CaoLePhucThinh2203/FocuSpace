@@ -23,7 +23,7 @@ Code chia theo 4 khu vực, mỗi người chỉ sửa thư mục của mình (s
 Mỗi thư mục khu vực có `README.md` ghi việc còn lại và khối cần tách từ `frontend/src/engine/legacy/roomEngine.js`.
 
 Việc trước demo 15/11: Thịnh chạy `npm install`, tạo DB Neon, `db:migrate`, `db:seed`, commit thư mục migrations (G11 phần DB); cả nhóm `npm run dev`, kiểm tra 6 trang theo AC ở PRD 5.4, báo lỗi bằng Issue.
-Chưa có: gửi telemetry từ Căn phòng (N10), test integration với PostgreSQL thật (L2), E2E theo từng UC (H2, N2), tách engine thành module (xem `frontend/src/engine/room/legacy/README.md`).
+Chưa có: gửi telemetry từ Căn phòng (N10), test integration với PostgreSQL thật (L2), E2E theo từng UC (H2, N2), tách engine thành module (xem `frontend/src/engine/legacy/README.md`).
 
 ## Tổng hợp khối lượng
 
