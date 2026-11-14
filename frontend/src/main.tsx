@@ -1,10 +1,10 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
-import { initObservability } from "./areas/garden/observability";
+import { setupAreas } from "./lib/areas";
 import "./styles/index.css";
 
-initObservability();
+setupAreas();
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <App />

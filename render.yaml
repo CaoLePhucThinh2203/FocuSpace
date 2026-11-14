@@ -1,0 +1,24 @@
+# Render Blueprint — backend FocuSpace (gói miễn phí). Kiến trúc §3.5.
+# Render → New → Blueprint → chọn repo này. Điền DATABASE_URL (Neon) và CORS_ORIGIN khi Render hỏi.
+services:
+  - type: web
+    name: focuspace-api
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: npm install --no-audit --no-fund && npx prisma generate --schema backend/prisma/schema.prisma
+    startCommand: npx prisma migrate deploy --schema backend/prisma/schema.prisma && npm run start -w backend
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CORS_ORIGIN
+        sync: false
+      - key: COOKIE_SECURE
+        value: "true"
+      - key: SENTRY_DSN
+        sync: false

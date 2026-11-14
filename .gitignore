@@ -18,3 +18,5 @@ test-results/
 
 # Gói zip chia theo người
 _packages/
+.neon
+neon.ts

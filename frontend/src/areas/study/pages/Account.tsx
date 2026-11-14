@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { ApiError } from "../../../lib/api";
-import { track } from "../../garden/observability";
+import { track } from "../../../lib/analytics";
 import { useTitle } from "../../../lib/useTitle";
 import { useAuth } from "../../../store/auth";
 

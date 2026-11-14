@@ -11,8 +11,9 @@ const db = {
   itemType: { findMany: vi.fn().mockResolvedValue([]) },
   scene: { findMany: vi.fn().mockResolvedValue([]) },
 } as unknown as Db;
-const app = createApp({ db });
+const app = await createApp({ db });
 
+/** Test của base: chỉ dùng endpoint của base (health, /room-state). Endpoint các khu vực test trong file riêng. */
 describe("API cơ bản", () => {
   it("GET /api/v1/health trả 200", async () => {
     const r = await request(app).get("/api/v1/health");
@@ -23,15 +24,6 @@ describe("API cơ bản", () => {
     const r = await request(app).get("/api/v1/room-state");
     expect(r.status).toBe(401);
     expect(r.body.error.code).toBe("UNAUTHENTICATED");
-  });
-  it("đăng ký với mật khẩu 7 ký tự trả 400 VALIDATION_ERROR (AC-08.2)", async () => {
-    const r = await request(app).post("/api/v1/auth/register").send({ email: "a@b.vn", password: "1234567", displayName: "A" });
-    expect(r.status).toBe(400);
-    expect(r.body.error.code).toBe("VALIDATION_ERROR");
-  });
-  it("GET /catalog/items lọc sai tham số trả 400", async () => {
-    const r = await request(app).get("/api/v1/catalog/items?room=kitchen");
-    expect(r.status).toBe(400);
   });
   it("đường dẫn không tồn tại trả 404 NOT_FOUND", async () => {
     const r = await request(app).get("/api/v1/khong-co");

@@ -20,6 +20,21 @@ npm run dev                                   # API: http://localhost:3000/api/v
 Lệnh khác: `npm test` (unit + integration), `npm run test:e2e` (Playwright), `npm run lint`, `npm run build`.
 Ràng buộc CHECK của CSDL: xem `backend/prisma/checks.sql` (thêm bằng một migration SQL sau migration đầu).
 
+## Deploy (Vercel + Render + Neon, gói miễn phí)
+
+1. **Neon** (neon.tech): tạo project PostgreSQL 16, chép chuỗi kết nối (có `sslmode=require`).
+2. **Migration lần đầu** (trên máy, một lần): đặt `DATABASE_URL` của Neon vào `backend/.env`, chạy `npm run db:migrate -- --name init` rồi `npm run db:seed`; **commit thư mục `backend/prisma/migrations/`**.
+3. **Render** (render.com): New → Blueprint → chọn repo → Render đọc `render.yaml`. Điền `DATABASE_URL` (Neon) và `CORS_ORIGIN` (domain Vercel, ví dụ `https://focuspace.vercel.app`). Mở `https://<tên>.onrender.com/api/v1/health` thấy `"status":"ok"` là xong.
+4. **Vercel** (vercel.com): Import repo → Root Directory `frontend` → Framework Vite. Nếu tên service Render khác `focuspace-api`, sửa URL trong `frontend/vercel.json`. Frontend gọi `/api/...` cùng domain, Vercel chuyển tiếp sang Render nên cookie đăng nhập hoạt động.
+5. Gói miễn phí của Render ngủ sau 15 phút không dùng: mở link API khoảng 1 phút trước khi demo.
+
+## Cách làm việc theo khu vực
+
+Base (Thịnh) chạy được một mình. Mỗi khu vực tự cắm vào, **không sửa file của base**:
+- Frontend: thêm `frontend/src/areas/<khu-vực>/index.ts` export `area` (route, mục điều hướng, hàm `setup`) — xem `frontend/src/lib/areas.ts`.
+- Backend: `backend/src/areas/<khu-vực>/routes.ts` export hàm `...Routes(db)`; `seed.ts` export hàm `seed...(db)` — base tự nạp (`backend/src/lib/areas.ts`).
+- Mỗi người: tạo nhánh từ `main` → thêm file trong thư mục khu vực của mình → mở PR → CI xanh + 1 người duyệt → merge.
+
 ## Thành viên
 
 | Thành viên | Phụ trách |
