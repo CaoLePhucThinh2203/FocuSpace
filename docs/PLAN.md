@@ -43,7 +43,7 @@ Nhóm 4 người, họp khởi động 27/10/2026 (biên bản: `docs/meetings/2
 
 Quy ước phối hợp:
 
-- **Chủ sở hữu thư mục:** mỗi người chỉ sửa thư mục của mình; sửa phần của người khác thì mở PR và gán người đó duyệt. Phần dùng chung (`shared/`, `store/`, `ui/Header`, `ui/Toolbar`, `persistence/local.ts`) do Phúc Thịnh giữ.
+- **Chủ sở hữu thư mục:** code chia theo khu vực ở `frontend/src/areas/{items-audio, garden, bedroom, study}/` và `backend/src/areas/` cùng tên (Hưng, Nhiên, Lộc, Thịnh); phần chung do Thịnh giữ. Mỗi người chỉ sửa thư mục của mình; sửa phần của người khác thì mở PR và gán người đó duyệt. Phần dùng chung (`shared/`, `store/`, `ui/Header`, `ui/Toolbar`, `persistence/local.ts`) do Phúc Thịnh giữ.
 - **Giao diện giữa các khu vực** (chốt đầu S3, trước khi code song song): `RoomState` (`shared/roomState.ts`), hàm vẽ mỗi phòng `drawStudy/drawBed/drawOut(ctx, state, t)`, đăng ký nguồn âm `audio.register(sourceId, node)`, sự kiện telemetry `telemetry.track(name, data)`.
 - Mỗi người: ≥ 1 commit mỗi ngày làm việc, self-report cuối mỗi sprint (`docs/reports/sprint-N/<tên>.md`).
 - Danh sách task chi tiết theo người và sprint: `docs/TASKS.md` (mỗi dòng = 1 GitHub Issue).
@@ -59,6 +59,8 @@ Dự án bắt đầu **27/10/2026** (họp khởi động), **hạn hoàn thàn
 | S3 | 13–17/11 | 0, 1, 2, 6 (bước 1–2) | Repo + Projects + mẫu issue/PR + bảo vệ nhánh; monorepo chạy, CI lint/test; khung test (test-first); `shared/`, logic engine có test; `schema.prisma`, migration đầu, seeder 17 + 5 | Khung test đồ vật, âm thanh; `catalog.ts`, `placement.ts`, `spatial.ts`; seeder đồ vật | Khung test telemetry; `defaults.ts` Sân vườn; seeder khung cảnh | Khung test auth; `sleepTimer.ts`; `migrate.ts` | Repo, CI, monorepo; chốt giao diện giữa các khu vực; `roomState.ts`, `rooms.ts`, `pomodoro.ts`; `schema.prisma`, migration |
 | S4 | 18–22/11 | 3, 4, 5, 6 (bắt đầu) | Ba không gian giống prototype ở chế độ khách; âm thanh không gian; Trang chủ, Giới thiệu bằng Tailwind; điều hướng 6 trang; endpoint auth, catalog, telemetry có test | Âm thanh, khay, kéo thả, mixer; `/catalog/items` | Render Sân vườn, ScenePicker, âm cảnh; `/catalog/scenes`, telemetry | Render Phòng ngủ, Hẹn giờ ngủ; auth | Render Phòng học, Header/Toolbar, lưu cục bộ, Trang chủ, Giới thiệu, NavBar/Footer |
 | S5 | 23–27/11 | 6 (còn lại), 7, 8 | Đủ 14 endpoint; Tài khoản, Thư viện, Thống kê lấy dữ liệu thật; đồng bộ; góp ý 2 nhóm khác + sửa theo góp ý; Lighthouse ≥ 90; GA4, Sentry; README; video; **nộp bài 27/11** | Review nhóm A; tối ưu Căn phòng | Gửi telemetry; review nhóm A; GA4, Sentry | `/me`, `/me/stats`, trang Thống kê; review nhóm B; Lighthouse, E2E responsive | `/room-state`, sync, hộp thoại hợp nhất; trang Thư viện, Tài khoản; triển khai Vercel + Render + Neon; review nhóm B; README, video, `received.md`, nộp bài |
+
+**Mốc demo cho giảng viên: Chủ nhật 15/11/2026** (chốt 13/11). Code nền đã có từ 13/11: monorepo, `shared/` có test, backend đủ 14 endpoint + Prisma + seeder, frontend React 6 trang nối API, Căn phòng chạy từ engine prototype (`frontend/src/engine/room/legacy/`) kèm đồng bộ `/room-state`. Từ 14/11: chạy thử, sửa lỗi, rồi tách engine thành module theo `frontend/src/engine/room/legacy/README.md`.
 
 Đường găng (critical path): giao diện giữa các khu vực (đầu S3) → `shared/roomState.ts` (S3) → render từng phòng (S4) → sync (S5). S5 nặng nhất, nên review chéo bắt đầu ngay khi có bản chạy được ở cuối S4. Nếu trễ, cắt theo PRD §8.2: dời P1 (xung đột hai thiết bị, xóa tài khoản) trước, giữ đủ tiêu chí chấm điểm.
 
@@ -305,3 +307,5 @@ D:\du an FocuSpace\
 | 13/11/2026 (lần 4) | Trạng thái: đã duyệt ở buổi họp kế hoạch 13/11/2026; Phase 7 tham chiếu Kiến trúc Hình 2 (Sequence UC.09, Hình 3 đã gộp); drawio thêm trang ERD. |
 | 13/11/2026 (lần 5) | Prototype: chốt cách 2 cho Lighthouse (title + meta description; nhạc Lo-fi dựng nền ngay khi mở Căn phòng); Phase 4 bước 3, Phase 8 bước 1 và cây thư mục cập nhật theo. |
 | 13/11/2026 (lần 6) | §2 chốt phân công backend và việc chung; trang Thống kê chuyển từ Thịnh sang Lộc; Thịnh tạo tài khoản GA4, Sentry và triển khai. §3 cột S5 cập nhật. Phase 8 bước 8: triển khai Vercel + Render + Neon. R11 cập nhật. |
+| 13/11/2026 (lần 7) | Thêm mốc demo 15/11; code nền đã viết (monorepo, shared, backend 14 endpoint, frontend 6 trang, Căn phòng chạy từ engine prototype). Tailwind dùng v4 (`@tailwindcss/vite`, theme khai báo bằng `@theme` trong CSS) để giữ nguyên CSS phương án 2 của prototype. |
+| 13/11/2026 (lần 8) | Code chia thành 4 thư mục khu vực trong `frontend/src/areas/` và `backend/src/areas/` theo §2; seeder và router tách theo khu vực. |
