@@ -11,7 +11,14 @@ import { errorHandler, notFoundHandler } from "./middleware/error";
 export async function createApp({ db }: { db: Db }) {
   const app = express();
   app.set("trust proxy", 1);
-  if (!config.isTest) app.use(pinoHttp());
+  // Log gọn: không ghi header, cookie, token (PRD BR-13).
+  if (!config.isTest)
+    app.use(pinoHttp({
+      serializers: {
+        req: (r: { method: string; url: string }) => ({ method: r.method, url: r.url }),
+        res: (r: { statusCode: number }) => ({ statusCode: r.statusCode }),
+      },
+    }));
   app.use(cors({ origin: config.corsOrigin, credentials: true }));
   app.use(express.json({ limit: "256kb" }));
   app.use(cookieParser());
