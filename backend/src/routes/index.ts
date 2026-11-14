@@ -1,16 +1,13 @@
 import { Router } from "express";
 import type { Db } from "../lib/prisma";
 import { a } from "../lib/http";
-import { itemsAudioRoutes } from "../areas/items-audio/routes";
-import { gardenRoutes } from "../areas/garden/routes";
-import { bedroomRoutes } from "../areas/bedroom/routes";
-import { studyRoutes } from "../areas/study/routes";
+import { loadAreaExports } from "../lib/areas";
 
-/** Gộp router của 4 khu vực (docs/PLAN.md §2) dưới /api/v1. */
-export function apiRouter(db: Db) {
+/** Router /api/v1: health (base) + router của mọi khu vực có trong src/areas/ (docs/PLAN.md §2). */
+export async function apiRouter(db: Db) {
   const r = Router();
 
-  // 4.1 Health — phần chung (Thịnh)
+  // 4.1 Health
   r.get("/health", a(async (_req, res) => {
     try {
       await db.$queryRaw`SELECT 1`;
@@ -20,9 +17,8 @@ export function apiRouter(db: Db) {
     }
   }));
 
-  r.use(itemsAudioRoutes(db)); // Tuấn Hưng: /catalog/items
-  r.use(gardenRoutes(db)); // Đình Nhiên: /catalog/scenes, /telemetry/batch
-  r.use(bedroomRoutes(db)); // Tuấn Lộc: /auth/*, /me, /me/stats
-  r.use(studyRoutes(db)); // Phúc Thịnh: /room-state
+  // study (Thịnh): /room-state · items-audio (Hưng): /catalog/items · garden (Nhiên): /catalog/scenes, /telemetry/batch
+  // bedroom (Lộc): /auth/*, /me, /me/stats — khu vực nào chưa có routes.ts thì endpoint đó trả 404.
+  for (const { fn } of await loadAreaExports("routes", (n) => n.endsWith("Routes"))) r.use(fn(db));
   return r;
 }

@@ -1,14 +1,13 @@
-/** Seeder danh mục (DATABASE §3.7, §3.8): gọi seeder của từng khu vực. */
+/** Seeder: gọi mọi hàm seed* trong backend/src/areas/<khu-vực>/seed.ts (đồ vật — Hưng, khung cảnh — Nhiên). */
 import { PrismaClient } from "@prisma/client";
-import { seedItemTypes } from "../src/areas/items-audio/seed";
-import { seedScenes } from "../src/areas/garden/seed";
+import { loadAreaExports } from "../src/lib/areas";
 
 const prisma = new PrismaClient();
 
 async function main() {
-  const items = await seedItemTypes(prisma);
-  const scenes = await seedScenes(prisma);
-  console.log(`Seed xong: ${items} đồ vật, ${scenes} khung cảnh.`);
+  const seeds = await loadAreaExports("seed", (n) => n.startsWith("seed"));
+  if (!seeds.length) console.log("Chưa có khu vực nào có seed.ts — bỏ qua.");
+  for (const { area, name, fn } of seeds) console.log(`${area}/${name}: ${await fn(prisma)} dòng`);
 }
 
 main()
