@@ -1,0 +1,163 @@
+/* CSS Căn phòng — chép nguyên từ prototype/web/room.html (Tailwind v4, phương án 2).
+   Nạp riêng khi vào /room (RoomPage) để biến màu theo phòng không ảnh hưởng các trang khác. */
+@import "tailwindcss";
+
+/* Phương án 2 — toàn bộ CSS của Căn phòng viết lại bằng Tailwind CSS v4.
+   Biến màu đổi theo phòng (body[data-room]) nên theme dùng "@theme inline" trỏ tới biến CSS.
+   Lớp thành phần (pop, seg, switch…) giữ tên cũ vì script tạo và đổi chúng lúc chạy; nội dung lớp viết bằng @apply. */
+@theme inline {
+  --color-bg: var(--bg); --color-panel: var(--panel); --color-panel-2: var(--panel-2); --color-line: var(--line);
+  --color-ink: var(--text); --color-muted: var(--muted); --color-amber: var(--amber); --color-amber-ink: var(--amber-ink);
+  --color-rain: var(--rain); --color-danger: var(--danger); --color-ok: var(--ok); --color-deep: var(--deep); --color-deep2: var(--deep2);
+  --color-panel-a: var(--panel-a); --color-shadow: var(--shadow); --color-on-bg: var(--on-bg);
+  --font-pixel: "Pixelify Sans", "Courier New", monospace;
+  --font-ui: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-num: "VT323", "Courier New", monospace;
+  --font-logo: "Press Start 2P", "Pixelify Sans", "Courier New", monospace;
+}
+
+@layer base {
+  :root {
+    --bg:#16100d; --panel:#211712; --panel-2:#2b1e17; --line:#3e2c21; --text:#f2e4cf; --muted:#b49b81;
+    --amber:#f3a84b; --amber-ink:#2a1606; --rain:#8fb3d9; --danger:#e0705a; --ok:#8fd49a;
+    --deep:#120c09; --deep2:#1a120e; --panel-a:rgba(33,23,18,.94); --shadow:#0b0806; --on-bg:#3d2a12;
+    color-scheme: dark;
+  }
+  body[data-room="bed"] {
+    --bg:#0e0a1c; --panel:#171230; --panel-2:#1f173b; --line:#32285c; --text:#e9e4f7; --muted:#9d96c4;
+    --amber:#F7D070; --amber-ink:#1d1436; --deep:#0c0818; --deep2:#120d26; --panel-a:rgba(23,18,48,.94); --shadow:#06030f; --on-bg:#3a2f12;
+  }
+  body[data-room="out"] {
+    --bg:#0d1612; --panel:#15251d; --panel-2:#1c3128; --line:#2f5242; --text:#e8f3e2; --muted:#9bbba6;
+    --amber:#f2c14e; --amber-ink:#1d2a0a; --deep:#0a120e; --deep2:#101c16; --panel-a:rgba(21,37,29,.94); --shadow:#050a07; --on-bg:#3a3a12;
+  }
+  html, body { @apply h-full; }
+  body {
+    @apply m-2 bg-bg text-ink font-ui text-[14px] leading-[1.45] overflow-hidden
+           pl-[max(16px,env(safe-area-inset-left,0px))] pr-[max(16px,env(safe-area-inset-right,0px))]
+           max-[720px]:overflow-auto;
+  }
+  [hidden] { display: none !important; }
+  :focus-visible { @apply outline-2 outline-solid outline-amber outline-offset-2; }
+  input[type=range] { @apply m-[2px] w-full accent-amber; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+}
+
+@layer components {
+  /* Header */
+  .logo { @apply flex items-center gap-2 font-logo text-[15px] font-normal tracking-normal; }
+  .logo i { @apply inline-block size-3 bg-amber shadow-[3px_3px_0_#7a4b1c]; }
+  .chip { @apply inline-flex items-center gap-2 whitespace-nowrap border border-line bg-panel px-[10px] py-[5px] text-[12px] text-muted; }
+  .chip .dot { @apply size-[7px] bg-muted; }
+  .chip.live .dot { @apply bg-ok; }
+  .chip.saving .dot { @apply bg-amber; }
+  .pomo-mini, .sleep-mini { @apply inline-flex items-center gap-2 border border-line bg-panel pt-[2px] pr-1 pb-[2px] pl-[10px]; }
+  .sleep-mini { @apply flex-wrap; }
+  .pomo-mini .mode, .sleep-mini .mode { @apply text-[11px] uppercase tracking-[.08em] text-muted; }
+  .pomo-mini .time, .sleep-mini .time { @apply font-num text-[24px] leading-none tabular-nums text-amber; }
+  .sleep-mini .time { @apply min-w-14 text-right; }
+  .sleep-mini.fading .time { @apply text-rain; }
+  .sleep-mini .seg { @apply inline-grid grid-cols-[repeat(5,auto)]; }
+  .sleep-mini .seg button { @apply px-2 py-[5px]; }
+  .btn { @apply cursor-pointer border border-line bg-panel-2 px-[10px] py-[6px] text-[12px] font-semibold hover:border-amber; }
+  .btn.primary { @apply border-amber bg-amber text-amber-ink; }
+  .btn.danger { @apply text-danger hover:border-danger; }
+
+  /* Thanh công cụ + khay */
+  .toolbar { @apply z-30 flex flex-row items-center gap-[6px] border border-line bg-panel-a p-1 shadow-[3px_3px_0_var(--shadow),0_10px_24px_rgba(0,0,0,.45)] backdrop-blur-[6px]; }
+  .toolbar.is-drop { @apply border-danger bg-[rgba(224,112,90,.2)]; }
+  .tb-btn { @apply relative grid size-[42px] cursor-pointer place-items-center px-[6px] py-px border border-transparent bg-panel-2 text-ink hover:border-amber; }
+  .tb-btn svg { @apply size-[22px]; }
+  .tb-btn[aria-pressed="true"] { @apply bg-amber text-amber-ink; }
+  .tb-tip { @apply pointer-events-none absolute top-[calc(100%+8px)] left-1/2 z-[60] -translate-x-1/2 whitespace-nowrap border border-line bg-panel px-[7px] py-[2px] text-[11px] text-ink opacity-0 transition-opacity duration-150 max-[720px]:hidden; }
+  .tb-btn:hover .tb-tip, .tb-btn:focus-visible .tb-tip { @apply opacity-100; }
+  .toolbar.tray-open .tb-tip { @apply hidden; }
+  /* Giữ đúng prototype gốc: nền và chữ cùng màu đỏ */
+  .drop-hint { @apply hidden self-center whitespace-nowrap bg-danger px-2 py-0 text-[12px] font-bold text-danger -translate-y-1/2 max-[720px]:-translate-x-1/2 max-[720px]:translate-y-0; }
+  .toolbar.is-drop .drop-hint { @apply block; }
+  .mixchip { @apply inline-flex items-center gap-2 text-[12px] text-muted; }
+  .mixchip .dot { @apply size-[7px] bg-ok; }
+  .tray { @apply absolute top-[calc(100%+8px)] left-0 z-[80] grid max-h-[calc(100vh-150px)] w-[300px] gap-[10px] overflow-auto border border-line bg-panel-a p-3 shadow-[3px_3px_0_var(--shadow),0_10px_24px_rgba(0,0,0,.45)] max-[720px]:w-[calc(100vw-32px)]; }
+  .tray.wide { @apply w-[330px] max-[720px]:w-[calc(100vw-32px)]; }
+  .tray h3 { @apply m-0 font-pixel text-[16px] font-bold; }
+  .tray .note { @apply mt-[-6px] mb-0 text-[11px] text-muted; }
+  .cards { @apply grid grid-cols-3 gap-[6px]; }
+  .card { @apply grid cursor-grab touch-none select-none justify-items-center gap-1 border border-transparent bg-panel-2 px-1 py-2 hover:border-amber; }
+  .card .ico { @apply grid h-9 place-items-center; }
+  .card canvas { image-rendering: pixelated; }
+  .card .nm { @apply text-center text-[12px] leading-[1.2] font-semibold; }
+  .mix { @apply grid gap-[10px]; }
+  .mrow { @apply grid gap-1 text-[12px]; }
+  .mrow.master { @apply mb-[2px] border-b border-line pb-[10px]; }
+  .mrow.master .row span { @apply font-bold; }
+  .mvrow { @apply flex items-center gap-2; }
+  .mvrow input { @apply min-w-0 flex-1; }
+  .mpct { @apply min-w-[34px] text-right tabular-nums text-muted; }
+  .scenes { @apply grid grid-cols-2 gap-2; }
+  .scn { @apply grid cursor-pointer gap-[3px] border border-line bg-panel-2 p-[5px] text-left hover:border-amber; }
+  .scn[aria-pressed="true"] { @apply border-amber bg-on-bg; }
+  .scn canvas { @apply block aspect-video w-full; image-rendering: pixelated; }
+  .scn b { @apply text-[12px]; }
+  .scn small { @apply text-[10px] leading-[1.25] text-muted; }
+
+  /* Sân khấu phòng */
+  .room { @apply relative touch-none overflow-hidden bg-[#0d0907] shadow-[0_0_0_3px_#0d0907,0_0_0_5px_var(--line),0_18px_40px_rgba(0,0,0,.5)]; }
+  .room canvas.layer { @apply absolute inset-0 size-full; image-rendering: pixelated; }
+  #lightCv { @apply pointer-events-none z-[400]; }
+  .items { @apply absolute inset-0 z-[3]; }
+  .obj { @apply absolute top-0 left-0 cursor-grab touch-none select-none border-0 bg-none p-0 will-change-transform focus-visible:outline-none; }
+  .obj:hover, .obj:focus-visible { filter: drop-shadow(1px 0 0 var(--amber)) drop-shadow(-1px 0 0 var(--amber)) drop-shadow(0 1px 0 var(--amber)) drop-shadow(0 -1px 0 var(--amber)); }
+  .obj.dragging { @apply cursor-grabbing; filter: drop-shadow(0 6px 4px rgba(0,0,0,.45)); }
+  .obj canvas { @apply pointer-events-none block size-full; image-rendering: pixelated; }
+  .meow { @apply pointer-events-none absolute bottom-full left-[-6px] mb-1 whitespace-nowrap border border-line bg-panel px-[7px] py-[2px] text-[12px] font-bold text-ink shadow-[2px_2px_0_var(--shadow)] animate-[meowPop_1.4s_steps(7)_forwards]; }
+  .hot { @apply absolute z-[1] cursor-pointer border border-dashed border-transparent bg-none p-0 hover:border-[rgba(243,168,75,.85)] focus-visible:border-[rgba(243,168,75,.85)] focus-visible:outline-none; }
+  .hot .tag, .nav-door .tag { @apply pointer-events-none absolute left-1/2 -translate-x-1/2 whitespace-nowrap border border-line bg-panel px-[6px] py-px text-[11px] opacity-0 transition-opacity duration-150; }
+  .hot .tag { @apply top-[-22px]; }
+  .nav-door .tag { @apply top-[-24px] text-ink; }
+  .hot:hover .tag, .hot:focus-visible .tag, .nav-door:hover .tag, .nav-door:focus-visible .tag { @apply opacity-100; }
+  .nav-arrow { @apply relative z-[60] row-start-1 flex h-[clamp(48px,7vw,76px)] w-[clamp(34px,4.2vw,52px)] cursor-pointer items-center justify-center self-center border-2 border-amber bg-panel-a p-0 text-amber shadow-[3px_3px_0_var(--shadow)] hover:bg-amber hover:text-amber-ink focus-visible:bg-amber focus-visible:text-amber-ink max-[720px]:w-10; }
+  .nav-arrow svg { @apply h-auto w-[55%]; }
+  .nav-arrow.l { @apply col-start-1 justify-self-start; }
+  .nav-arrow.r { @apply col-start-3 justify-self-end; }
+  .nav-arrow .tag { @apply pointer-events-none absolute top-[calc(100%+6px)] whitespace-nowrap border border-line bg-panel px-[6px] py-px text-[11px] text-ink opacity-0 transition-opacity duration-150; }
+  .nav-arrow.l .tag { @apply left-0; }
+  .nav-arrow.r .tag { @apply right-0; }
+  .nav-arrow:hover .tag, .nav-arrow:focus-visible .tag { @apply opacity-100; }
+  .nav-door { @apply absolute top-[54.4%] left-[81.25%] z-[60] h-[31%] w-[6.9%] cursor-pointer border-2 border-dashed border-transparent bg-none p-0 hover:border-amber hover:bg-[#f3a84b22] focus-visible:border-amber focus-visible:bg-[#f3a84b22]; }
+  .fade { @apply pointer-events-none fixed inset-0 z-50 bg-[#05030d] opacity-0 transition-opacity duration-300 ease-[ease]; }
+  .fade.on { @apply pointer-events-auto opacity-100; }
+
+  /* Kéo thả: đồng hồ trái/phải, bóng đồ vật */
+  .drag-meter { @apply pointer-events-none fixed z-[900] grid min-w-[150px] gap-1 border border-line bg-panel px-2 py-1 text-[11px]; }
+  .meter { @apply relative h-[6px] border border-line bg-deep after:absolute after:top-[-2px] after:left-1/2 after:h-2 after:w-px after:bg-muted after:content-['']; }
+  .meter i { @apply absolute top-[-1px] size-[6px] -translate-x-1/2 bg-amber; }
+  .meter-row { @apply flex justify-between gap-2 text-muted tabular-nums; }
+  .ghost { @apply pointer-events-none fixed z-[950] opacity-85; }
+  .ghost canvas { @apply size-full; image-rendering: pixelated; }
+
+  /* Popover */
+  .pop { @apply fixed z-[1000] grid max-h-[calc(100vh-16px)] w-[268px] max-w-[calc(100vw-32px)] gap-3 overflow-auto border border-line bg-panel p-[14px] shadow-[4px_4px_0_var(--shadow),0_12px_30px_rgba(0,0,0,.5)]; }
+  .pop h3 { @apply m-0 flex items-center justify-between gap-2 font-pixel text-[17px] font-bold; }
+  .pop h4 { @apply m-0 text-[11px] font-semibold uppercase tracking-[.1em] text-muted; }
+  .pop .x { @apply cursor-pointer border-0 bg-none px-[6px] py-px text-[18px] leading-none text-muted; }
+  .pop .desc { @apply mt-[-6px] mb-0 text-[12px] text-muted; }
+  .row { @apply flex items-center justify-between gap-[10px]; }
+  .lbl { @apply text-[12px] text-muted; }
+  .seg { @apply grid grid-cols-[repeat(auto-fit,minmax(0,1fr))] border border-line; }
+  .seg button { @apply cursor-pointer border-0 border-r border-line bg-panel-2 px-1 py-[7px] text-[12px] last:border-r-0; }
+  .seg button[aria-pressed="true"] { @apply bg-amber font-bold text-amber-ink; }
+  .seg.cols2 { @apply grid-cols-2; }
+  .seg.cols2 button { @apply border-b border-line even:border-r-0 nth-last-[-n+2]:border-b-0; }
+  .switch { @apply relative h-[22px] w-[42px] flex-none cursor-pointer border border-line bg-deep p-0 after:absolute after:top-[3px] after:left-[3px] after:size-[14px] after:bg-muted after:transition-[left] after:duration-150 after:content-['']; }
+  .switch[aria-checked="true"] { @apply border-amber bg-on-bg after:left-[23px] after:bg-amber; }
+  .vol { @apply grid gap-1; }
+  .vol .row span:last-child { @apply text-[12px] tabular-nums; }
+  .spatial { @apply grid gap-[6px] border-t border-dashed border-line pt-[10px] text-[11px] text-muted; }
+  .section { @apply grid gap-3 border-t border-dashed border-line pt-3; }
+  .pomo-box { @apply grid gap-2 border border-line bg-deep2 p-[10px]; }
+  .pomo-box .big { @apply text-center font-num text-[44px] leading-[.9] tabular-nums text-amber; }
+  .pomo-box .actions { @apply grid grid-cols-2 gap-[6px]; }
+
+}
+
+@keyframes meowPop { 0% { opacity: 0; transform: translateY(4px); } 15% { opacity: 1; transform: none; } 80% { opacity: 1; } 100% { opacity: 0; transform: translateY(-4px); } }
