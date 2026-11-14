@@ -1,8 +1,6 @@
 # FocuSpace — Thiết kế Database
 
-> Trạng thái: **Đã duyệt** ở buổi họp kế hoạch 13/11/2026 · bản đầu 08/11/2026 · cập nhật 10/11/2026 theo đề bài đồ án CSB25022 (thêm bảng danh mục, seeder, truy vấn trang Thống kê) · cập nhật 12/11/2026 theo Chương 1 Phân tích hệ thống (truy vết use case, ánh xạ lớp ↔ bảng)
-> Nguồn: ERD trong `docs/ARCHITECTURE.md` (Hình 4, mục 3.3; nguồn `docs/analysis/FocuSpace_Diagrams.drawio`, trang ERD) · `docs/API.md` · `docs/PRD.md` (mục 4.2, 5.2, 6.2) · `docs/analysis/FocuSpace_Diagrams.drawio`, Chương 1 Phân tích hệ thống (Class C1).
-> ERD và tài liệu này khớp từng cột. Các cột, ràng buộc từng ghi nhãn [Bổ sung] (API hoặc PRD cần, không có trong ERD v1.0) đã được duyệt ngày 13/11/2026 và đưa vào ERD; cột ghi chú vẫn giữ nguồn của từng cột.
+> Trạng thái: **Đã duyệt** ở buổi họp kế hoạch 13/11/2026 · rút gọn 14/11/2026. ERD: Kiến trúc Hình 4 (nguồn `docs/analysis/FocuSpace_Diagrams.drawio`, trang ERD), khớp từng cột với tài liệu này.
 
 ## 1. Tổng quan
 
@@ -337,26 +335,15 @@ WHERE u.user_id = $uid
 
 ## 6. Lưu giữ & migration
 
-- Telemetry giữ 400 ngày; job hằng đêm xóa `usage_sessions` có `started_at` quá hạn (cascade sang hai bảng con).
-- Token: job hằng đêm xóa `refresh_tokens` hết hạn > 30 ngày.
 - Migration bằng `prisma migrate`; chỉ thêm cột/bảng, xóa cột ở lần phát hành sau (ARCHITECTURE 4.2).
 - Đổi cấu trúc RoomState: tăng `schemaVer`, thêm bước migrate trong `shared/`; server migrate khi đọc, không migrate hàng loạt.
 - Seeder `backend/prisma/seed.ts` đọc `shared/src/catalog.ts` (cùng nguồn với engine — DRY) và `upsert` theo `code`, nên chạy lại không trùng; khai báo trong `package.json` (`"prisma": { "seed": … }`).
 - Lệnh: `npx prisma migrate dev` (máy dev, tạo migration), `npx prisma migrate deploy` (staging/production), `npx prisma db seed` (nạp danh mục; tự chạy sau `migrate reset`).
 
-## 7. Câu hỏi cần duyệt
-
-1. Lưu `visited` dạng 3 cột boolean (theo tên `visited_out` trong PRD) hay một cột `text[]`? Bản nháp chọn 3 cột boolean.
-2. Ràng buộc chống trùng cho `client_errors` như mục 3.6 có được không?
-3. Băm refresh token bằng SHA-256 (char(64)) có được không?
-4. Hai bảng danh mục `item_types`, `scenes` và dữ liệu seeder ở mục 3.7, 3.8 (lấy từ prototype) có được duyệt không?
-5. Có cần tài khoản demo / số liệu mẫu cho video demo không (PRD Q-13)? Nếu có, nhóm cung cấp nội dung; seeder hiện chỉ nạp danh mục.
-
-## 8. Lịch sử thay đổi
+## 7. Lịch sử thay đổi
 
 | Ngày | Thay đổi |
 |---|---|
 | 08/11/2026 | Bản nháp đầu. |
-| 10/11/2026 | Thêm bảng danh mục, seeder, truy vấn trang Thống kê theo đề bài đồ án. |
-| 12/11/2026 | Đồng bộ với Chương 1 Phân tích hệ thống: thêm bảng ánh xạ lớp thực thể (Class C1) ↔ bảng sau ERD; ghi chú `usage_sessions.user_id` và ý nghĩa `pomodoro_sessions.outcome`; mục 4 thêm cột Use case; truy vấn `/me/stats` ghi chú UC.10. Không đổi bảng, cột, ràng buộc. |
-| 13/11/2026 | Đã duyệt ở buổi họp kế hoạch: bỏ nhãn [Bổ sung] (giữ nguồn trong cột ghi chú); ERD vẽ lại trong drawio (trang ERD), khớp từng cột. |
+| 10–13/11/2026 | Thêm bảng danh mục, seeder, truy vấn trang Thống kê; ánh xạ lớp thực thể ↔ bảng; ERD vẽ lại trong drawio. Duyệt ở buổi họp 13/11. |
+| 14/11/2026 | Rút gọn: bỏ mục "Câu hỏi cần duyệt" (đã duyệt 13/11) và việc dọn dữ liệu hằng đêm (không làm trong đồ án). |

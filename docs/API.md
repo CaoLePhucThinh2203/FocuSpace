@@ -1,5 +1,3 @@
-> Bản chính thức duy nhất (bản Word cũ `docs/FocuSpace_API_Docs.docx` đã gộp vào file này ngày 13/11/2026; cần bản Word thì xuất bằng `pandoc docs/API.md -o FocuSpace_API_Docs.docx`). Đối chiếu lần cuối với `prototype/FocuSpace-Semi-Sandbox.html` ngày 10/11/2026.
-
 # FocuSpace — API Docs
 
 Tài liệu API REST — FocuSpace bản chính thức
@@ -8,15 +6,14 @@ Tài liệu API REST — FocuSpace bản chính thức
 |------------------------|-------------------------------------------------------------------------|
 | **Sản phẩm**           | FocuSpace — web app pixel art Lo-fi Semi-Sandbox                        |
 | **Phiên bản API**      | v1                                                                      |
-| **Phiên bản tài liệu** | v1.2 · v1.0 đã phê duyệt 07/11/2026; v1.1 (danh mục, thống kê) và v1.2 (truy vết use case) đã duyệt ở buổi họp kế hoạch 13/11/2026 |
-| **Ngày cập nhật**      | 13/11/2026 (duyệt v1.1 – v1.2) |
+| **Phiên bản tài liệu** | v1.3 (rút gọn 14/11/2026) · v1.0 phê duyệt 07/11/2026; v1.1 – v1.2 duyệt ở buổi họp kế hoạch 13/11/2026 |
 | **Nguồn**              | docs/API.md · docs/DATABASE.md · docs/PRD.md · prototype/FocuSpace-Semi-Sandbox.html · docs/analysis/FocuSpace_Diagrams.drawio, Chương 1 Phân tích hệ thống |
 
 # 1. Tổng quan & Giới thiệu
 
 |                           |                                                                                               |
 |---------------------------|-----------------------------------------------------------------------------------------------|
-| **Base URL (production)** | https://\<tên-miền\>/api/v1 — \[Cần xác nhận\] khi chọn nơi triển khai                        |
+| **Base URL (production)** | https://\<domain Vercel\>/api/v1 — Vercel chuyển tiếp sang backend trên Render (Kiến trúc §3.5) |
 | **Base URL (dev)**        | http://localhost:3000/api/v1 (gọi qua frontend dev: http://localhost:5173/api/v1, Vite proxy) |
 | **Định dạng dữ liệu**     | application/json; charset=utf-8 cho cả request và response                                    |
 | **Quy ước JSON**          | Khóa camelCase; thời gian ISO 8601 UTC (ví dụ 2026-11-07T10:00:00.000Z); id dạng UUID         |
@@ -1214,9 +1211,7 @@ Mọi response của endpoint có giới hạn kèm header:
 
 - Phiên bản API nằm trên URL: /api/v1/.... Mọi endpoint hiện tại thuộc v1.
 
-- Thay đổi **không phá vỡ** (thêm endpoint, thêm trường tùy chọn trong request, thêm trường trong response) được làm ngay trong v1. Client phải bỏ qua trường không biết.
-
-- Thay đổi **phá vỡ** (đổi tên/xóa trường, đổi kiểu, đổi ý nghĩa mã lỗi) ra mắt ở /api/v2; v1 được duy trì song song ít nhất 90 ngày \[Đề xuất\] và báo trước qua header Deprecation.
+- Thêm endpoint hoặc trường tùy chọn làm ngay trong v1 (client bỏ qua trường không biết); thay đổi phá vỡ sẽ ra /api/v2.
 
 - Cấu trúc trạng thái phòng có phiên bản riêng schemaVer (hiện là 4), độc lập với phiên bản API; server tự migrate dữ liệu cũ khi đọc.
 
@@ -1265,7 +1260,5 @@ Dùng trong GET /room-state (trường data) và PUT /room-state (trường data
 | **Phiên bản** | **Ngày** | **Thay đổi** |
 |---|---|---|
 | v1.0 | 07/11/2026 | Bản đã phê duyệt. |
-| v1.1 | 10/11/2026 | Bổ sung endpoint danh mục (4.12, 4.13) và thống kê (4.14). |
-| v1.2 | 12/11/2026 | Đồng bộ với Chương 1 Phân tích hệ thống: mỗi endpoint 4.1–4.14 thêm dòng “Use case” và “Phương thức service”; mục 1 thêm bảng tóm tắt endpoint ↔ use case ↔ service. Không đổi schema request/response, mã lỗi, rate limit. |
-| v1.2 (duyệt) | 13/11/2026 | Nội dung không đổi; v1.1 – v1.2 đã duyệt ở buổi họp kế hoạch 13/11/2026. |
-| v1.2 (chốt) | 13/11/2026 | 5.1: chốt giới hạn cho /auth/refresh (30 / 15 phút), endpoint 🔒 còn lại và danh mục (120 / phút), cùng 3 header X-RateLimit-*. |
+| v1.1–v1.2 | 10–13/11/2026 | Thêm endpoint danh mục (4.12, 4.13), thống kê (4.14); truy vết use case và phương thức service cho từng endpoint; chốt rate limit 5.1. Duyệt ở buổi họp 13/11. |
+| v1.3 | 14/11/2026 | Rút gọn: bỏ dòng chú thích bản Word cũ; Base URL production theo cách triển khai Vercel + Render; 5.2 Versioning còn 2 ý. Không đổi request/response, mã lỗi. |
