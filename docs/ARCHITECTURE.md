@@ -1,18 +1,12 @@
-> Bản chính thức duy nhất (bản Word cũ `docs/FocuSpace_Kien_truc_giai_phap.docx` đã gộp vào file này ngày 13/11/2026; cần bản Word thì xuất bằng `pandoc docs/ARCHITECTURE.md -o FocuSpace_Kien_truc_giai_phap.docx`). Đối chiếu lần cuối với `prototype/FocuSpace-Semi-Sandbox.html` ngày 10/11/2026.
-
 # FocuSpace — Tài liệu Kiến trúc giải pháp
 
 Solution Architecture Document — FocuSpace bản chính thức
 
-|                   |                                                                                                                    |
-|-------------------|--------------------------------------------------------------------------------------------------------------------|
-| **Sản phẩm**      | FocuSpace — web app pixel art Lo-fi Semi-Sandbox                                                                   |
-| **Phiên bản**     | v1.3 (Hình 2 thay bằng Sequence UC.09, ERD vẽ trong drawio, mã FR chi tiết; thay v1.2) |
-| **Trạng thái**    | v1.0 đã phê duyệt phần kiến trúc ứng dụng và dữ liệu (07/11/2026); v1.1 – v1.3 đã duyệt ở buổi họp kế hoạch 13/11/2026. Phần hạ tầng, giám sát, chi phí giữ nhãn [Đề xuất] vì ngoài phạm vi chấm đồ án |
-| **Ngày cập nhật** | 13/11/2026 (v1.3) |
-| **Nguồn**         | prototype/FocuSpace-Semi-Sandbox.html · docs/PRD.md · docs/ARCHITECTURE.md · docs/DATABASE.md · docs/API.md · docs/PLAN.md · docs/analysis/FocuSpace_Diagrams.drawio, Chương 1 Phân tích hệ thống      |
-
-> **Cách đọc:** Mục có nhãn \[Đề xuất\] là phương án kiến trúc sư đưa ra khi tài liệu nguồn chưa quyết định (nơi triển khai, SLA, công cụ giám sát, chi phí). Mục có nhãn \[Cần xác nhận\] cần số liệu từ đội dự án.
+| | |
+|---|---|
+| **Sản phẩm** | FocuSpace — web app pixel art Lo-fi Semi-Sandbox |
+| **Phiên bản** | v1.4 (rút gọn 14/11/2026) · v1.0 duyệt 07/11, v1.1–v1.3 duyệt ở buổi họp 13/11/2026 |
+| **Nguồn** | docs/PRD.md · docs/DATABASE.md · docs/API.md · docs/PLAN.md · docs/analysis/FocuSpace_Diagrams.drawio · prototype/ |
 
 # 1. Giới thiệu & Tổng quan dự án
 
@@ -30,43 +24,10 @@ Tài liệu mô tả thiết kế giải pháp CNTT cho FocuSpace bản chính t
 
 - Ràng buộc đồ án: đề bài môn Web Design and Development (CSB25022) — Tailwind CSS, ít nhất 3 trang, PostgreSQL có migration và seeder, tối ưu Lighthouse, Google Analytics, Sentry, quy trình GitHub (PRD mục 2.4).
 
-## 1.3 Bối cảnh & Mục tiêu kinh doanh
+## 1.3 Bối cảnh
 
-### Hiện trạng (AS-IS)
-
-- Một file HTML tĩnh prototype/FocuSpace-Semi-Sandbox.html (~240 KB) chứa toàn bộ giao diện, đồ họa canvas và âm thanh tổng hợp bằng Web Audio.
-
-- Trạng thái phòng chỉ lưu trong LocalStorage của một trình duyệt (khóa focuspace.room.v4); không có tài khoản, không đồng bộ giữa thiết bị.
-
-- Không đo được KPI (thời lượng phiên, tỷ lệ hoàn thành Pomodoro, retention).
-
-- Mã nguồn một khối, khó kiểm thử và mở rộng.
-
-### Tương lai (TO-BE)
-
-- Frontend React + TypeScript, giao diện bằng Tailwind CSS, 6 trang định tuyến bằng React Router; engine (render, âm thanh, đặt đồ, hẹn giờ) tách thành module thuần có unit test và chỉ tải ở trang Căn phòng.
-
-- Backend REST (Node.js + Express) cho tài khoản, đồng bộ trạng thái phòng có kiểm soát phiên bản, thu thập số liệu KPI và cung cấp dữ liệu cho trang Thư viện, Thống kê.
-
-- PostgreSQL 16 lưu người dùng, trạng thái phòng (JSONB), số liệu và danh mục đồ vật, khung cảnh (nạp bằng seeder).
-
-- Kiến trúc **local-first**: không đăng nhập hoặc mất mạng vẫn dùng đủ tính năng.
-
-- Google Analytics 4 theo dõi hành vi người dùng; Sentry ghi lỗi frontend và backend.
-
-### Bản đồ năng lực kinh doanh
-
-| **Năng lực**           | **Mô tả**                                                    | **Thành phần đảm nhận**                                |
-|------------------------|--------------------------------------------------------------|--------------------------------------------------------|
-| Trải nghiệm không gian | Ba không gian pixel art, chuyển phòng, thời tiết, khung cảnh | Frontend · Room Engine (render)                        |
-| Âm thanh không gian    | Spatial Audio 2D, mixer, Master, nhạc Lo-fi tổng hợp         | Frontend · Room Engine (audio)                         |
-| Tùy biến Semi-Sandbox  | Thêm/xóa/kéo đồ vật theo quy tắc đặt                         | Frontend · placement + UI                              |
-| Quản lý thời gian      | Pomodoro dùng chung, Hẹn giờ ngủ                             | Frontend · timers                                      |
-| Lưu & đồng bộ          | LocalStorage, đồng bộ cloud, xử lý xung đột                  | Frontend sync client · Room state service · PostgreSQL |
-| Tài khoản              | Đăng ký, đăng nhập, phiên, xóa tài khoản                     | Auth service · PostgreSQL                              |
-| Đo lường               | Phiên dùng, Pomodoro, lỗi âm thanh, báo cáo KPI              | Telemetry queue · Telemetry service · PostgreSQL       |
-| Nội dung động | Thư viện đồ vật, khung cảnh; thống kê học tập | Trang Thư viện, Thống kê · Catalog service · Stats service · PostgreSQL |
-| Quan sát | Lượt xem, sự kiện, lỗi ứng dụng | Google Analytics 4 · Sentry · log JSON |
+- **Trước:** prototype một file HTML (`prototype/FocuSpace-Semi-Sandbox.html`) chứa toàn bộ giao diện, đồ họa canvas và âm thanh Web Audio; trạng thái chỉ lưu LocalStorage, không tài khoản, không đo KPI.
+- **Sau:** frontend React + TypeScript + Tailwind CSS, 6 trang; backend REST (Node.js + Express) cho tài khoản, đồng bộ phòng, telemetry, Thư viện, Thống kê; PostgreSQL có migration và seeder; **local-first** (không đăng nhập hoặc mất mạng vẫn dùng đủ tính năng); GA4 + Sentry.
 
 # 2. Yêu cầu hệ thống (Requirements)
 
@@ -97,31 +58,18 @@ Tài liệu mô tả thiết kế giải pháp CNTT cho FocuSpace bản chính t
 | Thời gian phản hồi API                | p95 \< 300 ms                                      | Mọi endpoint                                                 |
 | Độ trễ dữ liệu đồng bộ giữa thiết bị  | ≤ 2 giây sau thay đổi + thời gian mở app ở máy kia | PUT debounce 2 giây; máy kia nhận khi mở app hoặc khi bị 409 |
 | Kích thước trạng thái phòng           | ≤ 64 KB / người dùng                               | Ràng buộc DB + validate                                      |
-| Người dùng đồng thời / lưu lượng đỉnh | \[Cần xác nhận\]                                   | Xem ước tính tải bên dưới                                    |
+| Người dùng đồng thời | Khoảng 50 | Gói miễn phí Render + Neon (PRD Q-10) |
 | Điểm Google Lighthouse | ≥ 90 cho Performance, Accessibility, Best Practices, SEO | Cấu hình mobile, cả 6 trang; đo trong CI |
-
-**Ước tính tải theo hành vi client** (để định cỡ khi có số người dùng): mỗi người dùng đang đăng nhập gửi tối đa 1 PUT /room-state mỗi 2 giây khi đang chỉnh liên tục (thường vài lần mỗi phiên), 1 POST /telemetry/batch mỗi 60 giây, và vài request lúc mở app. Với **1.000 người dùng đồng thời**: trung bình ≈ 17 request/giây cho telemetry, đỉnh lý thuyết ≈ 500 request/giây nếu tất cả cùng kéo đồ một lúc.
-
-### Tính sẵn sàng & Khôi phục (Availability & DR) \[Đề xuất\]
-
-- Uptime mục tiêu API: **99,5%/tháng** (≈ 3,6 giờ gián đoạn). Mức này đủ vì kiến trúc local-first: API ngừng chỉ làm chậm đồng bộ, không làm hỏng trải nghiệm.
-
-- Frontend tĩnh trên CDN: sẵn sàng theo SLA của nhà cung cấp CDN.
-
-- Database: dịch vụ PostgreSQL quản lý, có bản sao dự phòng ở vùng sẵn sàng (AZ) khác; sao lưu hằng ngày giữ 14 ngày + Point-in-Time Recovery 7 ngày.
-
-- RPO ≤ 5 phút, RTO ≤ 1 giờ. Multi-Region: không cần ở giai đoạn này.
 
 ### Bảo mật
 
 | **Khía cạnh**              | **Giải pháp**                                                                                                                                                                                                                                                        |
 |----------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Xác thực (Authentication)  | Email + mật khẩu (Argon2id). Access token JWT HS256 15 phút trong bộ nhớ trình duyệt; refresh token 256 bit ngẫu nhiên, 30 ngày, cookie httpOnly · Secure · SameSite=Strict · Path=/api/v1/auth; xoay vòng mỗi lần refresh, phát hiện dùng lại thì thu hồi cả chuỗi. |
+| Xác thực (Authentication)  | Email + mật khẩu (Argon2id). Access token JWT HS256 15 phút trong bộ nhớ trình duyệt; refresh token 256 bit ngẫu nhiên, 30 ngày, cookie httpOnly · Secure · SameSite=None (production; dev dùng Lax) · Path=/api/v1/auth; xoay vòng mỗi lần refresh, phát hiện dùng lại thì thu hồi cả chuỗi. |
 | Phân quyền (Authorization) | Một vai trò duy nhất (người dùng). Mỗi người chỉ đọc/ghi room_states và tài khoản của chính mình, xác định bằng sub trong JWT; không có tham số user id trên URL. Danh mục (/catalog) công khai, chỉ đọc.                                                                                                    |
-| Mã hóa khi truyền          | HTTPS/TLS 1.2+ cho mọi kết nối; HSTS. Kết nối API → DB dùng TLS.                                                                                                                                                                                                     |
-| Mã hóa khi lưu             | Mã hóa đĩa của dịch vụ DB quản lý \[Đề xuất\]; mật khẩu và refresh token chỉ lưu bản băm.                                                                                                                                                                            |
+| Mã hóa khi truyền          | HTTPS cho mọi kết nối (Vercel, Render); kết nối Render → Neon dùng TLS (`sslmode=require`).                                                                                                                                                                                                     |
+| Mã hóa khi lưu | Mật khẩu (Argon2id) và refresh token (SHA-256) chỉ lưu bản băm. |
 | Chống lạm dụng             | Rate limit đăng nhập/đăng ký 10 lần/15 phút/IP; telemetry 60 lô/giờ/clientId; giới hạn body 64 KB / 256 KB; CORS chỉ cho origin frontend; validate Zod mọi request.                                                                                                  |
-| Audit log \[Đề xuất\]      | Ghi log có cấu trúc cho đăng ký, đăng nhập thành công/thất bại, refresh bị từ chối, thu hồi chuỗi token, xóa tài khoản (user id, IP, thời điểm; không ghi mật khẩu hay token).                                                                                       |
 
 # 3. Kiến trúc giải pháp chi tiết
 
@@ -171,20 +119,23 @@ Hai khối lớn: **ứng dụng trong trình duyệt** chịu toàn bộ trải
 
 ### Ánh xạ lớp thiết kế ↔ thành phần
 
-| **Lớp (Chương 1, Class C2/C3)** | **Module mã nguồn** |
+| **Lớp (Chương 1, Class C2/C3)** | **Module mã nguồn** (`frontend/src/`, `backend/src/`) |
 |---|---|
-| GiaoDienCanPhong | `frontend/src/pages/Room` + `ui/` (Header, Toolbar, Tray, Popover, Mixer, ScenePicker, RoomNav, MergeDialog) + `store/` (Zustand) |
-| RoomEngine | `engine/logic/rooms` + `engine/render/*` |
-| QuanLyDoVat | `engine/logic/placement` (+ `spatial`) |
-| AmThanhKhongGian | `engine/audio/*` (context, graph, synth, lofi, routing) |
-| BoDemPomodoro | `engine/logic/pomodoro` |
-| HenGioNgu | `engine/logic/sleepTimer` |
-| BoLuuTruCucBo | `persistence/local` + `shared/src/migrate.ts` |
-| DongBoClient | `persistence/sync` + `persistence/api` |
-| TelemetryQueue | `persistence/telemetry` |
-| TrangThuVien / TrangThongKe / TrangTaiKhoan | `pages/Library` / `pages/Stats` / `pages/Account` |
-| TrangChu / TrangGioiThieu | `pages/Home` / `pages/About` (kèm `pages/NotFound`) |
-| AuthService, RoomStateService, CatalogService, StatsService, TelemetryService | `backend/src/services/*` (route tương ứng trong `backend/src/routes/`) |
+| GiaoDienCanPhong | `areas/study/pages/Room.tsx`, `areas/study/components/` (RoomHeader, RoomNav) + component của từng khu vực (ItemTray, ItemPopover, VolumeMixer, ScenePicker, SleepTimer) |
+| RoomEngine | `areas/study/engine/` (rooms, static, animation, lighting) + `areas/bedroom/engine/bed.ts` + `areas/garden/engine/out.ts`; phần chưa tách nằm ở `engine/legacy/roomEngine.js` |
+| QuanLyDoVat | `areas/items-audio/engine/placement.ts` (+ `shared/src/spatial.ts`) |
+| AmThanhKhongGian | `areas/items-audio/engine/audio/` (context, synth, lofi, routing) + `areas/garden/engine/sceneAudio.ts` |
+| BoDemPomodoro / HenGioNgu | `areas/study/engine/pomodoro.ts` / `areas/bedroom/engine/sleepTimer.ts` |
+| BoLuuTruCucBo / DongBoClient | `areas/study/roomSync.ts` + `lib/api.ts` + `shared/src/migrate.ts` |
+| TelemetryQueue | `areas/garden/telemetry.ts` |
+| TrangChu, TrangThuVien, TrangTaiKhoan, TrangGioiThieu | `areas/study/pages/` (Home, Library, Account, About, NotFound) |
+| TrangThongKe | `areas/bedroom/pages/Stats.tsx` |
+| AuthService, StatsService | `backend/src/areas/bedroom/` (authService, statsService, routes) |
+| RoomStateService | `backend/src/areas/study/roomStateService.ts` |
+| CatalogService | `backend/src/areas/items-audio/catalogItemsService.ts`, `backend/src/areas/garden/scenesService.ts` |
+| TelemetryService | `backend/src/areas/garden/telemetryService.ts` |
+
+Router và seeder của mỗi khu vực được nạp tự động (`backend/src/lib/areas.ts`, `frontend/src/lib/areas.ts`), nên phần nền chạy được khi chưa có code của khu vực khác.
 
 Thông điệp trong biểu đồ Sequence (Chương 1 §1.4) dùng đúng tên phương thức của các lớp này. Hình các biểu đồ lớp: Phụ lục A.
 
@@ -200,8 +151,6 @@ Hình 2 gồm hai luồng chính của hệ thống:
 - **Lưu thay đổi:** áp ngay vào hình và âm, lưu LocalStorage sau 250 ms, đẩy `PUT /room-state` sau 2 giây; backend kiểm tra Zod rồi `UPDATE … WHERE revision = baseRevision`. Khớp thì trả revision mới; máy khác đã ghi trước thì trả 409 REVISION_CONFLICT kèm bản hiện có, client áp bản server và báo “Phòng đã được cập nhật từ thiết bị khác”. Mất mạng thì thử lại khi có mạng, chip báo ngoại tuyến.
 
 AudioContext được tạo ở trạng thái tạm dừng và chỉ bật sau cú nhấp/phím đầu tiên (PRD FR-AUD-07): xem Sequence UC.03 (Chương 1, Hình 1.16).
-
-*Hình 3 của v1.2 (lưu thay đổi và xung đột) đã gộp vào Hình 2 từ v1.3; số Hình 4, 5 giữ nguyên để không đổi tham chiếu.*
 
 ## 3.3 Kiến trúc dữ liệu (Data Architecture)
 
@@ -234,17 +183,10 @@ AudioContext được tạo ở trạng thái tạm dừng và chỉ bật sau c
 | Pomodoro / Hẹn giờ ngủ đang chạy | Chỉ trong bộ nhớ trình duyệt                                                   | Không giữ qua lần tải lại (FR-SAVE-04)                                                                    |
 | Danh mục đồ vật, khung cảnh | Bảng item_types, scenes; nạp bằng seeder từ shared/catalog | Trang Thư viện truy vấn và lọc theo phòng, nhóm; cùng một nguồn với engine (DRY) |
 
-### Phân vùng, sao lưu và lưu trữ lâu dài
+### Thay đổi cấu trúc dữ liệu
 
-- Không phân vùng ở giai đoạn đầu. Khi usage_sessions vượt khoảng 10 triệu dòng \[Đề xuất\], phân vùng theo tháng của started_at để xóa dữ liệu cũ nhanh.
-
-- Dữ liệu telemetry giữ 400 ngày, job hằng đêm xóa phần quá hạn (đủ cho so sánh theo năm).
-
-- Sao lưu: theo dịch vụ DB quản lý (mục 2.2); diễn tập khôi phục mỗi quý \[Đề xuất\].
-
-- Thay đổi cấu trúc RoomState: tăng schemaVer, thêm bước migrate; server migrate khi đọc và ghi lại ở lần PUT kế tiếp, không chạy migrate hàng loạt.
-
-- Migration bằng prisma migrate (chỉ thêm cột, bảng); seeder bằng prisma db seed, upsert theo code nên chạy lại an toàn; seeder không tạo người dùng hay số liệu mẫu.
+- RoomState: tăng `schemaVer`, thêm bước migrate trong `shared/`; server migrate khi đọc, không migrate hàng loạt.
+- Bảng: `prisma migrate` (chỉ thêm cột/bảng); seeder `prisma db seed` upsert theo code nên chạy lại an toàn, không tạo người dùng hay số liệu mẫu.
 
 ## 3.4 Kiến trúc tích hợp (Integration Architecture)
 
@@ -253,52 +195,28 @@ AudioContext được tạo ở trạng thái tạm dừng và chỉ bật sau c
 | REST/JSON qua HTTPS             | Có        | Toàn bộ giao tiếp client ↔ backend, tiền tố /api/v1 (chi tiết trong API Docs)                  |
 | Cookie httpOnly                 | Có        | Chỉ cho refresh token, phạm vi /api/v1/auth                                                    |
 | fetch keepalive                 | Có        | Lần đồng bộ cuối khi đóng tab                                                                  |
-| API Gateway                     | Không     | Một backend duy nhất; reverse proxy/load balancer đảm nhận TLS, giới hạn body                  |
-| Message broker (Kafka/RabbitMQ) | Không     | Không có xử lý bất đồng bộ giữa các service; telemetry ghi thẳng DB theo lô                    |
-| gRPC, Webhook                   | Không     | Không có hệ thống bên thứ ba tích hợp                                                          |
 | Google Fonts                    | Có        | Font Press Start 2P, Be Vietnam Pro, Pixelify Sans, VT323; có font dự phòng nếu không tải được |
 | Google Analytics 4 (gtag.js) | Có | Lượt xem trang và sự kiện; chỉ ở bản production; không gửi dữ liệu cá nhân |
 | Sentry | Có | SDK frontend và backend gửi lỗi qua HTTPS; DSN đặt trong biến môi trường |
 
 ## 3.5 Kiến trúc hạ tầng & Cloud
 
-### Triển khai cho đồ án (đã chốt 13/11/2026, D-04)
+Chốt 13/11/2026 (D-04), gói miễn phí, chi phí 0 đồng trong thời gian đồ án.
 
-| **Lớp** | **Dịch vụ (gói miễn phí)** | **Cấu hình** |
+| **Lớp** | **Dịch vụ** | **Cấu hình** |
 |---|---|---|
-| Frontend | Vercel | Build `vite build` từ thư mục `frontend/`; rewrite mọi đường dẫn về `index.html`; biến `VITE_API_URL`, `VITE_GA_ID`, `VITE_SENTRY_DSN` |
-| Backend | Render — Web Service Node 20 | Lệnh chạy `npm run start -w backend`; health check `GET /api/v1/health`; biến `DATABASE_URL`, `JWT_SECRET`, `SENTRY_DSN`, `CORS_ORIGIN` (domain Vercel). Gói miễn phí ngủ sau 15 phút không dùng: mở link trước khi demo khoảng 1 phút |
-| Database | Neon — PostgreSQL 16 | `prisma migrate deploy` và `prisma db seed` chạy một lần sau mỗi migration mới; dùng chuỗi kết nối có `sslmode=require` |
-| Theo dõi | Google Analytics 4, Sentry | Tài khoản do Phúc Thịnh tạo; mã chỉ đặt trong biến môi trường của Vercel/Render và `.env` máy cá nhân |
+| Frontend | Vercel | Root Directory `frontend`, framework Vite. `frontend/vercel.json` chuyển `/api/*` sang Render và trả `index.html` cho các route còn lại. Không cần `VITE_API_URL` (mặc định `/api/v1`); `VITE_GA_ID`, `VITE_SENTRY_DSN` nếu bật theo dõi |
+| Backend | Render — Web Service Node 20 | Tạo bằng Blueprint từ `render.yaml`: build `npm install` + `prisma generate`, start `prisma migrate deploy` rồi `npm run start -w backend` (chạy TypeScript bằng tsx); health check `GET /api/v1/health`; biến `DATABASE_URL`, `JWT_SECRET` (Render tự sinh), `CORS_ORIGIN` (domain Vercel), `COOKIE_SECURE=true`, `SENTRY_DSN`. Gói miễn phí ngủ sau 15 phút: mở link health trước khi demo |
+| Database | Neon — PostgreSQL 16 | `DATABASE_URL` dùng chuỗi **không qua pooler** (unpooled) để `migrate deploy` chạy được; seed chạy một lần từ máy dev (`npm run db:seed`) |
+| Theo dõi | Google Analytics 4, Sentry | Tài khoản do Phúc Thịnh tạo; mã chỉ đặt trong biến môi trường |
 
-Cookie refresh token đặt `SameSite=None; Secure` vì frontend và backend khác domain; CORS chỉ cho domain Vercel. Chi phí: 0 đồng trong thời gian đồ án.
-
-### Kiến trúc tham chiếu khi mở rộng \[Đề xuất\]
-
-Ngoài phạm vi đồ án. Kiến trúc dưới đây không phụ thuộc nhà cung cấp; áp dụng được trên AWS, GCP, Azure hoặc nhà cung cấp trong nước.
-
-![Hình 5](images/architecture-hinh-5.png)
-
-*Hình 5 — Kiến trúc hạ tầng tham chiếu*
-
-| **Lớp**      | **Thành phần**                                           | **Cấu hình khởi điểm**                                                       |
-|--------------|----------------------------------------------------------|------------------------------------------------------------------------------|
-| Frontend     | Object storage + CDN                                     | File tĩnh từ vite build, cache dài cho asset có hash, không cache index.html; mọi đường dẫn trang trả về index.html (định tuyến phía client) |
-| Mạng         | VPC, subnet công khai cho LB, subnet riêng cho API và DB | DB không có IP công khai                                                     |
-| Cân bằng tải | Load balancer L7 / reverse proxy                         | Kết thúc TLS, health check GET /api/v1/health, giới hạn body                 |
-| Compute      | Container (Docker) chạy Node.js 20                       | 2 bản chạy song song (0,5 vCPU, 512 MB mỗi bản); tự mở rộng khi CPU \> 60%   |
-| Database     | PostgreSQL 16 quản lý                                    | 2 vCPU, 4 GB RAM, 20 GB SSD, có bản dự phòng AZ khác                         |
-| Môi trường   | local · staging · production                             | local dùng docker-compose hoặc PostgreSQL cài trực tiếp                      |
+Trình duyệt chỉ gọi domain Vercel (Vercel chuyển tiếp `/api` sang Render), nên cookie refresh token là cookie cùng trang, không bị chặn cookie bên thứ ba.
 
 ## 3.6 Kiến trúc bảo mật & IAM
 
 - Quản lý danh tính tự xây (email/mật khẩu), không OAuth2/OIDC ở phiên bản này (đã chốt). Nếu bổ sung sau, thêm bảng auth_identities và luồng OIDC mà không đổi cấu trúc token hiện tại.
 
-- Secret (JWT_SECRET, DATABASE_URL, SENTRY_DSN) lưu trong trình quản lý secret của nền tảng, không nằm trong mã nguồn; .env chỉ dùng cho máy dev.
-
-- WAF/firewall \[Đề xuất\]: bật bộ luật cơ bản (OWASP) ở load balancer; security group chỉ cho LB gọi API, chỉ API gọi DB.
-
-- Quyền truy cập vận hành: tài khoản cá nhân, xác thực hai lớp, nguyên tắc quyền tối thiểu cho console cloud và DB.
+- Secret (`JWT_SECRET`, `DATABASE_URL`, `SENTRY_DSN`) đặt trong biến môi trường của Render/Vercel, không nằm trong mã nguồn; `.env` chỉ dùng cho máy dev và không commit.
 
 # 4. Vận hành & Quản lý giải pháp
 
@@ -307,9 +225,7 @@ Ngoài phạm vi đồ án. Kiến trúc dưới đây không phụ thuộc nhà
 | **Hạng mục**       | **Giải pháp**                                                                                          | **Ngưỡng cảnh báo**                         |
 |--------------------|--------------------------------------------------------------------------------------------------------|---------------------------------------------|
 | Log tập trung      | Log JSON (pino) có requestId, gửi về dịch vụ log của nền tảng; không ghi mật khẩu, token, nội dung room state | —                                           |
-| Metrics            | \[Đề xuất\] Prometheus (endpoint metrics nội bộ) + Grafana: request/giây, p95, tỷ lệ 5xx, số 409, kết nối DB       | p95 \> 300 ms trong 5 phút; 5xx \> 1%       |
-| Health check       | GET /api/v1/health từ load balancer và dịch vụ kiểm tra uptime bên ngoài                               | 2 lần thất bại liên tiếp                    |
-| Database           | CPU, dung lượng, kết nối, độ trễ bản sao                                                               | Dung lượng \> 80%; CPU \> 80% trong 10 phút |
+| Health check | GET /api/v1/health (Render dùng để kiểm tra service) | Render báo lỗi khi health không trả 200 |
 | APM / lỗi frontend | Sentry cho frontend và backend (lỗi, phiên bản phát hành, môi trường, không gửi dữ liệu cá nhân); tỷ lệ lỗi Audio Context lấy từ client_errors                         | Lỗi Audio Context \> 0,05% phiên/ngày       |
 | KPI sản phẩm       | Truy vấn tổng hợp theo DATABASE §5, bảng điều khiển hằng ngày                                          | —                                           |
 | Hành vi người dùng | Google Analytics 4: lượt xem từng trang, sự kiện room_switch, item_add, scene_change, pomodoro_start, pomodoro_complete, sleep_timer_set, sign_up, login | — |
@@ -317,21 +233,9 @@ Ngoài phạm vi đồ án. Kiến trúc dưới đây không phụ thuộc nhà
 
 ## 4.2 DevOps & CI/CD
 
-Mã nguồn là monorepo npm workspaces (shared, backend, frontend). Quy trình đề xuất:
+Monorepo npm workspaces (`shared`, `backend`, `frontend`). CI (`.github/workflows/ci.yml`, job `build-test`) chạy trên mỗi PR và mỗi lần push lên `main`, có PostgreSQL 16 dạng service (DB `focuspace_test`): cài thư viện → `prisma generate` → `npm run lint` → `npm test` → build frontend. Ruleset của `main` bắt buộc job này xanh trước khi merge.
 
-1.  Pull request: npm run lint, format:check, unit test (shared, engine).
-
-2.  Integration test backend với PostgreSQL chạy dạng service trong CI (DB focuspace_test, tài khoản tạm tạo và xóa trong mỗi lần chạy).
-
-3.  Build: shared → backend (image Docker gắn tag theo commit) → frontend (file tĩnh).
-
-4.  E2E Playwright trên Chromium, Firefox, WebKit với bản build ở 3 cỡ màn hình (375, 768, 1280 px); Lighthouse CI đo 6 trang.
-
-5.  Merge vào nhánh chính: tự triển khai staging, chạy prisma migrate deploy và prisma db seed, smoke test health.
-
-6.  Triển khai production cần duyệt thủ công; rolling update từng container.
-
-**Rollback:** triển khai lại image và bản frontend của lần phát hành trước. Migration DB phải tương thích ngược (chỉ thêm cột/bảng; xóa cột ở lần phát hành sau) để rollback không cần hạ cấp DB. Định dạng RoomState mới luôn đọc được bởi hàm migrate nên frontend cũ không làm hỏng dữ liệu.
+Triển khai: Render và Vercel tự deploy lại khi `main` có commit mới; migration chạy trong lệnh start của Render. Rollback: chọn lại bản deploy trước trên Render/Vercel; migration chỉ thêm cột/bảng nên không cần hạ cấp DB.
 
 ### Quy trình làm việc trên GitHub
 
@@ -347,26 +251,13 @@ Mã nguồn là monorepo npm workspaces (shared, backend, frontend). Quy trình 
 
 - **Thư mục .github/:** ISSUE_TEMPLATE/ (feature.md, bug.md), pull_request_template.md, workflows/ci.yml.
 
-## 4.3 Ước tính chi phí (Cost Estimation)
+## 4.3 Chi phí
 
-> Trong thời gian đồ án chi phí là 0 đồng (Vercel, Render, Neon, GA4, Sentry đều dùng gói miễn phí, §3.5). Bảng dưới chỉ dùng để báo giá khi mở rộng theo kiến trúc tham chiếu; số người dùng tham chiếu khoảng 50 đồng thời (PRD Q-10).
-
-| **Hạng mục**          | **Cấu hình khởi điểm**                                  | **Cách tối ưu**                                         | **Chi phí/tháng** |
-|-----------------------|---------------------------------------------------------|---------------------------------------------------------|-------------------|
-| Compute API           | 2 container × 0,5 vCPU, 512 MB                          | Reserved/Savings Plan cho phần nền; tự mở rộng theo CPU | \[Cần báo giá\]   |
-| Database              | PostgreSQL quản lý 2 vCPU, 4 GB, 20 GB, có bản dự phòng | Reserved 1 năm; tắt bản dự phòng ở staging              | \[Cần báo giá\]   |
-| Load balancer         | 1 LB L7                                                 | Dùng chung cho staging và production nếu được           | \[Cần báo giá\]   |
-| CDN + lưu trữ tĩnh    | Vài MB file tĩnh, băng thông theo lượt truy cập         | Cache dài cho asset có hash                             | \[Cần báo giá\]   |
-| Log, metrics, sao lưu | Giữ log 30 ngày, backup 14 ngày                         | Lọc log mức debug ở production                          | \[Cần báo giá\]   |
-| Môi trường staging    | 1 container, DB nhỏ không dự phòng                      | Có thể dùng Spot/preemptible; tắt ngoài giờ             | \[Cần báo giá\]   |
-| Google Analytics 4 | Bản miễn phí | — | 0 |
-| Sentry | Gói miễn phí cho nhóm nhỏ | Lấy mẫu trace 10%, chỉ gửi lỗi production | [Cần xác nhận gói] |
-
-Âm thanh và đồ họa tạo bằng code nên không tốn chi phí lưu trữ/băng thông cho file media — một lợi thế chi phí của quyết định Q-03.
+0 đồng trong thời gian đồ án: Vercel, Render, Neon, GA4, Sentry đều dùng gói miễn phí. Âm thanh và đồ họa tạo bằng code nên không tốn lưu trữ file media (Q-03).
 
 # Phụ lục A — Mô hình lớp thiết kế
 
-Ba biểu đồ lớp xuất từ FocuSpace_Diagrams.drawio (trang C1–C3), cùng nội dung với Chương 1 §1.5. Đặt ở phụ lục để không đổi số Hình 1–5 đang được các tài liệu khác tham chiếu.
+Ba biểu đồ lớp xuất từ FocuSpace_Diagrams.drawio (trang C1–C3), cùng nội dung với Chương 1 §1.5.
 
 ![Hình A1](images/class-thuc-the.png)
 
@@ -390,8 +281,6 @@ Các lớp trang (TrangChu, TrangGioiThieu, TrangThuVien, TrangThongKe, TrangTai
 
 | **Phiên bản** | **Ngày** | **Thay đổi** |
 |---|---|---|
-| v1.0 | 07/11/2026 | Bản đã phê duyệt phần kiến trúc ứng dụng và dữ liệu. |
-| v1.1 | 10/11/2026 | Bổ sung theo đề bài đồ án CSB25022. |
-| v1.2 | 12/11/2026 | Đồng bộ với Chương 1 Phân tích hệ thống: 2.1 thêm cột Use case; 3.2 bổ sung tên 5 lớp service, bảng ánh xạ lớp thiết kế ↔ module, ghi chú chi tiết dưới Hình 2, Hình 3; 3.3 thêm bảng ánh xạ lớp thực thể ↔ bảng; thêm Phụ lục A (Hình A1–A3, biểu đồ lớp). |
-| v1.3 | 13/11/2026 | Hình 2 thay bằng Sequence UC.09 xuất từ drawio (trang S9), Hình 3 gộp vào Hình 2; Hình 4 (ERD) vẽ lại trong drawio (trang ERD); 2.1 ghi mã FR chi tiết theo PRD v5.4; 4.2 nhãn khu vực theo `docs/TASKS.md`; trạng thái: v1.1 – v1.3 đã duyệt ở buổi họp kế hoạch 13/11/2026. |
-| v1.3 (bổ sung) | 13/11/2026 | 3.5 chốt nơi triển khai cho đồ án (D-04): Vercel + Render + Neon, gói miễn phí; kiến trúc cloud cũ giữ làm tham chiếu khi mở rộng; 4.3 ghi chi phí 0 đồng. |
+| v1.0 | 07/11/2026 | Bản đã phê duyệt. |
+| v1.1–v1.3 | 10–13/11/2026 | Bổ sung theo đề bài CSB25022; đồng bộ Chương 1 (ánh xạ lớp ↔ module/bảng, Phụ lục A); Hình 2 là Sequence UC.09, ERD vẽ trong drawio; chốt triển khai Vercel + Render + Neon. Duyệt ở buổi họp 13/11. |
+| v1.4 | 14/11/2026 | Rút gọn: bỏ phần [Đề xuất] ngoài phạm vi đồ án (bản đồ năng lực, DR, kiến trúc tham chiếu khi mở rộng và Hình 5, WAF, metrics, báo giá); bảng ánh xạ lớp ↔ module theo thư mục khu vực thật; 3.5 và 4.2 ghi đúng cấu hình `render.yaml`, `vercel.json`, CI; cookie SameSite=None. |
