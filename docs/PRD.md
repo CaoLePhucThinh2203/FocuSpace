@@ -1,16 +1,6 @@
-> Bản chính thức duy nhất (bản Word cũ `docs/FocuSpace_PRD.docx` đã gộp vào file này ngày 13/11/2026; cần bản Word thì xuất bằng `pandoc docs/PRD.md -o FocuSpace_PRD.docx`). Đối chiếu lần cuối với `prototype/FocuSpace-Semi-Sandbox.html` ngày 10/11/2026.
-
 # FocuSpace — Tài liệu yêu cầu sản phẩm (PRD)
 
 Căn phòng Semi-Sandbox · Phòng học · Phòng ngủ · Sân vườn
-
-|                   |                                                                                                  |
-|-------------------|--------------------------------------------------------------------------------------------------|
-| **Sản phẩm**      | FocuSpace — web app pixel art Lo-fi Semi-Sandbox                                                 |
-| **Phiên bản**     | v5.5 (sửa giao diện và âm thanh theo góp ý 15/11; thay v5.4) |
-| **Trạng thái**    | v5.0 đã phê duyệt 07/11/2026 · v5.1 – v5.4 đã duyệt ở buổi họp kế hoạch 13/11/2026 · v5.5 chờ duyệt |
-| **Ngày cập nhật** | 15/11/2026 (v5.5 — header chung, âm nền, chỉnh giờ Pomodoro/Hẹn giờ ngủ) |
-| **Nguồn**         | prototype/FocuSpace-Semi-Sandbox.html (tiêu đề trang “FocuSpace Semi-Sandbox 9”) · docs/PRD.md · PRD v2–v4 · FocuSpace_Semi_Sandbox_PRD · đề bài Final Project Brief CSB25022 · FocuSpace_Diagrams.drawio, Chương 1 Phân tích hệ thống |
 
 # 1. Thông tin chung (Metadata)
 
@@ -18,9 +8,7 @@ Căn phòng Semi-Sandbox · Phòng học · Phòng ngủ · Sân vườn
 |---|---|
 | **Chủ sở hữu (Product Owner / PM)** | Cao Lê Phúc Thịnh (theo PRD Semi-Sandbox gốc) |
 | **Đội ngũ tham gia** | Tuấn Hưng (đồ vật, âm thanh) · Đình Nhiên (Sân vườn) · Tuấn Lộc (Phòng ngủ) · Phúc Thịnh (Phòng học, quản lý repo, các trang còn lại) · chi tiết docs/PLAN.md mục 2 |
-| **Trạng thái tài liệu** | v5.0 đã phê duyệt 07/11/2026 · v5.1 – v5.4 đã duyệt ở buổi họp kế hoạch 13/11/2026 · v5.5 chờ duyệt |
-| **Ngày cập nhật** | 15/11/2026 (v5.5 — header chung, âm nền, chỉnh giờ Pomodoro/Hẹn giờ ngủ) |
-| **Phiên bản** | v5.5 |
+| **Phiên bản / trạng thái** | v5.6 (rút gọn 15/11/2026) · v5.0 phê duyệt 07/11/2026 · v5.1 – v5.4 duyệt ở buổi họp kế hoạch 13/11/2026 · v5.5 (sửa giao diện, âm thanh 15/11) chờ duyệt |
 | **Tài liệu liên quan** | Tài liệu Kiến trúc giải pháp · API Docs · docs/DATABASE.md · docs/PLAN.md · Final Project Brief CSB25022 · FocuSpace_Diagrams.drawio · Chương 1 Phân tích hệ thống (FocuSpace_Chuong2_PhanTich.docx) |
 
 > **Quy tắc nguồn:** Khi hai nguồn mâu thuẫn, nguồn mới hơn thắng: tài liệu này \> prototype FocuSpace-Semi-Sandbox.html \> PRD .docx cũ. Mọi hành vi giao diện mô tả theo prototype FocuSpace-Semi-Sandbox.html. Yêu cầu của đề bài đồ án môn Web (CSB25022) đứng trên mọi nguồn.
@@ -41,13 +29,9 @@ FocuSpace giải quyết bốn vấn đề của người học và làm việc 
 
 **Lời giải Semi-Sandbox:** cho sẵn ba không gian pixel art dựng hoàn chỉnh; người dùng chỉ tùy biến âm thanh không gian 2D, môi trường (thời tiết, rèm, khung cảnh) và vài đồ vật kéo thả. Mục tiêu: vào phòng là học được ngay, thiết lập dưới 15 giây.
 
-**Vì sao làm ngay lúc này:** prototype đã qua 10 vòng chỉnh sửa và được duyệt ngày 07/11/2026 (FocuSpace-Semi-Sandbox.html); tài liệu kỹ thuật đã duyệt cùng ngày; mốc cuối là nộp đồ án ngày 27/11/2026 (không có mốc ra mắt riêng, Q-08).
-
 ## 2.2 Tầm nhìn (Vision)
 
-FocuSpace hướng tới trở thành “người bạn học ảo” (Virtual Body Doubling): một không gian ấm cúng người dùng quay lại mỗi ngày để học, nghỉ và ngủ. Lộ trình dài hạn theo các PRD trước gồm: chia sẻ ảnh góc pixel lên mạng xã hội để lan tỏa tự nhiên, phòng học nhóm thời gian thực và kết nối dịch vụ nhạc. Các hạng mục này nằm ngoài phạm vi phiên bản hiện tại.
-
-> **Cần xác nhận:** Tài liệu nguồn không mô tả chiến lược dài hạn của công ty; phần Tầm nhìn tổng hợp từ mục tiêu tăng trưởng và roadmap trong các PRD trước. Cần PO xác nhận.
+“Người bạn học ảo” (Virtual Body Doubling): một không gian ấm cúng người dùng quay lại mỗi ngày để học, nghỉ và ngủ. Chia sẻ ảnh, phòng học nhóm, kết nối dịch vụ nhạc nằm ngoài phạm vi đồ án (7.1).
 
 ## 2.3 Phạm vi (Scope)
 
@@ -185,8 +169,6 @@ Mã FR theo bảng mã yêu cầu chức năng ở cuối mục 5.1 (85 mã, 15 
 ## 4.1 North Star Metric
 
 **Thời lượng phiên làm việc sâu (Deep Work) trung bình ≥ 50 phút.** Chỉ số này phản ánh trực tiếp mục tiêu “vào phòng là học được ngay và ở lại học lâu”, và chịu tác động của mọi tính năng cốt lõi: không gian dựng sẵn, âm thanh dịu, Pomodoro.
-
-> **Cần xác nhận:** Các PRD nguồn liệt kê KPI nhưng không chỉ định North Star; lựa chọn này cần PO xác nhận.
 
 ## 4.2 Chỉ số hỗ trợ (Supporting Metrics)
 
@@ -864,7 +846,7 @@ Mỗi tiêu chí viết theo dạng **Cho trước – Khi – Thì**, kiểm đ
 
 - Phiên 4–8 giờ không rò bộ nhớ (hủy nguồn âm, bộ hẹn giờ khi rời phòng hoặc xóa đồ).
 
-- API: p95 \< 300 ms. Lưu lượng đồng thời mục tiêu: \[Cần xác nhận\] — tài liệu nguồn chưa có số người dùng dự kiến.
+- API: p95 \< 300 ms; khoảng 50 người dùng đồng thời (Q-10).
 
 - Google Lighthouse (cấu hình mobile): Performance, Accessibility, Best Practices và SEO đều ≥ 90 ở cả 6 trang; đo trước và sau khi tối ưu, lưu báo cáo vào docs/reports/lighthouse/.
 
@@ -878,15 +860,14 @@ Mỗi tiêu chí viết theo dạng **Cho trước – Khi – Thì**, kiểm đ
 
 - Mật khẩu băm Argon2id; không lưu mật khẩu gốc.
 
-- Refresh token chỉ nằm trong cookie httpOnly, Secure, SameSite=Strict; server chỉ lưu bản băm; xoay vòng mỗi lần dùng.
+- Refresh token chỉ nằm trong cookie httpOnly, Secure (SameSite=None ở production, Lax ở máy dev); server chỉ lưu bản băm; xoay vòng mỗi lần dùng.
 
 - Giới hạn tần suất đăng nhập/đăng ký; validate mọi dữ liệu gửi lên.
 
-- Google Analytics và Sentry không nhận dữ liệu cá nhân (BR-13). Có cần banner xin đồng ý trước khi bật Google Analytics theo Nghị định 13/2023/NĐ-CP hay không: [Cần xác nhận] (Q-14).
+- Google Analytics và Sentry không nhận dữ liệu cá nhân (BR-13); không làm banner xin đồng ý, trang Giới thiệu có mục Quyền riêng tư (Q-14).
 
 - Dữ liệu cá nhân tối thiểu: email, tên hiển thị, trạng thái phòng; telemetry của khách dùng id ẩn danh. Người dùng xóa được tài khoản và toàn bộ dữ liệu.
 
-- Không xử lý thanh toán nên không thuộc PCI-DSS. Quy định áp dụng (Nghị định 13/2023/NĐ-CP về bảo vệ dữ liệu cá nhân, GDPR nếu có người dùng EU): \[Cần xác nhận với pháp chế\].
 
 ## 6.3 Khả năng mở rộng & Tương thích
 
@@ -912,43 +893,35 @@ Mỗi tiêu chí viết theo dạng **Cho trước – Khi – Thì**, kiểm đ
 | Phase 2 — Nâng cao             | Quên mật khẩu qua email (FR-ACC-06); tự xếp đồ trên giá (Q-01); âm nền theo cảnh mới (Q-02); chụp/chia sẻ ảnh góc pixel (Q-06).                                                                                            |
 | Sau Phase 2 (roadmap)          | Phòng học nhóm thời gian thực; kết nối Spotify / Apple Music.                                                                                                                                                              |
 
-## 7.2 Mốc thời gian dự kiến (Milestones)
+## 7.2 Mốc thời gian (Milestones)
 
-| **Mốc** | **Ngày** | **Trạng thái** |
-|---|---|---|
-| Họp khởi động | 27/10/2026 | Xong |
-| M1 · Sprint 1: wireframe Figma 6 trang, prototype Căn phòng, PRD | 27/10 – 07/11/2026 | Xong |
-| Duyệt PRD, kiến trúc, database, API, kế hoạch (v5.0) | 07/11/2026 | Xong |
-| M2 · Sprint 2: PLAN, Kiến trúc, API, DATABASE, Chương 1 Phân tích hệ thống, prototype 6 trang | 08 – 12/11/2026 | Xong |
-| M3 · Sprint 3: repo GitHub, monorepo, CI, khung test; dữ liệu dùng chung, logic engine, cơ sở dữ liệu (migration, seeder) | 13 – 17/11/2026 | Đang làm (phân vai chốt 13/11) |
-| M4 · Sprint 4: render, âm thanh; Căn phòng, Trang chủ, Giới thiệu bằng Tailwind; API auth, catalog, telemetry | 18 – 22/11/2026 | Chưa bắt đầu |
-| M5 · Sprint 5: API còn lại, Tài khoản, Thư viện, Thống kê, đồng bộ; review chéo + sửa theo góp ý; Lighthouse, Google Analytics, Sentry, README, video, nộp bài | 23 – 27/11/2026 (hạn nộp 27/11) | Chưa bắt đầu |
-
-Thứ tự phát triển theo docs/PLAN.md: Phase 0 Khởi tạo → 1 Dữ liệu dùng chung → 2 Logic engine → 3 Render → 4 Âm thanh → 5 Giao diện & lưu cục bộ → 6 Backend → 7 Đăng nhập & đồng bộ → 8 Phi chức năng & phát hành. Ngày bắt đầu và hạn nộp theo lịch giảng viên (Q-11); lịch sprint chi tiết, phân vai và bảng đối chiếu tiêu chí chấm nằm trong docs/PLAN.md.
+Bắt đầu 27/10/2026 (họp khởi động), demo cho giảng viên 15/11/2026, nộp bài 27/11/2026. Năm sprint: S1 (27/10–07/11) và S2 (08–12/11) thiết kế, lập kế hoạch — đã xong; S3 (13–17/11), S4 (18–22/11), S5 (23–27/11) lập trình. Lịch chi tiết, phân vai và bảng đối chiếu tiêu chí chấm: docs/PLAN.md §1–§3.
 
 # 8. Các vấn đề cần lưu ý & Rủi ro
 
-## 8.1 Câu hỏi chưa có lời giải đáp
+## 8.1 Quyết định đã chốt
 
-| **Mã** | **Câu hỏi**                                                                         | **Trạng thái**              |
-|--------|-------------------------------------------------------------------------------------|-----------------------------|
-| Q-01   | Đồ trên cùng tầng giá chồng nhau: tự xếp cạnh nhau hay giữ như hiện tại?            | Đã chốt 13/11: giữ như prototype (đồ trên cùng tầng giá được chồng nhau) |
-| Q-02   | Âm nền có đổi theo hình mới (tiếng thác ở Núi băng, đêm thành phố, sóng sớm) không? | Đã chốt 13/11: giữ âm nền hiện tại của 5 khung cảnh |
-| Q-03   | Âm thanh tổng hợp bằng code hay file OGG/MP3?                                       | Đã chốt: tổng hợp bằng code |
-| Q-04   | Có cần đăng nhập Google/OAuth?                                                      | Đã chốt: chỉ email/mật khẩu |
-| Q-05   | Ngưỡng KPI phiên ngủ chạy hết và tỷ lệ ghé Sân vườn.                                | Đã chốt 13/11: ngoài phạm vi đồ án; chỉ đo và báo cáo số liệu thực tế, không đặt ngưỡng |
-| Q-06   | Có làm chụp/chia sẻ ảnh góc pixel trong bản nộp?                                     | Đã chốt 13/11: không làm trong bản nộp (để ở Phase 2) |
-| Q-07   | Cửa nhà ở Sân vườn vào Phòng học hay phòng trong nhà gần nhất?                      | Đã chốt: luôn vào Phòng học (căn cứ của UC.01 luồng phụ 1) |
-| Q-08   | Ngày ra mắt vẫn là 10/12/2026? | Đã chốt 13/11: bỏ mốc ra mắt riêng; mốc cuối là nộp đồ án 27/11/2026 |
-| Q-09   | Giữ độ lệch trái/phải của cửa sổ Phòng ngủ (≈ −0,44)?                               | Đã chốt 13/11: giữ như prototype (≈ −0,44) |
-| Q-10   | Số người dùng đồng thời dự kiến và quy định dữ liệu cá nhân áp dụng.                | Đã chốt 13/11: ngoài phạm vi đồ án; tham chiếu khoảng 50 người dùng đồng thời (gói miễn phí Render + Neon); dữ liệu cá nhân chỉ gồm email, tên hiển thị, mật khẩu băm |
-| Q-11 | Ngày bắt đầu và hạn nộp đồ án theo lịch giảng viên (lịch sprint ở 7.2 đang là đề xuất). | Đã chốt 13/11: bắt đầu 27/10/2026 (họp khởi động), hoàn thành 27/11/2026 |
-| Q-12 | Danh sách thành viên nhóm và phân vai (docs/PLAN.md mục 2). | Đã chốt 13/11: Tuấn Hưng (đồ vật, âm thanh), Đình Nhiên (Sân vườn), Tuấn Lộc (Phòng ngủ), Phúc Thịnh (Phòng học, repo, các trang còn lại) |
-| Q-13 | Có cần tài khoản demo và số liệu mẫu cho video demo không? Nếu có, nhóm cung cấp nội dung; seeder hiện chỉ nạp danh mục. | Đã chốt 13/11: không có tài khoản demo hay số liệu mẫu trong seeder; nhóm tự dùng thật vài ngày trước khi quay video để trang Thống kê có dữ liệu |
-| Q-14 | Có cần banner xin đồng ý trước khi bật Google Analytics không? | Đã chốt 13/11: không làm banner; trang Giới thiệu có mục Quyền riêng tư nói rõ GA4 và Sentry không nhận dữ liệu cá nhân (BR-13) |
-| Q-15 | Email liên hệ và địa chỉ repo GitHub hiển thị ở trang Giới thiệu & Liên hệ. | Đã chốt 13/11: email từng thành viên (thinh.cao240924, loc.dau240925, hung.nguyen240919, nhien.truong240960 @vnuk.udn.vn); repo https://github.com/CaoLePhucThinh2203/FocuSpace |
-| Q-16 | Câu thông báo khi phòng đủ 40 đồ vật (đề xuất: “Phòng đã đủ 40 đồ vật”). | Đã chốt 13/11: “Phòng đã đầy — hãy xóa bớt đồ để thêm mới” |
-| Q-17 | PRD hiện không có bảng liệt kê từng mã FR (Kiến trúc 2.1 dùng dải FR-UI-01→06, FR-ACC-01→07…). Cần khôi phục bảng mã FR chi tiết, đánh mã cho FR-LIB, FR-STAT, FR-PAGE, FR-OBS và xác định mã FR-ACC của đổi tên hiển thị, đăng xuất, xóa tài khoản (US-17). | Đã giải quyết 13/11: bảng mã FR cuối mục 5.1 (85 mã); đổi tên hiển thị, đăng xuất = FR-ACC-08; xóa tài khoản = FR-ACC-07 |
+Mọi câu hỏi mở đã chốt (Q-03, Q-04, Q-07 trước 07/11; còn lại ở buổi họp 13/11/2026):
+
+| **Mã** | **Quyết định** |
+|---|---|
+| Q-01 | Đồ trên cùng tầng giá được chồng nhau như prototype |
+| Q-02 | Giữ âm nền hiện tại của 5 khung cảnh |
+| Q-03 | Âm thanh tổng hợp bằng code, không dùng file |
+| Q-04 | Chỉ đăng nhập email/mật khẩu, không OAuth |
+| Q-05 | KPI phiên ngủ và tỷ lệ ghé Sân vườn: chỉ đo, không đặt ngưỡng |
+| Q-06 | Không làm chụp/chia sẻ ảnh trong bản nộp (Phase 2) |
+| Q-07 | Cửa nhà ở Sân vườn luôn vào Phòng học |
+| Q-08 | Không có mốc ra mắt riêng; mốc cuối là nộp đồ án 27/11/2026 |
+| Q-09 | Giữ độ lệch trái/phải cửa sổ Phòng ngủ ≈ −0,44 như prototype |
+| Q-10 | Khoảng 50 người dùng đồng thời; dữ liệu cá nhân chỉ gồm email, tên hiển thị, mật khẩu băm |
+| Q-11 | Bắt đầu 27/10/2026, hoàn thành 27/11/2026 |
+| Q-12 | Phân vai: Tuấn Hưng (đồ vật, âm thanh), Đình Nhiên (Sân vườn), Tuấn Lộc (Phòng ngủ), Phúc Thịnh (Phòng học, repo, các trang còn lại) |
+| Q-13 | Không có tài khoản demo hay số liệu mẫu; nhóm tự dùng thật vài ngày trước khi quay video |
+| Q-14 | Không làm banner đồng ý GA4; trang Giới thiệu có mục Quyền riêng tư |
+| Q-15 | Email từng thành viên (thinh.cao240924, loc.dau240925, hung.nguyen240919, nhien.truong240960 @vnuk.udn.vn); repo https://github.com/CaoLePhucThinh2203/FocuSpace |
+| Q-16 | Thông báo khi đủ 40 đồ vật: “Phòng đã đầy — hãy xóa bớt đồ để thêm mới” |
+| Q-17 | Bảng mã FR cuối mục 5.1; đổi tên, đăng xuất = FR-ACC-08; xóa tài khoản = FR-ACC-07 |
 
 ## 8.2 Rủi ro và phương án dự phòng
 
@@ -972,10 +945,6 @@ Thứ tự phát triển theo docs/PLAN.md: Phase 0 Khởi tạo → 1 Dữ li�
 | **Phiên bản** | **Ngày** | **Thay đổi** |
 |---|---|---|
 | v5.0 | 07/11/2026 | Bản đã phê duyệt. |
-| v5.1 | 10/11/2026 | Bổ sung theo đề bài đồ án CSB25022. |
-| v5.2 | 12/11/2026 | Đồng bộ với Chương 1 Phân tích hệ thống và FocuSpace_Diagrams.drawio: thêm 3.3 Mô hình use case (Hình 1, bảng 12 use case), đánh lại số Hình 2–7; thêm cột Use case vào bảng 3.2 và US-17; thêm dòng “Use case liên quan” cho Tính năng A–M; Tính năng E thêm ngoại lệ đủ 40 đồ vật [Đề xuất]; Tính năng G, I thêm quy tắc kết quả phiên Pomodoro (`completed` / `reset` / `abandoned`); Tính năng H, L viết thống nhất cách xử lý phiên hết hạn theo trang; Tính năng H thêm quy tắc revision và 409; 5.3 thêm cột Use case; Q-07 ghi căn cứ UC.01; thêm Q-16, Q-17. **BR-09 thay nội dung cũ** (“Đăng nhập / đăng ký tối đa 10 lần mỗi 15 phút cho mỗi IP”) vì mâu thuẫn với API 4.2–4.3 (đăng nhập tính theo IP + email). |
-| v5.3 | 13/11/2026 | Thêm 5.4 Tiêu chí nghiệm thu (48 AC theo use case và phi chức năng) để PRD đủ Problem / Context / FR / AC; 7.2 lịch 5 sprint từ 27/10 → 27/11/2026 (S1, S2 đã xong: Figma, prototype, tài liệu kế hoạch); 5.3 wireframe Figma (bản draw.io bổ sung); Q-11, Q-12 đã chốt. |
-| v5.4 | 13/11/2026 | Thêm bảng mã yêu cầu chức năng cuối mục 5.1 (85 mã FR, đóng Q-17): giữ nguyên mã cũ, thêm FR-ACC-08 (đổi tên, đăng xuất) và đánh mã FR-PAGE-01→08, FR-LIB-01→06, FR-STAT-01→06, FR-OBS-01→04; bảng 3.2, 3.3 tham chiếu mã cụ thể. Bỏ mốc Go-live 10/12/2026, mốc cuối là nộp đồ án 27/11/2026 (Q-08). 2.4, 8.2 sửa thời gian theo lịch 27/10 → 27/11. Trạng thái: v5.1 – v5.4 đã duyệt ở buổi họp kế hoạch 13/11/2026. |
-| v5.4 (bổ sung) | 13/11/2026 | 6.1 và 8.2: tối ưu Lighthouse theo cách 2 đã chọn (title + meta description; nhạc Lo-fi vẫn dựng nền ngay khi mở Căn phòng). |
-| v5.4 (bổ sung 2) | 13/11/2026 | Chốt Q-01, Q-02, Q-05, Q-06, Q-09, Q-10, Q-13 → Q-16; Tính năng J ghi email thành viên, link GitHub, mục Quyền riêng tư và năm học; câu thông báo đủ 40 đồ vật (Tính năng E, AC-04.2). |
-| v5.5 | 15/11/2026 | Sửa theo góp ý giao diện và âm thanh: một font Be Vietnam Pro; header dùng chung kể cả Căn phòng, 5 liên kết một hàng từ 768 px (FR-PAGE-02, 03, AC-12.4); Trang chủ bỏ ô “Pixel art…”, đổi “Vì sao chọn FocuSpace” thành “Mô tả & Tính năng”, bỏ 2 nút cuối trang (AC-12.5, 12.6); bỏ chip âm thanh, chip lưu (FR-UI-02, FR-SAVE-01, 03, AC-02.1, 03.1, 04.1, 06.1); âm nền cho nhạc, tích tắc, cửa sổ, lò sưởi (FR-AUD-02, AC-03.5); tiếng rè chỉ ở đĩa than; 6 bài Lo-fi có tên, dài khoảng 1 phút, dựng khi cần; rù rù mèo 1/3, âm khung cảnh 50%; lò sưởi dịch lên hàng sàn 1; hoàng hôn ở cửa sổ vẽ theo cảnh Bãi biển; Pomodoro và Hẹn giờ ngủ chỉnh ±1/±10 phút, tích tắc chỉ khi đếm và mặc định tắt (FR-TIME-01, 03, AC-05.5, 05.6, 06.3); hitbox thảm phòng ngủ khớp hình; điện thoại dựng dọc tự xoay ngang (AC-01.5). Lighthouse /room (Tuấn Hưng, H12): âm thanh dựng sau cú nhấp đầu tiên, font tải không chặn hiển thị (6.1, 8.2, FR-AUD-06). |
+| v5.1–v5.4 | 10–13/11/2026 | Bổ sung theo đề bài CSB25022 (2.4, Tính năng J–M); đồng bộ Chương 1 (3.3 use case, cột UC); 5.4 Tiêu chí nghiệm thu; bảng 85 mã FR; lịch 27/10 → 27/11; chốt Q-01 → Q-17; Lighthouse cách 2. Duyệt ở buổi họp 13/11. |
+| v5.5 | 15/11/2026 | Sửa theo góp ý giao diện và âm thanh: một font Be Vietnam Pro; header dùng chung, menu 1 hàng từ 768 px; Trang chủ "Mô tả & Tính năng"; bỏ chip âm thanh, chip lưu; âm nền; 6 bài Lo-fi; chỉnh ±1/±10 phút cho Pomodoro, Hẹn giờ ngủ; điện thoại dựng dọc tự xoay ngang; Lighthouse /room dựng âm thanh sau cú nhấp đầu. FR và AC liên quan: FR-UI-02, FR-SAVE-01/03, FR-AUD-02/06, FR-TIME-01/03, FR-PAGE-02/03; AC-01.5, 03.5, 05.5, 05.6, 06.3, 12.4–12.6. |
+| v5.6 | 15/11/2026 | Rút gọn: bỏ bảng thông tin trùng ở đầu, ghi chú [Cần xác nhận] đã có lời giải; 7.2 dẫn sang PLAN; 8.1 thành bảng quyết định đã chốt; 6.2 cookie SameSite=None theo cách triển khai. |
