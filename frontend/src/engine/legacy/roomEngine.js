@@ -7,6 +7,8 @@
  * shared/ và frontend/src/engine/{logic,render,audio}/ — xem legacy/README.md.
  * Engine đọc/ghi LocalStorage khóa "focuspace.room.v4"; frontend/src/lib/roomSync.ts đồng bộ khóa này với /room-state.
  */
+import { adjustSeconds, shouldTick } from "../../lib/time";
+
 export function startRoomEngine() {
 "use strict";
 /* ============================================================
@@ -19,12 +21,13 @@ const D_MAX = Math.hypot(W, H);         // đường chéo phòng
 const W_HALF = W / 2;
 const DESK = { x0: 92, x1: 228, top: 115, front: 158 }; // bàn hộp: mặt bàn y=115, thân bàn tới y=158
 const FLOOR_MIN_BASE = 112, FLOOR_MAX_BASE = H - 2;
+const FY = 16;   // lò sưởi dịch lên 16 px so với prototype: đáy chân lò nằm ở hàng sàn số 1 (y 112–120)
 const STORAGE_KEY = "focuspace.room.v4";   // v6: khóa lưu mới để lần mở đầu thấy bàn học chỉ có đèn + ly cà phê
 
 /* Đồ vật phát âm thanh (di chuyển tự do, có Spatial Audio) */
 const TYPES = {
   tv:        { group: "sound", name: "Tivi CRT",   sub: "Nhiễu sóng trắng", w: 26, h: 26, sound: true, hp: true,  vol: 0.35 },
-  cat:       { group: "sound", name: "Mèo ngủ",    sub: "Rù rù khẽ, êm dịu",      w: 24, h: 13, sound: true, hp: false, vol: 0.6 },
+  cat:       { group: "sound", name: "Mèo ngủ",    sub: "Rù rù khẽ, êm dịu",      w: 24, h: 13, sound: true, hp: false, vol: 0.6, gain: 1 / 3 },   // rù rù còn 1/3
   /* Đồ trang trí (không âm thanh) */
   plant:  { group: "decor", name: "Chậu cây",    w: 12, h: 16 },
   cactus: { group: "decor", name: "Xương rồng",  w: 10, h: 14 },
@@ -36,11 +39,11 @@ const TYPES = {
   cup:  { group: "desk", name: "Ly cà phê",   sub: "Kéo để di chuyển", w: 12, h: 14, deskOnly: true, fixed: true },
   /* Đồ vật phòng ngủ (phát âm thanh, di chuyển tự do) */
   diffuser: { group: "sound", name: "Máy xông tinh dầu", sub: "Nước sủi bọt lăn tăn",    w: 14, h: 16, sound: true, hp: false, vol: 0.4 },
-  vinyl:    { group: "sound", name: "Đĩa than",          sub: "Lofi Sleep, rãnh đĩa",    w: 26, h: 16, sound: true, hp: false, vol: 0.5 },
-  musicbox: { group: "sound", name: "Hộp nhạc",          sub: "Nhạc chuông ru ngủ",      w: 14, h: 16, sound: true, hp: false, vol: 0.45 },
+  vinyl:    { group: "sound", name: "Đĩa than",          sub: "Lofi Sleep, rãnh đĩa",    w: 26, h: 16, sound: true, hp: false, vol: 0.5, bg: true },
+  musicbox: { group: "sound", name: "Hộp nhạc",          sub: "Nhạc chuông ru ngủ",      w: 14, h: 16, sound: true, hp: false, vol: 0.45, bg: true },
   fan:      { group: "sound", name: "Quạt bàn",          sub: "Gió nhẹ ru ngủ",          w: 18, h: 22, sound: true, hp: false, vol: 0.35 },
-  radio:    { group: "sound", name: "Radio",             sub: "Nhạc Lo-fi",              w: 20, h: 12, sound: true, hp: false, vol: 0.5 },
-  clock:    { group: "sound", name: "Đồng hồ Pomodoro",  sub: "Tích tắc nhẹ, đếm giờ Pomodoro", w: 24, h: 12, sound: true, hp: false, vol: 0.4 },
+  radio:    { group: "sound", name: "Radio",             sub: "Nhạc Lo-fi",              w: 20, h: 12, sound: true, hp: false, vol: 0.5, bg: true },
+  clock:    { group: "sound", name: "Đồng hồ Pomodoro",  sub: "Tích tắc nhẹ, đếm giờ Pomodoro", w: 24, h: 12, sound: true, hp: false, vol: 0.4, bg: true },
   bigplant: { group: "decor", name: "Chậu cây lớn",      w: 24, h: 50, floorOnly: true },
   catbed:   { group: "decor", name: "Giường mèo",        w: 30, h: 10, bedOnly: true },
 };
@@ -67,10 +70,23 @@ const SCENES = [
 const SCENE_IDS = SCENES.map(s => s.id);
 const ART_N = 10;   // số tranh nhỏ ngẫu nhiên của vật phẩm Khung ảnh
 function fixArt(items) { items.forEach(i => { if (i.type === "frame") i.art = Number.isInteger(i.art) ? clamp(i.art, 0, ART_N - 1) : (Math.random() * ART_N | 0); }); return items; }
-const LOFI = [ // tham số sinh nhạc thủ tục, không phải dữ liệu bài hát
-  { bpm: 72, chords: [[53,57,60,64],[52,55,59,62],[50,53,57,60],[48,52,55,59]] },
-  { bpm: 80, chords: [[57,60,64,67],[50,54,57,60],[55,59,62,66],[48,52,55,59]] },
-  { bpm: 66, chords: [[50,53,57,60],[55,59,62,65],[48,52,55,59],[57,61,64,67]] },
+/* Nhạc Lo-fi: mỗi bài là một bản hoàn chỉnh khoảng 1 phút (mở đầu – A – B – A – kết), sinh thủ tục từ tham số dưới đây.
+   chords: vòng hợp âm đoạn A (giữ từ bản cũ); chordsB: vòng hợp âm đoạn B; lead: tiếng giai điệu; drums: kiểu trống; seed: giai điệu riêng của bài. */
+const LOFI = [
+  { name: "Chiều mưa",     bpm: 72, seed: 1, lead: "keys",  drums: "lazy",
+    chords: [[53,57,60,64],[52,55,59,62],[50,53,57,60],[48,52,55,59]], chordsB: [[50,53,57,60],[55,59,62,65],[52,55,59,62],[57,60,64,67]] },
+  { name: "Cà phê sáng",   bpm: 80, seed: 2, lead: "flute", drums: "swing",
+    chords: [[57,60,64,67],[50,54,57,60],[55,59,62,66],[48,52,55,59]], chordsB: [[52,55,59,62],[57,60,64,67],[50,53,57,60],[55,59,62,66]] },
+  { name: "Đêm thư viện",  bpm: 66, seed: 3, lead: "bell",  drums: "soft",
+    chords: [[50,53,57,60],[55,59,62,65],[48,52,55,59],[57,61,64,67]], chordsB: [[53,57,60,64],[52,55,59,62],[50,53,57,60],[57,61,64,67]] },
+];
+/* Bố cục bài (số ô nhịp): mở đầu không trống → A → B → A → kết dịu dần */
+const LOFI_FORM = [
+  { bars: 2, prog: "A", drums: 0, mel: "",  intro: true },
+  { bars: 4, prog: "A", drums: 1, mel: "a" },
+  { bars: 4, prog: "B", drums: 1, mel: "b" },
+  { bars: 4, prog: "A", drums: 1, mel: "a" },
+  { bars: 2, prog: "A", drums: 0, mel: "",  outro: true },
 ];
 /* Kệ sách: 4 ngăn, đáy mỗi ngăn (y logic) và tâm x */
 const SHELF_SLOTS = [{ bottom: 40, cx: 247 }, { bottom: 66, cx: 236 }, { bottom: 92, cx: 253 }];   // giá 3 tầng lệch nhau
@@ -122,7 +138,7 @@ function loadBed(b, d) {
   }) : d.items;
   if (Array.isArray(b.shelf)) b.shelf.slice(0, 3).forEach((v, i) => {   // bản cũ: đồ đặt theo ngăn → đổi thành đồ vật thật
     const t = TYPES[v], sl = SLOTS["s" + i];
-    if (t && BED_ITEM_TYPES.has(v) && !(v === "clock" && items.some(x => x.type === "clock"))) items.push({ id: uid(), type: v, x: sl.cx - t.w / 2, y: sl.bottom - t.h, on: true, vol: t.vol ?? 0.5, track: 0 });
+    if (t && BED_ITEM_TYPES.has(v) && !(v === "clock" && items.some(x => x.type === "clock"))) items.push({ id: uid(), type: v, x: sl.cx - t.w / 2, y: sl.bottom - t.h, on: v !== "clock", vol: t.vol ?? 0.5, track: 0 });
   });
   fixArt(items);
   return {
@@ -161,6 +177,10 @@ function loadState() {
       on: i.on !== false, vol: clamp(num(i.vol, TYPES[i.type].vol ?? 0.5), 0, 1), track: i.track | 0, art: i.art,
     })) : d.items;
     ["lamp", "cup"].forEach(k => { if (!items.some(i => i.type === k)) items.push(d.items.find(i => i.type === k)); });
+    {   // lò sưởi dịch lên 16 px: đồ đang đứng trên mặt lò cũ (đáy y = 56) dời lên mặt lò mới (đáy y = 40)
+      const fx0 = s.fireSide === "left" ? 8 : 274, fx1 = fx0 + 44;
+      items.forEach(i => { const t = TYPES[i.type], cx = i.x + t.w / 2; if (Math.abs(i.y + t.h - 56) < 0.5 && cx >= fx0 && cx <= fx1) i.y -= 16; });
+    }
     if (!items.some(i => i.type === "bigplant") && !(s.ver >= 3)) items.push(d.items.find(i => i.type === "bigplant"));   // chậu cây góc phòng giờ là đồ vật di chuyển được
     if (Array.isArray(s.shelf)) s.shelf.slice(0, 3).forEach((v, i) => {   // bản cũ: kệ sách có 3 ngăn chọn đồ → đổi thành đồ vật đặt trên giá
       const ok = ["clock", "plant", "cactus", "books", "frame", "candle"], t = TYPES[v];
@@ -187,20 +207,33 @@ const POMO_LEN = { focus: 25 * 60, break: 5 * 60 };
 const pomo = { mode: "focus", remaining: POMO_LEN.focus, running: false, endAt: 0 };
 
 const $ = id => document.getElementById(id);
-const saveChip = $("saveChip"), saveTxt = $("saveTxt");
+
+/* Điện thoại dựng dọc: xoay cả trang 90° để Căn phòng luôn nằm ngang (html.rot, CSS ở room.css).
+   Toạ độ con trỏ và khung chữ nhật đổi sang hệ toạ độ của trang đã xoay qua pt(), box(), vp(). */
+const ROT_MQ = window.matchMedia("(orientation: portrait) and (max-width: 720px) and (pointer: coarse)");
+function isRot() { return document.documentElement.classList.contains("rot"); }
+function applyRot() {
+  const de = document.documentElement;
+  de.classList.toggle("rot", ROT_MQ.matches);
+  de.style.setProperty("--rw", innerHeight + "px"); de.style.setProperty("--rh", innerWidth + "px");
+}
+applyRot();
+if (ROT_MQ.addEventListener) ROT_MQ.addEventListener("change", applyRot); else ROT_MQ.addListener(applyRot);
+window.addEventListener("resize", applyRot);
+function vp() { return isRot() ? { w: innerHeight, h: innerWidth } : { w: innerWidth, h: innerHeight }; }
+function pt(e) { return isRot() ? { x: e.clientY, y: innerWidth - e.clientX } : { x: e.clientX, y: e.clientY }; }
+function box(el) {
+  const r = el.getBoundingClientRect();
+  if (!isRot()) return r;
+  const left = r.top, top = innerWidth - r.right;
+  return { left, top, width: r.height, height: r.width, right: left + r.height, bottom: top + r.width };
+}
 let saveTimer = 0;
-function save() {
-  saveChip.className = "chip saving"; saveTxt.textContent = "Đang lưu…";
+function save() {   // lưu sau 250 ms (không còn chip "Đã lưu" ở header)
   clearTimeout(saveTimer);
   saveTimer = setTimeout(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-      const t = new Date();
-      saveChip.className = "chip live";
-      saveTxt.textContent = "Đã lưu " + String(t.getHours()).padStart(2, "0") + ":" + String(t.getMinutes()).padStart(2, "0");
-    } catch (e) {
-      saveChip.className = "chip"; saveTxt.textContent = "Trình duyệt chặn lưu cục bộ";
-    }
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+    catch (e) { console.warn("FocuSpace: trình duyệt chặn lưu cục bộ", e); }
   }, 250);
 }
 
@@ -223,10 +256,12 @@ function ramp(param, v, t) {
   param.linearRampToValueAtTime(v, now + t);
 }
 
+/* Âm nền: nguồn phát nhạc / tích tắc / ngoài cửa sổ / lò sưởi — to đều mọi vị trí, nghe đều hai tai (không tính khoảng cách, trái/phải) */
+const BG_GAIN = 0.8;
 class Emitter {
-  constructor(x, y, hp, out, L) {
-    this.L = L || LISTENERS.study; this.out = out || master;
-    this.x = x; this.y = y; this.cur = null; this.sp = spatial(x, y, this.L);
+  constructor(x, y, hp, out, L, bg) {
+    this.L = L || LISTENERS.study; this.out = out || master; this.bg = !!bg; this.scale = 1;   // scale: hệ số âm lượng riêng của nguồn (mèo 1/3, khung cảnh 1/2)
+    this.x = x; this.y = y; this.cur = null; this.sp = this.calc(x, y);
     if (!ctx) return;
     this.input = ctx.createGain();
     let n = this.input;
@@ -254,7 +289,8 @@ class Emitter {
     }
     this.cur = { s, g, start: now };
   }
-  setLevel(on, vol) { if (ctx) ramp(this.user.gain, on ? vol : 0, 0.2); }
+  calc(x, y) { return this.bg ? { d: Math.hypot(x - this.L.x, y - this.L.y), gain: BG_GAIN, pan: 0, bg: true } : spatial(x, y, this.L); }
+  setLevel(on, vol) { if (ctx) ramp(this.user.gain, on ? vol * this.scale : 0, 0.2); }
   pulse(enable) {   // phát to 2 giây rồi giảm âm lượng ngẫu nhiên 0.5–2 giây (dùng cho tiếng mèo)
     if (!ctx) return;
     const g = this.input.gain;
@@ -267,7 +303,7 @@ class Emitter {
     step(true);
   }
   setPos(x, y, instant) {
-    this.x = x; this.y = y; this.sp = spatial(x, y, this.L);
+    this.x = x; this.y = y; this.sp = this.calc(x, y);
     if (!ctx) return;
     if (instant) { this.dist.gain.value = this.sp.gain; if (this.panner) this.panner.pan.value = this.sp.pan; }
     else { ramp(this.dist.gain, this.sp.gain, 0.15); if (this.panner) ramp(this.panner.pan, this.sp.pan, 0.15); }
@@ -278,11 +314,11 @@ class Emitter {
     const cur = this.cur, nodes = [this.input, this.hp, this.user, this.dist, this.panner];
     setTimeout(() => { try { cur && cur.s.stop(); } catch (e) {} nodes.forEach(n => n && n.disconnect()); }, 300);
   }
-  oneShot(buf, gain = 1) {
+  oneShot(buf, gain = 1, viaUser = false) {   // viaUser: đi qua công tắc + âm lượng của nguồn (tiếng tích tắc)
     if (!ctx || !buf) return;
     const s = ctx.createBufferSource(); s.buffer = buf;
     const g = ctx.createGain(); g.gain.value = gain;
-    s.connect(g); g.connect(this.user ? this.dist : master); s.start();
+    s.connect(g); g.connect(this.user ? (viaUser ? this.user : this.dist) : master); s.start();
   }
 }
 
@@ -381,11 +417,11 @@ function softPurrFill(d, len, c) {   // rù rù êm: nhịp mềm ~23 Hz, hơi t
     d[i] = (q * 4.2 * am + 0.02 * Math.sin(2 * Math.PI * 46 * t) * am) * breath;
   }
 }
-function clockFill(d, len, c) {
-  const r = rng(31 + c);
-  [[0, 3100], [Math.floor(len / 2), 2500]].forEach(([at, f]) => {
-    for (let i = 0; i < 0.02 * SR; i++) { const t = i / SR; d[at + i] += (Math.sin(2 * Math.PI * f * t) * 0.35 + (r() * 2 - 1) * 0.15) * Math.exp(-t / 0.003); }
-  });
+function softTickFill(f) {   // tiếng "tách" trầm và êm (~1,1 kHz), ngắn, nhỏ — thay tiếng tích tắc 3,1 kHz cũ
+  return (d, len, c) => {
+    const r = rng(31 + c + f); let p = 0;
+    for (let i = 0; i < len; i++) { const t = i / SR; p += 0.35 * ((r() * 2 - 1) - p); d[i] = (Math.sin(2 * Math.PI * f * t) * 0.16 + p * 0.05) * Math.exp(-t / 0.006); }
+  };
 }
 function flipFill(d, len, c) {
   const r = rng(51 + c); let p = 0;
@@ -401,22 +437,23 @@ function bellFill(d, len) {
 
 const BUF = ctx ? {
   clear: mkBuf(8, birdsFill), rain: mkBuf(6, rainFill(false)), storm: mkBuf(12, stormFill),
-  fire: mkBuf(6, fireFill), tv: mkBuf(3, staticFill), cat: mkLoopBuf(6, softPurrFill), meow: mkBuf(0.75, meowFill), clock: mkBuf(2, clockFill),
+  fire: mkBuf(6, fireFill), tv: mkBuf(3, staticFill), cat: mkLoopBuf(6, softPurrFill), meow: mkBuf(0.75, meowFill), tick: mkBuf(0.06, softTickFill(1150)), tock: mkBuf(0.06, softTickFill(950)),
   flip: mkBuf(0.35, flipFill), click: mkBuf(0.05, clickFill), bell: mkBuf(3.2, bellFill, 1),
-  lofi: [],
 } : {};
 
-async function renderLofi(def, idx) {
+async function renderLofi(def, idx, crackle) {   // crackle: tiếng rè rãnh đĩa (chỉ đĩa than)
   const OAC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
   if (!OAC) return null;
-  const beat = 60 / def.bpm, dur = beat * 16, oc = new OAC(2, Math.floor(dur * SR), SR);
+  const beat = 60 / def.bpm, barLen = beat * 4, nBars = LOFI_FORM.reduce((n, sec) => n + sec.bars, 0), dur = barLen * nBars;
+  const oc = new OAC(2, Math.floor(dur * SR), SR);
   const out = oc.createGain(); out.gain.value = 0.5;
   const lp = oc.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 2200; lp.connect(out); out.connect(oc.destination);
   const r = rng(300 + idx);
   const noise = oc.createBuffer(1, SR, SR); { const nd = noise.getChannelData(0); for (let i = 0; i < nd.length; i++) nd[i] = r() * 2 - 1; }
   const mtof = m => 440 * Math.pow(2, (m - 69) / 12);
-  const tone = (f, t, len, a, type = "sine") => {
+  const tone = (f, t, len, a, type = "sine", vib = 0) => {
     const o = oc.createOscillator(); o.type = type; o.frequency.value = f;
+    if (vib) { const l = oc.createOscillator(), lg = oc.createGain(); l.frequency.value = 5; lg.gain.value = f * vib; l.connect(lg); lg.connect(o.frequency); l.start(t); l.stop(t + len + 0.05); }
     const g = oc.createGain(); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(a, t + 0.02); g.gain.exponentialRampToValueAtTime(0.0008, t + len);
     o.connect(g); g.connect(lp); o.start(t); o.stop(t + len + 0.05);
   };
@@ -425,20 +462,63 @@ async function renderLofi(def, idx) {
     const g = oc.createGain(); g.gain.setValueAtTime(a, t); g.gain.exponentialRampToValueAtTime(0.0008, t + len);
     s.connect(fl); fl.connect(g); g.connect(out); s.start(t, r() * 0.5); s.stop(t + len + 0.02);
   };
-  def.chords.forEach((ch, bar) => {
-    const t0 = bar * beat * 4;
-    ch.forEach((m, k) => { tone(mtof(m), t0 + k * 0.025, beat * 3.6, 0.07); tone(mtof(m) * 2, t0 + k * 0.025, beat * 1.2, 0.012, "triangle"); });
-    tone(mtof(ch[0] - 12) / 1, t0 + beat * 2.5, beat * 1.2, 0.04, "triangle");
-    tone(mtof(ch[0] - 24), t0, beat * 1.8, 0.16); tone(mtof(ch[0] - 24), t0 + beat * 2, beat * 1.6, 0.13);
-    for (let b = 0; b < 4; b++) {
-      const t = t0 + b * beat;
-      if (b === 0 || b === 2) { const o = oc.createOscillator(); const g = oc.createGain(); o.frequency.setValueAtTime(120, t); o.frequency.exponentialRampToValueAtTime(42, t + 0.18); g.gain.setValueAtTime(0.5, t); g.gain.exponentialRampToValueAtTime(0.001, t + 0.3); o.connect(g); g.connect(out); o.start(t); o.stop(t + 0.32); }
-      if (b === 1 || b === 3) nz(t, 0.16, 0.12, "bandpass", 1800);
-      nz(t, 0.04, 0.03, "highpass", 7000); nz(t + beat * 0.58, 0.035, 0.018, "highpass", 7000);
+  const kick = (t, a = 0.5) => { const o = oc.createOscillator(), g = oc.createGain(); o.frequency.setValueAtTime(120, t); o.frequency.exponentialRampToValueAtTime(42, t + 0.18); g.gain.setValueAtTime(a, t); g.gain.exponentialRampToValueAtTime(0.001, t + 0.3); o.connect(g); g.connect(out); o.start(t); o.stop(t + 0.32); };
+  const LEAD = {   // tiếng giai điệu: phím điện (keys), sáo (flute), chuông nhỏ (bell)
+    keys:  (f, t, len) => { tone(f, t, len, 0.05); tone(f * 2, t, len * 0.4, 0.012, "triangle"); },
+    flute: (f, t, len) => tone(f, t + 0.03, len, 0.035, "triangle", 0.006),
+    bell:  (f, t, len) => { tone(f * 2, t, len * 1.4, 0.03); tone(f * 4.01, t, len * 0.5, 0.006); },
+  }[def.lead] || ((f, t, len) => tone(f, t, len, 0.05));
+  const DRUM = {   // kiểu trống theo ô nhịp (b: phách 0–3)
+    lazy:  (t, b) => { if (b === 0) kick(t); if (b === 2) kick(t + beat * 0.5, 0.4); if (b === 1 || b === 3) nz(t, 0.16, 0.12, "bandpass", 1800); nz(t, 0.04, 0.03, "highpass", 7000); nz(t + beat * 0.58, 0.035, 0.018, "highpass", 7000); },
+    swing: (t, b) => { if (b === 0 || b === 2) kick(t); if (b === 1 || b === 3) nz(t, 0.14, 0.1, "bandpass", 2000); nz(t, 0.04, 0.03, "highpass", 7000); nz(t + beat * 0.66, 0.035, 0.022, "highpass", 7500); },
+    soft:  (t, b) => { if (b === 0) kick(t, 0.38); if (b === 2) nz(t, 0.2, 0.08, "bandpass", 1500); nz(t + beat * 0.5, 0.03, 0.015, "highpass", 7000); },
+    brush: (t, b) => { if (b === 0) kick(t, 0.22); nz(t, 0.22, 0.02, "bandpass", 3000); },
+    none:  () => {},
+  }[def.drums] || (() => {});
+  const RHY = { a: [[0, 1], [1.5, 0.5], [2, 1.5], [3.5, 0.5]], b: [[0, 0.5], [0.5, 0.5], [1, 1], [2.5, 1.5]] };   // nhịp giai điệu (phách bắt đầu, độ dài)
+  const melody = (motif, ch, barIdx, t0, fade) => {   // cùng motif + cùng ô nhịp => cùng nốt, nên hai đoạn A giống nhau
+    const mr = rng(def.seed * 97 + (motif === "a" ? 0 : 50) + barIdx), tones = ch.map(m => m + 12).concat(ch[0] + 14, ch[0] + 24);
+    RHY[motif].forEach(([at, len], k) => { if (k === 3 && barIdx % 2) return; LEAD(mtof(tones[Math.floor(mr() * tones.length)]), t0 + at * beat, len * beat * 1.1 * fade); });
+  };
+  let bar = 0;
+  LOFI_FORM.forEach(sec => {
+    for (let i = 0; i < sec.bars; i++, bar++) {
+      const ch = (sec.prog === "B" ? def.chordsB : def.chords)[sec.outro ? (i ? 0 : 2) : i % 4], t0 = bar * barLen;
+      const fade = sec.outro ? (i ? 0.45 : 0.75) : sec.intro ? 0.8 : 1;   // mở đầu và kết nhỏ hơn
+      ch.forEach((m, k) => { tone(mtof(m), t0 + k * 0.025, beat * 3.6, 0.07 * fade); tone(mtof(m) * 2, t0 + k * 0.025, beat * 1.2, 0.012 * fade, "triangle"); });
+      if (!sec.intro) { tone(mtof(ch[0] - 24), t0, beat * 1.8, 0.16 * fade); tone(mtof(ch[0] - 24), t0 + beat * 2, beat * 1.6, 0.13 * fade); }
+      tone(mtof(ch[0] - 12), t0 + beat * 2.5, beat * 1.2, 0.04 * fade, "triangle");
+      if (sec.mel) melody(sec.mel, ch, i, t0, fade);
+      if (sec.drums) for (let b = 0; b < 4; b++) DRUM(t0 + b * beat, b);
     }
   });
-  for (let k = 0; k < dur * 6; k++) nz(r() * dur, 0.006, 0.02 + r() * 0.03, "highpass", 3000);
+  if (crackle) for (let k = 0; k < dur * 6; k++) nz(r() * dur, 0.006, 0.02 + r() * 0.03, "highpass", 3000);   // tiếng rè rãnh đĩa
   return oc.startRendering();
+}
+
+/* Bài Lo-fi dựng khi cần (bài đang chọn), không dựng cả 6 bài một lúc để tiết kiệm bộ nhớ.
+   kind "lofi": tai nghe + radio (không rè); "sleep": đĩa than (có tiếng rè). */
+const lofiCache = { lofi: [], sleep: [] }, lofiPending = {};
+function lofiInUse() {
+  const u = new Set(["lofi" + (state.headphone.track | 0)]);
+  const all = state.items.concat(state.bed.items);
+  all.forEach(d => { if (d.type === "radio") u.add("lofi" + (d.track | 0)); if (d.type === "vinyl") u.add("sleep" + (d.track | 0)); });
+  return u;
+}
+function lofiBuf(kind, i) {
+  i = clamp(i | 0, 0, 2);
+  if (lofiCache[kind][i]) return lofiCache[kind][i];
+  const key = kind + i;
+  if (!ctx || lofiPending[key]) return null;
+  lofiPending[key] = renderLofi((kind === "sleep" ? SLEEP_LOFI : LOFI)[i], (kind === "sleep" ? 10 : 0) + i, kind === "sleep").then(b => {
+    delete lofiPending[key];
+    if (!b) return;
+    lofiCache[kind][i] = b;
+    const u = lofiInUse();   // bỏ bài không còn dùng khỏi bộ nhớ
+    ["lofi", "sleep"].forEach(k => lofiCache[k].forEach((x, j) => { if (x && !u.has(k + j)) lofiCache[k][j] = null; }));
+    applyHeadphone(); applyRadio(); itemsById.forEach(o => { if (o.data.type === "vinyl") applyItemAudio(o); });
+  }).catch(() => { delete lofiPending[key]; });
+  return null;
 }
 
 let audioReady = false;
@@ -446,12 +526,12 @@ function unlockAudio() {
   if (!ctx || audioReady) return;
   ctx.resume().then(() => {
     audioReady = true;
-    $("audioChip").className = "chip live"; $("audioTxt").textContent = "Âm thanh đang phát";
+    const note = document.getElementById("sleepNote"); if (note) note.hidden = true;   // âm thanh trở lại sau khi hết giờ ngủ (AC-06.2)
   }).catch(() => {});
 }
 document.addEventListener("pointerdown", unlockAudio, true);
 document.addEventListener("keydown", unlockAudio, true);
-if (!ctx) $("audioTxt").textContent = "Trình duyệt không hỗ trợ Web Audio";
+if (!ctx) console.warn("FocuSpace: trình duyệt không hỗ trợ Web Audio");
 
 /* ============================================================
    PIXEL HELPERS
@@ -540,15 +620,15 @@ function drawStatic(c) {
   // Giá treo tường 3 tầng, độ dài và vị trí lệch nhau
   const sh = (x0, x1, y) => { R(c, x0, y, x1 - x0, 3, "#86552f"); R(c, x0, y, x1 - x0, 1, "#a8744a"); R(c, x0, y + 3, x1 - x0, 1, "#2b190f"); R(c, x0 + 3, y + 4, 2, 5, "#4e2f1b"); R(c, x1 - 5, y + 4, 2, 5, "#4e2f1b"); };
   sh(226, 268, 40); sh(214, 262, 66); sh(236, 270, 92);
-  // Lò sưởi
-  c.save(); c.translate(FDX(), 0);
+  // Lò sưởi — dịch lên FY = 16 px để đáy chân lò nằm ở hàng sàn số 1 (y 112–120) thay vì hàng 3
+  c.save(); c.translate(FDX(), -FY);
   R(c, 278, 60, 40, 64, "#7b4a3a");
   for (let y = 62, i = 0; y < 122; y += 4, i++) { R(c, 278, y, 40, 1, "#5a3428"); for (let x = 278 + (i % 2) * 4; x < 318; x += 8) R(c, x, y, 1, 4, "#5a3428"); }
   R(c, 274, 56, 48, 5, "#5c3a23"); R(c, 274, 56, 48, 1, "#86552f");
   R(c, 286, 88, 24, 34, "#120b08"); R(c, 287, 87, 22, 1, "#120b08"); R(c, 289, 86, 18, 1, "#120b08");
   R(c, 284, 86, 2, 36, "#5a3428"); R(c, 310, 86, 2, 36, "#5a3428");
   R(c, 274, 122, 48, 4, "#6a5a52"); R(c, 274, 122, 48, 1, "#8a7a70");
-  R(c, 276, 126, 44, 10, "#5c4a42"); R(c, 276, 126, 44, 1, "#7a6a60"); R(c, 276, 135, 44, 1, "#3a2c26");   // chân lò liền khối tới mặt sàn
+  R(c, 276, 126, 44, 10, "#5c4a42"); R(c, 276, 126, 44, 1, "#7a6a60"); R(c, 276, 135, 44, 1, "#3a2c26");   // chân lò liền khối tới mặt sàn (đáy y = 136 − FY = 120)
   R(c, 282, 50, 6, 6, "#c9a24a"); R(c, 296, 48, 4, 8, "#d8cdb4"); R(c, 297, 46, 2, 2, "#ffd36b");
   c.restore();
   // Ghế (lưng ghế phía sau nhân vật)
@@ -764,13 +844,22 @@ function drawWindow(c, f) {
     [[cx, 8, 18], [cx + 40, 16, 14], [cx + 14, 22, 12]].forEach(([x, y, wd], i) => {
       R(c, gx + x, gy + y, wd, 3, i % 2 ? "#f59bb8" : "#ff9fc2"); R(c, gx + x + 3, gy + y - 2, wd - 7, 2, "#ffc7dc"); R(c, gx + x + 1, gy + y + 3, wd - 2, 1, "#d97a9e");
     });
-    R(c, gx, gy + 31, gw, 10, "#c0587f"); R(c, gx, gy + 35, gw, 6, "#9d4a78"); R(c, gx, gy + 31, gw, 1, "#ffc09a");
-    for (let i = 0; i < 6; i++) R(c, gx + 34 + ((f + i * 5) % 3) * 2 + (i % 2) * 3, gy + 32 + i, 10 - i, 1, "#ffd7a3");
-    R(c, gx, gy + 41, gw, 11, "#e8c89a"); R(c, gx, gy + 47, gw, 5, "#d9b585");
-    for (let x = 0; x < gw; x += 9) R(c, gx + x, gy + 45 + (x % 18 ? 1 : 0), 5, 1, "#c99d6a");
-    const wv = Math.round(Math.sin(f * 0.25) * 1.5);
-    R(c, gx, gy + 41 + wv, gw, 2, "#cfa878"); R(c, gx, gy + 39 + wv, gw, 1, "rgba(255,240,235,.55)");
-    for (let x = 0; x < gw; x += 3) R(c, gx + x, gy + 40 + wv, 2, 1, "#fff3ee");
+    // Biển lúc hoàng hôn — cùng cách vẽ cảnh Bãi biển ở Sân vườn: vệt nắng đứt đoạn lấp lánh, bọt sóng gợn, mép bờ dâng hạ
+    R(c, gx, gy + 31, gw, 11, "#c0587f"); R(c, gx, gy + 35, gw, 7, "#9d4a78"); R(c, gx, gy + 31, gw, 1, "#ffc09a");
+    for (let i = 0; i < 5; i++) {   // vệt nắng phản chiếu: vạch ngang đứt đoạn, dài và sáng gần mặt trời, ngắn và cam dần xuống dưới
+      const y = gy + 32 + i * 2, w = 18 - i * 3, sh = Math.round(Math.sin(f * 0.12 + i * 1.7)), col = i < 2 ? "#ffe08a" : i < 4 ? "#ffc070" : "#f59a58";
+      const gap = 1 + ((i * 7 + (f >> 2)) % 3);   // khe hở chạy qua lại tạo lấp lánh
+      R(c, gx + 40 - w / 2 + sh, y, gap + 2, 1, col); R(c, gx + 40 - w / 2 + sh + gap + 3, y, Math.max(1, w - gap - 3), 1, col);
+    }
+    for (let i = 0; i < 8; i++) if (((f >> 1) + i * 3) % 7 < 3) R(c, gx + 4 + ((i * 13) % 64), gy + 33 + ((i * 5) % 6), 2, 1, "#ffe3c8");   // nắng lấp lánh trên sóng
+    for (let k = 0; k < 2; k++) {   // bọt sóng
+      const y = gy + 38 + k * 2 + Math.round(Math.sin(f * 0.1 + k * 1.3));
+      for (let x = (k * 11) % 20; x < gw; x += 20) R(c, gx + x, y, 9 + k * 3, 1, `rgba(255,240,235,${0.7 - k * 0.25})`);
+    }
+    R(c, gx, gy + 42, gw, 10, "#e8c89a"); R(c, gx, gy + 47, gw, 5, "#d9b585");
+    for (let x = 0; x < gw; x += 9) R(c, gx + x, gy + 46 + (x % 18 ? 1 : 0), 5, 1, "#c99d6a");
+    const edge = gy + 42 + Math.round(Math.sin(f * 0.1) * 1.5);   // mép bờ dâng hạ theo nhịp sóng
+    R(c, gx, edge, gw, 1, "rgba(255,255,255,.8)"); R(c, gx, edge + 1, gw, 1, "rgba(255,255,255,.35)");
   } else {
     const flash = w === "storm" && lightningOn();
     const sky = w === "storm" ? ["#0d111c", "#131a29", "#1a2234"] : ["#1b2335", "#222c43", "#2b3652"];
@@ -1207,19 +1296,6 @@ function fanFill(d, len, c) {                    // gió quạt nhẹ: lọc th�
     d[i] = (a * 6 + b * 0.22) * (0.82 + 0.18 * Math.sin(2 * Math.PI * t / 6 + c));
   }
 }
-function addCrackle(buf) {                      // tiếng nổ rẹt rẹt của rãnh đĩa than
-  if (!buf) return buf;
-  const r = rng(500);
-  for (let ch = 0; ch < buf.numberOfChannels; ch++) {
-    const d = buf.getChannelData(ch);
-    for (let i = 0; i < d.length; i++) d[i] += (r() * 2 - 1) * 0.004;
-    for (let k = 0; k < d.length / SR * 14; k++) {
-      const at = Math.floor(r() * (d.length - 300)), a = 0.05 + r() * 0.18, l = Math.floor((0.0008 + r() * 0.0025) * SR);
-      for (let i = 0; i < l; i++) d[at + i] += (r() * 2 - 1) * a * Math.exp(-i / (l / 3));
-    }
-  }
-  return buf;
-}
 function wavesFill(d, len, c) {                 // sóng biển: chu kỳ 7 giây, hai tai lệch pha
   const r = rng(111 + c); let p = 0, q = 0;
   for (let i = 0; i < len; i++) {
@@ -1228,19 +1304,22 @@ function wavesFill(d, len, c) {                 // sóng biển: chu kỳ 7 giâ
     d[i] = q * 7 * (0.35 + swell * 0.9) + p * 0.35 * swell * swell;
   }
 }
-const SLEEP_LOFI = [   // nhạc Lofi Sleep: nhịp chậm, hợp âm trầm
-  { bpm: 58, chords: [[48, 52, 55, 59], [45, 48, 52, 55], [41, 45, 48, 52], [43, 47, 50, 55]] },
-  { bpm: 62, chords: [[50, 53, 57, 60], [46, 50, 53, 57], [48, 52, 55, 59], [45, 48, 52, 55]] },
-  { bpm: 54, chords: [[45, 48, 52, 55], [41, 45, 48, 52], [43, 47, 50, 53], [40, 44, 47, 52]] },
+const SLEEP_LOFI = [   // nhạc Lofi Sleep (đĩa than): nhịp chậm, hợp âm trầm, trống rất nhẹ
+  { name: "Ru đêm",   bpm: 58, seed: 11, lead: "bell",  drums: "brush",
+    chords: [[48, 52, 55, 59], [45, 48, 52, 55], [41, 45, 48, 52], [43, 47, 50, 55]], chordsB: [[41, 45, 48, 52], [43, 47, 50, 55], [40, 43, 47, 50], [45, 48, 52, 55]] },
+  { name: "Trăng non", bpm: 62, seed: 12, lead: "keys",  drums: "brush",
+    chords: [[50, 53, 57, 60], [46, 50, 53, 57], [48, 52, 55, 59], [45, 48, 52, 55]], chordsB: [[46, 50, 53, 57], [48, 52, 55, 59], [43, 46, 50, 53], [45, 49, 52, 55]] },
+  { name: "Gió khẽ",  bpm: 54, seed: 13, lead: "flute", drums: "none",
+    chords: [[45, 48, 52, 55], [41, 45, 48, 52], [43, 47, 50, 53], [40, 44, 47, 52]], chordsB: [[41, 45, 48, 52], [43, 47, 50, 53], [45, 48, 52, 55], [40, 44, 47, 52]] },
 ];
 if (ctx) Object.assign(BUF, {
   stars: mkBuf(8, cricketsFill), wind: mkLoopBuf(20, snowNightFill), roof: mkBuf(8, roofRainFill),
-  bubble: mkBuf(6, bubbleFill), musicbox: mkBuf(12, musicboxFill), fan: mkLoopBuf(6, fanFill), sleepLofi: [],
+  bubble: mkBuf(6, bubbleFill), musicbox: mkBuf(12, musicboxFill), fan: mkLoopBuf(6, fanFill),
 });
 if (ctx) BUF.sunset = mkBuf(14, wavesFill);
 
 function FDX() { return state.fireSide === "left" ? -266 : 0; }
-function drawFire(c, f) { c.save(); c.translate(FDX(), 0); drawFire0(c, f); c.restore(); }
+function drawFire(c, f) { c.save(); c.translate(FDX(), -FY); drawFire0(c, f); c.restore(); }
 function drawFire0(c, f) {
   R(c, 290, 116, 16, 3, "#5a3a22"); R(c, 292, 113, 12, 3, "#6b4429"); R(c, 292, 113, 12, 1, "#86552f");
   if (!state.fireOn) {
@@ -1313,12 +1392,12 @@ function drawLight(f) {
   const hole = (x, y, r, a) => { const g = c.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, `rgba(0,0,0,${a})`); g.addColorStop(1, "rgba(0,0,0,0)"); c.fillStyle = g; c.fillRect(0, 0, 160, 90); };
   const flick = 0.9 + Math.random() * 0.1;
   if (state.lampOn && lampObj) hole((lampObj.data.x + 10) / 2, (lampObj.data.y + 6) / 2, 34, 0.95);
-  if (state.fireOn) hole(149 + FDX() / 2, 52, 26 * flick, 0.9);
+  if (state.fireOn) hole(149 + FDX() / 2, 52 - FY / 2, 26 * flick, 0.9);
   if (open > 0) { c.fillStyle = `rgba(0,0,0,${w === "clear" || w === "sunset" ? 0.78 : 0.4})`; c.fillRect(gl / 2, 9, open / 2, 26); }   // chỉ đục đúng phần kính còn hở
   c.globalCompositeOperation = "source-over";
   const glow = (x, y, r, col) => { const g = c.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, col); g.addColorStop(1, "rgba(0,0,0,0)"); c.fillStyle = g; c.fillRect(0, 0, 160, 90); };
   if (state.lampOn && lampObj) glow((lampObj.data.x + 10) / 2, (lampObj.data.y + 8) / 2, 30, "rgba(255,196,110,.20)");
-  if (state.fireOn) glow(149 + FDX() / 2, 54, 24 * flick, `rgba(255,120,50,${0.16 * flick})`);
+  if (state.fireOn) glow(149 + FDX() / 2, 54 - FY / 2, 24 * flick, `rgba(255,120,50,${0.16 * flick})`);
   {                                                    // ánh sáng toả khắp phòng từ mép trên cửa sổ, nghiêng nhẹ sang trái; kính hở cho qua đủ, rèm chặn bớt (lọt khoảng 22%)
     const day = w === "clear" || w === "sunset", col = w === "sunset" ? "255,170,150" : day ? "255,240,200" : flash ? "200,220,255" : "110,140,210", base = day ? 0.17 : flash ? 0.24 : 0.07;
     if (open > 6) { c.fillStyle = `rgba(${col},${(day ? 0.10 : flash ? 0.30 : 0.08) * k})`; c.fillRect(gl / 2, 9, open / 2, 26); }
@@ -2355,7 +2434,7 @@ function chatterFill(d, len, c) {   // người đi đường nói chuyện xa: 
 }
 function scheduleCityExtras() {   // thỉnh thoảng (20–40 giây, trung bình 30 giây) có tiếng còi hoặc tiếng nói chuyện rất nhỏ ở khung cảnh thành phố
   setTimeout(() => {
-    if (ctx && ROOM.cur === "out" && state.out.scene === "city" && state.out.on) sceneEm.oneShot(Math.random() < 0.5 ? BUF.horn : BUF.chatter, (0.35 + Math.random() * 0.25) * 1.5);
+    if (ctx && ROOM.cur === "out" && state.out.scene === "city" && state.out.on) sceneEm.oneShot(Math.random() < 0.5 ? BUF.horn : BUF.chatter, (0.35 + Math.random() * 0.25) * 1.5 * SCENE_GAIN);
     scheduleCityExtras();
   }, (20 + Math.random() * 20) * 1000);
 }
@@ -2481,18 +2560,18 @@ const ROOMCFG = {
     hint: "Mẹo: kéo Tivi hoặc Mèo quanh phòng để nghe âm thanh đổi hướng tai. Bấm tai nghe để phát nhạc, bấm cửa sổ để đổi thời tiết và kéo rèm, bấm kệ sách để thêm đồ.",
     sound: ["tv", "cat", "clock"],
     list: () => state.items, setList: v => { state.items = v; },
-    get surfaces() { const dx = state.fireSide === "left" ? -266 : 0; return [{ x0: 92, x1: 228, top: 115, snapBelow: 136, front: 161 }, { x0: 274 + dx, x1: 318 + dx, top: 56, snapBelow: 104, front: 137 }]; },   // mặt bàn + mặt trên lò sưởi (liền khối tới sàn, đồ không đè lên lửa)
+    get surfaces() { const dx = state.fireSide === "left" ? -266 : 0; return [{ x0: 92, x1: 228, top: 115, snapBelow: 136, front: 161 }, { x0: 274 + dx, x1: 318 + dx, top: 40, snapBelow: 88, front: 121 }]; },   // mặt bàn + mặt trên lò sưởi (liền khối tới sàn, đồ không đè lên lửa)
     shelves: [{ x0: 226, x1: 268, top: 40 }, { x0: 214, x1: 262, top: 66 }, { x0: 236, x1: 270, top: 92 }],   // 3 tầng giá treo tường: đồ kéo lại gần sẽ tự khớp vào
     fixed: {
       window:    { x: 112, y: 6,  w: 96, h: 74, label: "Cửa sổ · thời tiết & rèm" },
-      fireplace: { x: 272, y: 56, w: 46, h: 70, label: "Lò sưởi" },
+      fireplace: { x: 272, y: 40, w: 50, h: 80, label: "Lò sưởi" },   // khớp hình lò: mặt lò y 40 → đáy chân lò y 120
       rug:       { x: 66,  y: 150, w: 188, h: 26, label: "Thảm · đổi họa tiết" },
       headphone: { x: 146, y: 73, w: 28, h: 20, label: "Tai nghe · nhạc Lo-fi" },
     },
   },
   bed: {
     name: "Phòng ngủ yên tĩnh",
-    hint: "Mẹo: bấm giá treo tường hoặc ngăn trên tủ đầu giường để đặt quạt, máy xông, đĩa than, hộp nhạc, radio hoặc đồng hồ Pomodoro; kéo đồ ra góc xa để thành tiếng nền mờ. Bấm đèn ngủ để tắt đèn.",
+    hint: "Mẹo: bấm giá treo tường hoặc ngăn trên tủ đầu giường để đặt quạt, máy xông, đĩa than, hộp nhạc, radio hoặc đồng hồ Pomodoro; radio, đĩa than, hộp nhạc là âm nền nghe đều hai tai; kéo máy xông, quạt hoặc mèo ra góc xa để thành tiếng nền mờ. Bấm đèn ngủ để tắt đèn.",
     sound: ["radio", "diffuser", "vinyl", "musicbox", "fan", "cat", "clock"],
     list: () => state.bed.items, setList: v => { state.bed.items = v; },
     shelves: [{ x0: 14, x1: 66, top: 40 }, { x0: 40, x1: 100, top: 66 }, { x0: 14, x1: 66, top: 92 }, { x0: 276, x1: 312, top: 146, tol: 9 }],   // giá treo tường + ngăn trên tủ đầu giường
@@ -2505,7 +2584,7 @@ const ROOMCFG = {
       window:  { x: 122, y: 6,  w: 76, h: 68, label: "Cửa sổ · thời tiết & rèm" },
       bedlamp: { x: 285, y: 96, w: 18, h: 28, label: "Đèn ngủ · bật/tắt" },
       wallclock: { x: 215, y: 26, w: 25, h: 25, label: "Đồng hồ treo tường" },
-      rug:     { x: 174, y: 140, w: 142, h: 31, label: "Thảm · đổi họa tiết" },
+      rug:     { x: 174, y: 124, w: 142, h: 49, label: "Thảm · đổi họa tiết" },   // khớp thảm vẽ ở drawBedRug (x 174–316, đáy y 173); mép trên chừa 2 px cho đèn ngủ
     },
   },
   out: {
@@ -2526,10 +2605,10 @@ const ROOMCFG = {
 const room = $("room"), itemsEl = $("items"), stageWrap = $("stageWrap");
 let S = 2;
 function layout() {
-  const r = stageWrap.getBoundingClientRect();
+  const r = box(stageWrap);
   const maxW = Math.max(200, r.width - 10), maxH = Math.max(112, r.height - 10);
   let w = Math.min(maxW, maxH * W / H);
-  if (window.innerWidth <= 720) w = maxW;
+  if (!isRot() && window.innerWidth <= 720) w = maxW;
   S = w / W;
   room.style.width = w + "px"; room.style.height = (w * H / W) + "px";
   itemsById.forEach(placeObj);
@@ -2539,12 +2618,14 @@ new ResizeObserver(layout).observe(stageWrap);
 
 /* ---------- Nguồn âm cố định của từng phòng ---------- */
 const FS = ROOMCFG.study.fixed;
-const windowEm = new Emitter(160, 46, true, roomOut.study, LISTENERS.study);          // chính giữa: pan = 0, nghe đều hai tai
-const fireEm = new Emitter(FS.fireplace.x + 24, FS.fireplace.y + 50, false, roomOut.study, LISTENERS.study);
+const windowEm = new Emitter(160, 46, true, roomOut.study, LISTENERS.study, true);    // âm nền ngoài cửa sổ
+const fireEm = new Emitter(FS.fireplace.x + 24, FS.fireplace.y + 50, false, roomOut.study, LISTENERS.study, true);   // lò sưởi: âm nền
 const headEm = new Emitter(160, 100, false, roomOut.study, LISTENERS.study);          // tai nghe nằm đúng điểm nghe: pan = 0, gain = 1
-const wallClockEm = new Emitter(227, 37, false, roomOut.bed, LISTENERS.bed);
-const bedWindowEm = new Emitter(160, 42, true, roomOut.bed, LISTENERS.bed);           // bên phải phòng: nghiêng hẳn sang tai phải
+const wallClockEm = new Emitter(227, 37, false, roomOut.bed, LISTENERS.bed, true);    // tích tắc: âm nền
+const bedWindowEm = new Emitter(160, 42, true, roomOut.bed, LISTENERS.bed, true);     // âm nền ngoài cửa sổ
 const sceneEm = new Emitter(160, 60, false, roomOut.out, LISTENERS.out);              // âm thanh khung cảnh: ngay phía sau lưng, nghe đều hai tai
+const SCENE_GAIN = 0.5;   // mọi tiếng của khung cảnh sân vườn còn 50%
+sceneEm.scale = SCENE_GAIN;
 const outHeadEm = new Emitter(160, 100, false, roomOut.out, LISTENERS.out);           // tai nghe của người ngồi xích đu (dùng chung cài đặt với tai nghe phòng học)
 const BED_WEATHERS = [
   { id: "stars", label: "Đêm sao",  sub: "Tiếng dế mèn" },
@@ -2555,16 +2636,16 @@ const BED_WEATHER_BUF = { stars: "stars", rain: "roof", wind: "wind" };
 function applyWindow() { windowEm.play(BUF.clear && BUF[state.weather]); windowEm.setLevel(state.windowOn, state.windowVol); }
 function applyBedWindow() { bedWindowEm.play(BUF.stars && BUF[BED_WEATHER_BUF[state.bed.weather]]); bedWindowEm.setLevel(state.bed.windowOn, state.bed.windowVol); }
 function redrawBg() { bg.clearRect(0, 0, W, H); if (ROOM.cur === "study") drawStatic(bg); else if (ROOM.cur === "bed") drawStaticBed(bg); else drawOutBackdrop(); }
-function applyFire() { FS.fireplace.x = state.fireSide === "left" ? 6 : 272; fireEm.setPos(FS.fireplace.x + 23, 106); fireEm.play(BUF.fire); fireEm.setLevel(state.fireOn, state.fireVol); }
+function applyFire() { FS.fireplace.x = state.fireSide === "left" ? 6 : 272; fireEm.setPos(FS.fireplace.x + 23, 90); fireEm.play(BUF.fire); fireEm.setLevel(state.fireOn, state.fireVol); }
 function applyFire0() { fireEm.play(BUF.fire); fireEm.setLevel(state.fireOn, state.fireVol); }
 function applyHeadphone() {
-  const h = state.headphone, b = BUF.lofi && BUF.lofi[h.track | 0];
+  const h = state.headphone, b = lofiBuf("lofi", h.track);
   headEm.play(b); headEm.setLevel(h.on, h.vol);
   outHeadEm.play(b); outHeadEm.setLevel(h.on, h.vol);   // cùng một tai nghe, nghe được cả trong nhà lẫn ngoài sân
 }
 function applyScene() { const so = state.out; sceneEm.play(sceneBuf(so.scene)); sceneEm.setLevel(so.on, so.vol); }
 function applyRadio() { itemsById.forEach(o => { if (o.data.type === "radio") applyItemAudio(o); }); }
-function applyWallClock() { wallClockEm.play(BUF.clock); wallClockEm.setLevel(state.bed.clock.on, state.bed.clock.vol); }
+function applyWallClock() { wallClockEm.setLevel(state.bed.clock.on, state.bed.clock.vol); }   // tiếng tích tắc phát từng giây (xem vòng lặp đồng hồ treo tường)
 function playClick() {
   if (!ctx || !BUF.click) return;
   const s = ctx.createBufferSource(); s.buffer = BUF.click; const g = ctx.createGain(); g.gain.value = 0.8; s.connect(g); g.connect(master); s.start();
@@ -2637,7 +2718,8 @@ function spawn(d) {
   el.type = "button"; el.className = "obj"; el.setAttribute("aria-label", t.name + " — kéo để di chuyển, Enter để mở bảng điều khiển");
   const cv = document.createElement("canvas"); cv.width = t.w; cv.height = t.h; el.appendChild(cv);
   itemsEl.appendChild(el);
-  const em = t.sound ? new Emitter(...emCenter(d), t.hp, roomOut[ROOM.cur], LISTENERS[ROOM.cur]) : null;
+  const em = t.sound ? new Emitter(...emCenter(d), t.hp, roomOut[ROOM.cur], LISTENERS[ROOM.cur], t.bg) : null;
+  if (em && t.gain) em.scale = t.gain;
   const o = { data: d, el, ctx: cv.getContext("2d"), em };
   itemsById.set(d.id, o);
   if (d.type === "lamp") lampObj = o;
@@ -2648,8 +2730,8 @@ function spawn(d) {
 }
 function itemBuffer(d) {
   switch (d.type) {
-    case "headphone": case "radio": return BUF.lofi && BUF.lofi[d.track | 0];
-    case "vinyl": return BUF.sleepLofi && BUF.sleepLofi[d.track | 0];
+    case "headphone": case "radio": return lofiBuf("lofi", d.track);
+    case "vinyl": return lofiBuf("sleep", d.track);
     case "diffuser": return BUF.bubble;
     default: return BUF[d.type];
   }
@@ -2675,7 +2757,7 @@ function removeItem(id) {
 }
 function addItem(type, x, y) {
   const t = TYPES[type];
-  const d = { id: uid(), type, x: x - t.w / 2, y: y - t.h / 2, on: true, vol: t.vol ?? 0.5, track: 0 };
+  const d = { id: uid(), type, x: x - t.w / 2, y: y - t.h / 2, on: type !== "clock", vol: t.vol ?? 0.5, track: 0 };   // đồng hồ: tích tắc mặc định tắt
   if (type === "frame") d.art = Math.random() * ART_N | 0;   // mỗi khung ảnh mới nhận một tranh ngẫu nhiên
   clampPos(d); ROOMCFG[ROOM.cur].list().push(d); spawn(d); save();
 }
@@ -2685,16 +2767,17 @@ const toolbar = $("toolbar"), tray = $("tray");
 const meter = document.createElement("div"); meter.className = "drag-meter"; meter.hidden = true;
 meter.innerHTML = `<div class="meter-row"><span>Trái</span><span id="mtxt"></span><span>Phải</span></div><div class="meter"><i id="mdot"></i></div>`;
 document.body.appendChild(meter);
-function toLogical(e) { const r = room.getBoundingClientRect(); return [(e.clientX - r.left) / S, (e.clientY - r.top) / S]; }
-function inRect(el, e) { if (el.hidden) return false; const r = el.getBoundingClientRect(); return e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom; }
+function toLogical(e) { const r = box(room), p = pt(e); return [(p.x - r.left) / S, (p.y - r.top) / S]; }
+function inRect(el, e) { if (el.hidden) return false; const r = box(el), p = pt(e); return p.x >= r.left && p.x <= r.right && p.y >= r.top && p.y <= r.bottom; }
 function overTrash(e) { return inRect(toolbar, e) || inRect(tray, e); }   // thả đồ lên thanh công cụ = xóa
 function panLabel(p) { return Math.abs(p) < 0.05 ? "Chính giữa" : (p < 0 ? "Trái " : "Phải ") + Math.round(Math.abs(p) * 100) + "%"; }
 function showMeter(e, sp) {
   meter.hidden = false;
-  meter.style.left = clamp(e.clientX + 16, 8, window.innerWidth - 170) + "px";
-  meter.style.top = clamp(e.clientY + 20, 8, window.innerHeight - 50) + "px";
+  const p = pt(e), v = vp();
+  meter.style.left = clamp(p.x + 16, 8, v.w - 170) + "px";
+  meter.style.top = clamp(p.y + 20, 8, v.h - 50) + "px";
   $("mdot").style.left = ((sp.pan + 1) / 2 * 100) + "%";
-  $("mtxt").textContent = panLabel(sp.pan) + " · gain " + sp.gain.toFixed(2);
+  $("mtxt").textContent = sp.bg ? "Âm nền · nghe đều hai tai" : panLabel(sp.pan) + " · gain " + sp.gain.toFixed(2);
 }
 function bindDrag(o) {
   const t = TYPES[o.data.type];
@@ -2820,7 +2903,8 @@ function makeCard(type) {
       const g = document.createElement("canvas"); paintType(g, type, true);
       ghost.appendChild(g); document.body.appendChild(ghost);
     }
-    Object.assign(ghost.style, { width: t.w * S + "px", height: t.h * S + "px", left: e.clientX - t.w * S / 2 + "px", top: e.clientY - t.h * S / 2 + "px" });
+    const p = pt(e);
+    Object.assign(ghost.style, { width: t.w * S + "px", height: t.h * S + "px", left: p.x - t.w * S / 2 + "px", top: p.y - t.h * S / 2 + "px" });
     const [lx, ly] = toLogical(e);
     if (t.sound && lx >= 0 && lx <= W && ly >= 0 && ly <= H) showMeter(e, spatial(lx, ly, LISTENERS[ROOM.cur])); else meter.hidden = true;
   });
@@ -2852,18 +2936,31 @@ function pomoToggle() {
 }
 function pomoSetMode(m) { pomo.mode = m; pomo.running = false; pomo.remaining = POMO_LEN[m]; renderPomo(); }
 function pomoReset() { pomoSetMode(pomo.mode); }
+function pomoAdjust(step) {   // ▲▼ trái ±1 phút, phải ±10 phút; chỉ chỉnh khi đang dừng; Đặt lại quay về độ dài đã chỉnh
+  if (pomo.running) return;
+  POMO_LEN[pomo.mode] = adjustSeconds(POMO_LEN[pomo.mode], step);
+  pomo.remaining = adjustSeconds(pomo.remaining, step);
+  renderPomo();
+}
+function tickClocks() {   // một tiếng tích tắc mỗi khi số giây giảm; tiếng "tích" và "tắc" xen kẽ
+  pomo.tk = !pomo.tk;
+  itemsById.forEach(o => { if (o.data.type === "clock" && o.em) o.em.oneShot(pomo.tk ? BUF.tick : BUF.tock, 1, true); });
+}
 function renderPomo() {
   $("pomoMiniMode").textContent = pomo.mode === "focus" ? "Focus" : "Nghỉ";
   $("pomoMiniTime").textContent = fmt(pomo.remaining);
   $("pomoMiniBtn").textContent = pomo.running ? "Tạm dừng" : "Bắt đầu";
   const big = document.getElementById("pomoBig"); if (big) big.textContent = fmt(pomo.remaining);
   const pb = document.getElementById("pomoPlay"); if (pb) pb.textContent = pomo.running ? "Tạm dừng" : "Bắt đầu";
-  document.querySelectorAll("[data-pmode]").forEach(b => b.setAttribute("aria-pressed", b.dataset.pmode === pomo.mode));
+  document.querySelectorAll("[data-pmode]").forEach(b => { b.setAttribute("aria-pressed", b.dataset.pmode === pomo.mode); b.textContent = pomoModeLabel(b.dataset.pmode); });
+  document.querySelectorAll('[data-adj="pomo"] [data-step]').forEach(b => { b.disabled = pomo.running; });
 }
 $("pomoMiniBtn").addEventListener("click", pomoToggle);
 setInterval(() => {
   if (!pomo.running) return;
+  const prev = pomo.remaining;
   pomo.remaining = Math.max(0, Math.ceil((pomo.endAt - Date.now()) / 1000));
+  if (shouldTick(pomo.running, prev, pomo.remaining)) tickClocks();
   if (pomo.remaining <= 0) {
     if (ctx && BUF.bell) { const s = ctx.createBufferSource(); s.buffer = BUF.bell; const g = ctx.createGain(); g.gain.value = 0.8; s.connect(g); g.connect(master); s.start(); }
     pomoSetMode(pomo.mode === "focus" ? "break" : "focus");
@@ -2872,17 +2969,32 @@ setInterval(() => {
   renderPomo();
 }, 250);
 
-/* Hẹn giờ ngủ: 15/30/45/60 phút. Hai phút cuối, toàn bộ âm thanh nhỏ dần đều về 0 rồi dừng hẳn. */
-const sleep = { min: 0, endAt: 0 };
+/* Hẹn giờ ngủ: Tắt/15/30/45/60 phút hoặc chỉnh ▲▼ (±1/±10 phút, 1–120 phút). Hai phút cuối, toàn bộ âm thanh nhỏ dần đều về 0 rồi dừng hẳn. */
+const sleep = { min: 0, endAt: 0 };   // min: mức đã chọn (-1 = tự chỉnh)
+function sleepRem() { return sleep.endAt ? Math.max(0, Math.ceil((sleep.endAt - Date.now()) / 1000)) : 0; }
 function renderSleep() {
-  const el = $("sleepMini"), rem = sleep.endAt ? Math.max(0, Math.ceil((sleep.endAt - Date.now()) / 1000)) : 0;
-  el.querySelectorAll("[data-sl]").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.sl === sleep.min)));
-  $("sleepTime").textContent = sleep.endAt ? fmt(rem) : "--:--";
+  const el = $("sleepMini"), rem = sleepRem();
+  document.querySelectorAll("[data-sl]").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.sl === sleep.min)));
+  document.querySelectorAll("[data-sleep-time]").forEach(t => { t.textContent = sleep.endAt ? fmt(rem) : "--:--"; });
   el.classList.toggle("fading", !!sleep.endAt && rem <= 120);
 }
 function sleepSet(min) { sleep.min = min; sleep.endAt = min ? Date.now() + min * 60000 : 0; if (ctx) ramp(fade.gain, 1, 0.2); renderSleep(); }
 function sleepCancel() { if (sleep.endAt || sleep.min) sleepSet(0); }
-$("sleepMini").querySelectorAll("[data-sl]").forEach(b => b.addEventListener("click", () => sleepSet(+b.dataset.sl)));
+function sleepAdjust(step) {   // đang tắt: ▲ bắt đầu hẹn giờ đúng số phút đó; đang chạy: cộng/trừ vào thời gian còn lại
+  if (!sleep.endAt && step < 0) return;
+  const sec = sleep.endAt ? adjustSeconds(sleepRem(), step) : adjustSeconds(0, step);
+  sleep.min = -1; sleep.endAt = Date.now() + sec * 1000;
+  if (ctx && sec > 120) ramp(fade.gain, 1, 0.2);
+  renderSleep();
+}
+document.addEventListener("click", e => {   // nút ▲▼ dùng chung (header, popover Pomodoro, popover đồng hồ treo tường)
+  const b = e.target.closest && e.target.closest("[data-adj] [data-step]"); if (!b || b.disabled) return;
+  const kind = b.closest("[data-adj]").dataset.adj;
+  if (kind === "pomo") pomoAdjust(+b.dataset.step); else sleepAdjust(+b.dataset.step);
+});
+document.addEventListener("click", e => {
+  const b = e.target.closest && e.target.closest("[data-sl]"); if (b) sleepSet(+b.dataset.sl);
+});
 setInterval(() => {
   if (!sleep.endAt) return;
   const rem = (sleep.endAt - Date.now()) / 1000;
@@ -2892,7 +3004,7 @@ setInterval(() => {
       ramp(fade.gain, 0, 0.1);
       setTimeout(() => ctx.suspend().then(() => {
         fade.gain.value = 1; audioReady = false;
-        $("audioChip").className = "chip"; $("audioTxt").textContent = "Đã hết giờ ngủ · chạm để bật lại";
+        $("sleepNote").hidden = false;   // "Đã hết giờ ngủ · chạm để bật lại" (AC-06.1)
       }).catch(() => {}), 150);
     }
     renderSleep(); return;
@@ -2900,6 +3012,8 @@ setInterval(() => {
   if (rem <= 120 && ctx) ramp(fade.gain, rem / 120, 0.25);
   renderSleep();
 }, 250);
+let wallTk = false;
+setInterval(() => { if (ctx && audioReady && ROOM.cur === "bed" && state.bed.clock.on) { wallTk = !wallTk; wallClockEm.oneShot(wallTk ? BUF.tick : BUF.tock, 1, true); } }, 1000);
 
 /* ============================================================
    POPOVER (FEAT-04)
@@ -2913,6 +3027,7 @@ function sw(id, on, label) { return `<div class="row"><span>${label}</span><butt
 function volRow(id, v) { return `<div class="vol"><div class="row"><label class="lbl" for="${id}">Âm lượng</label><span id="${id}Val">${Math.round(v * 100)}%</span></div><input type="range" id="${id}" min="0" max="100" value="${Math.round(v * 100)}"></div>`; }
 function spatialRow(em) {
   const sp = em.sp;
+  if (sp.bg) return `<div class="spatial"><span>Âm nền · to đều mọi vị trí, nghe đều hai tai</span></div>`;
   return `<div class="spatial"><div class="meter-row"><span>Trái</span><span>${panLabel(sp.pan)}</span><span>Phải</span></div><div class="meter"><i style="left:${(sp.pan + 1) / 2 * 100}%"></i></div><span>Suy giảm theo khoảng cách: ${sp.gain.toFixed(2)} · cách điểm nghe ${Math.round(sp.d)} px</span></div>`;
 }
 function bindSwitch(id, get, set) {
@@ -2928,7 +3043,15 @@ function bindPomo() {
   pop.querySelectorAll("[data-pmode]").forEach(b => b.addEventListener("click", () => pomoSetMode(b.dataset.pmode)));
   const pp = pop.querySelector("#pomoPlay"); if (pp) { pp.addEventListener("click", pomoToggle); pop.querySelector("#pomoReset").addEventListener("click", pomoReset); }
 }
-const pomoBox = () => `<div class="pomo-box"><div class="seg" role="group" aria-label="Chế độ Pomodoro"><button type="button" data-pmode="focus" aria-pressed="${pomo.mode === "focus"}">Focus 25p</button><button type="button" data-pmode="break" aria-pressed="${pomo.mode === "break"}">Nghỉ 5p</button></div><div class="big" id="pomoBig">${fmt(pomo.remaining)}</div><div class="actions"><button type="button" class="btn primary" id="pomoPlay">${pomo.running ? "Tạm dừng" : "Bắt đầu"}</button><button type="button" class="btn" id="pomoReset">Đặt lại</button></div></div>`;
+const TRI_UP = `<svg viewBox="0 0 7 4" width="12" height="7" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M3 0h1v1h1v1h1v1h1v1H0V3h1V2h1V1h1z"/></svg>`;
+const TRI_DN = `<svg viewBox="0 0 7 4" width="12" height="7" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M0 0h7v1H6v1H5v1H4v1H3V3H2V2H1V1H0z"/></svg>`;
+/* Hai cột nút tam giác (▲ trên, ▼ dưới) hai bên mặt đồng hồ: trái ±1 phút, phải ±10 phút */
+function adjBox(kind, face, compact) {
+  const col = n => `<div class="tri"><button type="button" data-step="${n}" aria-label="Tăng ${n} phút" title="+${n} phút">${TRI_UP}</button><button type="button" data-step="-${n}" aria-label="Giảm ${n} phút" title="−${n} phút">${TRI_DN}</button>${compact ? "" : `<small>${n}p</small>`}</div>`;
+  return `<div class="adj${compact ? " compact" : ""}" data-adj="${kind}">${col(1)}${face}${col(10)}</div>`;
+}
+function pomoModeLabel(m) { return (m === "focus" ? "Focus " : "Nghỉ ") + Math.round(POMO_LEN[m] / 60) + "p"; }
+const pomoBox = () => `<div class="pomo-box"><div class="seg" role="group" aria-label="Chế độ Pomodoro"><button type="button" data-pmode="focus" aria-pressed="${pomo.mode === "focus"}">${pomoModeLabel("focus")}</button><button type="button" data-pmode="break" aria-pressed="${pomo.mode === "break"}">${pomoModeLabel("break")}</button></div>${adjBox("pomo", `<div class="big" id="pomoBig">${fmt(pomo.remaining)}</div>`)}<div class="actions"><button type="button" class="btn primary" id="pomoPlay">${pomo.running ? "Tạm dừng" : "Bắt đầu"}</button><button type="button" class="btn" id="pomoReset">Đặt lại</button></div></div>`;
 const CURTAIN_LABELS = { study: [["open", "Mở"], ["half", "Che một phần"], ["closed", "Che kín"]], bed: [["open", "Mở"], ["half", "Che một phần"], ["closed", "Che kín"]] };
 
 function openPop(key, anchor) {
@@ -2974,7 +3097,7 @@ function openPop(key, anchor) {
     const isH = true, st = state.headphone, em = headEm, apply = applyHeadphone;
     html = head(isH ? "Tai nghe" : "Radio", isH ? "Nhạc Lo-fi phát thẳng vào tai nghe." : "Nhạc Lo-fi từ chiếc radio trong tủ đầu giường.") +
       sw("rOn", st.on, isH ? "Phát nhạc" : "Bật radio") + volRow("rVol", st.vol) +
-      `<div class="row"><span class="lbl">Bài Lo-fi</span></div><div class="seg" role="group" aria-label="Chọn bài">${LOFI.map((l, i) => `<button type="button" data-t="${i}" aria-pressed="${(st.track | 0) === i}">Bài ${i + 1} · ${l.bpm}</button>`).join("")}</div>` +
+      `<div class="row"><span class="lbl">Bài Lo-fi</span></div><div class="seg list" role="group" aria-label="Chọn bài">${LOFI.map((l, i) => `<button type="button" data-t="${i}" aria-pressed="${(st.track | 0) === i}">${l.name}</button>`).join("")}</div>` +
       (isH ? "" : spatialRow(em));
     bind = () => {
       bindSwitch("rOn", () => st.on, v => { st.on = v; apply(); });
@@ -2986,7 +3109,8 @@ function openPop(key, anchor) {
     };
   } else if (key === "wallclock") {
     const wc = state.bed.clock;
-    html = head("Đồng hồ treo tường", "Chiếc đồng hồ kim quay đều, chỉ để trang trí.") + sw("wcOn", wc.on, "Tiếng tích tắc") + volRow("wcVol", wc.vol);
+    html = head("Đồng hồ treo tường", "Chiếc đồng hồ kim quay đều. Đặt hẹn giờ ngủ ngay tại đây.") + sw("wcOn", wc.on, "Tiếng tích tắc") + volRow("wcVol", wc.vol) +
+      `<div class="section"><h4>Hẹn giờ ngủ</h4><div class="pomo-box"><div class="seg" role="group" aria-label="Hẹn giờ ngủ">${[0, 15, 30, 45, 60].map(m => `<button type="button" data-sl="${m}" aria-pressed="${sleep.min === m}">${m ? m + "p" : "Tắt"}</button>`).join("")}</div>${adjBox("sleep", `<div class="big" data-sleep-time>${sleep.endAt ? fmt(sleepRem()) : "--:--"}</div>`)}</div></div>`;
     bind = () => {
       bindSwitch("wcOn", () => wc.on, v => { wc.on = v; applyWallClock(); });
       bindVol("wcVol", v => { wc.vol = v; applyWallClock(); });
@@ -3007,7 +3131,7 @@ function openPop(key, anchor) {
     bind = () => bindSwitch("lOn", () => state.lampOn, v => { state.lampOn = v; playClick(); });
   } else if (o.data.type === "clock") {
     const d = o.data;
-    html = head("Đồng hồ Pomodoro", "Đếm giờ Focus/Nghỉ, đồng bộ với Pomodoro ở góc trên. Kéo lên giá hoặc đặt lên bàn.") + sw("iOn", d.on, "Tiếng tích tắc") + volRow("iVol", d.vol) + `<div class="section"><h4>Pomodoro</h4>${pomoBox()}</div><button type="button" class="btn danger" id="iDel">Xóa khỏi phòng</button>`;
+    html = head("Đồng hồ Pomodoro", "Đếm giờ Focus/Nghỉ, đồng bộ với Pomodoro ở góc trên. Chỉnh giờ bằng ▲▼ khi đang dừng. Kéo lên giá hoặc đặt lên bàn.") + sw("iOn", d.on, "Tiếng tích tắc khi đếm") + volRow("iVol", d.vol) + `<div class="section"><h4>Pomodoro</h4>${pomoBox()}</div><button type="button" class="btn danger" id="iDel">Xóa khỏi phòng</button>`;
     bind = () => {
       bindSwitch("iOn", () => d.on, v => { d.on = v; applyItemAudio(o); });
       bindVol("iVol", v => { d.vol = v; o.em.setLevel(d.on, v); });
@@ -3026,7 +3150,7 @@ function openPop(key, anchor) {
     const onLabel = { tv: "Bật tivi", headphone: "Phát nhạc", cat: "Tiếng rù rù", diffuser: "Bật máy xông", vinyl: "Phát đĩa than", musicbox: "Lên dây cót", fan: "Bật quạt", radio: "Bật radio" }[d.type];
     const tracks = d.type === "headphone" || d.type === "radio" ? LOFI : d.type === "vinyl" ? SLEEP_LOFI : null;
     html = head(t.name, t.sub + ".") + sw("iOn", d.on, onLabel) + volRow("iVol", d.vol);
-    if (tracks) html += `<div class="row"><span class="lbl">${d.type === "vinyl" ? "Đĩa Lofi Sleep" : "Bài Lo-fi"}</span></div><div class="seg" role="group" aria-label="Chọn bài">${tracks.map((l, i) => `<button type="button" data-t="${i}" aria-pressed="${(d.track | 0) === i}">Bài ${i + 1} · ${l.bpm}</button>`).join("")}</div>`;
+    if (tracks) html += `<div class="row"><span class="lbl">${d.type === "vinyl" ? "Đĩa Lofi Sleep" : "Bài Lo-fi"}</span></div><div class="seg list" role="group" aria-label="Chọn bài">${tracks.map((l, i) => `<button type="button" data-t="${i}" aria-pressed="${(d.track | 0) === i}">${l.name}</button>`).join("")}</div>`;
     html += spatialRow(o.em) + `<button type="button" class="btn danger" id="iDel">Xóa khỏi phòng</button>`;
     bind = () => {
       bindSwitch("iOn", () => d.on, v => { d.on = v; applyItemAudio(o); });
@@ -3042,7 +3166,7 @@ function openPop(key, anchor) {
   document.body.appendChild(pop);
   pop.querySelector(".x").addEventListener("click", closePop);
   bind();
-  const a = anchor.getBoundingClientRect(), p = pop.getBoundingClientRect(), vw = window.innerWidth, vh = window.innerHeight;
+  const a = box(anchor), p = box(pop), { w: vw, h: vh } = vp();
   let x = a.right + 12; if (x + p.width > vw - 8) x = a.left - p.width - 12; if (x < 8) x = clamp(a.left + a.width / 2 - p.width / 2, 8, vw - p.width - 8);
   let y = clamp(a.top + a.height / 2 - p.height / 2, 8, Math.max(8, vh - p.height - 8));
   pop.style.left = x + "px"; pop.style.top = y + "px";
@@ -3120,15 +3244,12 @@ setTimeout(() => { SCENE_IDS.forEach((id, i) => setTimeout(() => sceneBuf(id), 3
 /* ============================================================
    KHỞI ĐỘNG
    ============================================================ */
+$("sleepTime").outerHTML = adjBox("sleep", `<span class="time" id="sleepTime" data-sleep-time>--:--</span>`, true);   // ▲▼ chỉnh hẹn giờ ngủ ngay trên header
 renderPomo(); renderSleep();
 setupRoom(); buildNav();
 requestAnimationFrame(loop);
-// Nhạc Lo-fi render nền (OfflineAudioContext) rồi gắn vào các headphone / đĩa than đang có
-if (ctx) {
-  LOFI.reduce((p, def, i) => p.then(() => renderLofi(def, i).then(b => { BUF.lofi[i] = b; applyHeadphone(); applyRadio(); })), Promise.resolve()).catch(() => {});
-  SLEEP_LOFI.reduce((p, def, i) => p.then(() => renderLofi(def, 10 + i).then(b => { BUF.sleepLofi[i] = addCrackle(b); itemsById.forEach(o => { if (o.data.type === "vinyl") applyItemAudio(o); }); })), Promise.resolve()).catch(() => {});
-}
+// Nhạc Lo-fi: bài đang chọn của tai nghe, radio, đĩa than đã được dựng nền qua lofiBuf() khi gắn âm thanh lúc khởi động
 // Hook kiểm thử
 window.__focuspace = { spatial, state, D_MAX, W_HALF, LISTENERS, itemsById, windowEm, bedWindowEm, sceneEm, outHeadEm, setScene, sceneBuf, roomOut, fade, sleep, ROOM, switchRoom,
-  sleepRemaining: s => { sleep.endAt = Date.now() + s * 1000; } };
+  sleepRemaining: s => { sleep.endAt = Date.now() + s * 1000; }, pomo, POMO_LEN, pomoAdjust, sleepAdjust, fireEm, lofiCache };
 }
