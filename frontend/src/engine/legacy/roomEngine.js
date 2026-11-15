@@ -11,6 +11,7 @@ import { shouldTick } from "../../lib/time";
 import { RHYTHMS, RHYTHM_IDS, nextPhase, parseConfig, phaseSeconds, rhythmOf, setCustom } from "../../areas/study/engine/pomodoro";
 import { NAVS, canSwitch, lastIndoorAfter, pausesPomodoro } from "../../areas/study/engine/rooms";
 import * as SleepTimer from "../../areas/bedroom/engine/sleepTimer";
+import * as Placement from "../../areas/items-audio/engine/placement";
 
 export function startRoomEngine() {
 "use strict";
@@ -23,9 +24,7 @@ const X0 = 160, Y0 = 100;
 const D_MAX = Math.hypot(W, H);         // đường chéo phòng
 const W_HALF = W / 2;
 const DESK = { x0: 92, x1: 228, top: 115, front: 158 }; // bàn hộp: mặt bàn y=115, thân bàn tới y=158
-const FLOOR_MIN_BASE = 112, FLOOR_MAX_BASE = H - 2;
 const FY = 16;   // lò sưởi dịch lên 16 px so với prototype: đáy chân lò nằm ở hàng sàn số 1 (y 112–120)
-const MAX_ITEMS_PER_ROOM = 25;   // BR-06: tối đa 25 đồ mỗi phòng (khớp shared/src/constants.ts)
 const STORAGE_KEY = "focuspace.room.v4";   // v6: khóa lưu mới để lần mở đầu thấy bàn học chỉ có đèn + ly cà phê
 
 /* Đồ vật phát âm thanh (di chuyển tự do, có Spatial Audio) */
@@ -2610,8 +2609,8 @@ const ROOMCFG = {
     hint: "Mẹo: kéo Tivi hoặc Mèo quanh phòng để nghe âm thanh đổi hướng tai. Bấm tai nghe để phát nhạc, bấm cửa sổ để đổi thời tiết và kéo rèm, bấm kệ sách để thêm đồ.",
     sound: ["tv", "cat", "clock"],
     list: () => state.items, setList: v => { state.items = v; },
-    get surfaces() { const dx = state.fireSide === "left" ? -266 : 0; return [{ x0: 92, x1: 228, top: 115, snapBelow: 136, front: 161 }, { x0: 274 + dx, x1: 318 + dx, top: 40, snapBelow: 88, front: 121 }]; },   // mặt bàn + mặt trên lò sưởi (liền khối tới sàn, đồ không đè lên lửa)
-    shelves: [{ x0: 226, x1: 268, top: 40 }, { x0: 214, x1: 262, top: 66 }, { x0: 236, x1: 270, top: 92 }],   // 3 tầng giá treo tường: đồ kéo lại gần sẽ tự khớp vào
+    get surfaces() { return Placement.studyGeometry(state.fireSide).surfaces; },   // mặt bàn + mặt trên lò sưởi (areas/items-audio/engine/placement.ts)
+    shelves: Placement.STUDY_SHELVES,   // 3 tầng giá treo tường: đồ kéo lại gần sẽ tự khớp vào
     fixed: {
       window:    { x: 112, y: 6,  w: 96, h: 74, label: "Cửa sổ · thời tiết & rèm" },
       fireplace: { x: 272, y: 40, w: 50, h: 80, label: "Lò sưởi" },   // khớp hình lò: mặt lò y 40 → đáy chân lò y 120
@@ -2624,12 +2623,8 @@ const ROOMCFG = {
     hint: "Mẹo: bấm giá treo tường hoặc ngăn trên tủ đầu giường để đặt quạt, máy xông, đĩa than, hộp nhạc, radio hoặc đồng hồ Pomodoro; radio, đĩa than, hộp nhạc là âm nền nghe đều hai tai; kéo máy xông, quạt hoặc mèo ra góc xa để thành tiếng nền mờ. Bấm đèn ngủ để tắt đèn.",
     sound: ["radio", "diffuser", "vinyl", "musicbox", "fan", "cat", "clock"],
     list: () => state.bed.items, setList: v => { state.bed.items = v; },
-    shelves: [{ x0: 14, x1: 66, top: 40 }, { x0: 40, x1: 100, top: 66 }, { x0: 14, x1: 66, top: 92 }, { x0: 276, x1: 312, top: 146, tol: 9 }],   // giá treo tường + ngăn trên tủ đầu giường
-    surfaces: [                                                               // mặt tủ đầu giường, mặt chăn
-      { x0: 274, x1: 314, top: 124, snapBelow: 140, front: 156 },
-      { x0: 200, x1: 230, top: 92, snapBelow: 114, front: 132 },   // phần giường thừa dưới chân: mèo (cao 13) nằm ở y=85
-      { x0: 230, x1: 274, top: 91, snapBelow: 114, front: 132 },   // phần còn lại của giường: mặt đặt đồ y=94
-    ],
+    shelves: Placement.BED_GEOMETRY.shelves,     // giá treo tường + ngăn trên tủ đầu giường (placement.ts)
+    surfaces: Placement.BED_GEOMETRY.surfaces,   // mặt tủ đầu giường, mặt chăn
     fixed: {
       window:  { x: 122, y: 6,  w: 76, h: 68, label: "Cửa sổ · thời tiết & rèm" },
       bedlamp: { x: 285, y: 96, w: 18, h: 28, label: "Đèn ngủ · bật/tắt" },
@@ -2732,31 +2727,9 @@ function emCenter(d) { const t = TYPES[d.type]; return [d.x + t.w / 2, d.y + t.h
    - Đèn, ly cà phê (phòng học): chỉ trượt dọc mặt bàn.
    - Đồ khác: thả lên một mặt phẳng (mặt bàn, mặt tủ đầu giường, mặt chăn) thì tự đặt sát mặt đó;
      thả phía trước thì đứng trên sàn; chỗ khác đứng trên sàn. */
-function clampPos(d) {
-  const t = TYPES[d.type], cfg = ROOMCFG[ROOM.cur];
-  if (t.deskOnly) { d.x = clamp(d.x, 94, 226 - t.w); d.y = 115 - t.h; return; }
-  d.x = clamp(d.x, 0, W - t.w);
-  const cx = d.x + t.w / 2; let base = d.y + t.h, done = false;
-  if (d.type === "cat") {   // mèo kéo lại gần giường mèo thì tự nằm vào; kéo ra xa thì tách khỏi giường
-    const bed = cfg.list().find(i => i.type === "catbed" && cx >= i.x - 4 && cx <= i.x + TYPES.catbed.w + 4 && Math.abs(base - (i.y + TYPES.catbed.h)) <= 14);
-    if (bed) { d.x = bed.x + 3; d.y = bed.y + 8 - t.h; d.bedId = bed.id; return; }
-    d.bedId = null;
-  }
-  if (t.floorOnly) {   // chậu cây lớn: chỉ đứng trên sàn, đi khắp phòng (không lên bàn / giá)
-    base = clamp(base, ROOM.cur === "study" && cx > 90 && cx < 230 ? 160 : 138, FLOOR_MAX_BASE); d.y = base - t.h; return;
-  }
-  // Giá / ngăn: kéo đồ lại gần thì tự khớp vào, trượt dọc theo giá; kéo xuống sàn thì hết khớp
-  const sh = t.h <= 28 && (cfg.shelves || []).find(s => cx >= s.x0 && cx <= s.x1 && Math.abs(base - s.top) <= (s.tol || 13));
-  if (sh) { d.x = clamp(d.x, sh.x0, sh.x1 - t.w); d.y = sh.top - t.h; return; }
-  for (const s of cfg.surfaces) {
-    if (cx >= s.x0 && cx <= s.x1) {
-      if (base < s.snapBelow) { d.x = clamp(d.x, s.x0 + 2, s.x1 - 2 - t.w); base = s.top; }
-      else base = clamp(base, s.front, FLOOR_MAX_BASE);
-      done = true; break;
-    }
-  }
-  if (!done) base = clamp(base, FLOOR_MIN_BASE, FLOOR_MAX_BASE);
-  d.y = base - t.h;
+function clampPos(d) {   // quy tắc đặt đồ BR-03→06: areas/items-audio/engine/placement.ts
+  const cfg = ROOMCFG[ROOM.cur];
+  Object.assign(d, Placement.clampPos(d, TYPES[d.type], ROOM.cur, cfg, cfg.list(), TYPES.catbed));
 }
 function syncCats(bedObj) {   // kéo giường mèo thì mèo đang nằm trên đó đi theo
   const b = bedObj.data; if (b.type !== "catbed") return;
@@ -2810,8 +2783,11 @@ function removeItem(id) {
   const cfg = ROOMCFG[ROOM.cur]; cfg.setList(cfg.list().filter(i => i.id !== id));
   closePop(); save();
 }
+/* Thông báo ngắn cho người dùng (ví dụ phòng đã đủ đồ): trang Căn phòng (Room.tsx) hiện ở ô role="status" dưới màn hình */
+function notify(msg) { window.dispatchEvent(new CustomEvent("focuspace:notice", { detail: msg })); }
 function addItem(type, x, y) {
-  if (ROOMCFG[ROOM.cur].list().length >= MAX_ITEMS_PER_ROOM) return;   // BR-06 / AC-04.2: phòng đủ đồ thì không thêm
+  if (!Placement.canAdd(ROOMCFG[ROOM.cur].list().length)) { notify(Placement.ROOM_FULL_MESSAGE); return; }   // BR-06 / AC-04.2: phòng đủ 25 đồ thì không thêm, chỉ thông báo
+  if (!Placement.canPlaceIn(type, ROOM.cur)) return;   // BR-05: giường mèo chỉ ở Phòng ngủ
   const t = TYPES[type];
   const d = { id: uid(), type, x: x - t.w / 2, y: y - t.h / 2, on: type !== "clock", vol: t.vol ?? 0.5, track: 0 };   // đồng hồ: tích tắc mặc định tắt
   if (type === "frame") d.art = Math.random() * ART_N | 0;   // mỗi khung ảnh mới nhận một tranh ngẫu nhiên
