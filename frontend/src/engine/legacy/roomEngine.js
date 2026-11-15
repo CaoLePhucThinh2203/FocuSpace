@@ -7,7 +7,8 @@
  * shared/ và frontend/src/engine/{logic,render,audio}/ — xem legacy/README.md.
  * Engine đọc/ghi LocalStorage khóa "focuspace.room.v4"; frontend/src/lib/roomSync.ts đồng bộ khóa này với /room-state.
  */
-import { adjustSeconds, shouldTick } from "../../lib/time";
+import { shouldTick } from "../../lib/time";
+import { RHYTHMS, RHYTHM_IDS, nextPhase, parseConfig, phaseSeconds, rhythmOf, setCustom } from "../../lib/pomodoro";
 
 export function startRoomEngine() {
 "use strict";
@@ -204,8 +205,10 @@ function loadState() {
   } catch (e) { return d; }
 }
 const state = loadState();
-const POMO_LEN = { focus: 25 * 60, break: 5 * 60 };
-const pomo = { mode: "focus", remaining: POMO_LEN.focus, running: false, endAt: 0 };
+/* Pomodoro theo vòng: Focus → nghỉ ngắn, lặp lại; đủ số phiên của nhịp thì nghỉ dài (lib/pomodoro.ts). Nhịp đã chọn lưu riêng ở POMO_KEY. */
+const POMO_KEY = "focuspace.pomo.v1";
+let pomoCfg = (() => { try { return parseConfig(localStorage.getItem(POMO_KEY)); } catch { return parseConfig(null); } })();
+const pomo = { mode: "focus", done: 0, remaining: phaseSeconds(pomoCfg, "focus"), running: false, endAt: 0 };   // mode: focus | short | long; done: số phiên Focus đã xong trong vòng
 
 const $ = id => document.getElementById(id);
 
@@ -2989,77 +2992,164 @@ document.addEventListener("pointerdown", e => { if (trayKind && !toolbar.contain
    POMODORO (phòng học) + HẸN GIỜ NGỦ (phòng ngủ)
    ============================================================ */
 function fmt(s) { s = Math.max(0, s); return String(Math.floor(s / 60)).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0"); }
+const PHASE_LABEL = { focus: "Focus", short: "Nghỉ ngắn", long: "Nghỉ dài" };
+function savePomoCfg() { try { localStorage.setItem(POMO_KEY, JSON.stringify(pomoCfg)); } catch { /* trình duyệt chặn lưu: vẫn dùng trong phiên */ } }
 function pomoToggle() {
   if (pomo.running) { pomo.running = false; pomo.remaining = Math.max(0, Math.ceil((pomo.endAt - Date.now()) / 1000)); }
   else { pomo.running = true; pomo.endAt = Date.now() + pomo.remaining * 1000; }
   renderPomo();
 }
-function pomoSetMode(m) { pomo.mode = m; pomo.running = false; pomo.remaining = POMO_LEN[m]; renderPomo(); }
-function pomoReset() { pomoSetMode(pomo.mode); }
-function pomoAdjust(step) {   // ▲▼ trái ±1 phút, phải ±10 phút; chỉ chỉnh khi đang dừng; Đặt lại quay về độ dài đã chỉnh
-  if (pomo.running) return;
-  POMO_LEN[pomo.mode] = adjustSeconds(POMO_LEN[pomo.mode], step);
-  pomo.remaining = adjustSeconds(pomo.remaining, step);
+function pomoPause() { if (pomo.running) pomoToggle(); }
+function pomoSetPhase(phase) { pomo.mode = phase; pomo.running = false; pomo.remaining = phaseSeconds(pomoCfg, phase); renderPomo(); }
+function pomoReset() { pomo.done = 0; pomoSetPhase("focus"); }   // Đặt lại vòng: về phiên Focus đầu tiên (AC-05.4)
+function pomoSkip() { if (pomo.mode === "focus") return; if (pomo.mode === "long") pomo.done = 0; pomoSetPhase("focus"); }
+/* Đổi nhịp: đang dừng thì áp dụng ngay; đang chạy thì phiên hiện tại giữ nguyên, nhịp mới dùng từ phiên sau (AC-05.5) */
+function pomoSetRhythm(id) {
+  pomoCfg = { ...pomoCfg, rhythm: id }; savePomoCfg();
+  if (!pomo.running) { if (pomo.done >= rhythmOf(pomoCfg).rounds) pomo.done = 0; pomo.remaining = phaseSeconds(pomoCfg, pomo.mode); }
   renderPomo();
+}
+function pomoSetCustom(key, minutes) {
+  pomoCfg = setCustom(pomoCfg, key, minutes); savePomoCfg();
+  if (!pomo.running && pomoCfg.rhythm === "custom" && key === pomo.mode) pomo.remaining = phaseSeconds(pomoCfg, pomo.mode);
+  renderPomo();
+}
+function pomoPhaseLine() {
+  const n = rhythmOf(pomoCfg).rounds;
+  return pomo.mode === "focus" ? `Focus · phiên ${Math.min(pomo.done + 1, n)} / ${n}` : PHASE_LABEL[pomo.mode];
 }
 function tickClocks() {   // một tiếng tích tắc mỗi khi số giây giảm; tiếng "tích" và "tắc" xen kẽ
   pomo.tk = !pomo.tk;
   itemsById.forEach(o => { if (o.data.type === "clock" && o.em) o.em.oneShot(pomo.tk ? BUF.tick : BUF.tock, 1, true); });
 }
-function renderPomo() {
-  $("pomoMiniMode").textContent = pomo.mode === "focus" ? "Focus" : "Nghỉ";
+function renderPomoTime() {   // mỗi nhịp đếm chỉ cập nhật số giờ, không dựng lại bảng Nhịp học
   $("pomoMiniTime").textContent = fmt(pomo.remaining);
-  $("pomoMiniBtn").textContent = pomo.running ? "Tạm dừng" : "Bắt đầu";
   const big = document.getElementById("pomoBig"); if (big) big.textContent = fmt(pomo.remaining);
-  const pb = document.getElementById("pomoPlay"); if (pb) pb.textContent = pomo.running ? "Tạm dừng" : "Bắt đầu";
-  document.querySelectorAll("[data-pmode]").forEach(b => { b.setAttribute("aria-pressed", b.dataset.pmode === pomo.mode); b.textContent = pomoModeLabel(b.dataset.pmode); });
-  document.querySelectorAll('[data-adj="pomo"] [data-step]').forEach(b => { b.disabled = pomo.running; });
 }
+function renderPomo() {
+  const n = rhythmOf(pomoCfg).rounds, done = Math.min(pomo.done, n);
+  $("pomoMiniMode").textContent = PHASE_LABEL[pomo.mode];
+  $("pomoMiniBtn").textContent = pomo.running ? "Tạm dừng" : "Bắt đầu";
+  const dots = $("pomoDots");
+  dots.innerHTML = Array.from({ length: n }, (_, i) => `<i class="${i < done ? "done" : pomo.mode === "focus" && i === done ? "cur" : ""}"></i>`).join("");
+  dots.setAttribute("aria-label", `Vòng này: ${done} / ${n} phiên Focus`);
+  const pb = document.getElementById("pomoPlay"); if (pb) pb.textContent = pomo.running ? "Tạm dừng" : "Bắt đầu";
+  const ph = document.getElementById("pomoPhase"); if (ph) ph.textContent = pomoPhaseLine();
+  renderPomoTime();
+  if (!$("pomoPanel").hidden) renderPomoPanel();
+}
+
+/* Bảng Nhịp học: bấm số giờ trên header để mở / đóng; điện thoại hiện thành bảng trượt từ dưới lên (room.css) */
+const CHEV_X = `<svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 2l8 8M10 2 2 10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`;
+const CUSTOM_ROWS = [["focus", "Focus", 5], ["short", "Nghỉ ngắn", 1], ["long", "Nghỉ dài", 5]];
+function renderPomoPanel() {
+  const panel = $("pomoPanel"), r = rhythmOf(pomoCfg), n = r.rounds, done = Math.min(pomo.done, n);
+  const a = document.activeElement, keep = a && panel.contains(a) ? ["data-rh", "data-cu", "data-pp"].map(k => a.getAttribute(k) && `[${k}="${a.getAttribute(k)}"]${a.dataset.d ? `[data-d="${a.dataset.d}"]` : ""}`).find(Boolean) : null;
+  const list = RHYTHM_IDS.map(id => {
+    const x = id === "custom" ? null : RHYTHMS[id], on = pomoCfg.rhythm === id;
+    const desc = x ? `${x.focus} / ${x.short} phút · nghỉ dài ${x.long} sau ${x.rounds} phiên` : "Tự đặt 3 thời lượng, nghỉ dài sau 4 phiên";
+    return `<button type="button" role="radio" aria-checked="${on}" data-rh="${id}"><span class="pp-dot"></span><span><b>${x ? x.name : "Tuỳ chỉnh"}</b><small>${desc}</small></span></button>`;
+  }).join("");
+  const custom = pomoCfg.rhythm !== "custom" ? "" : `<div class="pp-custom">${CUSTOM_ROWS.map(([k, l, s]) => `<div class="pp-row"><span>${l}</span><span class="stp"><button type="button" data-cu="${k}" data-d="-${s}" aria-label="Giảm ${s} phút ${l.toLowerCase()}">−</button><output>${pomoCfg.custom[k]} phút</output><button type="button" data-cu="${k}" data-d="${s}" aria-label="Tăng ${s} phút ${l.toLowerCase()}">+</button></span></div>`).join("")}</div>`;
+  let bar = "";
+  for (let i = 0; i < n; i++) {
+    const last = i === n - 1, bp = last ? "long" : "short";
+    bar += `<i class="f${i < done ? " done" : ""}${pomo.mode === "focus" && i === done ? " cur" : ""}" style="flex:${r.focus}"></i>`;
+    bar += `<i class="b${i < done - 1 || (pomo.mode === "focus" && i < done) ? " done" : ""}${pomo.mode === bp && i === done - 1 ? " cur" : ""}" style="flex:${last ? r.long : r.short}"></i>`;
+  }
+  panel.innerHTML = `<div class="pp-head"><span>Nhịp học</span><button type="button" class="pp-x" data-pp="close" aria-label="Đóng">${CHEV_X}</button></div>
+    <div class="pp-list" role="radiogroup" aria-label="Chọn nhịp học">${list}</div>${custom}
+    <div class="pp-track"><small>Vòng này: ${done} / ${n} phiên Focus</small><div class="pp-bar" aria-hidden="true">${bar}</div></div>
+    ${pomo.running ? `<p class="pp-note" role="status">Phiên đang chạy giữ nguyên; nhịp mới áp dụng từ phiên sau.</p>` : ""}
+    <div class="pp-actions">${pomo.mode !== "focus" ? `<button type="button" class="btn" data-pp="skip">Bỏ qua lượt nghỉ</button>` : ""}<button type="button" class="btn" data-pp="reset">Đặt lại vòng</button></div>`;
+  if (keep) { const el = panel.querySelector(keep); if (el) el.focus(); }
+}
+function openPomoPanel(open) {
+  const panel = $("pomoPanel"), trig = $("pomoTrig");
+  if (open === undefined) open = panel.hidden;
+  panel.hidden = !open; trig.setAttribute("aria-expanded", String(open));
+  if (open) { closePop(); closeTray(); renderPomoPanel(); const c = panel.querySelector('[aria-checked="true"]'); if (c) c.focus(); }
+}
+$("pomoTrig").addEventListener("click", () => openPomoPanel());
+$("pomoPanel").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  if (b.dataset.rh) pomoSetRhythm(b.dataset.rh);
+  else if (b.dataset.cu) pomoSetCustom(b.dataset.cu, pomoCfg.custom[b.dataset.cu] + +b.dataset.d);
+  else if (b.dataset.pp === "skip") pomoSkip();
+  else if (b.dataset.pp === "reset") pomoReset();
+  else if (b.dataset.pp === "close") { openPomoPanel(false); $("pomoTrig").focus(); }
+});
+$("pomoPanel").addEventListener("keydown", e => { if (e.key === "Escape") { openPomoPanel(false); $("pomoTrig").focus(); } });
+document.addEventListener("pointerdown", e => { if (!$("pomoPanel").hidden && !e.target.closest(".pomo-mini")) openPomoPanel(false); });
 $("pomoMiniBtn").addEventListener("click", pomoToggle);
 setInterval(() => {
   if (!pomo.running) return;
   const prev = pomo.remaining;
   pomo.remaining = Math.max(0, Math.ceil((pomo.endAt - Date.now()) / 1000));
   if (shouldTick(pomo.running, prev, pomo.remaining)) tickClocks();
-  if (pomo.remaining <= 0) {
+  if (pomo.remaining <= 0) {   // hết giờ: chuông, sang giai đoạn kế tiếp của vòng và dừng chờ bấm Bắt đầu (AC-05.3, AC-05.7)
     if (ctx && BUF.bell) { const s = ctx.createBufferSource(); s.buffer = BUF.bell; const g = ctx.createGain(); g.gain.value = 0.8; s.connect(g); g.connect(master); s.start(); }
-    pomoSetMode(pomo.mode === "focus" ? "break" : "focus");
+    const nx = nextPhase(pomo.mode, pomo.done, rhythmOf(pomoCfg).rounds);
+    pomo.done = nx.done; pomoSetPhase(nx.phase);
     return;
   }
-  renderPomo();
+  renderPomoTime();
 }, 250);
 
-/* Hẹn giờ ngủ: Tắt/15/30/45/60 phút hoặc chỉnh ▲▼ (±1/±10 phút, 1–120 phút). Hai phút cuối, toàn bộ âm thanh nhỏ dần đều về 0 rồi dừng hẳn. */
-const sleep = { min: 0, endAt: 0 };   // min: mức đã chọn (-1 = tự chỉnh)
-function sleepRem() { return sleep.endAt ? Math.max(0, Math.ceil((sleep.endAt - Date.now()) / 1000)) : 0; }
+/* Hẹn giờ ngủ (chỉ Phòng ngủ): chọn Tắt/15/30/60 phút ở bảng mở từ header hoặc popover đồng hồ treo tường. Hai phút cuối, toàn bộ âm thanh nhỏ dần đều về 0 rồi dừng hẳn. */
+const sleep = { min: 0, remaining: 0, running: false, endAt: 0 };   // min: mức đã chọn; chọn xong chờ bấm Bắt đầu như Pomodoro
+function sleepRem() { return sleep.running ? Math.max(0, Math.ceil((sleep.endAt - Date.now()) / 1000)) : sleep.remaining; }
 function renderSleep() {
   const el = $("sleepMini"), rem = sleepRem();
   document.querySelectorAll("[data-sl]").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.sl === sleep.min)));
-  document.querySelectorAll("[data-sleep-time]").forEach(t => { t.textContent = sleep.endAt ? fmt(rem) : "--:--"; });
-  el.classList.toggle("fading", !!sleep.endAt && rem <= 120);
+  document.querySelectorAll("[data-sleep-time]").forEach(t => { t.textContent = sleep.min ? fmt(rem) : "--:--"; });
+  document.querySelectorAll("[data-sleep-play]").forEach(b => { b.hidden = !sleep.min; b.textContent = sleep.running ? "Tạm dừng" : "Bắt đầu"; });
+  el.classList.toggle("fading", sleep.running && rem <= 120);
 }
-function sleepSet(min) { sleep.min = min; sleep.endAt = min ? Date.now() + min * 60000 : 0; if (ctx) ramp(fade.gain, 1, 0.2); renderSleep(); }
-function sleepCancel() { if (sleep.endAt || sleep.min) sleepSet(0); }
-function sleepAdjust(step) {   // đang tắt: ▲ bắt đầu hẹn giờ đúng số phút đó; đang chạy: cộng/trừ vào thời gian còn lại
-  if (!sleep.endAt && step < 0) return;
-  const sec = sleep.endAt ? adjustSeconds(sleepRem(), step) : adjustSeconds(0, step);
-  sleep.min = -1; sleep.endAt = Date.now() + sec * 1000;
-  if (ctx && sec > 120) ramp(fade.gain, 1, 0.2);
+function sleepSet(min) {   // chọn mức: hiện số phút, chờ bấm Bắt đầu
+  sleep.min = min; sleep.running = false; sleep.endAt = 0; sleep.remaining = min * 60;
+  if (ctx) ramp(fade.gain, 1, 0.2);
+  renderSleep(); if (!$("sleepPanel").hidden) renderSleepPanel();
+}
+function sleepToggle() {   // Bắt đầu / Tạm dừng; tạm dừng trong 2 phút cuối thì âm thanh trở lại mức bình thường
+  if (!sleep.min) return;
+  if (sleep.running) { sleep.remaining = sleepRem(); sleep.running = false; sleep.endAt = 0; if (ctx) ramp(fade.gain, 1, 0.2); }
+  else if (sleep.remaining > 0) { sleep.running = true; sleep.endAt = Date.now() + sleep.remaining * 1000; }
   renderSleep();
 }
-document.addEventListener("click", e => {   // nút ▲▼ dùng chung (header, popover Pomodoro, popover đồng hồ treo tường)
-  const b = e.target.closest && e.target.closest("[data-adj] [data-step]"); if (!b || b.disabled) return;
-  const kind = b.closest("[data-adj]").dataset.adj;
-  if (kind === "pomo") pomoAdjust(+b.dataset.step); else sleepAdjust(+b.dataset.step);
+/* Bảng Hẹn giờ ngủ: cùng kiểu bảng Nhịp học của Pomodoro, bấm số giờ trên header để mở */
+const SLEEP_OPTS = [[0, "Tắt", "Âm thanh phát liên tục"], [15, "15 phút", "Nhỏ dần trong 2 phút cuối rồi tắt"], [30, "30 phút", "Nhỏ dần trong 2 phút cuối rồi tắt"], [60, "60 phút", "Nhỏ dần trong 2 phút cuối rồi tắt"]];
+function renderSleepPanel() {
+  const panel = $("sleepPanel"), a = document.activeElement, keep = a && panel.contains(a) && a.dataset.slp;
+  panel.innerHTML = `<div class="pp-head"><span>Hẹn giờ ngủ</span><button type="button" class="pp-x" data-pp="close" aria-label="Đóng">${CHEV_X}</button></div>
+    <div class="pp-list" role="radiogroup" aria-label="Chọn hẹn giờ ngủ">${SLEEP_OPTS.map(([m, l, d]) => `<button type="button" role="radio" aria-checked="${sleep.min === m}" data-slp="${m}"><span class="pp-dot"></span><span><b>${l}</b><small>${d}</small></span></button>`).join("")}</div>`;
+  if (keep) { const el = panel.querySelector(`[data-slp="${keep}"]`); if (el) el.focus(); }
+}
+function openSleepPanel(open) {
+  const panel = $("sleepPanel"), trig = $("sleepTrig");
+  if (open === undefined) open = panel.hidden;
+  panel.hidden = !open; trig.setAttribute("aria-expanded", String(open));
+  if (open) { closePop(); closeTray(); renderSleepPanel(); const c = panel.querySelector('[aria-checked="true"]'); if (c) c.focus(); }
+}
+$("sleepTrig").addEventListener("click", () => openSleepPanel());
+$("sleepPlay").addEventListener("click", sleepToggle);
+document.addEventListener("click", e => { const b = e.target.closest && e.target.closest("[data-sleep-play]"); if (b && b.id !== "sleepPlay") sleepToggle(); });
+$("sleepPanel").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  if (b.dataset.slp !== undefined) { sleepSet(+b.dataset.slp); openSleepPanel(false); $("sleepTrig").focus(); }
+  else if (b.dataset.pp === "close") { openSleepPanel(false); $("sleepTrig").focus(); }
 });
+$("sleepPanel").addEventListener("keydown", e => { if (e.key === "Escape") { openSleepPanel(false); $("sleepTrig").focus(); } });
+document.addEventListener("pointerdown", e => { if (!$("sleepPanel").hidden && !e.target.closest(".sleep-mini")) openSleepPanel(false); });
+function sleepCancel() { if (sleep.min) sleepSet(0); }
 document.addEventListener("click", e => {
   const b = e.target.closest && e.target.closest("[data-sl]"); if (b) sleepSet(+b.dataset.sl);
 });
 setInterval(() => {
-  if (!sleep.endAt) return;
+  if (!sleep.running) return;
   const rem = (sleep.endAt - Date.now()) / 1000;
   if (rem <= 0) {
-    sleep.endAt = 0; sleep.min = 0;
+    sleep.endAt = 0; sleep.min = 0; sleep.remaining = 0; sleep.running = false;
     if (ctx) {
       ramp(fade.gain, 0, 0.1);
       setTimeout(() => ctx.suspend().then(() => {
@@ -3100,18 +3190,10 @@ function bindVol(id, set) {
   el.addEventListener("change", save);
 }
 function bindPomo() {
-  pop.querySelectorAll("[data-pmode]").forEach(b => b.addEventListener("click", () => pomoSetMode(b.dataset.pmode)));
   const pp = pop.querySelector("#pomoPlay"); if (pp) { pp.addEventListener("click", pomoToggle); pop.querySelector("#pomoReset").addEventListener("click", pomoReset); }
 }
-const TRI_UP = `<svg viewBox="0 0 7 4" width="12" height="7" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M3 0h1v1h1v1h1v1h1v1H0V3h1V2h1V1h1z"/></svg>`;
-const TRI_DN = `<svg viewBox="0 0 7 4" width="12" height="7" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M0 0h7v1H6v1H5v1H4v1H3V3H2V2H1V1H0z"/></svg>`;
-/* Hai cột nút tam giác (▲ trên, ▼ dưới) hai bên mặt đồng hồ: trái ±1 phút, phải ±10 phút */
-function adjBox(kind, face, compact) {
-  const col = n => `<div class="tri"><button type="button" data-step="${n}" aria-label="Tăng ${n} phút" title="+${n} phút">${TRI_UP}</button><button type="button" data-step="-${n}" aria-label="Giảm ${n} phút" title="−${n} phút">${TRI_DN}</button>${compact ? "" : `<small>${n}p</small>`}</div>`;
-  return `<div class="adj${compact ? " compact" : ""}" data-adj="${kind}">${col(1)}${face}${col(10)}</div>`;
-}
-function pomoModeLabel(m) { return (m === "focus" ? "Focus " : "Nghỉ ") + Math.round(POMO_LEN[m] / 60) + "p"; }
-const pomoBox = () => `<div class="pomo-box"><div class="seg" role="group" aria-label="Chế độ Pomodoro"><button type="button" data-pmode="focus" aria-pressed="${pomo.mode === "focus"}">${pomoModeLabel("focus")}</button><button type="button" data-pmode="break" aria-pressed="${pomo.mode === "break"}">${pomoModeLabel("break")}</button></div>${adjBox("pomo", `<div class="big" id="pomoBig">${fmt(pomo.remaining)}</div>`)}<div class="actions"><button type="button" class="btn primary" id="pomoPlay">${pomo.running ? "Tạm dừng" : "Bắt đầu"}</button><button type="button" class="btn" id="pomoReset">Đặt lại</button></div></div>`;
+/* Popover đồ vật Đồng hồ Pomodoro: chỉ điều khiển phiên; đổi nhịp ở bảng Nhịp học trên header */
+const pomoBox = () => `<div class="pomo-box"><div class="pp-phase" id="pomoPhase">${pomoPhaseLine()}</div><div class="big" id="pomoBig">${fmt(pomo.remaining)}</div><div class="actions"><button type="button" class="btn primary" id="pomoPlay">${pomo.running ? "Tạm dừng" : "Bắt đầu"}</button><button type="button" class="btn" id="pomoReset">Đặt lại vòng</button></div></div>`;
 const CURTAIN_LABELS = { study: [["open", "Mở"], ["half", "Che một phần"], ["closed", "Che kín"]], bed: [["open", "Mở"], ["half", "Che một phần"], ["closed", "Che kín"]] };
 
 function openPop(key, anchor) {
@@ -3170,7 +3252,7 @@ function openPop(key, anchor) {
   } else if (key === "wallclock") {
     const wc = state.bed.clock;
     html = head("Đồng hồ treo tường", "Chiếc đồng hồ kim quay đều. Đặt hẹn giờ ngủ ngay tại đây.") + sw("wcOn", wc.on, "Tiếng tích tắc") + volRow("wcVol", wc.vol) +
-      `<div class="section"><h4>Hẹn giờ ngủ</h4><div class="pomo-box"><div class="seg" role="group" aria-label="Hẹn giờ ngủ">${[0, 15, 30, 45, 60].map(m => `<button type="button" data-sl="${m}" aria-pressed="${sleep.min === m}">${m ? m + "p" : "Tắt"}</button>`).join("")}</div>${adjBox("sleep", `<div class="big" data-sleep-time>${sleep.endAt ? fmt(sleepRem()) : "--:--"}</div>`)}</div></div>`;
+      `<div class="section"><h4>Hẹn giờ ngủ</h4><div class="pomo-box"><div class="seg" role="group" aria-label="Hẹn giờ ngủ">${[0, 15, 30, 60].map(m => `<button type="button" data-sl="${m}" aria-pressed="${sleep.min === m}">${m ? m + "p" : "Tắt"}</button>`).join("")}</div><div class="big" data-sleep-time>${sleep.min ? fmt(sleepRem()) : "--:--"}</div><button type="button" class="btn primary" data-sleep-play${sleep.min ? "" : " hidden"}>${sleep.running ? "Tạm dừng" : "Bắt đầu"}</button></div></div>`;
     bind = () => {
       bindSwitch("wcOn", () => wc.on, v => { wc.on = v; applyWallClock(); });
       bindVol("wcVol", v => { wc.vol = v; applyWallClock(); });
@@ -3191,7 +3273,7 @@ function openPop(key, anchor) {
     bind = () => bindSwitch("lOn", () => state.lampOn, v => { state.lampOn = v; playClick(); });
   } else if (o.data.type === "clock") {
     const d = o.data;
-    html = head("Đồng hồ Pomodoro", "Đếm giờ Focus/Nghỉ, đồng bộ với Pomodoro ở góc trên. Chỉnh giờ bằng ▲▼ khi đang dừng. Kéo lên giá hoặc đặt lên bàn.") + sw("iOn", d.on, "Tiếng tích tắc khi đếm") + volRow("iVol", d.vol) + `<div class="section"><h4>Pomodoro</h4>${pomoBox()}</div><button type="button" class="btn danger" id="iDel">Xóa khỏi phòng</button>`;
+    html = head("Đồng hồ Pomodoro", "Đếm giờ Focus/Nghỉ, dùng chung với Pomodoro ở góc trên. Đổi nhịp học bằng cách bấm số giờ ở góc trên. Kéo lên giá hoặc đặt lên bàn.") + sw("iOn", d.on, "Tiếng tích tắc khi đếm") + volRow("iVol", d.vol) + `<div class="section"><h4>Pomodoro</h4>${pomoBox()}</div><button type="button" class="btn danger" id="iDel">Xóa khỏi phòng</button>`;
     bind = () => {
       bindSwitch("iOn", () => d.on, v => { d.on = v; applyItemAudio(o); });
       bindVol("iVol", v => { d.vol = v; o.em.setLevel(d.on, v); });
@@ -3247,7 +3329,7 @@ function renderRoomUI() {
   const cur = ROOM.cur, out = cur === "out";
   document.body.dataset.room = cur;
   $("roomName").textContent = ROOMCFG[cur].name;
-  document.querySelector(".pomo-mini").hidden = cur === "bed";   // phòng học + sân vườn dùng chung Pomodoro
+  document.querySelector(".pomo-mini").hidden = cur === "bed";   // Phòng học + Sân vườn dùng chung Pomodoro; Phòng ngủ chỉ có Hẹn giờ ngủ
   $("sleepMini").hidden = cur !== "bed";
   toolbar.querySelectorAll("[data-tray]").forEach(b => { const k = b.dataset.tray; b.hidden = out ? (k === "sound" || k === "decor") : k === "scene"; });
   roomNav.querySelectorAll("[data-go]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.go === cur)));
@@ -3289,7 +3371,8 @@ function buildNav() {
 const roomEl = document.getElementById("room");
 function switchRoom(to) {
   if (to === ROOM.cur || ROOM.busy) return;
-  ROOM.busy = true; closePop(); closeTray(); sleepCancel();
+  ROOM.busy = true; closePop(); closeTray(); sleepCancel(); openPomoPanel(false); openSleepPanel(false);
+  if (to === "bed") pomoPause();   // vào Phòng ngủ: Pomodoro tự tạm dừng, giữ số giờ còn lại (AC-05.8)
   if (to !== "out") state.lastIndoor = to; else if (ROOM.cur !== "out") state.lastIndoor = ROOM.cur;   // nhớ phòng trong nhà gần nhất để vào lại
   if (ctx) { ramp(roomOut[ROOM.cur].gain, 0, 0.3); ramp(roomOut[to].gain, 1, 0.3); }   // cross-fade âm thanh nền
   fadeEl.classList.add("on");                                                          // mờ tối 0.3s
@@ -3303,12 +3386,11 @@ function switchRoom(to) {
 /* ============================================================
    KHỞI ĐỘNG
    ============================================================ */
-$("sleepTime").outerHTML = adjBox("sleep", `<span class="time" id="sleepTime" data-sleep-time>--:--</span>`, true);   // ▲▼ chỉnh hẹn giờ ngủ ngay trên header
 renderPomo(); renderSleep();
 setupRoom(); buildNav();
 requestAnimationFrame(loop);
 // Nhạc Lo-fi: bài đang chọn của tai nghe, radio, đĩa than đã được dựng nền qua lofiBuf() khi gắn âm thanh lúc khởi động
 // Hook kiểm thử
 window.__focuspace = { spatial, state, D_MAX, W_HALF, LISTENERS, itemsById, windowEm, bedWindowEm, sceneEm, outHeadEm, setScene, sceneBuf, roomOut, fade, sleep, ROOM, switchRoom,
-  sleepRemaining: s => { sleep.endAt = Date.now() + s * 1000; }, pomo, POMO_LEN, pomoAdjust, sleepAdjust, fireEm, lofiCache };
+  sleepRemaining: s => { sleep.running = true; sleep.endAt = Date.now() + s * 1000; }, pomo, get pomoCfg() { return pomoCfg; }, pomoSetRhythm, pomoSetCustom, pomoSkip, pomoReset, fireEm, lofiCache };
 }

@@ -9,15 +9,27 @@ test.describe("UC.06 Hẹn giờ ngủ (Lộc)", () => {
     await page.goto("/");
   });
 
-  test("AC-06.3 ▲▼ ở header chỉnh hẹn giờ: đang tắt bấm ▲ 10 phút thì bắt đầu 10:00, ▼ 1 phút còn 9:00", async ({ page }) => {
+  test("AC-06.3 header Phòng ngủ: bấm số giờ chọn Tắt/15/30/60 phút, rồi Bắt đầu / Tạm dừng như Pomodoro", async ({ page }) => {
     await page.goto("/room");
     await page.waitForFunction(() => !!(window as unknown as HookWindow).__focuspace);
     await page.evaluate(() => (window as unknown as HookWindow).__focuspace.switchRoom("bed"));
-    const box = page.locator('#sleepMini [data-adj="sleep"]');
+    const box = page.locator("#sleepMini");
     await expect(box).toBeVisible();
-    await box.getByRole("button", { name: "Tăng 10 phút" }).click();
-    await expect(page.locator("#sleepTime")).toHaveText(/^(10:00|09:5\d)$/);
-    await box.getByRole("button", { name: "Giảm 1 phút" }).click();
-    await expect(page.locator("#sleepTime")).toHaveText(/^(09:00|08:5\d)$/);
+    await expect(box.locator("[data-step]")).toHaveCount(0);
+    await page.locator("#sleepTrig").click();
+    const panel = page.locator("#sleepPanel");
+    await expect(panel.getByRole("radio")).toHaveCount(4);
+    await panel.getByRole("radio", { name: /^15 phút/ }).click();
+    await expect(panel).toBeHidden();
+    await expect(page.locator("#sleepTime")).toHaveText("15:00");   // chọn xong chưa chạy, chờ Bắt đầu
+    const play = page.locator("#sleepPlay");
+    await expect(play).toHaveText("Bắt đầu");
+    await play.click();
+    await expect(play).toHaveText("Tạm dừng");
+    await expect(page.locator("#sleepTime")).toHaveText(/^(15:00|14:5\d)$/);
+    await page.locator("#sleepTrig").click();
+    await panel.getByRole("radio", { name: /^Tắt/ }).click();
+    await expect(page.locator("#sleepTime")).toHaveText("--:--");
+    await expect(play).toBeHidden();
   });
 });

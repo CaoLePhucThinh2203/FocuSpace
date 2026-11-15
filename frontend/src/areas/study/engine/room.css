@@ -63,14 +63,49 @@
   /* Header */
   .site-head { @apply min-h-10; }
   .pomo-mini, .sleep-mini { @apply inline-flex items-center gap-2 border border-line bg-panel pt-[2px] pr-1 pb-[2px] pl-[10px]; }
-  .sleep-mini { @apply flex-wrap; }
+  .sleep-mini { @apply relative; }
   .pomo-mini .mode, .sleep-mini .mode { @apply text-[11px] uppercase tracking-[.08em] text-muted; }
   .pomo-mini .time, .sleep-mini .time { @apply font-num text-[19px] font-semibold leading-none tabular-nums text-amber; }
-  .sleep-mini .time { @apply min-w-14 text-center; }
   .sleep-note { @apply text-[12px] font-semibold text-rain; }
   .sleep-mini.fading .time { @apply text-rain; }
-  .sleep-mini .seg { @apply inline-grid grid-cols-[repeat(5,auto)]; }
-  .sleep-mini .seg button { @apply px-2 py-[5px]; }
+  /* Pomodoro trên header: giai đoạn + chấm tiến độ của vòng, số giờ mở bảng Nhịp học. Bảng nằm trên lớp ánh sáng (#lightCv z-400), ngang popover (.pop z-1000) */
+  .pomo-mini { @apply relative; }
+  /* Hẹn giờ ngủ (Phòng ngủ) dùng cùng kiểu: nhãn, số giờ mở bảng, nút Tắt khi đang hẹn */
+  .pm-label { @apply grid gap-[3px]; }
+  .pm-dots { @apply flex gap-[3px]; }
+  .pm-dots i { @apply block size-[7px] rounded-full border border-line; }
+  .pm-dots i.done { @apply border-amber bg-amber; }
+  .pm-dots i.cur { @apply border-amber; }
+  .pm-trig { @apply inline-flex cursor-pointer items-center gap-1 border border-transparent bg-transparent px-1 py-[2px] hover:border-line aria-expanded:border-amber; }
+  .pm-trig svg { @apply size-3; }
+  .pomo-panel { @apply absolute top-[calc(100%+8px)] right-0 z-[1000] grid w-[340px] gap-3 border border-line bg-panel p-3 text-ink shadow-[3px_3px_0_var(--shadow),0_10px_24px_rgba(0,0,0,.45)] backdrop-blur-[6px]
+                        narrow:fixed narrow:inset-x-2 narrow:top-auto narrow:bottom-2 narrow:w-auto narrow:max-h-[75vh] narrow:overflow-auto; }
+  .pomo-panel[hidden] { @apply hidden; }
+  .pp-head { @apply flex items-center justify-between text-[12px] font-bold uppercase tracking-[.1em] text-muted; }
+  .pp-x { @apply grid size-8 cursor-pointer place-items-center border-0 bg-transparent text-muted hover:text-ink; }
+  .pp-list { @apply grid gap-[6px]; }
+  .pp-list button { @apply flex min-h-12 cursor-pointer items-center gap-3 border border-line bg-transparent px-3 py-2 text-left text-ink hover:border-amber aria-checked:border-amber aria-checked:bg-panel-2; }
+  .pp-list b { @apply block text-[14px] font-semibold; }
+  .pp-list small { @apply block text-[12px] text-muted; }
+  .pp-dot { @apply grid size-4 flex-none place-items-center rounded-full border-2 border-line; }
+  .pp-list [aria-checked="true"] .pp-dot { @apply border-amber after:size-[6px] after:rounded-full after:bg-amber after:content-['']; }
+  .pp-custom { @apply grid gap-2 bg-deep2 p-[10px]; }
+  .pp-row { @apply flex items-center justify-between gap-2 text-[13px]; }
+  .pp-row .stp { @apply flex items-center gap-[6px]; }
+  .pp-row .stp button { @apply grid size-9 cursor-pointer place-items-center border border-line bg-panel-2 text-[18px] font-bold text-amber hover:border-amber; }
+  .pp-row output { @apply min-w-16 text-center font-num text-[15px] font-bold text-amber; }
+  .pp-track { @apply grid gap-[6px]; }
+  .pp-track small { @apply text-[12px] text-muted; }
+  .pp-bar { @apply flex h-4 gap-[2px]; }
+  .pp-bar i { @apply block min-w-1; }
+  .pp-bar i.f { @apply bg-panel-2; }
+  .pp-bar i.f.done { @apply bg-amber; }
+  .pp-bar i.b { @apply bg-deep2; }
+  .pp-bar i.b.done { @apply bg-ok; }
+  .pp-bar i.cur { @apply outline-2 outline-offset-1 outline-amber; }
+  .pp-note { @apply m-0 text-[12px] text-muted; }
+  .pp-actions { @apply grid auto-cols-fr grid-flow-col gap-2; }
+  .pp-phase { @apply text-center text-[12px] text-muted; }
   .btn { @apply cursor-pointer border border-line bg-panel-2 px-[10px] py-[6px] text-[12px] font-semibold hover:border-amber; }
   .btn.primary { @apply border-amber bg-amber text-amber-ink; }
   .btn.danger { @apply text-danger hover:border-danger; }
@@ -168,15 +203,6 @@
   .section { @apply grid gap-3 border-t border-dashed border-line pt-3; }
   .pomo-box { @apply grid gap-2 border border-line bg-deep2 p-[10px]; }
   .pomo-box .big { @apply text-center font-num text-[36px] font-semibold leading-none tabular-nums text-amber; }
-  /* Nút chỉnh giờ: hai cột tam giác ▲ trên ▼ dưới, trái ±1 phút, phải ±10 phút */
-  .adj { @apply flex items-center justify-center gap-3; }
-  .adj .big { @apply min-w-[120px]; }
-  .tri { @apply grid justify-items-center gap-[3px]; }
-  .tri button { @apply grid h-[18px] w-7 cursor-pointer place-items-center border border-line bg-panel-2 text-amber hover:border-amber disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:border-line; }
-  .tri small { @apply text-[10px] leading-none text-muted; }
-  .adj.compact { @apply gap-1; }
-  .adj.compact .tri { @apply gap-px; }
-  .adj.compact .tri button { @apply h-[13px] w-5; }
   .seg.list { @apply grid-cols-1; }
   .seg.list button { @apply border-r-0 border-b border-line text-left px-2 last:border-b-0; }
   .pomo-box .actions { @apply grid grid-cols-2 gap-[6px]; }
