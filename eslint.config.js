@@ -16,4 +16,9 @@ export default tseslint.config(
       "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
     },
   },
+  {
+    // Test E2E đọc hook kiểm thử window.__focuspace nên cần dùng any
+    files: ["frontend/e2e/**/*.ts"],
+    rules: { "@typescript-eslint/no-explicit-any": "off" },
+  },
 );
