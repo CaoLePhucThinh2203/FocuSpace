@@ -22,6 +22,7 @@ const W_HALF = W / 2;
 const DESK = { x0: 92, x1: 228, top: 115, front: 158 }; // bàn hộp: mặt bàn y=115, thân bàn tới y=158
 const FLOOR_MIN_BASE = 112, FLOOR_MAX_BASE = H - 2;
 const FY = 16;   // lò sưởi dịch lên 16 px so với prototype: đáy chân lò nằm ở hàng sàn số 1 (y 112–120)
+const MAX_ITEMS_PER_ROOM = 25;   // BR-06: tối đa 25 đồ mỗi phòng (khớp shared/src/constants.ts)
 const STORAGE_KEY = "focuspace.room.v4";   // v6: khóa lưu mới để lần mở đầu thấy bàn học chỉ có đèn + ly cà phê
 
 /* Đồ vật phát âm thanh (di chuyển tự do, có Spatial Audio) */
@@ -1331,7 +1332,10 @@ function FDX() { return state.fireSide === "left" ? -266 : 0; }
 function drawFire(c, f) { c.save(); c.translate(FDX(), -FY); drawFire0(c, f); c.restore(); }
 function drawFire0(c, f) {
   R(c, 290, 116, 16, 3, "#5a3a22"); R(c, 292, 113, 12, 3, "#6b4429"); R(c, 292, 113, 12, 1, "#86552f");
-  if (!state.fireOn) return;   // tắt lửa: chỉ còn củi, không vẽ than đỏ nhấp nháy
+  if (!state.fireOn) {
+    for (let i = 0; i < 5; i++) if (Math.random() < 0.5) R(c, 292 + i * 3, 115, 1, 1, "#8a2e14");
+    return;
+  }
   for (let col = 0; col < 20; col++) {
     const x = 288 + col, base = Math.sin(Math.PI * (col + 0.5) / 20) * 20, h = base * (0.55 + Math.random() * 0.55);
     R(c, x, 116 - h, 1, h, "#e2552b"); R(c, x, 116 - h * 0.7, 1, h * 0.7, "#ff9a3c"); R(c, x, 116 - h * 0.38, 1, h * 0.38, "#ffd36b");
@@ -1559,12 +1563,22 @@ function drawSceneBeach(c) {
   ["#2f5f9e", "#3f70ac", "#5580b4", "#7090b8", "#9aa0b8", "#c0a8aa", "#e0b49a"].forEach((col, i) => R(c, 0, 76 + i * 4, W, 4, col));
   R(c, 0, 76, W, 1, "#f6c58a"); R(c, 0, 77, W, 2, "rgba(255,214,160,.28)");
 }
-const MTN = [[44, 78, 1.15]];   // v2: chỉ còn núi băng lớn, đặt bên trái màn hình   // [x đỉnh, cao, độ dốc]
+const MTN = [[30, 72, 1.3, 12]];   // núi cao bên trái, đỉnh bo tròn   // [x đỉnh, cao, độ dốc, bán kính bo đỉnh]
+const MTN_LOW = [[92, 0], [99, 6], [106, 13], [113, 26], [116, 30], [123, 35], [132, 36], [146, 37], [148, 34], [152, 30], [159, 29], [165, 23], [172, 13], [182, 0]];   // v4: núi thấp theo phác thảo — sườn trái cong lên, đỉnh bằng, bậc hụt bên phải rồi thoải dần; chân trái chạm chân núi cao thành khe chữ V   // [x, cao]
+const MTN_LOW_PX = 139, MTN_LOW_SNOW = 0.3;   // ranh sáng/tối và tỉ lệ tuyết của núi thấp
 function mtnAt(x) {
-  let h = 0, px = 0;
-  MTN.forEach(([ax, ah, sl]) => { const dx = Math.abs(x - ax), v = ah - dx * sl + (dx * sl < ah ? [0, 1, 0, -1, 1, 0, -1, 0][(x + ax) & 7] : 0); if (v > h) { h = v; px = ax; } });
-  return [Math.max(0, Math.round(h)), px];
+  let h = 0, px = 0, snr = 0.5;
+  MTN.forEach(([ax, ah, sl, rr]) => {
+    const dx = Math.abs(x - ax), v = ah + sl * (rr - Math.hypot(dx, rr)) + (dx > rr && ah - dx * sl > 2 ? [0, 1, 0, -1, 1, 0, -1, 0][(x + ax) & 7] : 0);   // đỉnh bo theo hypot, gợn nhỏ ở sườn
+    if (v > h) { h = v; px = ax; snr = 0.5; }
+  });
+  for (let i = 0; i < MTN_LOW.length - 1; i++) {
+    const [x0, h0] = MTN_LOW[i], [x1, h1] = MTN_LOW[i + 1];
+    if (x >= x0 && x <= x1) { const v = h0 + (h1 - h0) * (x - x0) / (x1 - x0); if (v > h) { h = v; px = MTN_LOW_PX; snr = MTN_LOW_SNOW; } break; }
+  }
+  return [Math.max(0, Math.round(h)), px, snr];
 }
+const mtnSnow = (x, h, sr) => Math.max(3, Math.round(h * sr + 2 * Math.sin(x * 0.4)));   // bề dày tuyết phủ tính từ đỉnh — dùng chung cho núi và bóng dưới hồ
 function ety(x) {   // mép vách núi (đỉnh vách) nơi đặt ngôi nhà
   const P = [[0, 160], [60, 152], [100, 140], [140, 128], [180, 118], [215, 106], [320, 104]];
   for (let i = 0; i < P.length - 1; i++) if (x <= P[i + 1][0]) { const t = (x - P[i][0]) / (P[i + 1][0] - P[i][0]); return P[i][1] + (P[i + 1][1] - P[i][1]) * t; }
@@ -1573,16 +1587,16 @@ function ety(x) {   // mép vách núi (đỉnh vách) nơi đặt ngôi nhà
 const WF_Y0 = 62, WF = y => 44, WF_HW = y => 2;   // v7: thác nước thẳng, rộng đúng bằng lòng hang (5px), rơi từ hang giữa núi xuống hồ
 function drawSceneGlacier(c) {
   for (let x = 0; x < W; x++) {
-    const [h, px] = mtnAt(x);
+    const [h, px, sr] = mtnAt(x);
     if (h <= 0) { R(c, x, 101, 1, 5, "#d4e4f0"); continue; }   // bờ hồ xa
-    const top = 100 - h, lit = x <= px, sn = Math.max(3, Math.round(h * 0.5 + 2 * Math.sin(x * 0.4)));
+    const top = 100 - h, lit = x <= px, sn = mtnSnow(x, h, sr);
     R(c, x, top, 1, sn, lit ? "#fbf4e2" : "#c3d2ec"); R(c, x, top + sn, 1, h - sn + 6, lit ? "#9a7c62" : "#4e5b7c");
     if (h - sn > 5 && (x * 7 + px) % 9 === 0) R(c, x, top + sn, 1, 5, lit ? "#f1e6cf" : "#9fb2d4");
   }
   const r = rng(143), gap = x => false;   // v8: bỏ thác nước, rừng thông liền mạch
-  for (let x = -4; x < W + 8; x += 8) { const xx = x + (r() * 3 | 0), h = 22 + (r() * 14 | 0); if (!gap(xx)) fir(c, xx, 103, h, "#4a8076", "#3a6a62", true); }
+  for (let x = -4; x < W + 8; x += 8) { const xx = x + (r() * 3 | 0), h = 12 + (r() * 8 | 0); if (!gap(xx)) fir(c, xx, 103, h, "#4a8076", "#3a6a62", true); }   // v4: hạ thấp hàng thông (22–35 → 12–19) để lộ sườn núi thấp
   R(c, 0, 94, W, 8, "rgba(200,220,240,.14)");
-  for (let x = 2; x < W + 8; x += 11) { const xx = x + (r() * 4 | 0), h = 30 + (r() * 18 | 0); if (!gap(xx)) fir(c, xx, 108, h, "#1f5048", "#17413b", true); }
+  for (let x = 2; x < W + 8; x += 11) { const xx = x + (r() * 4 | 0), h = 17 + (r() * 9 | 0); if (!gap(xx)) fir(c, xx, 108, h, "#1f5048", "#17413b", true); }   // v4: 30–47 → 17–25
 }
 function hillTop(x) {   // mép trên của đồi cỏ: thấp dần về bên trái, cao ở bên nhà
   const P = [[0, 150], [40, 142], [90, 134], [140, 128], [200, 122], [250, 118], [320, 116]];
@@ -1602,10 +1616,11 @@ function drawCliffGround(c) {   // hồ núi phía sau và mặt vách núi nơi
   for (let x = 0; x < W; x++) {   // hồ phản chiếu núi
     const eY = Math.floor(ety(x)); if (x >= 215) continue;
     for (let y = 106; y < eY; y++) R(c, x, y, 1, 1, y < 114 ? "#27496f" : y < 126 ? "#21406a" : y < 140 ? "#1b3860" : "#16305a");
-    const [h] = mtnAt(x), lenR = Math.min(40, Math.round(h * 0.6)), px = mtnAt(x)[1], lit = x <= px, snH = Math.max(3, Math.round(h * 0.45));
+    const [h, px, sr] = mtnAt(x); if (h <= 0) continue;
+    const lenR = Math.round((h + 6) * 0.6), lit = x <= px, snH = mtnSnow(x, h, sr), treeR = 7 + ((x * 5) % 3);   // v3: bóng đủ cả đỉnh (bỏ trần 40), tuyết khớp núi, dải bóng thông thấp theo hàng thông mới
     for (let dy = 0; dy < lenR && 106 + dy < eY; dy++) {
       if ((dy + (x >> 2)) % 4 === 3) continue;
-      const m = dy / 0.6, col = dy < 10 ? "#0f2538" : m < h - snH ? (lit ? "#4a4458" : "#2d3d5f") : (lit ? "#c9b896" : "#7f9cc8");
+      const m = dy / 0.6 - 6, col = dy < treeR ? "#0f2538" : m < h - snH ? (lit ? "#4a4458" : "#2d3d5f") : (lit ? "#c9b896" : "#7f9cc8");
       R(c, x, 106 + dy, 1, 1, col);
     }
   }
@@ -1750,9 +1765,10 @@ function drawHouseFg(c, sc) {
   }
   if (sc === "city") {   // buổi tối: đèn trong nhà sáng rực
     const glow = (x, y, r, a) => { const g = c.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, `rgba(255,226,150,${a})`); g.addColorStop(1, "rgba(255,226,150,0)"); c.fillStyle = g; c.fillRect(x - r, y - r, r * 2, r * 2); };
-    glow(246, 108, 30, 0.34); glow(296, 108, 30, 0.34); glow(272, 63, 30, 0.85); glow(256, 114, 14, 0.6);
+    glow(246, 108, 30, 0.34); glow(296, 108, 30, 0.34); glow(271, 92, 14, 0.6);
     R(c, 236, 96, 20, 24, "rgba(255,232,165,.12)"); R(c, 286, 96, 20, 24, "rgba(255,232,165,.12)");
-    disc(c, 272, 63, 5, 5, "#fff6c8"); disc(c, 272, 63, 3.5, 3.5, "#ffffff"); R(c, 255, 112, 3, 4, "#fff2b8");   // đèn cửa chính
+    disc(c, 272, 63, 6, 6, "#3e1b19"); disc(c, 272, 63, 4.5, 4.5, "#fff6c8"); disc(c, 272, 63, 3, 3, "#ffffff"); R(c, 271, 58, 2, 11, "#3e1b19"); R(c, 267, 62, 11, 1, "#3e1b19"); glow(272, 63, 30, 0.5);   // cửa sổ tròn gác: vẽ khung + kính trước, quầng sáng (0,5) phủ lên sau để khung nhuộm ấm, không nổi cứng trên vùng sáng
+    R(c, 271, 89, 1, 1, "#4e2f1b"); R(c, 270, 90, 3, 4, "#fff2b8");   // đèn cửa chính: treo trên tường phía trên cửa, không đè lên khung cửa sổ trái
     disc(c, 246, 154, 22, 3, "rgba(255,214,130,.24)"); disc(c, 296, 154, 22, 3, "rgba(255,214,130,.24)");
   }
 }
@@ -1779,7 +1795,23 @@ function houseWindow(c, x, y, kind) {   // cửa sổ nhìn thấy bên trong: b
   }
   R(c, x, y, 2, h, "#d8c8a0"); R(c, x + w - 2, y, 2, h, "#d8c8a0"); R(c, x, y, w, 2, "#b8a47a");
   R(c, x - 3, y + h, w + 6, 3, "#c9955a"); R(c, x - 2, y + h + 3, w + 4, 4, "#6b4429");
-  [[1, "#e8968a"], [6, "#f2d36b"], [11, "#e8968a"], [16, "#c78ae0"]].forEach(([dx, col]) => { R(c, x + dx, y + h + 1, 2, 2, col); R(c, x + dx, y + h + 3, 2, 1, "#5f9a5a"); });
+  windowGarland(c, x - 2, y + h, w + 4);
+}
+function windowGarland(c, x0, sy, bw) {   // chân cửa sổ: bồn hoa nở trên bậu + 2 vòng dây hoa rủ trước bồn (màu hoa/lá lấy từ bảng màu sẵn có)
+  const PET = ["#e8968a", "#f2d36b", "#c78ae0", "#f0f0f0"], LD = "#4f8a48", LM = "#5f9a5a", LL = "#7cbf6a";
+  for (let i = 0; i < bw; i++) { const hh = 1 + ((i * 3) % 4 === 1 ? 1 : 0); R(c, x0 + i, sy - hh, 1, hh + 1, i % 3 ? LM : LD); if (i % 4 === 2) R(c, x0 + i, sy - hh - 1, 1, 1, LL); }   // tán lá gợn sóng phủ bậu
+  [[2, 0], [7, 1], [12, 2], [17, 0], [21, 1]].forEach(([dx, k]) => {   // cụm hoa dấu "+" nhô trên tán lá
+    const fx = x0 + dx, fy = sy - 3, col = PET[k];
+    R(c, fx, fy - 1, 1, 3, col); R(c, fx - 1, fy, 3, 1, col); R(c, fx, fy, 1, 1, k === 1 ? "#fff0b8" : "#f2d36b");
+  });
+  const half = (bw - 1) >> 1;
+  for (let s = 0; s < 2; s++) for (let t = 0; t <= half; t++) {   // 2 vòng dây hoa võng xuống trước mặt bồn
+    const xx = x0 + s * half + t, yy = sy + 3 + Math.round(3 * Math.sin(Math.PI * t / half));
+    R(c, xx, yy, 1, 2, t % 2 ? LM : LD); if (t % 3 === 1) R(c, xx, yy - 1, 1, 1, LL);
+    if (t === 2 || t === half - 2) R(c, xx, yy + 1, 1, 1, PET[(s + t) % 3]);
+    if (t === (half >> 1)) { R(c, xx - 1, yy + 1, 3, 1, PET[s ? 2 : 0]); R(c, xx, yy, 1, 3, PET[s ? 2 : 0]); R(c, xx, yy + 1, 1, 1, "#f2d36b"); }   // hoa giữa vòng
+  }
+  [0, half, half * 2].forEach(dx => { R(c, x0 + dx, sy + 2, 1, 2, "#e8968a"); R(c, x0 + dx, sy + 3, 1, 1, "#f2d36b"); });   // nút buộc dây hoa
 }
 /* ---------- Cây lớn (vẽ 1 lần vào canvas riêng 320×180 theo toạ độ gốc, rồi đặt vào cảnh) ---------- */
 const TREE_DX = 26, TREE_DY = -6;   // dời cây: thân đứng đúng chỗ cũ (x≈207), cành xích đu đi qua 2 điểm treo dây
@@ -2222,7 +2254,7 @@ function drawApples(c) {   // táo chín to (8×7) trên tán cây — vẽ ở 
 function drawForegroundOut(c, sc) {
   if (sc === "beach") { palm(c, 24, 131, 74, 1, 1.4, true); palm(c, 66, 139, 112, -1, 1.7, true); palm(c, 24, 131, 74, 1, 1.4); palm(c, 66, 139, 112, -1, 1.7); drawSandCastle(c, 112, 151); }   // dừa nằm ở lớp trước, đè lên sóng
   if (sc === "hill") drawHillPath(c);
-  else if (sc !== "glacier") [[250, 160, 7], [236, 167, 7], [222, 172, 8], [206, 176, 8]].forEach(([x, y, rx]) => { disc(c, x, y, rx, 2.5, "#a99a7e"); disc(c, x, y - 0.5, rx - 1, 2, "#bfb092"); });   // lối đi đá từ cửa nhà
+  else if (sc !== "glacier") (sc === "beach" ? [[250, 160, 7], [236, 167, 7], [222, 172, 8], [206, 176, 8]] : [[272, 160, 8], [250, 170, 8], [220, 176, 8], [188, 175, 8], [160, 168, 7]]).forEach(([x, y, rx]) => { disc(c, x, y, rx, 2.5, "#a99a7e"); disc(c, x, y - 0.5, rx - 1, 2, "#bfb092"); });   // lối đá từ cửa nhà; Thành phố + Khu rừng: vòng trước gốc cây tới xích đu theo đường của Đồi ven biển, thưa hơn (5 viên), giữ màu cũ
   drawHouseFg(c, sc); if (sc !== "beach") drawTreeFg(c, sc); else drawSurfboard(c);
 }
 const fgCache = document.createElement("canvas"); fgCache.width = W; fgCache.height = H;
@@ -2768,6 +2800,7 @@ function removeItem(id) {
   closePop(); save();
 }
 function addItem(type, x, y) {
+  if (ROOMCFG[ROOM.cur].list().length >= MAX_ITEMS_PER_ROOM) return;   // BR-06 / AC-04.2: phòng đủ đồ thì không thêm
   const t = TYPES[type];
   const d = { id: uid(), type, x: x - t.w / 2, y: y - t.h / 2, on: type !== "clock", vol: t.vol ?? 0.5, track: 0 };   // đồng hồ: tích tắc mặc định tắt
   if (type === "frame") d.art = Math.random() * ART_N | 0;   // mỗi khung ảnh mới nhận một tranh ngẫu nhiên
