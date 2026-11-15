@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { GROUP_LABEL, type ItemGroup } from "@focuspace/shared";
+// Lấy thẳng catalog (không qua index của shared) để trang Thư viện không kéo theo Zod + roomState (~14 KiB JS thừa, Lighthouse)
+import { GROUP_LABEL, type ItemGroup } from "@focuspace/shared/src/catalog";
 import { api } from "../../../lib/api";
 import { useTitle } from "../../../lib/useTitle";
 
