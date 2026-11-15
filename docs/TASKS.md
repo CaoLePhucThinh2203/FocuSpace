@@ -25,10 +25,10 @@ Mỗi người chỉ sửa thư mục của mình; sửa chỗ khác thì mở P
 | Thành viên | Số issue | Khu vực |
 |---|---|---|
 | Tuấn Hưng | 12 | Đồ vật, bảng đồ vật, âm thanh |
-| Đình Nhiên | 11 | Sân vườn, telemetry, GA4/Sentry |
+| Đình Nhiên | 14 | Sân vườn (gồm tinh chỉnh hình ảnh 15/11), telemetry, GA4/Sentry |
 | Tuấn Lộc | 13 | Phòng ngủ, Hẹn giờ ngủ, auth, `/me`, thống kê (API + trang) |
 | Phúc Thịnh | 18 | Phòng học, repo, khung Căn phòng, 4 trang còn lại, đồng bộ |
-| Cả nhóm | 11 | Wireframe review, review chéo, self-report, video, tài khoản dịch vụ, triển khai |
+| Cả nhóm | 12 | Wireframe review, review chéo, self-report, video, tài khoản dịch vụ, triển khai |
 
 ---
 
@@ -39,7 +39,7 @@ Mỗi người chỉ sửa thư mục của mình; sửa chỗ khác thì mở P
 | H1 | S3 | `test(items): khung unit test placement, spatial, catalog` | UC.03, UC.04 | Có `it.todo` cho BR-03→07, AC-03.3, AC-04.4 |
 | H2 | S3 | `test(e2e): khung uc03-dieu-chinh-am-thanh, uc04-sap-xep-do-vat` | AC-03.x, AC-04.x | Mỗi AC là một `test.fixme` |
 | H3 | S3 | `feat(shared): catalog.ts 17 loại đồ vật từ prototype TYPES` | UC.04, UC.07 | Test đủ 17 loại, kích thước, phòng, nhóm |
-| H4 | S3 | `feat(engine): placement.ts quy tắc đặt đồ BR-03→06` | UC.04 | Unit test mỗi nhánh BR-04, giường mèo BR-05, ≤ 40 đồ |
+| H4 | S3 | `feat(engine): placement.ts quy tắc đặt đồ BR-03→06` | UC.04 | Unit test mỗi nhánh BR-04, giường mèo BR-05, ≤ 25 đồ |
 | H5 | S3 | `feat(engine): spatial.ts gain/pan BR-07` | UC.03 | AC-03.3 xanh |
 | H6 | S3 | `feat(db): bảng item_types + seeder đồ vật` ⓓ | UC.07 | `prisma db seed` chạy 2 lần vẫn 17 dòng |
 | H7 | S4 | `feat(audio): AudioContext sau cú nhấp đầu, đồ thị âm, Master` | UC.03 | AC-03.1, AC-03.2 xanh; lỗi tạo → ghi telemetry |
@@ -57,13 +57,16 @@ Mỗi người chỉ sửa thư mục của mình; sửa chỗ khác thì mở P
 | N2 | S3 | `test(garden): khung test Sân vườn, khung cảnh, telemetry` | UC.01, UC.02 | `test.fixme` cho AC-01.3, AC-02.3 |
 | N3 | S3 | `feat(shared): defaults Sân vườn + catalog 5 khung cảnh` | UC.02 | Test đủ 5 cảnh, mặc định Khu rừng |
 | N4 | S3 | `feat(db): bảng scenes + seeder khung cảnh` ⓓ | UC.07 | Seed 2 lần vẫn 5 dòng |
-| N5 | S4 | `feat(render): Sân vườn — cây, xích đu, nhà gỗ, 5 khung cảnh, lá/tuyết rơi` | UC.02 | Ảnh chụp từng cảnh khớp prototype |
+| N5 | S4 | `feat(render): Sân vườn — cây, xích đu, nhà gỗ, 5 khung cảnh, lá/tuyết rơi` | UC.02 | Ảnh chụp từng cảnh khớp prototype, trừ các điểm đã đổi ở N12–N14 |
 | N6 | S4 | `feat(audio): âm nền 5 khung cảnh, cross-fade khi đổi cảnh` | UC.02 | Đổi cảnh liên tục không chồng lớp âm |
 | N7 | S4 | `feat(garden): ScenePicker + cửa nhà → Phòng học` | UC.01, UC.02 | AC-01.3, AC-02.3 xanh |
 | N8 | S4 | `feat(api): GET /catalog/scenes` ⓓ | UC.07 | Integration test; AC-07.3 xanh |
 | N9 | S4 | `feat(api): POST /telemetry/batch upsert idempotent` ⓓ | UC.05, UC.06 | Gửi trùng lô không nhân đôi dòng; 202/400/413/429 |
 | N10 | S5 | `feat(persistence): telemetry.ts gom sự kiện, gửi lô 60 s / khi ẩn tab` ⓓ | UC.05, UC.06 | Phiên `completed`/`reset`/`abandoned` ghi đúng |
 | N11 | S5 | `feat(obs): Google Analytics 4 + Sentry frontend/backend` ⓓ | AC-NF.2 | Realtime GA4 thấy page_view; Sentry nhận lỗi thử; không gửi PII; mã GA4/DSN do Thịnh tạo (G10), lưu `.env` |
+| N12 | S4 | `feat(render): Sân vườn — bồn hoa và dây hoa ở chân cửa sổ nhà gỗ` | UC.02 | Ảnh chụp 5 cảnh: chân 2 cửa sổ có bồn hoa + 2 vòng dây hoa; dùng màu hoa/lá sẵn có của prototype |
+| N13 | S4 | `feat(render): Núi băng — thêm núi thấp, hạ hàng thông, sửa phản chiếu hồ` | UC.02 | Ảnh chụp Núi băng: 2 núi tách rời, núi cao giữ nguyên, núi thấp theo phác thảo (đỉnh bằng, bậc hụt bên phải), thông thấp hơn, bóng dưới hồ khớp |
+| N14 | S4 | `feat(render): lối đá Thành phố, Khu rừng theo đường vòng của Đồi ven biển` | UC.02 | Lối đá thưa (5 viên) cùng đường với Đồi ven biển, màu đá giữ nguyên; Bãi biển không đổi |
 
 ## Tuấn Lộc — Phòng ngủ, tài khoản & thống kê
 
@@ -72,7 +75,7 @@ Mỗi người chỉ sửa thư mục của mình; sửa chỗ khác thì mở P
 | L1 | S1 ✅ | `docs(wireframe): wireframe Figma Thống kê, Tài khoản` | UC.08, UC.10, UC.11 | ✅ Figma desktop + mobile, nhóm duyệt |
 | L2 | S3 | `test(api): khung integration test auth, me, stats` ⓓ | UC.08, UC.10, UC.11 | Liệt kê đủ mã trạng thái API §3.2 |
 | L3 | S3 | `feat(engine): sleepTimer.ts Tắt/15/30/45/60, giảm dần 2 phút cuối` | UC.06 | Unit test BR-02 |
-| L4 | S3 | `feat(shared): migrate.ts dữ liệu prototype → v4` | UC.09 | Test: rỗng, JSON hỏng, bản phẳng `ver: 3`, > 40 đồ |
+| L4 | S3 | `feat(shared): migrate.ts dữ liệu prototype → v4` | UC.09 | Test: rỗng, JSON hỏng, bản phẳng `ver: 3`, > 25 đồ |
 | L5 | S4 | `feat(render): Phòng ngủ — cửa sổ 3 thời tiết, rèm, đồng hồ tường, đèn ngủ, thảm, kệ` | UC.02 | Ảnh chụp khớp prototype |
 | L6 | S4 | `feat(bedroom): giao diện Hẹn giờ ngủ + thông báo hết giờ` | UC.06 | AC-06.1, AC-06.2, AC-01.4 xanh |
 | L7 | S4 | `feat(api): auth register/login/refresh/logout` ⓓ | UC.08 | AC-08.3, AC-08.4; refresh xoay vòng, thu hồi family |
@@ -92,7 +95,7 @@ Mỗi người chỉ sửa thư mục của mình; sửa chỗ khác thì mở P
 | T3 | S3 | `chore(frontend): Vite React TS + Tailwind + React Router 6 route + 404` | UC.12 | `npm run dev` mở được 6 route trống |
 | T4 | S1 ✅ | `docs(wireframe): wireframe Figma Căn phòng, Thư viện` | UC.01–UC.07 | ✅ Figma desktop + mobile, nhóm duyệt |
 | T5 | S3 | `feat(shared): chốt giao diện RoomState, drawX(ctx,state,t), audio.register, telemetry.track` | — | 3 người còn lại duyệt PR |
-| T6 | S3 | `feat(shared): roomState.ts Zod schema v4 + defaults Phòng học` | UC.09 | Test giới hạn 40 đồ, ≤ 64 KB |
+| T6 | S3 | `feat(shared): roomState.ts Zod schema v4 + defaults Phòng học` | UC.09 | Test giới hạn 25 đồ, ≤ 64 KB |
 | T7 | S3 | `feat(engine): rooms.ts chuyển phòng, pomodoro.ts` | UC.01, UC.05 | AC-01.2, AC-05.2 (unit) xanh |
 | T8 | S3 | `feat(db): schema.prisma + migration đầu` ⓓ | Task 3a | `prisma migrate deploy` chạy trên DB trống |
 | T9 | S4 | `feat(render): Phòng học — bàn, nhân vật, cửa sổ 4 thời tiết, rèm, lò sưởi, thảm, đèn` | UC.02 | AC-02.1, AC-02.4 xanh; ảnh chụp khớp prototype |
@@ -121,3 +124,4 @@ Mỗi người chỉ sửa thư mục của mình; sửa chỗ khác thì mở P
 | G9 | S2 ✅ | `docs(plan): PRD, PLAN, Kiến trúc, API, DATABASE, Chương 1 Phân tích hệ thống` | Thịnh (cả nhóm góp nội dung khu vực mình) | ✅ các file trong `docs/` |
 | G10 | S3 | `chore(obs): tạo tài khoản GA4, Sentry; gửi mã đo lường và DSN` | Thịnh | Nhiên nhận mã qua kênh riêng, không commit |
 | G11 | S5 | `chore(deploy): triển khai Vercel (frontend) + Render (backend) + Neon (PostgreSQL)` | Thịnh | Link chạy được ghi trong README; migrate + seed trên Neon |
+| G12 | S3 | `feat(shared): giảm MAX_ITEMS_PER_ROOM 40 → 25 (BR-06), chặn thêm đồ khi đủ 25` | Nhiên đề xuất; Thịnh duyệt (`shared/`)| Test schema từ chối 26 đồ; AC-04.2 xanh; PRD (BR-06, AC-04.2), API Phụ lục A, DATABASE cập nhật cùng PR |
