@@ -6,6 +6,7 @@ export interface FocuspaceHook {
   state: { room: RoomId; items: { id: string; type: string; x: number; y: number }[]; bed: { items: { id: string; type: string; x: number; y: number }[] } };
   sleep: { min: number; remaining: number; running: boolean; endAt: number };
   sleepRemaining(sec: number): void;
+  fade: { gain: { value: number }; context: { state: string } } | null;
   pomo: { mode: "focus" | "short" | "long"; done: number; remaining: number; running: boolean; endAt: number };
   pomoCfg: { rhythm: "classic" | "deep" | "light" | "custom"; custom: { focus: number; short: number; long: number } };
   pomoSetRhythm(id: "classic" | "deep" | "light" | "custom"): void;
