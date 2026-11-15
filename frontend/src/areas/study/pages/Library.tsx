@@ -59,10 +59,26 @@ export default function Library() {
       <button type="button" className="btn" onClick={() => setRetry((n) => n + 1)}>Thử lại</button>
     </div>
   );
-  const skeleton = (
-    <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" aria-busy="true">
-      {Array.from({ length: 6 }, (_, i) => <li key={i} className="card h-36 animate-pulse" />)}
-    </ul>
+  // Khung chờ cùng kích thước với thẻ thật (và chừa sẵn dòng "N đồ vật") để danh sách không bị nhảy khi dữ liệu về (Lighthouse CLS)
+  const skeleton = (kind: "items" | "scenes") => (
+    <>
+      {kind === "items" && <p className="text-xs text-muted" aria-hidden="true">&nbsp;</p>}
+      <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" aria-busy="true">
+        {Array.from({ length: 6 }, (_, i) =>
+          kind === "items" ? (
+            <li key={i} className="card flex animate-pulse gap-4 p-4">
+              <div className="size-16 shrink-0 bg-deep" />
+              <div className="h-24 flex-1" />
+            </li>
+          ) : (
+            <li key={i} className="card animate-pulse overflow-hidden">
+              <div className="aspect-video bg-deep" />
+              <div className="h-24" />
+            </li>
+          ),
+        )}
+      </ul>
+    </>
   );
 
   return (
@@ -87,7 +103,7 @@ export default function Library() {
             <span className="text-xs text-muted">Nhóm</span>
             {seg("group", group, [["", "Tất cả"], ["sound", "Phát âm thanh"], ["decor", "Trang trí"], ["desk", "Trên bàn"]])}
           </div>
-          {items.state === "loading" && skeleton}
+          {items.state === "loading" && skeleton("items")}
           {items.state === "error" && errorBox}
           {items.state === "ok" && (items.data.length === 0 ? (
             <p className="card p-6 text-muted">Không có đồ vật phù hợp.</p>
@@ -113,7 +129,7 @@ export default function Library() {
         </section>
       ) : (
         <section className="mt-6">
-          {scenes.state === "loading" && skeleton}
+          {scenes.state === "loading" && skeleton("scenes")}
           {scenes.state === "error" && errorBox}
           {scenes.state === "ok" && (
             <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
