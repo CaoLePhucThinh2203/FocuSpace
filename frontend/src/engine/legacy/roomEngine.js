@@ -10,6 +10,7 @@
 import { shouldTick } from "../../lib/time";
 import { RHYTHMS, RHYTHM_IDS, nextPhase, parseConfig, phaseSeconds, rhythmOf, setCustom } from "../../areas/study/engine/pomodoro";
 import { NAVS, canSwitch, lastIndoorAfter, pausesPomodoro } from "../../areas/study/engine/rooms";
+import * as SleepTimer from "../../areas/bedroom/engine/sleepTimer";
 
 export function startRoomEngine() {
 "use strict";
@@ -3089,28 +3090,29 @@ setInterval(() => {
 }, 250);
 
 /* Hẹn giờ ngủ (chỉ Phòng ngủ): chọn Tắt/15/30/60 phút ở bảng mở từ header hoặc popover đồng hồ treo tường. Hai phút cuối, toàn bộ âm thanh nhỏ dần đều về 0 rồi dừng hẳn. */
-const sleep = { min: 0, remaining: 0, running: false, endAt: 0 };   // min: mức đã chọn; chọn xong chờ bấm Bắt đầu như Pomodoro
-function sleepRem() { return sleep.running ? Math.max(0, Math.ceil((sleep.endAt - Date.now()) / 1000)) : sleep.remaining; }
+const sleep = { ...SleepTimer.SLEEP_OFF };   // min: mức đã chọn; chọn xong chờ bấm Bắt đầu như Pomodoro (logic: areas/bedroom/engine/sleepTimer.ts)
+function sleepRem() { return SleepTimer.sleepRemaining(sleep, Date.now()); }
 function renderSleep() {
   const el = $("sleepMini"), rem = sleepRem();
   document.querySelectorAll("[data-sl]").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.sl === sleep.min)));
   document.querySelectorAll("[data-sleep-time]").forEach(t => { t.textContent = sleep.min ? fmt(rem) : "--:--"; });
   document.querySelectorAll("[data-sleep-play]").forEach(b => { b.hidden = !sleep.min; b.textContent = sleep.running ? "Tạm dừng" : "Bắt đầu"; });
-  el.classList.toggle("fading", sleep.running && rem <= 120);
+  el.classList.toggle("fading", sleep.running && rem <= SleepTimer.FADE_SEC);
 }
 function sleepSet(min) {   // chọn mức: hiện số phút, chờ bấm Bắt đầu
-  sleep.min = min; sleep.running = false; sleep.endAt = 0; sleep.remaining = min * 60;
+  Object.assign(sleep, SleepTimer.sleepSet(min));
   if (ctx) ramp(fade.gain, 1, 0.2);
   renderSleep(); if (!$("sleepPanel").hidden) renderSleepPanel();
 }
 function sleepToggle() {   // Bắt đầu / Tạm dừng; tạm dừng trong 2 phút cuối thì âm thanh trở lại mức bình thường
   if (!sleep.min) return;
-  if (sleep.running) { sleep.remaining = sleepRem(); sleep.running = false; sleep.endAt = 0; if (ctx) ramp(fade.gain, 1, 0.2); }
-  else if (sleep.remaining > 0) { sleep.running = true; sleep.endAt = Date.now() + sleep.remaining * 1000; }
+  const wasRunning = sleep.running;
+  Object.assign(sleep, SleepTimer.sleepToggle(sleep, Date.now()));
+  if (wasRunning && ctx) ramp(fade.gain, 1, 0.2);
   renderSleep();
 }
 /* Bảng Hẹn giờ ngủ: cùng kiểu bảng Nhịp học của Pomodoro, bấm số giờ trên header để mở */
-const SLEEP_OPTS = [[0, "Tắt", "Âm thanh phát liên tục"], [15, "15 phút", "Nhỏ dần trong 2 phút cuối rồi tắt"], [30, "30 phút", "Nhỏ dần trong 2 phút cuối rồi tắt"], [60, "60 phút", "Nhỏ dần trong 2 phút cuối rồi tắt"]];
+const SLEEP_OPTS = SleepTimer.SLEEP_OPTIONS.map(m => m ? [m, m + " phút", "Nhỏ dần trong 2 phút cuối rồi tắt"] : [0, "Tắt", "Âm thanh phát liên tục"]);
 function renderSleepPanel() {
   const panel = $("sleepPanel"), a = document.activeElement, keep = a && panel.contains(a) && a.dataset.slp;
   panel.innerHTML = `<div class="pp-head"><span>Hẹn giờ ngủ</span><button type="button" class="pp-x" data-pp="close" aria-label="Đóng">${CHEV_X}</button></div>
@@ -3139,9 +3141,9 @@ document.addEventListener("click", e => {
 });
 setInterval(() => {
   if (!sleep.running) return;
-  const rem = (sleep.endAt - Date.now()) / 1000;
-  if (rem <= 0) {
-    sleep.endAt = 0; sleep.min = 0; sleep.remaining = 0; sleep.running = false;
+  const now = Date.now(), rem = (sleep.endAt - now) / 1000;
+  if (SleepTimer.sleepFinished(sleep, now)) {
+    Object.assign(sleep, SleepTimer.SLEEP_OFF);
     if (ctx) {
       ramp(fade.gain, 0, 0.1);
       setTimeout(() => ctx.suspend().then(() => {
@@ -3151,7 +3153,7 @@ setInterval(() => {
     }
     renderSleep(); return;
   }
-  if (rem <= 120 && ctx) ramp(fade.gain, rem / 120, 0.25);
+  if (rem <= SleepTimer.FADE_SEC && ctx) ramp(fade.gain, SleepTimer.sleepGain(rem), 0.25);   // 2 phút cuối âm tổng giảm dần
   renderSleep();
 }, 250);
 let wallTk = false;
