@@ -1,6 +1,6 @@
 # FocuSpace — Danh sách task theo thành viên (TASKS.md)
 
-> 13/11/2026 (cập nhật lịch) · nguồn: `docs/PLAN.md` §2–3 (phân vai; lịch từ 27/10/2026: S1 ✅ 27/10–07/11, S2 ✅ 08–12/11, S3 13–17/11, S4 18–22/11, S5 23–27/11; hạn **27/11/2026**), PRD 5.4 (AC).
+> Cập nhật 15/11/2026 · nguồn: `docs/PLAN.md` §2–3 (phân vai; lịch từ 27/10/2026: S1 ✅ 27/10–07/11, S2 ✅ 08–12/11, S3 13–17/11, S4 18–22/11, S5 23–27/11; hạn **27/11/2026**), PRD 5.4 (AC).
 > Issue đánh dấu ✅ là việc đã làm ở S1–S2: vẫn tạo trên GitHub rồi đóng ngay (kèm link Figma/file) để milestone S1, S2 có lịch sử.
 > Mỗi dòng = **1 GitHub Issue**: tiêu đề đúng như cột "Issue", gán người, milestone = sprint, nhãn `area:*`, `type:*`, `P0/P1`. Mở nhánh `feat/<số>-<mô-tả>`, PR có `Closes #<số>` và mã UC.
 > Cột **Xong khi** là điều kiện đóng issue (Definition of Done): test liên quan xanh, PR được 1 người khác duyệt, CI xanh.
@@ -8,22 +8,17 @@
 
 Nhãn khu vực: `area:items-audio` (Hưng) · `area:garden` (Nhiên) · `area:bedroom` (Lộc) · `area:study` · `area:pages` · `area:repo` (Thịnh) · `area:backend` · `area:shared`.
 
-## Trạng thái code nền (13/11/2026) — việc trước demo 15/11
+## Thư mục của từng người
 
-Code chia theo 4 khu vực, mỗi người chỉ sửa thư mục của mình (sửa chỗ khác thì mở PR và gán chủ thư mục duyệt):
+Mỗi người chỉ sửa thư mục của mình; sửa chỗ khác thì mở PR và gán chủ thư mục duyệt. Mỗi thư mục khu vực có `README.md` ghi việc còn lại.
 
-| Người | Frontend | Backend | Đã có | Issue |
+| Người | Frontend | Backend | Phần đã có | Issue |
 |---|---|---|---|---|
 | Tuấn Hưng | `frontend/src/areas/items-audio/` | `backend/src/areas/items-audio/` | `GET /catalog/items`, seeder `item_types` | H6, H11 |
 | Đình Nhiên | `frontend/src/areas/garden/` | `backend/src/areas/garden/` | GA4 + Sentry phía web, `GET /catalog/scenes`, `POST /telemetry/batch`, seeder `scenes` | N4, N8, N9, N11 |
 | Tuấn Lộc | `frontend/src/areas/bedroom/` | `backend/src/areas/bedroom/` | trang Thống kê, auth, `/me`, `/me/stats` | L7, L8, L9, L13 |
 | Phúc Thịnh | `frontend/src/areas/study/` | `backend/src/areas/study/` | 5 trang + 404, NavBar/Footer, trang Căn phòng, đồng bộ phòng, `/room-state` | T10–T14 |
 | Phần chung (Thịnh giữ) | `frontend/src/{App.tsx, main.tsx, lib/, store/, styles/, engine/legacy/}` | `backend/src/{app.ts, server.ts, routes/, middleware/, lib/}`, `backend/prisma/` | monorepo, CI, `shared/` + 12 unit test, schema 8 bảng | T2, T6, T8 |
-
-Mỗi thư mục khu vực có `README.md` ghi việc còn lại và khối cần tách từ `frontend/src/engine/legacy/roomEngine.js`.
-
-Việc trước demo 15/11: Thịnh chạy `npm install`, tạo DB Neon, `db:migrate`, `db:seed`, commit thư mục migrations (G11 phần DB); cả nhóm `npm run dev`, kiểm tra 6 trang theo AC ở PRD 5.4, báo lỗi bằng Issue.
-Chưa có: gửi telemetry từ Căn phòng (N10), test integration với PostgreSQL thật (L2), E2E theo từng UC (H2, N2), tách engine thành module (xem `frontend/src/engine/legacy/README.md`).
 
 ## Tổng hợp khối lượng
 

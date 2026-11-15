@@ -28,17 +28,7 @@ API phục vụ frontend FocuSpace (ứng dụng web chạy trong trình duyệt
 
 - **Nội dung trang động:** danh mục đồ vật, khung cảnh cho trang Thư viện và thống kê học tập của người dùng cho trang Thống kê.
 
-| **Nhóm**   | **Endpoint**                                                                    |
-|------------|---------------------------------------------------------------------------------|
-| Health     | GET /health                                                                     |
-| Auth       | POST /auth/register · POST /auth/login · POST /auth/refresh · POST /auth/logout |
-| Tài khoản  | GET /me · PATCH /me · DELETE /me                                                |
-| Room state | GET /room-state · PUT /room-state                                               |
-| Telemetry  | POST /telemetry/batch                                                           |
-| Danh mục | GET /catalog/items · GET /catalog/scenes |
-| Thống kê | GET /me/stats |
-
-Tóm tắt endpoint ↔ use case ↔ phương thức service (theo Chương 1 Phân tích hệ thống, Class C3):
+14 endpoint, kèm use case và phương thức service (theo Chương 1 Phân tích hệ thống, Class C3):
 
 | **Mục** | **Endpoint** | **Use case** | **Phương thức service** |
 |---|---|---|---|
@@ -1261,4 +1251,4 @@ Dùng trong GET /room-state (trường data) và PUT /room-state (trường data
 |---|---|---|
 | v1.0 | 07/11/2026 | Bản đã phê duyệt. |
 | v1.1–v1.2 | 10–13/11/2026 | Thêm endpoint danh mục (4.12, 4.13), thống kê (4.14); truy vết use case và phương thức service cho từng endpoint; chốt rate limit 5.1. Duyệt ở buổi họp 13/11. |
-| v1.3 | 14/11/2026 | Rút gọn: bỏ dòng chú thích bản Word cũ; Base URL production theo cách triển khai Vercel + Render; 5.2 Versioning còn 2 ý. Không đổi request/response, mã lỗi. |
+| v1.3 | 15/11/2026 | Rút gọn: bỏ dòng chú thích bản Word cũ, bảng nhóm endpoint trùng với bảng tóm tắt ở mục 1; Base URL production theo cách triển khai Vercel + Render; 5.2 Versioning còn 2 ý. Không đổi request/response, mã lỗi. |
