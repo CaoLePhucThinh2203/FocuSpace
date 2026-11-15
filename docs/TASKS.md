@@ -44,11 +44,11 @@ Mỗi người chỉ sửa thư mục của mình; sửa chỗ khác thì mở P
 | H5 | S3 | `feat(engine): spatial.ts gain/pan BR-07` | UC.03 | AC-03.3 xanh |
 | H6 | S3 | `feat(db): bảng item_types + seeder đồ vật` ⓓ | UC.07 | `prisma db seed` chạy 2 lần vẫn 17 dòng |
 | H7 | S4 | `feat(audio): AudioContext sau cú nhấp đầu, đồ thị âm, Master` | UC.03 | AC-03.1, AC-03.2 xanh; lỗi tạo → ghi telemetry |
-| H8 | S4 | `feat(audio): âm tổng hợp đồ vật + nhạc Lo-fi (OfflineAudioContext)` | UC.03 | Nghe giống prototype bằng tai nghe; Lo-fi dựng nền ngay khi mở Căn phòng (cách 2) |
+| H8 | S4 | `feat(audio): âm tổng hợp đồ vật + nhạc Lo-fi (OfflineAudioContext)` | UC.03 | Nghe giống prototype bằng tai nghe; Lo-fi dựng sau cú nhấp đầu (PRD v5.5, thay cách 2) |
 | H9 | S4 | `feat(items): khay đồ vật, kéo thả, bàn phím, xóa` | UC.04 | AC-04.1 → AC-04.5 xanh |
 | H10 | S4 | `feat(items): popover đồ vật + Volume mixer` | UC.03 | AC-03.4 xanh; pan cập nhật < 30 ms |
 | H11 | S4 | `feat(api): GET /catalog/items lọc room, group` ⓓ | UC.07 | Integration test 200/400; `Cache-Control` 1 giờ |
-| H12 | S5 | `perf(room): tối ưu Lighthouse Căn phòng (tách mã, title + meta — cách 2)` ⓓ | AC-NF.1 | Báo cáo trước/sau trong `docs/reports/lighthouse/` |
+| H12 | S5 | `perf(room): tối ưu Lighthouse Căn phòng (tách mã, title + meta, âm thanh dựng sau cú nhấp đầu)` ⓓ | AC-NF.1 | Báo cáo trước/sau trong `docs/reports/lighthouse/` (đã làm thêm cho Thư viện, font tự host, CLS — xem nhật ký trong báo cáo) |
 | H13 | S4 | `feat(items): mèo đổi màu lông (Cam, Xám tro, Kem) + rõ màu dưới ánh trăng Phòng ngủ` | UC.03, UC.04 | Bấm mèo → popover có hàng "Màu lông" 3 nút, đổi ngay và lưu như chọn thảm; mèo nằm trong vệt trăng giữ màu lông (đục bóng tối 55% theo hình mèo); `coat` 0–2 trong schema + migrate giữ `coat`, test xanh; Thịnh duyệt phần `shared/` |
 
 ## Đình Nhiên — Sân vườn
