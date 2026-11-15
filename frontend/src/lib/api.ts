@@ -8,7 +8,14 @@ export class ApiError extends Error {
 }
 
 let accessToken: string | null = null;
-export const setAccessToken = (t: string | null) => { accessToken = t; };
+/* H12 — Tuấn Hưng (Lighthouse "Đã ghi lỗi vào console"): đánh dấu máy này đang có phiên đăng nhập.
+   Khách chưa từng đăng nhập thì không gọi /auth/refresh, tránh lỗi 401 in ra console mỗi lần mở trang. */
+const SESSION_HINT = "focuspace.session";
+function hasSessionHint() { try { return localStorage.getItem(SESSION_HINT) === "1"; } catch { return true; } }
+export const setAccessToken = (t: string | null) => {
+  accessToken = t;
+  try { if (t) localStorage.setItem(SESSION_HINT, "1"); else localStorage.removeItem(SESSION_HINT); } catch { /* bị chặn lưu cục bộ: bỏ qua */ }
+};
 export const hasAccessToken = () => !!accessToken;
 
 async function raw<T>(path: string, init: RequestInit = {}): Promise<T> {
@@ -29,6 +36,7 @@ async function raw<T>(path: string, init: RequestInit = {}): Promise<T> {
 
 let refreshing: Promise<Session | null> | null = null;
 export function refreshSession(): Promise<Session | null> {
+  if (!accessToken && !hasSessionHint()) return Promise.resolve(null);   // khách: không có phiên để làm mới
   refreshing ??= raw<Session>("/auth/refresh", { method: "POST" })
     .then((s) => { setAccessToken(s.accessToken); return s; })
     .catch(() => { setAccessToken(null); return null; })
