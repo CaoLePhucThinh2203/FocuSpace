@@ -67,7 +67,7 @@ export default function Library() {
         {Array.from({ length: 6 }, (_, i) =>
           kind === "items" ? (
             <li key={i} className="card flex animate-pulse gap-4 p-4">
-              <div className="size-16 shrink-0 bg-deep" />
+              <div className="size-16 shrink-0 border border-line bg-panel" />
               <div className="h-24 flex-1" />
             </li>
           ) : (
@@ -113,7 +113,7 @@ export default function Library() {
               <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {items.data.map((it) => (
                   <li key={it.code} className="card flex gap-4 p-4">
-                    <img src={`/previews/item-${it.code}.png`} alt="" width={64} height={64} loading="lazy" className="pixel size-16 shrink-0 bg-deep object-contain" />
+                    <img src={`/previews/item-${it.code}.png`} alt="" width={64} height={64} loading="lazy" className="pixel size-16 shrink-0 border border-line bg-panel object-contain" />
                     <div className="min-w-0 space-y-1">
                       <h2 className="font-display text-lg font-bold">{it.name}</h2>
                       {it.description && <p className="text-muted">{it.description}</p>}
