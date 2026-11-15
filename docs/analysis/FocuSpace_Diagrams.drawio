@@ -419,7 +419,7 @@
         <mxCell id="c114" value="Tự động lưu trạng thái phòng vào LocalStorage sau 250 ms" style="html=1;align=center;verticalAlign=middle;rounded=1;absoluteArcSize=1;arcSize=14;dashed=0;whiteSpace=wrap;fontSize=12;" vertex="1" parent="1">
           <mxGeometry x="375" y="631.5" width="150" height="57" as="geometry" />
         </mxCell>
-        <mxCell id="c115" value="Cập nhật chip lưu &quot;Đã lưu HH:MM&quot;" style="html=1;align=center;verticalAlign=middle;rounded=1;absoluteArcSize=1;arcSize=14;dashed=0;whiteSpace=wrap;fontSize=12;" vertex="1" parent="1">
+        <mxCell id="c115" value="Lưu bị chặn thì ghi cảnh báo ở console (không còn chip lưu, PRD v5.5)" style="html=1;align=center;verticalAlign=middle;rounded=1;absoluteArcSize=1;arcSize=14;dashed=0;whiteSpace=wrap;fontSize=12;" vertex="1" parent="1">
           <mxGeometry x="375" y="719" width="150" height="42" as="geometry" />
         </mxCell>
         <mxCell id="c116" value="" style="ellipse;html=1;shape=endState;fillColor=strokeColor;" vertex="1" parent="1">
@@ -879,7 +879,7 @@
           <mxGeometry relative="1" as="geometry">
           </mxGeometry>
         </mxCell>
-        <mxCell id="c233" value="[≥ 40 đồ vật hoặc&lt;br&gt;sai loại phòng]" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=11;" vertex="1" parent="1">
+        <mxCell id="c233" value="[≥ 25 đồ vật hoặc&lt;br&gt;sai loại phòng]" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=11;" vertex="1" parent="1">
           <mxGeometry x="519" y="519" width="92.4062" height="30" as="geometry" />
         </mxCell>
         <mxCell id="c234" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="c205" target="c206">
@@ -959,7 +959,7 @@
         <mxCell id="c251" value="Bấm &quot;Bắt đầu&quot; ở Pomodoro mini hoặc popover Đồng hồ Pomodoro" style="html=1;align=center;verticalAlign=middle;rounded=1;absoluteArcSize=1;arcSize=14;dashed=0;whiteSpace=wrap;fontSize=12;" vertex="1" parent="1">
           <mxGeometry x="85" y="146.5" width="180" height="57" as="geometry" />
         </mxCell>
-        <mxCell id="c252" value="Đặt thời điểm kết thúc theo độ dài của chế độ (mặc định Focus 25 / Nghỉ 5 phút; chỉnh ▲▼ ±1/±10 phút khi đang dừng)" style="html=1;align=center;verticalAlign=middle;rounded=1;absoluteArcSize=1;arcSize=14;dashed=0;whiteSpace=wrap;fontSize=12;" vertex="1" parent="1">
+        <mxCell id="c252" value="Đặt thời điểm kết thúc theo giai đoạn của nhịp học đang chọn (mặc định Cổ điển: Focus 25 / Nghỉ ngắn 5 / Nghỉ dài 15 sau 4 phiên; đổi nhịp ở bảng Nhịp học)" style="html=1;align=center;verticalAlign=middle;rounded=1;absoluteArcSize=1;arcSize=14;dashed=0;whiteSpace=wrap;fontSize=12;" vertex="1" parent="1">
           <mxGeometry x="390" y="146.5" width="180" height="57" as="geometry" />
         </mxCell>
         <mxCell id="c253" value="Ghi sự kiện pomodoro_start vào hàng đợi telemetry" style="html=1;align=center;verticalAlign=middle;rounded=1;absoluteArcSize=1;arcSize=14;dashed=0;whiteSpace=wrap;fontSize=12;" vertex="1" parent="1">
@@ -980,10 +980,10 @@
         <mxCell id="c258" value="Ghi phiên Pomodoro kết quả &quot;completed&quot; vào hàng đợi telemetry" style="html=1;align=center;verticalAlign=middle;rounded=1;absoluteArcSize=1;arcSize=14;dashed=0;whiteSpace=wrap;fontSize=12;" vertex="1" parent="1">
           <mxGeometry x="635" y="516.5" width="150" height="57" as="geometry" />
         </mxCell>
-        <mxCell id="c259" value="Tự chuyển chế độ (Focus ↔ Nghỉ)" style="html=1;align=center;verticalAlign=middle;rounded=1;absoluteArcSize=1;arcSize=14;dashed=0;whiteSpace=wrap;fontSize=12;" vertex="1" parent="1">
+        <mxCell id="c259" value="Chuyển giai đoạn kế tiếp (Focus → Nghỉ ngắn; đủ số phiên thì Nghỉ dài rồi vòng mới) và dừng chờ Bắt đầu" style="html=1;align=center;verticalAlign=middle;rounded=1;absoluteArcSize=1;arcSize=14;dashed=0;whiteSpace=wrap;fontSize=12;" vertex="1" parent="1">
           <mxGeometry x="635" y="609" width="150" height="42" as="geometry" />
         </mxCell>
-        <mxCell id="c260" value="Ghi phiên kết quả &quot;reset&quot;, đặt lại về độ dài Focus đã đặt" style="html=1;align=center;verticalAlign=middle;rounded=1;absoluteArcSize=1;arcSize=14;dashed=0;whiteSpace=wrap;fontSize=12;" vertex="1" parent="1">
+        <mxCell id="c260" value="Ghi phiên kết quả &quot;reset&quot;, về phiên Focus đầu tiên của nhịp đang chọn" style="html=1;align=center;verticalAlign=middle;rounded=1;absoluteArcSize=1;arcSize=14;dashed=0;whiteSpace=wrap;fontSize=12;" vertex="1" parent="1">
           <mxGeometry x="390" y="514" width="180" height="42" as="geometry" />
         </mxCell>
         <mxCell id="c261" value="" style="ellipse;html=1;shape=endState;fillColor=strokeColor;" vertex="1" parent="1">
@@ -995,7 +995,7 @@
         <mxCell id="c263" value="Dừng đếm, giữ thời gian còn lại" style="html=1;align=center;verticalAlign=middle;rounded=1;absoluteArcSize=1;arcSize=14;dashed=0;whiteSpace=wrap;fontSize=12;" vertex="1" parent="1">
           <mxGeometry x="390" y="665" width="180" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="c264" value="Bấm &quot;Tiếp tục&quot;" style="html=1;align=center;verticalAlign=middle;rounded=1;absoluteArcSize=1;arcSize=14;dashed=0;whiteSpace=wrap;fontSize=12;" vertex="1" parent="1">
+        <mxCell id="c264" value="Bấm &quot;Bắt đầu&quot; để chạy tiếp" style="html=1;align=center;verticalAlign=middle;rounded=1;absoluteArcSize=1;arcSize=14;dashed=0;whiteSpace=wrap;fontSize=12;" vertex="1" parent="1">
           <mxGeometry x="100" y="745" width="150" height="40" as="geometry" />
         </mxCell>
         <mxCell id="c265" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="c250" target="c251">
@@ -1126,13 +1126,13 @@
         <mxCell id="c290" value="" style="ellipse;fillColor=strokeColor;html=1;" vertex="1" parent="1">
           <mxGeometry x="145" y="85" width="30" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="c291" value="Bấm Hẹn giờ ngủ trên thanh đầu trang (đang ở Phòng ngủ)" style="html=1;align=center;verticalAlign=middle;rounded=1;absoluteArcSize=1;arcSize=14;dashed=0;whiteSpace=wrap;fontSize=12;" vertex="1" parent="1">
+        <mxCell id="c291" value="Bấm số giờ ở ô Hẹn giờ ngủ trên thanh đầu trang (đang ở Phòng ngủ)" style="html=1;align=center;verticalAlign=middle;rounded=1;absoluteArcSize=1;arcSize=14;dashed=0;whiteSpace=wrap;fontSize=12;" vertex="1" parent="1">
           <mxGeometry x="75" y="146.5" width="170" height="57" as="geometry" />
         </mxCell>
-        <mxCell id="c292" value="Hiển thị lựa chọn Tắt / 15 / 30 / 45 / 60 phút và nút ▲▼ ±1/±10 phút" style="html=1;align=center;verticalAlign=middle;rounded=1;absoluteArcSize=1;arcSize=14;dashed=0;whiteSpace=wrap;fontSize=12;" vertex="1" parent="1">
+        <mxCell id="c292" value="Mở bảng Hẹn giờ ngủ: Tắt / 15 / 30 / 60 phút" style="html=1;align=center;verticalAlign=middle;rounded=1;absoluteArcSize=1;arcSize=14;dashed=0;whiteSpace=wrap;fontSize=12;" vertex="1" parent="1">
           <mxGeometry x="375" y="154" width="170" height="42" as="geometry" />
         </mxCell>
-        <mxCell id="c293" value="Chọn thời lượng hoặc chỉnh ▲▼" style="html=1;align=center;verticalAlign=middle;rounded=1;absoluteArcSize=1;arcSize=14;dashed=0;whiteSpace=wrap;fontSize=12;" vertex="1" parent="1">
+        <mxCell id="c293" value="Chọn thời lượng, rồi bấm Bắt đầu (Tạm dừng khi đang chạy)" style="html=1;align=center;verticalAlign=middle;rounded=1;absoluteArcSize=1;arcSize=14;dashed=0;whiteSpace=wrap;fontSize=12;" vertex="1" parent="1">
           <mxGeometry x="85" y="240" width="150" height="40" as="geometry" />
         </mxCell>
         <mxCell id="c294" value="" style="rhombus;html=1;" vertex="1" parent="1">
@@ -3223,13 +3223,13 @@
           <mxGeometry x="556.375" y="923.0" width="598.734" height="158" as="geometry" />
         </mxCell>
         <mxCell id="c5a1" value="opt" style="shape=umlFrame;whiteSpace=wrap;html=1;pointerEvents=0;width=50;height=20;" vertex="1" parent="1"><mxGeometry x="30" y="140" width="430" height="116" as="geometry" /></mxCell>
-        <mxCell id="c5a2" value="[đang dừng, bấm ▲▼ (trái ±1, phải ±10 phút)]" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;fontSize=11;" vertex="1" parent="1"><mxGeometry x="85" y="141" width="260" height="18" as="geometry" /></mxCell>
+        <mxCell id="c5a2" value="[bấm số giờ, chọn nhịp ở bảng Nhịp học]" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;fontSize=11;" vertex="1" parent="1"><mxGeometry x="85" y="141" width="260" height="18" as="geometry" /></mxCell>
         <mxCell id="c5a3" value="" style="html=1;fillColor=#ffffff;" vertex="1" parent="1"><mxGeometry x="100" y="176" width="10" height="20" as="geometry" /></mxCell>
         <mxCell id="c5a4" value="" style="html=1;fillColor=#ffffff;" vertex="1" parent="1"><mxGeometry x="250" y="176" width="10" height="70" as="geometry" /></mxCell>
         <mxCell id="c5a5" value="" style="html=1;fillColor=#ffffff;" vertex="1" parent="1"><mxGeometry x="404.906" y="206" width="10" height="34" as="geometry" /></mxCell>
-        <mxCell id="c5a6" value="bamChinhGio(buoc)" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;fontSize=11;" edge="1" parent="1"><mxGeometry relative="1" x="0" as="geometry"><mxPoint x="110" y="186" as="sourcePoint" /><mxPoint x="250" y="186" as="targetPoint" /></mxGeometry></mxCell>
-        <mxCell id="c5a7" value="chinhThoiLuong(buoc)" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;fontSize=11;" edge="1" parent="1"><mxGeometry relative="1" x="0" as="geometry"><mxPoint x="260" y="214" as="sourcePoint" /><mxPoint x="404.906" y="214" as="targetPoint" /></mxGeometry></mxCell>
-        <mxCell id="c5a8" value="thoiLuongMoi (1–120 phút)" style="html=1;verticalAlign=bottom;endArrow=open;endFill=0;dashed=1;fontSize=11;" edge="1" parent="1"><mxGeometry relative="1" x="0" as="geometry"><mxPoint x="404.906" y="240" as="sourcePoint" /><mxPoint x="260" y="240" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="c5a6" value="chonNhip(nhip)" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;fontSize=11;" edge="1" parent="1"><mxGeometry relative="1" x="0" as="geometry"><mxPoint x="110" y="186" as="sourcePoint" /><mxPoint x="250" y="186" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="c5a7" value="doiNhip(nhip)" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;fontSize=11;" edge="1" parent="1"><mxGeometry relative="1" x="0" as="geometry"><mxPoint x="260" y="214" as="sourcePoint" /><mxPoint x="404.906" y="214" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="c5a8" value="thoiLuongMoi (đang dừng: áp dụng ngay; đang chạy: từ phiên sau)" style="html=1;verticalAlign=bottom;endArrow=open;endFill=0;dashed=1;fontSize=11;" edge="1" parent="1"><mxGeometry relative="1" x="0" as="geometry"><mxPoint x="404.906" y="240" as="sourcePoint" /><mxPoint x="260" y="240" as="targetPoint" /></mxGeometry></mxCell>
         <mxCell id="c778" value="Người dùng" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=13;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="20" y="20" width="170" height="30" as="geometry" />
         </mxCell>
@@ -3339,7 +3339,7 @@
             <mxPoint x="626.375" y="669.0" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="c816" value="độ dài Focus đã đặt (mặc định 25:00)" style="html=1;verticalAlign=bottom;endArrow=open;endFill=0;dashed=1;fontSize=11;labelBackgroundColor=none;rounded=0;" edge="1" parent="1">
+        <mxCell id="c816" value="phiên Focus đầu tiên của nhịp (mặc định 25:00)" style="html=1;verticalAlign=bottom;endArrow=open;endFill=0;dashed=1;fontSize=11;labelBackgroundColor=none;rounded=0;" edge="1" parent="1">
           <mxGeometry relative="1" x="0" as="geometry">
             <mxPoint x="404.906" y="701.0" as="sourcePoint" />
             <mxPoint x="260" y="701.0" as="targetPoint" />
@@ -3499,7 +3499,7 @@
             <mxPoint x="110" y="185" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="c853" value="chonThoiLuong(phut) / chinhGio(buoc)" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;fontSize=11;labelBackgroundColor=none;rounded=0;" edge="1" parent="1">
+        <mxCell id="c853" value="chonThoiLuong(phut), bamBatDau()" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;fontSize=11;labelBackgroundColor=none;rounded=0;" edge="1" parent="1">
           <mxGeometry relative="1" x="0" as="geometry">
             <mxPoint x="110" y="217" as="sourcePoint" />
             <mxPoint x="252.469" y="217" as="targetPoint" />
@@ -3589,7 +3589,7 @@
         <mxCell id="c844" value="[phut = 0 (Tắt)]" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;rounded=0;fontSize=11;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="85" y="270" width="86.6719" height="18" as="geometry" />
         </mxCell>
-        <mxCell id="c846" value="[phut ∈ {15, 30, 45, 60} hoặc chỉnh ▲▼ ±1/±10 phút]" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;rounded=0;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+        <mxCell id="c846" value="[phut ∈ {15, 30, 60}]" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;rounded=0;fontSize=11;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="36" y="364" width="131.438" height="18" as="geometry" />
         </mxCell>
         <mxCell id="c848" value="[còn 2 phút]" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=middle;rounded=0;fontSize=11;fontStyle=1;" vertex="1" parent="1">
@@ -5372,7 +5372,7 @@
         <mxCell id="c1249" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="c1247">
           <mxGeometry x="0" y="70" width="170" height="8" as="geometry" />
         </mxCell>
-        <mxCell id="c1250" value="+ datHenGio(phut: int): void&lt;br&gt;+ chinhGio(buoc: int): void&lt;br&gt;+ huy(): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="c1247">
+        <mxCell id="c1250" value="+ datHenGio(phut: int): void&lt;br&gt;+ batDauTamDung(): void&lt;br&gt;+ huy(): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="c1247">
           <mxGeometry x="0" y="78" width="170" height="62" as="geometry" />
         </mxCell>
         <mxCell id="c1251" value="BoDemPomodoro" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
@@ -5384,7 +5384,7 @@
         <mxCell id="c1253" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="c1251">
           <mxGeometry x="0" y="88" width="310" height="8" as="geometry" />
         </mxCell>
-        <mxCell id="c1254" value="+ batDau(): void&lt;br&gt;+ tamDung(): void&lt;br&gt;+ datLai(): void&lt;br&gt;+ chinhThoiLuong(buoc: int): void&lt;br&gt;+ datThoiDiemKetThuc(cheDo: CheDoPomodoro): void&lt;br&gt;+ phatChuong(): void&lt;br&gt;+ chuyenCheDo(): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="c1251">
+        <mxCell id="c1254" value="+ batDau(): void&lt;br&gt;+ tamDung(): void&lt;br&gt;+ datLai(): void&lt;br&gt;+ doiNhip(nhip: NhipHoc): void&lt;br&gt;+ boQuaNghi(): void&lt;br&gt;+ datThoiDiemKetThuc(cheDo: CheDoPomodoro): void&lt;br&gt;+ phatChuong(): void&lt;br&gt;+ chuyenCheDo(): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="c1251">
           <mxGeometry x="0" y="96" width="310" height="134" as="geometry" />
         </mxCell>
         <mxCell id="c1255" value="AmThanhKhongGian" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
