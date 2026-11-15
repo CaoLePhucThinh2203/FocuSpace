@@ -7,18 +7,50 @@ async function openRoom(page: Page) {
   await page.waitForFunction(() => !!(window as unknown as HookWindow).__focuspace);
 }
 
+/** Chặn POST /telemetry/batch (trả 202) và ghi lại các lô gửi lên. */
+async function captureTelemetry(page: Page) {
+  const batches: { pomodoros: { mode: string; plannedSec: number; outcome: string }[] }[] = [];
+  await page.route("**/api/v1/telemetry/batch", async (route) => {
+    batches.push(route.request().postDataJSON());
+    await route.fulfill({ status: 202, json: { accepted: {} } });
+  });
+  return batches;
+}
+
 test.describe("UC.05 Pomodoro (Thịnh)", () => {
-  test.fixme("AC-05.1 Pomodoro mini ở Sân vườn cùng giờ", async ({ page }) => {
-    await page.goto("/");
+  test("AC-05.1 Pomodoro mini ở Sân vườn hiện cùng thời gian còn lại", async ({ page }) => {
+    await openRoom(page);
+    await page.locator("#pomoMiniBtn").click();
+    await page.evaluate(() => (window as unknown as HookWindow).__focuspace.switchRoom("out"));
+    await page.waitForFunction(() => { const R = (window as unknown as HookWindow).__focuspace.ROOM; return R.cur === "out" && !R.busy; });
+    await expect(page.locator(".pomo-mini")).toBeVisible();
+    await expect(page.locator("#pomoMiniTime")).toHaveText(/^(25:00|24:5\d)$/);
+    expect(await page.evaluate(() => (window as unknown as HookWindow).__focuspace.pomo.running)).toBe(true);
   });
   test.fixme("AC-05.2 tab ẩn không trôi giờ", async ({ page }) => {
     await page.goto("/");
   });
-  test.fixme("AC-05.3 hết giờ chuông + chuyển Nghỉ ngắn theo nhịp đã chọn (mặc định 5:00)", async ({ page }) => {
-    await page.goto("/");
+  test("AC-05.3 hết Focus: chuyển Nghỉ ngắn 5:00, dừng chờ Bắt đầu; telemetry ghi completed", async ({ page }) => {
+    const batches = await captureTelemetry(page);
+    await openRoom(page);
+    await page.locator("#pomoMiniBtn").click();
+    await page.evaluate(() => { const p = (window as unknown as HookWindow).__focuspace.pomo; p.endAt = Date.now() + 600; });
+    await page.waitForFunction(() => (window as unknown as HookWindow).__focuspace.pomo.mode === "short");
+    expect(await page.evaluate(() => (window as unknown as HookWindow).__focuspace.pomo)).toMatchObject({ mode: "short", running: false, remaining: 300 });
+    await expect(page.locator("#pomoMiniTime")).toHaveText("05:00");
+    await page.evaluate(() => (window as unknown as HookWindow).__focuspace.tel.flush());
+    expect(batches.flatMap((b) => b.pomodoros)).toMatchObject([{ mode: "focus", plannedSec: 1500, outcome: "completed" }]);
   });
-  test.fixme("AC-05.4 Đặt lại vòng về phiên Focus đầu tiên (mặc định 25:00)", async ({ page }) => {
-    await page.goto("/");
+  test("AC-05.4 Đặt lại vòng về phiên Focus đầu tiên 25:00; telemetry ghi reset", async ({ page }) => {
+    const batches = await captureTelemetry(page);
+    await openRoom(page);
+    await page.locator("#pomoMiniBtn").click();
+    await page.locator("#pomoTrig").click();
+    await page.locator("#pomoPanel").getByRole("button", { name: "Đặt lại vòng" }).click();
+    expect(await page.evaluate(() => (window as unknown as HookWindow).__focuspace.pomo)).toMatchObject({ mode: "focus", done: 0, running: false, remaining: 1500 });
+    await expect(page.locator("#pomoMiniTime")).toHaveText("25:00");
+    await page.evaluate(() => (window as unknown as HookWindow).__focuspace.tel.flush());
+    expect(batches.flatMap((b) => b.pomodoros)).toMatchObject([{ mode: "focus", outcome: "reset" }]);
   });
 
   test("AC-05.5 chọn nhịp học: đang dừng áp dụng ngay, đang chạy áp dụng từ phiên sau", async ({ page }) => {

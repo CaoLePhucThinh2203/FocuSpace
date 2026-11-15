@@ -3,6 +3,7 @@ export interface SpatialInfo { d: number; gain: number; pan: number; bg?: boolea
 export type RoomId = "study" | "bed" | "out";
 export interface FocuspaceHook {
   ROOM: { cur: RoomId; busy: boolean };
+  tel: { flush(keepalive?: boolean): Promise<void> };
   state: { room: RoomId; items: { id: string; type: string; x: number; y: number }[]; bed: { items: { id: string; type: string; x: number; y: number }[] } };
   sleep: { min: number; remaining: number; running: boolean; endAt: number };
   sleepRemaining(sec: number): void;
