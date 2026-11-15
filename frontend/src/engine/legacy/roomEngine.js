@@ -3096,16 +3096,40 @@ setInterval(() => {
   renderPomoTime();
 }, 250);
 
-/* Hẹn giờ ngủ (chỉ Phòng ngủ): chọn Tắt/15/30/45/60 phút. Hai phút cuối, toàn bộ âm thanh nhỏ dần đều về 0 rồi dừng hẳn. */
+/* Hẹn giờ ngủ (chỉ Phòng ngủ): chọn Tắt/15/30/60 phút ở bảng mở từ header hoặc popover đồng hồ treo tường. Hai phút cuối, toàn bộ âm thanh nhỏ dần đều về 0 rồi dừng hẳn. */
 const sleep = { min: 0, endAt: 0 };   // min: mức đã chọn
 function sleepRem() { return sleep.endAt ? Math.max(0, Math.ceil((sleep.endAt - Date.now()) / 1000)) : 0; }
 function renderSleep() {
   const el = $("sleepMini"), rem = sleepRem();
   document.querySelectorAll("[data-sl]").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.sl === sleep.min)));
   document.querySelectorAll("[data-sleep-time]").forEach(t => { t.textContent = sleep.endAt ? fmt(rem) : "--:--"; });
+  $("sleepOff").hidden = !sleep.endAt;
   el.classList.toggle("fading", !!sleep.endAt && rem <= 120);
 }
-function sleepSet(min) { sleep.min = min; sleep.endAt = min ? Date.now() + min * 60000 : 0; if (ctx) ramp(fade.gain, 1, 0.2); renderSleep(); }
+function sleepSet(min) { sleep.min = min; sleep.endAt = min ? Date.now() + min * 60000 : 0; if (ctx) ramp(fade.gain, 1, 0.2); renderSleep(); if (!$("sleepPanel").hidden) renderSleepPanel(); }
+/* Bảng Hẹn giờ ngủ: cùng kiểu bảng Nhịp học của Pomodoro, bấm số giờ trên header để mở */
+const SLEEP_OPTS = [[0, "Tắt", "Âm thanh phát liên tục"], [15, "15 phút", "Nhỏ dần trong 2 phút cuối rồi tắt"], [30, "30 phút", "Nhỏ dần trong 2 phút cuối rồi tắt"], [60, "60 phút", "Nhỏ dần trong 2 phút cuối rồi tắt"]];
+function renderSleepPanel() {
+  const panel = $("sleepPanel"), a = document.activeElement, keep = a && panel.contains(a) && a.dataset.slp;
+  panel.innerHTML = `<div class="pp-head"><span>Hẹn giờ ngủ</span><button type="button" class="pp-x" data-pp="close" aria-label="Đóng">${CHEV_X}</button></div>
+    <div class="pp-list" role="radiogroup" aria-label="Chọn hẹn giờ ngủ">${SLEEP_OPTS.map(([m, l, d]) => `<button type="button" role="radio" aria-checked="${sleep.min === m}" data-slp="${m}"><span class="pp-dot"></span><span><b>${l}</b><small>${d}</small></span></button>`).join("")}</div>`;
+  if (keep) { const el = panel.querySelector(`[data-slp="${keep}"]`); if (el) el.focus(); }
+}
+function openSleepPanel(open) {
+  const panel = $("sleepPanel"), trig = $("sleepTrig");
+  if (open === undefined) open = panel.hidden;
+  panel.hidden = !open; trig.setAttribute("aria-expanded", String(open));
+  if (open) { closePop(); closeTray(); renderSleepPanel(); const c = panel.querySelector('[aria-checked="true"]'); if (c) c.focus(); }
+}
+$("sleepTrig").addEventListener("click", () => openSleepPanel());
+$("sleepOff").addEventListener("click", () => sleepSet(0));
+$("sleepPanel").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  if (b.dataset.slp !== undefined) { sleepSet(+b.dataset.slp); openSleepPanel(false); $("sleepTrig").focus(); }
+  else if (b.dataset.pp === "close") { openSleepPanel(false); $("sleepTrig").focus(); }
+});
+$("sleepPanel").addEventListener("keydown", e => { if (e.key === "Escape") { openSleepPanel(false); $("sleepTrig").focus(); } });
+document.addEventListener("pointerdown", e => { if (!$("sleepPanel").hidden && !e.target.closest(".sleep-mini")) openSleepPanel(false); });
 function sleepCancel() { if (sleep.endAt || sleep.min) sleepSet(0); }
 document.addEventListener("click", e => {
   const b = e.target.closest && e.target.closest("[data-sl]"); if (b) sleepSet(+b.dataset.sl);
@@ -3217,7 +3241,7 @@ function openPop(key, anchor) {
   } else if (key === "wallclock") {
     const wc = state.bed.clock;
     html = head("Đồng hồ treo tường", "Chiếc đồng hồ kim quay đều. Đặt hẹn giờ ngủ ngay tại đây.") + sw("wcOn", wc.on, "Tiếng tích tắc") + volRow("wcVol", wc.vol) +
-      `<div class="section"><h4>Hẹn giờ ngủ</h4><div class="pomo-box"><div class="seg" role="group" aria-label="Hẹn giờ ngủ">${[0, 15, 30, 45, 60].map(m => `<button type="button" data-sl="${m}" aria-pressed="${sleep.min === m}">${m ? m + "p" : "Tắt"}</button>`).join("")}</div><div class="big" data-sleep-time>${sleep.endAt ? fmt(sleepRem()) : "--:--"}</div></div></div>`;
+      `<div class="section"><h4>Hẹn giờ ngủ</h4><div class="pomo-box"><div class="seg" role="group" aria-label="Hẹn giờ ngủ">${[0, 15, 30, 60].map(m => `<button type="button" data-sl="${m}" aria-pressed="${sleep.min === m}">${m ? m + "p" : "Tắt"}</button>`).join("")}</div><div class="big" data-sleep-time>${sleep.endAt ? fmt(sleepRem()) : "--:--"}</div></div></div>`;
     bind = () => {
       bindSwitch("wcOn", () => wc.on, v => { wc.on = v; applyWallClock(); });
       bindVol("wcVol", v => { wc.vol = v; applyWallClock(); });
@@ -3336,7 +3360,7 @@ function buildNav() {
 const roomEl = document.getElementById("room");
 function switchRoom(to) {
   if (to === ROOM.cur || ROOM.busy) return;
-  ROOM.busy = true; closePop(); closeTray(); sleepCancel(); openPomoPanel(false);
+  ROOM.busy = true; closePop(); closeTray(); sleepCancel(); openPomoPanel(false); openSleepPanel(false);
   if (to === "bed") pomoPause();   // vào Phòng ngủ: Pomodoro tự tạm dừng, giữ số giờ còn lại (AC-05.8)
   if (to !== "out") state.lastIndoor = to; else if (ROOM.cur !== "out") state.lastIndoor = ROOM.cur;   // nhớ phòng trong nhà gần nhất để vào lại
   if (ctx) { ramp(roomOut[ROOM.cur].gain, 0, 0.3); ramp(roomOut[to].gain, 1, 0.3); }   // cross-fade âm thanh nền

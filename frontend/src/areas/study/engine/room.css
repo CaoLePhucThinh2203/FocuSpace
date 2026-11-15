@@ -63,16 +63,14 @@
   /* Header */
   .site-head { @apply min-h-10; }
   .pomo-mini, .sleep-mini { @apply inline-flex items-center gap-2 border border-line bg-panel pt-[2px] pr-1 pb-[2px] pl-[10px]; }
-  .sleep-mini { @apply flex-wrap; }
+  .sleep-mini { @apply relative; }
   .pomo-mini .mode, .sleep-mini .mode { @apply text-[11px] uppercase tracking-[.08em] text-muted; }
   .pomo-mini .time, .sleep-mini .time { @apply font-num text-[19px] font-semibold leading-none tabular-nums text-amber; }
-  .sleep-mini .time { @apply min-w-14 text-center; }
   .sleep-note { @apply text-[12px] font-semibold text-rain; }
   .sleep-mini.fading .time { @apply text-rain; }
-  .sleep-mini .seg { @apply inline-grid grid-cols-[repeat(5,auto)]; }
-  .sleep-mini .seg button { @apply px-2 py-[5px]; }
   /* Pomodoro trên header: giai đoạn + chấm tiến độ của vòng, số giờ mở bảng Nhịp học. Bảng nằm trên lớp ánh sáng (#lightCv z-400), ngang popover (.pop z-1000) */
   .pomo-mini { @apply relative; }
+  /* Hẹn giờ ngủ (Phòng ngủ) dùng cùng kiểu: nhãn, số giờ mở bảng, nút Tắt khi đang hẹn */
   .pm-label { @apply grid gap-[3px]; }
   .pm-dots { @apply flex gap-[3px]; }
   .pm-dots i { @apply block size-[7px] rounded-full border border-line; }

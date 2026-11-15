@@ -201,7 +201,7 @@ Mức ưu tiên: **P0** bắt buộc trong bản nộp, **P1** nên có, **P2** 
 
 - Bố cục ba hàng: thanh đầu trang · thanh công cụ · sân khấu phòng 16:9 phóng nguyên tỷ lệ 320×180; không có dòng mẹo hay chân trang.
 
-- Thanh đầu trang: header dùng chung với các trang khác (logo, 5 liên kết trang trên một hàng từ 768 px, nút ☰ dưới 768 px), tên phòng, Pomodoro mini (Phòng học, Sân vườn; bấm số giờ mở bảng Nhịp học), Hẹn giờ ngủ chỉ có các lựa chọn Tắt / 15 / 30 / 45 / 60 phút (Phòng ngủ, thay chỗ Pomodoro mini). Không còn chip âm thanh và chip lưu (v5.5).
+- Thanh đầu trang: header dùng chung với các trang khác (logo, 5 liên kết trang trên một hàng từ 768 px, nút ☰ dưới 768 px), tên phòng, Pomodoro mini (Phòng học, Sân vườn; bấm số giờ mở bảng Nhịp học), Hẹn giờ ngủ cùng kiểu Pomodoro mini: bấm số giờ mở bảng Tắt / 15 / 30 / 60 phút, nút Tắt khi đang hẹn (Phòng ngủ, thay chỗ Pomodoro mini). Không còn chip âm thanh và chip lưu (v5.5).
 
 - Thanh công cụ: Đồ vật phát âm thanh, Đồ vật trang trí, Volume mixer, Khung cảnh. Sân vườn chỉ có Volume mixer và Khung cảnh; trong nhà ẩn Khung cảnh. Chip “N nguồn âm đang hoạt động” cập nhật mỗi 0,7 giây.
 
@@ -435,7 +435,7 @@ Mức ưu tiên: **P0** bắt buộc trong bản nộp, **P1** nên có, **P2** 
 
 - Hiển thị ở Pomodoro mini (Phòng học, Sân vườn) và popover Đồng hồ Pomodoro (đồ vật; chỉ có Bắt đầu / Tạm dừng và Đặt lại vòng). Màn hình đồng hồ xanh lá khi Focus, xanh dương khi Nghỉ, dấu hai chấm nhấp nháy khi chạy.
 
-- Hẹn giờ ngủ (chỉ Phòng ngủ): chọn Tắt / 15 / 30 / 45 / 60 phút ở header hoặc popover đồng hồ treo tường (không có nút chỉnh); 2 phút cuối âm tổng giảm dần về 0; hết giờ hiện “Đã hết giờ ngủ · chạm để bật lại” ngay trong ô Hẹn giờ ngủ.
+- Hẹn giờ ngủ (chỉ Phòng ngủ): ô trên header cùng kiểu Pomodoro mini (nhãn, số giờ còn lại, nút Tắt khi đang hẹn); bấm số giờ mở bảng chọn Tắt / 15 / 30 / 60 phút; popover đồng hồ treo tường có cùng các lựa chọn; không có nút chỉnh từng phút; 2 phút cuối âm tổng giảm dần về 0; hết giờ hiện “Đã hết giờ ngủ · chạm để bật lại” ngay trong ô Hẹn giờ ngủ.
 
 **Luồng chính (Happy path)**
 
@@ -696,7 +696,7 @@ Mỗi gạch đầu dòng ở Tính năng A–M ứng với một hoặc vài m�
 | FR-AUD-07 | AudioContext chỉ bật sau cú nhấp/phím đầu tiên; không tạo được thì app vẫn chạy phần hình và ghi lỗi | P0 | UC.03 | AC-03.1 |
 | FR-TIME-01 | Pomodoro theo vòng: Focus → nghỉ ngắn, đủ số phiên thì nghỉ dài; 4 nhịp học (Cổ điển 25/5/15 ×4 mặc định, Sâu 50/10/30 ×2, Nhẹ 15/3/10 ×4, Tuỳ chỉnh 1–120 phút) chọn ở bảng Nhịp học khi bấm số giờ; đổi khi đang chạy áp dụng từ phiên sau; Bắt đầu, Tạm dừng, Bỏ qua lượt nghỉ, Đặt lại vòng; chuông khi hết giai đoạn; tích tắc chỉ khi đang chạy | P0 | UC.05 | AC-05.3, AC-05.4, AC-05.5, AC-05.6, AC-05.7 |
 | FR-TIME-02 | Một bộ đếm dùng chung cho Phòng học và Sân vườn (Pomodoro mini, popover Đồng hồ); vào Phòng ngủ thì tự tạm dừng; tính theo thời điểm kết thúc nên không trôi khi tab ẩn | P0 | UC.05 | AC-05.1, AC-05.2, AC-05.8 |
-| FR-TIME-03 | Hẹn giờ ngủ (chỉ Phòng ngủ): chọn Tắt / 15 / 30 / 45 / 60 phút, không có nút chỉnh; 2 phút cuối âm tổng giảm dần; hết giờ hiện thông báo trong ô Hẹn giờ ngủ, chạm để bật lại | P0 | UC.06 | AC-06.1, AC-06.2, AC-06.3 |
+| FR-TIME-03 | Hẹn giờ ngủ (chỉ Phòng ngủ): ô header cùng kiểu Pomodoro mini, bấm số giờ mở bảng Tắt / 15 / 30 / 60 phút, nút Tắt khi đang hẹn; không có nút chỉnh; 2 phút cuối âm tổng giảm dần; hết giờ hiện thông báo trong ô Hẹn giờ ngủ, chạm để bật lại | P0 | UC.06 | AC-06.1, AC-06.2, AC-06.3 |
 | FR-SAVE-01 | Tự lưu LocalStorage sau 250 ms | P0 | UC.02–UC.04, UC.09 | AC-02.1 |
 | FR-SAVE-02 | Tải dữ liệu cũ không lỗi, không mất đồ (migrate về RoomState v4; giá trị lạ về mặc định) | P0 | UC.09 | — |
 | FR-SAVE-03 | LocalStorage bị chặn: app vẫn chạy, ghi cảnh báo ở console | P0 | UC.02–UC.04 | — |
@@ -809,7 +809,7 @@ Mỗi tiêu chí viết theo dạng **Cho trước – Khi – Thì**, kiểm đ
 | AC-05.8 | UC.05, UC.01 | Pomodoro đang chạy ở Phòng học | Chuyển sang Phòng ngủ | Pomodoro tự tạm dừng, ẩn khỏi header, ô Hẹn giờ ngủ hiện; quay lại Phòng học thấy đúng số giờ còn lại lúc dừng |
 | AC-06.1 | UC.06 | Đang ở Phòng ngủ | Chọn Hẹn giờ ngủ 15 phút | Bắt đầu đếm ngược; 2 phút cuối âm tổng giảm dần về 0; hết giờ ô Hẹn giờ ngủ hiện "Đã hết giờ ngủ · chạm để bật lại" |
 | AC-06.2 | UC.06 | Đã hết giờ ngủ | Chạm vào thông báo | Âm tổng trở lại mức trước khi hẹn giờ |
-| AC-06.3 | UC.06 | Đang ở Phòng ngủ, hẹn giờ tắt | Bấm "15p", rồi "Tắt" | Header không có nút ▲▼; bắt đầu 15:00, bấm Tắt thì về --:-- |
+| AC-06.3 | UC.06 | Đang ở Phòng ngủ, hẹn giờ tắt | Bấm số giờ, chọn "15 phút", rồi bấm "Tắt" | Bảng có 4 lựa chọn Tắt / 15 / 30 / 60 phút và đóng sau khi chọn; bắt đầu 15:00; bấm Tắt thì về --:-- và nút Tắt ẩn |
 | AC-07.1 | UC.07 | CSDL đã chạy seeder | Mở /library | Hiển thị đủ 17 đồ vật đọc từ `GET /catalog/items` |
 | AC-07.2 | UC.07 | Đang ở /library | Lọc "Phòng ngủ" + "Phát âm thanh" | URL thành `?room=bed&group=sound`, hiển thị đúng 7 đồ vật |
 | AC-07.3 | UC.07 | Đang ở /library | Chọn thẻ "Khung cảnh" | Hiển thị 5 khung cảnh từ `GET /catalog/scenes` |
@@ -952,4 +952,4 @@ Mọi câu hỏi mở đã chốt (Q-03, Q-04, Q-07 trước 07/11; còn lại �
 | v5.1–v5.4 | 10–13/11/2026 | Bổ sung theo đề bài CSB25022 (2.4, Tính năng J–M); đồng bộ Chương 1 (3.3 use case, cột UC); 5.4 Tiêu chí nghiệm thu; bảng 85 mã FR; lịch 27/10 → 27/11; chốt Q-01 → Q-17; Lighthouse cách 2. Duyệt ở buổi họp 13/11. |
 | v5.5 | 15/11/2026 | Sửa theo góp ý giao diện và âm thanh: một font Be Vietnam Pro; header dùng chung, menu 1 hàng từ 768 px; Trang chủ "Mô tả & Tính năng"; bỏ chip âm thanh, chip lưu; âm nền; 6 bài Lo-fi; chỉnh ±1/±10 phút cho Pomodoro, Hẹn giờ ngủ; điện thoại dựng dọc tự xoay ngang; Lighthouse /room dựng âm thanh sau cú nhấp đầu. FR và AC liên quan: FR-UI-02, FR-SAVE-01/03, FR-AUD-02/06, FR-TIME-01/03, FR-PAGE-02/03; AC-01.5, 03.5, 05.5, 05.6, 06.3, 12.4–12.6. |
 | v5.6 | 15/11/2026 | Rút gọn: bỏ bảng thông tin trùng ở đầu, ghi chú [Cần xác nhận] đã có lời giải; 7.2 dẫn sang PLAN; 8.1 thành bảng quyết định đã chốt; 6.2 cookie SameSite=None theo cách triển khai. |
-| v5.7 | 15/11/2026 | Pomodoro theo vòng của kỹ thuật Pomodoro: thêm nghỉ dài, chấm tiến độ, bảng Nhịp học (Cổ điển, Sâu, Nhẹ, Tuỳ chỉnh) mở từ số giờ ở header; bỏ nút ▲▼ ±1/±10 ở Pomodoro và Hẹn giờ ngủ; vào Phòng ngủ thì Pomodoro tự tạm dừng, ô Hẹn giờ ngủ thế chỗ. Sửa US-07, BR-01, Tính năng G, FR-UI-02, FR-TIME-01→03, FR-SAVE-04, AC-05.3→05.5, AC-06.3; thêm AC-05.7, AC-05.8. |
+| v5.7 | 15/11/2026 | Pomodoro theo vòng của kỹ thuật Pomodoro: thêm nghỉ dài, chấm tiến độ, bảng Nhịp học (Cổ điển, Sâu, Nhẹ, Tuỳ chỉnh) mở từ số giờ ở header; bỏ nút ▲▼ ±1/±10 ở Pomodoro và Hẹn giờ ngủ; Hẹn giờ ngủ trên header cùng kiểu Pomodoro mini, bảng chọn Tắt / 15 / 30 / 60 phút (bỏ mức 45); vào Phòng ngủ thì Pomodoro tự tạm dừng, ô Hẹn giờ ngủ thế chỗ. Sửa US-07, BR-01, Tính năng G, FR-UI-02, FR-TIME-01→03, FR-SAVE-04, AC-05.3→05.5, AC-06.3; thêm AC-05.7, AC-05.8. |
