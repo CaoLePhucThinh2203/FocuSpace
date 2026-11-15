@@ -26,3 +26,11 @@
 | /about | 94, 93, 93 | 97, 97, 97 | 2,54 s → 1,83 s | 2,62 s → 2,30 s | 0 | 100 / 100 / 100 |
 
 Đo bản Vercel `/library` trước thay đổi (có dữ liệu thật): Performance 88 / 96 / 91, CLS 0. Đo lại trên Vercel sau khi PR được merge và triển khai.
+
+## 15/11/2026 — CLS trang Thư viện do thanh cuộn xuất hiện muộn
+
+**Vấn đề:** Lighthouse trong Chrome desktop trên Windows báo CLS 0,327 ở `/library` (`<main>` 0,296, `<footer>` 0,031), trong khi Lighthouse headless và mobile đo CLS 0. Nguyên nhân: lúc danh sách đang tải, trang ngắn hơn màn hình nên không có thanh cuộn và chân trang lọt vào khung nhìn; khi 17 đồ vật về, trang dài ra, Chrome chèn thanh cuộn 15 px làm toàn bộ nội dung căn giữa lệch sang trái và chân trang bị đẩy ra ngoài. Headless ẩn thanh cuộn nên không thấy.
+
+**Thay đổi:** `html { scrollbar-gutter: stable }` cho các trang thường (Căn phòng đặt lại `auto` vì không cuộn); `<main>` của Thư viện cao tối thiểu bằng màn hình.
+
+**Đo** (Chrome hiện thanh cuộn, viewport desktop 1280×800, layout-shift qua PerformanceObserver): `/library` 0,352 → 0 (kể cả API chậm 1,2 giây); `/account` 0,036 → 0,020; `/stats` 0,058 → 0,032; `/`, `/about` 0 → 0; mobile và tablet 0. E2E `uc07-thu-vien-cls.spec.ts` giữ điều kiện này để chặn lỗi lặp lại.

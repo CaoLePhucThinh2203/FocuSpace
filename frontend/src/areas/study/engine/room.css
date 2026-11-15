@@ -40,6 +40,7 @@
     --amber:#f2c14e; --amber-ink:#1d2a0a; --deep:#0a120e; --deep2:#101c16; --panel-a:rgba(21,37,29,.94); --shadow:#050a07; --on-bg:#3a3a12;
   }
   html, body { @apply h-full; }
+  html { scrollbar-gutter: auto; }   /* Căn phòng không cuộn trang: bỏ chỗ chừa thanh cuộn của các trang khác (index.css) */
   body {
     @apply m-2 bg-bg text-ink font-ui text-[14px] leading-[1.45] overflow-hidden
            pl-[max(16px,env(safe-area-inset-left,0px))] pr-[max(16px,env(safe-area-inset-right,0px))]

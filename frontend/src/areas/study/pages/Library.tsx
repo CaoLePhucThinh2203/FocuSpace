@@ -83,7 +83,8 @@ export default function Library() {
   );
 
   return (
-    <main className="mx-auto max-w-6xl px-4 py-10">
+    // min-h-screen: lúc danh sách đang tải, chân trang không lọt vào khung nhìn rồi bị đẩy xuống khi dữ liệu về (CLS)
+    <main className="mx-auto min-h-screen max-w-6xl px-4 py-10">
       <h1 className="font-display text-2xl font-bold sm:text-3xl">Thư viện</h1>
       <p className="mt-2 text-muted">Mọi đồ vật và khung cảnh có trong FocuSpace. Dữ liệu đọc từ cơ sở dữ liệu.</p>
 

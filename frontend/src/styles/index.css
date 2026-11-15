@@ -28,7 +28,8 @@
   --font-digit: var(--font-body);
 }
 @layer base {
-  html { color-scheme: dark; }
+  /* Giữ sẵn chỗ thanh cuộn dọc: trang ngắn lúc đang tải rồi dài ra thì nội dung không bị lệch sang trái khi thanh cuộn xuất hiện (CLS trên Chrome desktop) */
+  html { color-scheme: dark; scrollbar-gutter: stable; }
   body { @apply bg-bg text-ink font-body text-sm leading-relaxed; }
   :focus-visible { @apply outline-2 outline-offset-2 outline-amber; }
 }
