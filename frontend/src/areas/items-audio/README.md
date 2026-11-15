@@ -10,7 +10,7 @@
 
 ## Phần trong `frontend/src/engine/legacy/roomEngine.js` (PA B)
 
-AUDIO ENGINE, ĐỊNH TUYẾN ÂM THANH THEO PHÒNG, SPRITES ĐỒ VẬT, thanh công cụ + khay, kéo thả, POPOVER (đồ vật, Volume mixer) giữ trong engine; quy tắc mới viết thành hàm thuần ở `engine/` kèm test rồi gọi từ engine. Chi tiết: `frontend/src/engine/legacy/README.md`.
+AUDIO ENGINE, ĐỊNH TUYẾN ÂM THANH THEO PHÒNG, SPRITES ĐỒ VẬT, thanh công cụ + khay, kéo thả, POPOVER (đồ vật, bảng âm lượng) giữ trong engine; quy tắc mới viết thành hàm thuần ở `engine/` kèm test rồi gọi từ engine. Chi tiết: `frontend/src/engine/legacy/README.md`.
 
 ## Backend tương ứng
 
