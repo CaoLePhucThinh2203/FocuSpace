@@ -8,7 +8,7 @@ Căn phòng Semi-Sandbox · Phòng học · Phòng ngủ · Sân vườn
 |---|---|
 | **Chủ sở hữu (Product Owner / PM)** | Cao Lê Phúc Thịnh (theo PRD Semi-Sandbox gốc) |
 | **Đội ngũ tham gia** | Tuấn Hưng (đồ vật, âm thanh) · Đình Nhiên (Sân vườn) · Tuấn Lộc (Phòng ngủ) · Phúc Thịnh (Phòng học, quản lý repo, các trang còn lại) · chi tiết docs/PLAN.md mục 2 |
-| **Phiên bản / trạng thái** | v5.8 (thống nhất 25 đồ, 15/11/2026) · v5.7 (Pomodoro theo vòng 15/11/2026) · v5.6 (rút gọn 15/11/2026) · v5.0 phê duyệt 07/11/2026 · v5.1 – v5.4 duyệt ở buổi họp kế hoạch 13/11/2026 · v5.5 (sửa giao diện, âm thanh 15/11) chờ duyệt |
+| **Phiên bản / trạng thái** | v5.9 (font tự host, 15/11/2026) · v5.8 (thống nhất 25 đồ, 15/11/2026) · v5.7 (Pomodoro theo vòng 15/11/2026) · v5.6 (rút gọn 15/11/2026) · v5.0 phê duyệt 07/11/2026 · v5.1 – v5.4 duyệt ở buổi họp kế hoạch 13/11/2026 · v5.5 (sửa giao diện, âm thanh 15/11) chờ duyệt |
 | **Tài liệu liên quan** | Tài liệu Kiến trúc giải pháp · API Docs · docs/DATABASE.md · docs/PLAN.md · Final Project Brief CSB25022 · FocuSpace_Diagrams.drawio · Chương 1 Phân tích hệ thống (FocuSpace_Chuong2_PhanTich.docx) |
 
 > **Quy tắc nguồn:** Khi hai nguồn mâu thuẫn, nguồn mới hơn thắng: tài liệu này \> prototype FocuSpace-Semi-Sandbox.html \> PRD .docx cũ. Mọi hành vi giao diện mô tả theo prototype FocuSpace-Semi-Sandbox.html. Yêu cầu của đề bài đồ án môn Web (CSB25022) đứng trên mọi nguồn.
@@ -854,7 +854,7 @@ Mỗi tiêu chí viết theo dạng **Cho trước – Khi – Thì**, kiểm đ
 
 - Google Lighthouse (cấu hình mobile): Performance, Accessibility, Best Practices và SEO đều ≥ 90 ở cả 6 trang; đo trước và sau khi tối ưu, lưu báo cáo vào docs/reports/lighthouse/.
 
-- Tách mã theo trang: engine vẽ và âm thanh chỉ tải ở Căn phòng; v5.5 (15/11/2026, Tuấn Hưng – H12): đo Lighthouse /room bản triển khai được Hiệu suất 60, Total Blocking Time 6,2 giây do dựng toàn bộ âm thanh lúc mở trang, nên đổi sang dựng âm thanh sau cú nhấp đầu tiên (trình duyệt vẫn chưa cho phát tiếng trước cú nhấp) và tải font Google không chặn hiển thị; thay quyết định cách 2 ngày 13/11/2026; hình xem trước ở Trang chủ chỉ vẽ khi cuộn tới; Tailwind chỉ giữ các class được dùng.
+- Tách mã theo trang: engine vẽ và âm thanh chỉ tải ở Căn phòng; v5.5 (15/11/2026, Tuấn Hưng – H12): đo Lighthouse /room bản triển khai được Hiệu suất 60, Total Blocking Time 6,2 giây do dựng toàn bộ âm thanh lúc mở trang, nên đổi sang dựng âm thanh sau cú nhấp đầu tiên (trình duyệt vẫn chưa cho phát tiếng trước cú nhấp) và tải font Google không chặn hiển thị; thay quyết định cách 2 ngày 13/11/2026; hình xem trước ở Trang chủ chỉ vẽ khi cuộn tới; Tailwind chỉ giữ các class được dùng. v5.9 (15/11/2026, H12): font Be Vietnam Pro tự host trong `frontend/public/fonts/` (giấy phép OFL, 12 file woff2 theo bộ chữ Latin / Latin mở rộng / tiếng Việt, `font-display: optional`, tải trước độ đậm 400 và 700) thay cho CSS Google Fonts chặn hiển thị — FCP giảm khoảng 0,6 giây; bỏ khối siêu dữ liệu `caBX` trong 17 ảnh xem trước đồ vật (−98 KiB, điểm ảnh giữ nguyên).
 
 - Mỗi trang có thẻ title và meta description riêng; html lang="vi"; mọi nút và hình có nhãn truy cập.
 
@@ -954,3 +954,4 @@ Mọi câu hỏi mở đã chốt (Q-03, Q-04, Q-07 trước 07/11; còn lại �
 | v5.6 | 15/11/2026 | Rút gọn: bỏ bảng thông tin trùng ở đầu, ghi chú [Cần xác nhận] đã có lời giải; 7.2 dẫn sang PLAN; 8.1 thành bảng quyết định đã chốt; 6.2 cookie SameSite=None theo cách triển khai. |
 | v5.7 | 15/11/2026 | Pomodoro theo vòng của kỹ thuật Pomodoro: thêm nghỉ dài, chấm tiến độ, bảng Nhịp học (Cổ điển, Sâu, Nhẹ, Tuỳ chỉnh) mở từ số giờ ở header; bỏ nút ▲▼ ±1/±10 ở Pomodoro và Hẹn giờ ngủ; Hẹn giờ ngủ trên header cùng kiểu Pomodoro mini, bảng chọn Tắt / 15 / 30 / 60 phút (bỏ mức 45), chọn xong bấm Bắt đầu / Tạm dừng; vào Phòng ngủ thì Pomodoro tự tạm dừng, ô Hẹn giờ ngủ thế chỗ. Sửa US-07, BR-01, Tính năng G, FR-UI-02, FR-TIME-01→03, FR-SAVE-04, AC-05.3→05.5, AC-06.3; thêm AC-05.7, AC-05.8. |
 | v5.8 | 15/11/2026 | Thống nhất giới hạn đồ vật với code (G12): BR-06, FR-ITEM-05, Tính năng E, AC-04.2, Q-16 đổi 40 → 25 đồ mỗi phòng; đủ 25 đồ thì không thêm, chỉ hiện thông báo “Phòng đã đầy — hãy xóa bớt đồ để thêm mới”. Tính năng G, I: bỏ nhãn [Đề xuất] — `abandoned` gửi bằng `fetch keepalive` khi rời trang (N10); Bỏ qua lượt nghỉ ghi `reset`. |
+| v5.9 | 15/11/2026 | 6.1: font Be Vietnam Pro tự host, bỏ CSS Google Fonts chặn hiển thị; ảnh xem trước đồ vật bỏ siêu dữ liệu `caBX`. Không đổi FR, AC (AC-12.6 vẫn một font Be Vietnam Pro). |
