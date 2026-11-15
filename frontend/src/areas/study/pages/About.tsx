@@ -21,7 +21,7 @@ export default function About() {
   return (
     <main className="mx-auto grid max-w-4xl gap-12 px-4 py-10 [&>*]:min-w-0">
       <section aria-labelledby="h-goal">
-        <h1 id="h-goal" className="font-display text-3xl font-bold">Về FocuSpace</h1>
+        <h1 id="h-goal" className="font-display text-2xl font-bold sm:text-3xl">Về FocuSpace</h1>
         <p className="mt-4 text-base text-muted">FocuSpace là căn phòng pixel art Lo-fi dành cho người học và làm việc buổi tối bằng tai nghe. Chúng tôi muốn giải quyết bốn vấn đề:</p>
         <ul className="mt-4 grid gap-3 sm:grid-cols-2">
           {PROBLEMS.map(([b, t]) => (

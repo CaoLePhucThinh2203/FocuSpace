@@ -8,8 +8,8 @@ const SPACES = [
 ];
 const FEATURES = [
   { title: "Semi-Sandbox", text: "Phòng đã bày sẵn bàn ghế và nhân vật. Bạn chỉ kéo thêm vài đồ vật — không mất thời gian sắp xếp." },
-  { title: "Âm thanh không gian 2D", text: "Kéo Tivi sang trái, tiếng nhiễu sóng lệch sang tai trái. Volume mixer chỉnh từng nguồn và âm lượng tổng." },
-  { title: "Pomodoro & Hẹn giờ ngủ", text: "Một bộ đếm 25/5 phút dùng chung mọi không gian; hẹn giờ ngủ giảm âm dần rồi tắt." },
+  { title: "Âm thanh không gian 2D", text: "Kéo Tivi sang trái, tiếng nhiễu sóng lệch sang tai trái. Nhạc, radio, đĩa than và âm ngoài cửa sổ là âm nền, nghe đều hai tai. Volume mixer chỉnh từng nguồn và âm lượng tổng." },
+  { title: "Pomodoro & Hẹn giờ ngủ", text: "Một bộ đếm dùng chung mọi không gian, mặc định 25/5 phút và chỉnh được bằng nút ▲▼; hẹn giờ ngủ giảm âm dần rồi tắt." },
 ];
 
 /** Trang chủ (FR-PAGE-04, UC.12). */
@@ -19,7 +19,6 @@ export default function Home() {
     <main>
       <section className="mx-auto grid max-w-6xl items-center gap-10 px-4 pt-12 pb-10 md:grid-cols-2 md:pt-20">
         <div className="space-y-6">
-          <p className="chip w-fit"><span className="size-1.5 bg-ok" />Pixel art · Lo-fi · Semi-Sandbox</p>
           <h1 className="font-display text-4xl font-bold leading-tight sm:text-5xl">Vào phòng là học được ngay.</h1>
           <p className="max-w-prose text-base text-muted">
             FocuSpace dựng sẵn ba không gian ấm áp: góc học tập, phòng ngủ và sân vườn. Bạn chỉ cần chọn âm thanh, thời tiết và vài đồ vật — thiết lập dưới 15 giây, rồi tập trung.
@@ -52,7 +51,7 @@ export default function Home() {
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-10" aria-labelledby="h-features">
-        <h2 id="h-features" className="font-display text-2xl font-bold">Vì sao chọn FocuSpace</h2>
+        <h2 id="h-features" className="font-display text-2xl font-bold">Mô tả & Tính năng</h2>
         <ul className="mt-6 grid gap-4 md:grid-cols-3">
           {FEATURES.map((f) => (
             <li key={f.title} className="card p-5">
@@ -61,10 +60,6 @@ export default function Home() {
             </li>
           ))}
         </ul>
-        <div className="mt-8 flex flex-wrap gap-3">
-          <a href="/room" className="btn btn-primary">Bắt đầu học ngay</a>
-          <Link to="/about" className="btn">Tìm hiểu thêm</Link>
-        </div>
       </section>
     </main>
   );

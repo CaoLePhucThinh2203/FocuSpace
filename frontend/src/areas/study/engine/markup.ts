@@ -1,7 +1,7 @@
 /** Khung HTML của Căn phòng — chép từ prototype/web/room.html (thẻ <div class="app"> và lớp fade). */
-export const ROOM_MARKUP = `<div class="app grid h-full grid-rows-[auto_auto_1fr] gap-3 py-3 max-[720px]:h-auto max-[720px]:min-h-full">
-  <header class="top flex min-w-0 flex-wrap items-center gap-4">
-    <div class="relative"><button type="button" class="logo cursor-pointer" id="logoBtn" aria-haspopup="true" aria-expanded="false" aria-controls="siteMenu" title="Các trang khác"><i></i>FocuSpace<svg viewBox="0 0 6 4" width="9" height="6" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M0 0h6v1H5v1H4v1H2V2H1V1H0z"/></svg></button><nav class="site-menu absolute top-[calc(100%+8px)] left-0 z-[700] grid min-w-[190px] border border-line bg-panel-a p-1 shadow-[3px_3px_0_var(--shadow),0_10px_24px_rgba(0,0,0,.45)]" id="siteMenu" aria-label="Các trang" hidden></nav></div>
+export const ROOM_MARKUP = `<div class="app grid h-full grid-rows-[auto_auto_1fr] gap-3 py-3 narrow:h-auto narrow:min-h-full">
+  <header class="top flex min-w-0 flex-wrap items-center gap-x-4 gap-y-2">
+    <div class="site-head flex min-w-0 items-center gap-4" id="siteHead"></div>
     <div class="room-name text-[13px] text-muted">Phòng: <b class="font-semibold text-ink" id="roomName">Góc học tập ấm áp</b></div>
     <div class="spacer flex-1"></div>
     <div class="pomo-mini" title="Pomodoro">
@@ -15,9 +15,8 @@ export const ROOM_MARKUP = `<div class="app grid h-full grid-rows-[auto_auto_1fr
         <button type="button" data-sl="0" aria-pressed="true">Tắt</button><button type="button" data-sl="15" aria-pressed="false">15p</button><button type="button" data-sl="30" aria-pressed="false">30p</button><button type="button" data-sl="45" aria-pressed="false">45p</button><button type="button" data-sl="60" aria-pressed="false">60p</button>
       </div>
       <span class="time" id="sleepTime">--:--</span>
+      <span class="sleep-note" id="sleepNote" role="status" hidden>Đã hết giờ ngủ · chạm để bật lại</span>
     </div>
-    <span class="chip" id="audioChip" title="Đeo tai nghe để trải nghiệm không gian âm thanh 2D chân thực nhất."><span class="dot"></span><span id="audioTxt">Âm thanh: nhấn vào phòng để bật</span></span>
-    <span class="chip" id="saveChip"><span class="dot"></span><span id="saveTxt">Chưa thay đổi</span></span>
   </header>
 
   <div class="toolwrap relative z-[500] flex flex-wrap items-center gap-[14px]">
@@ -44,9 +43,9 @@ export const ROOM_MARKUP = `<div class="app grid h-full grid-rows-[auto_auto_1fr
     <div class="tray" id="tray" hidden></div>
   </div>
 
-  <main class="main grid min-h-0 grid-cols-[clamp(40px,5vw,64px)_minmax(0,1fr)_clamp(40px,5vw,64px)] gap-2 max-[720px]:grid-cols-[44px_minmax(0,1fr)_44px] max-[720px]:content-start">
+  <main class="main grid min-h-0 grid-cols-[clamp(40px,5vw,64px)_minmax(0,1fr)_clamp(40px,5vw,64px)] gap-2 narrow:grid-cols-[44px_minmax(0,1fr)_44px] narrow:content-start">
     <nav class="room-nav" id="roomNav" hidden aria-label="Chuyển phòng"></nav>
-    <section class="stage-wrap relative col-start-2 row-start-1 grid min-h-0 min-w-0 place-items-center max-[720px]:flex max-[720px]:min-h-[200px] max-[720px]:flex-col max-[720px]:items-center max-[720px]:gap-2" id="stageWrap">
+    <section class="stage-wrap relative col-start-2 row-start-1 grid min-h-0 min-w-0 place-items-center narrow:flex narrow:min-h-[200px] narrow:flex-col narrow:items-center narrow:gap-2" id="stageWrap">
       <div class="room" id="room">
         <canvas class="layer" id="bgCv" width="320" height="180"></canvas>
         <canvas class="layer" id="animCv" width="320" height="180"></canvas>

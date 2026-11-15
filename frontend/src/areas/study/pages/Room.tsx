@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import roomCss from "../engine/room.css?inline";
 import { ROOM_MARKUP } from "../engine/markup";
 import { startRoomEngine } from "../../../engine/legacy/roomEngine";
-import { PAGES } from "../../../lib/pages";
+import { Logo, SiteNav } from "../components/SiteNav";
 import { pullBeforeStart, resolveMerge, startAutoPush, type MergeChoice } from "../roomSync";
 import { useTitle } from "../../../lib/useTitle";
 import { useAuth } from "../../../store/auth";
@@ -20,6 +21,7 @@ export default function Room() {
   const { user, ready } = useAuth();
   const [merge, setMerge] = useState<Merge | null>(null);
   const [notice, setNotice] = useState("");
+  const [headSlot, setHeadSlot] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
     if (!ready || started.current || !host.current) return;
@@ -29,7 +31,7 @@ export default function Room() {
     document.head.appendChild(style);
     document.getElementById("root")?.style.setProperty("height", "100%");
     host.current.innerHTML = ROOM_MARKUP;
-    buildLogoMenu();
+    setHeadSlot(document.getElementById("siteHead"));
 
     (async () => {
       if (user) {
@@ -62,6 +64,7 @@ export default function Room() {
   return (
     <>
       <div ref={host} className="contents" />
+      {headSlot && createPortal(<><Logo fullReload /><SiteNav current="/room" fullReload /></>, headSlot)}
       {notice && (
         <p role="status" className="fixed bottom-4 left-1/2 z-[1000] -translate-x-1/2 border border-[#3e2c21] bg-[#211712] px-4 py-2 text-sm text-[#f2e4cf]">
           {notice}
@@ -79,21 +82,4 @@ export default function Room() {
       )}
     </>
   );
-}
-
-/** Menu các trang ở logo (FR-PAGE-03) — thay đoạn script cuối của prototype. */
-function buildLogoMenu() {
-  const btn = document.getElementById("logoBtn");
-  const menu = document.getElementById("siteMenu");
-  if (!btn || !menu) return;
-  menu.innerHTML = PAGES.map(
-    (p) =>
-      `<a href="${p.path}"${p.path === "/room" ? ' aria-current="page"' : ""} class="px-[10px] py-[7px] text-[13px] text-ink [&[aria-current]]:text-amber hover:bg-panel-2 hover:text-amber focus-visible:bg-panel-2 focus-visible:text-amber">${p.label}</a>`,
-  ).join("");
-  const set = (open: boolean) => { menu.hidden = !open; btn.setAttribute("aria-expanded", String(open)); };
-  btn.addEventListener("click", () => set(menu.hidden));
-  document.addEventListener("pointerdown", (e) => {
-    if (!menu.hidden && !menu.contains(e.target as Node) && !btn.contains(e.target as Node)) set(false);
-  });
-  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !menu.hidden) { set(false); btn.focus(); } });
 }
