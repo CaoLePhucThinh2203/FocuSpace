@@ -39,6 +39,7 @@ test.describe("UC.12 Trang chủ, Giới thiệu (Thịnh)", () => {
 
   test("AC-12.6 toàn site dùng một font Be Vietnam Pro", async ({ page }) => {
     await page.goto("/");
+    await expect(page.locator("main h1")).toBeVisible();   // trang chủ tải lười: chờ nội dung hiện rồi mới đọc font
     const fonts = await page.evaluate(() => [...document.querySelectorAll("h1, h2, h3, p, a, button")].map((e) => getComputedStyle(e).fontFamily.split(",")[0].replace(/"/g, "").trim()));
     expect(new Set(fonts)).toEqual(new Set(["Be Vietnam Pro"]));
   });

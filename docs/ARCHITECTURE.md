@@ -5,7 +5,7 @@ Solution Architecture Document — FocuSpace bản chính thức
 | | |
 |---|---|
 | **Sản phẩm** | FocuSpace — web app pixel art Lo-fi Semi-Sandbox |
-| **Phiên bản** | v1.4 (rút gọn 14/11/2026) · v1.0 duyệt 07/11, v1.1–v1.3 duyệt ở buổi họp 13/11/2026 |
+| **Phiên bản** | v1.5 (PA B cho Căn phòng 15/11/2026) · v1.4 (rút gọn 14/11/2026) · v1.0 duyệt 07/11, v1.1–v1.3 duyệt ở buổi họp 13/11/2026 |
 | **Nguồn** | docs/PRD.md · docs/DATABASE.md · docs/API.md · docs/PLAN.md · docs/analysis/FocuSpace_Diagrams.drawio · prototype/ |
 
 # 1. Giới thiệu & Tổng quan dự án
@@ -89,7 +89,7 @@ Hai khối lớn: **ứng dụng trong trình duyệt** chịu toàn bộ trải
 
 - Backend phân lớp: routes (HTTP, validate) → services (nghiệp vụ) → Prisma (dữ liệu). Phụ thuộc bên ngoài truyền vào qua tham số (ví dụ createApp({ db })) để test được — tinh thần Ports & Adapters.
 
-- Frontend: React chỉ lo UI; **Room Engine** viết bằng TypeScript thuần, không phụ thuộc React, chạy vòng vẽ 10 FPS và đồ thị Web Audio riêng.
+- Frontend: React chỉ lo UI; **Room Engine** không phụ thuộc React, chạy vòng vẽ 10 FPS và đồ thị Web Audio riêng. Theo PA B (15/11/2026), phần vẽ và âm thanh nằm trong `frontend/src/engine/legacy/roomEngine.js` (chép từ prototype, có các thay đổi PRD v5.5–v5.8); quy tắc nghiệp vụ là hàm thuần TypeScript có unit test trong `areas/<khu-vực>/engine/` và `shared/`, engine import và gọi lại.
 
 - Frontend nhiều trang: React Router định tuyến phía client, mỗi trang tải lười (code splitting); Tailwind CSS cho mọi giao diện ngoài canvas, cấu hình màu và font lấy từ prototype.
 
@@ -121,10 +121,10 @@ Hai khối lớn: **ứng dụng trong trình duyệt** chịu toàn bộ trải
 
 | **Lớp (Chương 1, Class C2/C3)** | **Module mã nguồn** (`frontend/src/`, `backend/src/`) |
 |---|---|
-| GiaoDienCanPhong | `areas/study/pages/Room.tsx`, `areas/study/components/` (RoomHeader, RoomNav) + component của từng khu vực (ItemTray, ItemPopover, VolumeMixer, ScenePicker, SleepTimer) |
-| RoomEngine | `areas/study/engine/` (rooms, static, animation, lighting) + `areas/bedroom/engine/bed.ts` + `areas/garden/engine/out.ts`; phần chưa tách nằm ở `engine/legacy/roomEngine.js` |
+| GiaoDienCanPhong | `areas/study/pages/Room.tsx` (header chung, hộp thoại hợp nhất, ô thông báo), `areas/study/engine/markup.ts` + `room.css` (khung Căn phòng); thanh công cụ, khay, popover, Volume mixer, khay Khung cảnh, ô Hẹn giờ ngủ dựng trong `engine/legacy/roomEngine.js` |
+| RoomEngine | `engine/legacy/roomEngine.js` (vẽ ba không gian, vòng lặp, khởi động) + `areas/study/engine/rooms.ts` (bảng chuyển phòng, quy tắc chuyển) |
 | QuanLyDoVat | `areas/items-audio/engine/placement.ts` (+ `shared/src/spatial.ts`) |
-| AmThanhKhongGian | `areas/items-audio/engine/audio/` (context, synth, lofi, routing) + `areas/garden/engine/sceneAudio.ts` |
+| AmThanhKhongGian | `engine/legacy/roomEngine.js` (khối AUDIO ENGINE, ĐỊNH TUYẾN ÂM THANH THEO PHÒNG, âm Phòng ngủ, âm khung cảnh) + `shared/src/spatial.ts` (công thức gain/pan) |
 | BoDemPomodoro / HenGioNgu | `areas/study/engine/pomodoro.ts` / `areas/bedroom/engine/sleepTimer.ts` |
 | BoLuuTruCucBo / DongBoClient | `areas/study/roomSync.ts` + `lib/api.ts` + `shared/src/migrate.ts` |
 | TelemetryQueue | `areas/garden/telemetry.ts` |
@@ -284,3 +284,4 @@ Các lớp trang (TrangChu, TrangGioiThieu, TrangThuVien, TrangThongKe, TrangTai
 | v1.0 | 07/11/2026 | Bản đã phê duyệt. |
 | v1.1–v1.3 | 10–13/11/2026 | Bổ sung theo đề bài CSB25022; đồng bộ Chương 1 (ánh xạ lớp ↔ module/bảng, Phụ lục A); Hình 2 là Sequence UC.09, ERD vẽ trong drawio; chốt triển khai Vercel + Render + Neon. Duyệt ở buổi họp 13/11. |
 | v1.4 | 14/11/2026 | Rút gọn: bỏ phần [Đề xuất] ngoài phạm vi đồ án (bản đồ năng lực, DR, kiến trúc tham chiếu khi mở rộng và Hình 5, WAF, metrics, báo giá); bảng ánh xạ lớp ↔ module theo thư mục khu vực thật; 3.5 và 4.2 ghi đúng cấu hình `render.yaml`, `vercel.json`, CI; cookie SameSite=None. |
+| v1.5 | 15/11/2026 | PA B: 3.2 và bảng ánh xạ lớp ↔ module ghi đúng phần giữ trong `roomEngine.js` và hàm thuần đã tách (rooms, pomodoro, sleepTimer, placement). |

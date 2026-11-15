@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { api } from "../../../lib/api";
 import { useTitle } from "../../../lib/useTitle";
 import { useAuth } from "../../../store/auth";
+import { flushPending } from "../../garden/telemetry";
 
 interface StatsRes {
   range: string; from: string; to: string;
@@ -25,8 +26,12 @@ export default function Stats() {
   useEffect(() => {
     if (!user) return;
     setErr(false);
-    // TODO N10: gửi ngay lô telemetry đang chờ trước khi tải (FR-STAT-06)
-    api<StatsRes>(`/me/stats?range=${range}&tz=${encodeURIComponent(tz)}`).then(setData).catch(() => setErr(true));
+    // FR-STAT-06: gửi ngay lô telemetry còn chờ (lỗi thì bỏ qua) rồi mới tải số liệu
+    flushPending()
+      .catch(() => undefined)
+      .then(() => api<StatsRes>(`/me/stats?range=${range}&tz=${encodeURIComponent(tz)}`))
+      .then(setData)
+      .catch(() => setErr(true));
   }, [user, range]);
 
   if (!ready) return <main className="mx-auto max-w-6xl px-4 py-10" aria-busy="true" />;

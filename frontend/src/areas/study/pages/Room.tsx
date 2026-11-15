@@ -23,6 +23,19 @@ export default function Room() {
   const [notice, setNotice] = useState("");
   const [headSlot, setHeadSlot] = useState<HTMLElement | null>(null);
 
+  // Thông báo ngắn từ engine (ví dụ "Phòng đã đầy…", AC-04.2): hiện 3 giây ở ô role="status".
+  useEffect(() => {
+    let timer = 0;
+    const onNotice = (e: Event) => {
+      const msg = (e as CustomEvent<string>).detail;
+      setNotice(msg);
+      clearTimeout(timer);
+      timer = window.setTimeout(() => setNotice((n) => (n === msg ? "" : n)), 3000);
+    };
+    window.addEventListener("focuspace:notice", onNotice);
+    return () => { clearTimeout(timer); window.removeEventListener("focuspace:notice", onNotice); };
+  }, []);
+
   useEffect(() => {
     if (!ready || started.current || !host.current) return;
     started.current = true;

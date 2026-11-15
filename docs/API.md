@@ -6,7 +6,7 @@ Tài liệu API REST — FocuSpace bản chính thức
 |------------------------|-------------------------------------------------------------------------|
 | **Sản phẩm**           | FocuSpace — web app pixel art Lo-fi Semi-Sandbox                        |
 | **Phiên bản API**      | v1                                                                      |
-| **Phiên bản tài liệu** | v1.3 (rút gọn 14/11/2026) · v1.0 phê duyệt 07/11/2026; v1.1 – v1.2 duyệt ở buổi họp kế hoạch 13/11/2026 |
+| **Phiên bản tài liệu** | v1.4 (thống nhất với code 15/11/2026) · v1.3 (rút gọn 14/11/2026) · v1.0 phê duyệt 07/11/2026; v1.1 – v1.2 duyệt ở buổi họp kế hoạch 13/11/2026 |
 | **Nguồn**              | docs/API.md · docs/DATABASE.md · docs/PRD.md · prototype/FocuSpace-Semi-Sandbox.html · docs/analysis/FocuSpace_Diagrams.drawio, Chương 1 Phân tích hệ thống |
 
 # 1. Tổng quan & Giới thiệu
@@ -56,7 +56,7 @@ API dùng **Bearer Token (JWT)** kèm **refresh token trong cookie**. Không dù
 | **Loại**                 | **Cách truyền**                                                     | **Thời hạn**             | **Ghi chú**                                                           |
 |--------------------------|---------------------------------------------------------------------|--------------------------|-----------------------------------------------------------------------|
 | Access token (JWT HS256) | Header Authorization: Bearer \<accessToken\>                        | 15 phút (expiresIn: 900) | Client giữ trong bộ nhớ, không lưu LocalStorage                       |
-| Refresh token            | Cookie fs_rt (httpOnly, Secure, SameSite=Strict, Path=/api/v1/auth) | 30 ngày                  | Trình duyệt tự gửi; xoay vòng mỗi lần refresh; server chỉ lưu bản băm |
+| Refresh token            | Cookie fs_rt (httpOnly, Secure, SameSite=None ở production · Lax ở máy dev, Path=/api/v1/auth) | 30 ngày                  | Trình duyệt tự gửi; xoay vòng mỗi lần refresh; server chỉ lưu bản băm |
 
 ### Lấy token lần đầu
 
@@ -230,7 +230,7 @@ Không có.
 }
 ```
 
-Kèm header Set-Cookie: fs_rt=...; HttpOnly; Secure; SameSite=Strict; Path=/api/v1/auth.
+Kèm header Set-Cookie: fs_rt=...; HttpOnly; Secure; SameSite=None; Path=/api/v1/auth (production, `COOKIE_SECURE=true`; máy dev: SameSite=Lax, không Secure).
 
 **Response lỗi**
 
@@ -1222,12 +1222,12 @@ Dùng trong GET /room-state (trường data) và PUT /room-state (trường data
 | study.fireOn / fireVol / fireSide           | boolean / number / string | Lò sưởi; fireSide "left" \| "right"                                                                                         |
 | study.rug                                   | integer                   | 0–3 (Đỏ rượu, Xanh rêu, Xanh lam, Kem len)                                                                                  |
 | study.lampOn                                | boolean                   | Đèn bàn                                                                                                                     |
-| study.items                                 | Item\[\]                  | ≤ 40; loại hợp lệ: tv, cat, clock, bigplant, plant, cactus, books, frame, candle, lamp, cup                                 |
+| study.items                                 | Item\[\]                  | ≤ 25 (BR-06); loại hợp lệ: tv, cat, clock, bigplant, plant, cactus, books, frame, candle, lamp, cup                                 |
 | bed.weather                                 | string                    | "stars" \| "rain" \| "wind"                                                                                                 |
 | bed.curtain / windowOn / windowVol / lampOn | —                         | Như Phòng học; lampOn là đèn ngủ                                                                                            |
 | bed.wallClock                               | object                    | { on, vol } — tiếng tích tắc đồng hồ tường                                                                                  |
 | bed.rug                                     | integer                   | 0–3 (Tím sao, Xanh đêm, Hồng nhạt, Kem len)                                                                                 |
-| bed.items                                   | Item\[\]                  | ≤ 40; loại hợp lệ: catbed, radio, diffuser, vinyl, musicbox, fan, cat, clock, bigplant, plant, cactus, books, frame, candle |
+| bed.items                                   | Item\[\]                  | ≤ 25 (BR-06); loại hợp lệ: catbed, radio, diffuser, vinyl, musicbox, fan, cat, clock, bigplant, plant, cactus, books, frame, candle |
 | out.scene                                   | string                    | "city" \| "forest" \| "beach" \| "glacier" \| "hill"                                                                        |
 | out.on / out.vol                            | boolean / number          | Âm khung cảnh                                                                                                               |
 
@@ -1252,3 +1252,4 @@ Dùng trong GET /room-state (trường data) và PUT /room-state (trường data
 | v1.0 | 07/11/2026 | Bản đã phê duyệt. |
 | v1.1–v1.2 | 10–13/11/2026 | Thêm endpoint danh mục (4.12, 4.13), thống kê (4.14); truy vết use case và phương thức service cho từng endpoint; chốt rate limit 5.1. Duyệt ở buổi họp 13/11. |
 | v1.3 | 15/11/2026 | Rút gọn: bỏ dòng chú thích bản Word cũ, bảng nhóm endpoint trùng với bảng tóm tắt ở mục 1; Base URL production theo cách triển khai Vercel + Render; 5.2 Versioning còn 2 ý. Không đổi request/response, mã lỗi. |
+| v1.4 | 15/11/2026 | Thống nhất với code: cookie `fs_rt` SameSite=None ở production, Lax ở máy dev (§2, 4.2); Phụ lục A `study.items`, `bed.items` ≤ 25 (BR-06, G12). Không đổi endpoint. |

@@ -193,15 +193,15 @@ Ghi chú: `user_id` NULL khi Khách; gắn khi gửi lô kèm access token; đ�
 |---|---|---|---|---|
 | id | uuid | Không | | PK, client sinh; upsert |
 | usage_session_id | uuid | Không | | FK → usage_sessions.id, `ON DELETE CASCADE` |
-| mode | varchar(8) | Không | | `CHECK (mode IN ('focus','break'))` |
-| planned_sec | int | Không | | > 0 (focus 1500, break 300) |
+| mode | varchar(8) | Không | | `CHECK (mode IN ('focus','break'))`; Nghỉ ngắn và Nghỉ dài (PRD v5.7) đều ghi `break` |
+| planned_sec | int | Không | | > 0, theo nhịp học (Cổ điển: focus 1500, nghỉ ngắn 300, nghỉ dài 900; Tuỳ chỉnh 60–7200) |
 | started_at | timestamptz | Không | | API `pomodoros[].startedAt` |
 | ended_at | timestamptz | Có | | API `pomodoros[].endedAt` |
 | outcome | varchar(12) | Không | | `CHECK (outcome IN ('completed','reset','abandoned'))` |
 
 Index: `(usage_session_id)`.
 
-Ý nghĩa `outcome` (PRD Tính năng G): `completed` — hết giờ; `reset` — người dùng bấm Đặt lại; `abandoned` — phiên đang chạy khi tải lại hoặc đóng tab (**[Đề xuất]** gửi trong lô khi tab bị ẩn bằng `fetch keepalive`).
+Ý nghĩa `outcome` (PRD Tính năng G): `completed` — hết giờ; `reset` — người dùng bấm Đặt lại; `abandoned` — phiên đang chạy khi tải lại hoặc đóng tab (gửi trong lô lúc rời trang bằng `fetch keepalive`, N10).
 
 ### 3.6 `client_errors`
 
@@ -347,3 +347,4 @@ WHERE u.user_id = $uid
 | 08/11/2026 | Bản nháp đầu. |
 | 10–13/11/2026 | Thêm bảng danh mục, seeder, truy vấn trang Thống kê; ánh xạ lớp thực thể ↔ bảng; ERD vẽ lại trong drawio. Duyệt ở buổi họp 13/11. |
 | 14/11/2026 | Rút gọn: bỏ mục "Câu hỏi cần duyệt" (đã duyệt 13/11) và việc dọn dữ liệu hằng đêm (không làm trong đồ án). |
+| 15/11/2026 | Thống nhất với PRD v5.7–v5.8: `pomodoro_sessions.mode` ghi `break` cho cả nghỉ ngắn và nghỉ dài, `planned_sec` theo nhịp học; không đổi bảng, cột. |

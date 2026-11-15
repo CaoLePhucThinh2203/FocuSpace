@@ -2,16 +2,21 @@
 /* eslint-disable */
 /**
  * Engine Căn phòng — chép nguyên phần <script> của prototype/web/room.html (bản đã duyệt, Lighthouse cách 2).
- * Đây là bước 1 của việc tách prototype: chạy được ngay trong trang /room.
- * Bước 2 (S3–S4, theo docs/PLAN.md Phase 1–5): tách từng khối có tiêu đề "=====" dưới đây sang
- * shared/ và frontend/src/engine/{logic,render,audio}/ — xem legacy/README.md.
- * Engine đọc/ghi LocalStorage khóa "focuspace.room.v4"; frontend/src/lib/roomSync.ts đồng bộ khóa này với /room-state.
+ * Chạy trong trang /room; từ PRD v5.5 các thay đổi đã duyệt sửa thẳng ở đây, nên đây là nguồn logic hiện hành.
+ * PA B (15/11/2026): vẽ canvas, âm thanh, khay, popover giữ trong file này; quy tắc nghiệp vụ là hàm thuần ở
+ * shared/ và frontend/src/areas/<khu-vực>/engine/ (import bên dưới) — xem legacy/README.md.
+ * Engine đọc/ghi LocalStorage khóa "focuspace.room.v4"; frontend/src/areas/study/roomSync.ts đồng bộ khóa này với /room-state.
  */
 import { shouldTick } from "../../lib/time";
-import { RHYTHMS, RHYTHM_IDS, nextPhase, parseConfig, phaseSeconds, rhythmOf, setCustom } from "../../lib/pomodoro";
+import { RHYTHMS, RHYTHM_IDS, nextPhase, parseConfig, phaseSeconds, rhythmOf, setCustom } from "../../areas/study/engine/pomodoro";
+import { NAVS, canSwitch, lastIndoorAfter, pausesPomodoro } from "../../areas/study/engine/rooms";
+import * as SleepTimer from "../../areas/bedroom/engine/sleepTimer";
+import * as Placement from "../../areas/items-audio/engine/placement";
+import { startRoomTelemetry } from "../../areas/garden/telemetry";
 
 export function startRoomEngine() {
 "use strict";
+const tel = startRoomTelemetry();   // N10: phiên sử dụng, Pomodoro, lỗi client → POST /telemetry/batch (areas/garden/telemetry.ts)
 /* ============================================================
    HẰNG SỐ PHÒNG (đơn vị: pixel logic của căn phòng 320×180)
    ============================================================ */
@@ -21,9 +26,7 @@ const X0 = 160, Y0 = 100;
 const D_MAX = Math.hypot(W, H);         // đường chéo phòng
 const W_HALF = W / 2;
 const DESK = { x0: 92, x1: 228, top: 115, front: 158 }; // bàn hộp: mặt bàn y=115, thân bàn tới y=158
-const FLOOR_MIN_BASE = 112, FLOOR_MAX_BASE = H - 2;
 const FY = 16;   // lò sưởi dịch lên 16 px so với prototype: đáy chân lò nằm ở hàng sàn số 1 (y 112–120)
-const MAX_ITEMS_PER_ROOM = 25;   // BR-06: tối đa 25 đồ mỗi phòng (khớp shared/src/constants.ts)
 const STORAGE_KEY = "focuspace.room.v4";   // v6: khóa lưu mới để lần mở đầu thấy bàn học chỉ có đèn + ly cà phê
 
 /* Đồ vật phát âm thanh (di chuyển tự do, có Spatial Audio) */
@@ -206,7 +209,7 @@ function loadState() {
   } catch (e) { return d; }
 }
 const state = loadState();
-/* Pomodoro theo vòng: Focus → nghỉ ngắn, lặp lại; đủ số phiên của nhịp thì nghỉ dài (lib/pomodoro.ts). Nhịp đã chọn lưu riêng ở POMO_KEY. */
+/* Pomodoro theo vòng: Focus → nghỉ ngắn, lặp lại; đủ số phiên của nhịp thì nghỉ dài (areas/study/engine/pomodoro.ts). Nhịp đã chọn lưu riêng ở POMO_KEY. */
 const POMO_KEY = "focuspace.pomo.v1";
 let pomoCfg = (() => { try { return parseConfig(localStorage.getItem(POMO_KEY)); } catch { return parseConfig(null); } })();
 const pomo = { mode: "focus", done: 0, remaining: phaseSeconds(pomoCfg, "focus"), running: false, endAt: 0 };   // mode: focus | short | long; done: số phiên Focus đã xong trong vòng
@@ -234,11 +237,12 @@ function box(el) {
   return { left, top, width: r.height, height: r.width, right: left + r.height, bottom: top + r.width };
 }
 let saveTimer = 0;
-function save() {   // lưu sau 250 ms (không còn chip "Đã lưu" ở header)
+function save(interaction = true) {   // lưu sau 250 ms (không còn chip "Đã lưu" ở header); mỗi lần người dùng đổi phòng/đồ là một tương tác (FR-TEL-01)
+  if (interaction) tel.track("interaction");
   clearTimeout(saveTimer);
   saveTimer = setTimeout(() => {
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
-    catch (e) { console.warn("FocuSpace: trình duyệt chặn lưu cục bộ", e); }
+    catch (e) { console.warn("FocuSpace: trình duyệt chặn lưu cục bộ", e); tel.error("storage_write", String(e)); }
   }, 250);
 }
 
@@ -246,7 +250,8 @@ function save() {   // lưu sau 250 ms (không còn chip "Đã lưu" ở header)
    AUDIO ENGINE (Web Audio API — PRD 5.1, 6.2)
    ============================================================ */
 const AC = window.AudioContext || window.webkitAudioContext;
-const ctx = AC ? new AC() : null;
+const ctx = (() => { try { return AC ? new AC() : null; } catch (e) { tel.error("audio_context_create", String(e)); return null; } })();
+if (!AC) tel.error("audio_context_create", "Trình duyệt không hỗ trợ Web Audio");
 function masterGainOf() { return state.masterOn ? state.masterVol / 0.8 * 0.75 : 0; }   // 80% = mức gốc (0.75), kéo tới 100% để to hơn
 let master = null;
 if (ctx) {
@@ -541,7 +546,7 @@ function unlockAudio() {
   ctx.resume().then(() => {
     audioReady = true;
     const note = document.getElementById("sleepNote"); if (note) note.hidden = true;   // âm thanh trở lại sau khi hết giờ ngủ (AC-06.2)
-  }).catch(() => {});
+  }).catch(e => tel.error("audio_context_resume", String(e)));
 }
 document.addEventListener("pointerdown", unlockAudio, true);
 document.addEventListener("keydown", unlockAudio, true);
@@ -2608,8 +2613,8 @@ const ROOMCFG = {
     hint: "Mẹo: kéo Tivi hoặc Mèo quanh phòng để nghe âm thanh đổi hướng tai. Bấm tai nghe để phát nhạc, bấm cửa sổ để đổi thời tiết và kéo rèm, bấm kệ sách để thêm đồ.",
     sound: ["tv", "cat", "clock"],
     list: () => state.items, setList: v => { state.items = v; },
-    get surfaces() { const dx = state.fireSide === "left" ? -266 : 0; return [{ x0: 92, x1: 228, top: 115, snapBelow: 136, front: 161 }, { x0: 274 + dx, x1: 318 + dx, top: 40, snapBelow: 88, front: 121 }]; },   // mặt bàn + mặt trên lò sưởi (liền khối tới sàn, đồ không đè lên lửa)
-    shelves: [{ x0: 226, x1: 268, top: 40 }, { x0: 214, x1: 262, top: 66 }, { x0: 236, x1: 270, top: 92 }],   // 3 tầng giá treo tường: đồ kéo lại gần sẽ tự khớp vào
+    get surfaces() { return Placement.studyGeometry(state.fireSide).surfaces; },   // mặt bàn + mặt trên lò sưởi (areas/items-audio/engine/placement.ts)
+    shelves: Placement.STUDY_SHELVES,   // 3 tầng giá treo tường: đồ kéo lại gần sẽ tự khớp vào
     fixed: {
       window:    { x: 112, y: 6,  w: 96, h: 74, label: "Cửa sổ · thời tiết & rèm" },
       fireplace: { x: 272, y: 40, w: 50, h: 80, label: "Lò sưởi" },   // khớp hình lò: mặt lò y 40 → đáy chân lò y 120
@@ -2622,12 +2627,8 @@ const ROOMCFG = {
     hint: "Mẹo: bấm giá treo tường hoặc ngăn trên tủ đầu giường để đặt quạt, máy xông, đĩa than, hộp nhạc, radio hoặc đồng hồ Pomodoro; radio, đĩa than, hộp nhạc là âm nền nghe đều hai tai; kéo máy xông, quạt hoặc mèo ra góc xa để thành tiếng nền mờ. Bấm đèn ngủ để tắt đèn.",
     sound: ["radio", "diffuser", "vinyl", "musicbox", "fan", "cat", "clock"],
     list: () => state.bed.items, setList: v => { state.bed.items = v; },
-    shelves: [{ x0: 14, x1: 66, top: 40 }, { x0: 40, x1: 100, top: 66 }, { x0: 14, x1: 66, top: 92 }, { x0: 276, x1: 312, top: 146, tol: 9 }],   // giá treo tường + ngăn trên tủ đầu giường
-    surfaces: [                                                               // mặt tủ đầu giường, mặt chăn
-      { x0: 274, x1: 314, top: 124, snapBelow: 140, front: 156 },
-      { x0: 200, x1: 230, top: 92, snapBelow: 114, front: 132 },   // phần giường thừa dưới chân: mèo (cao 13) nằm ở y=85
-      { x0: 230, x1: 274, top: 91, snapBelow: 114, front: 132 },   // phần còn lại của giường: mặt đặt đồ y=94
-    ],
+    shelves: Placement.BED_GEOMETRY.shelves,     // giá treo tường + ngăn trên tủ đầu giường (placement.ts)
+    surfaces: Placement.BED_GEOMETRY.surfaces,   // mặt tủ đầu giường, mặt chăn
     fixed: {
       window:  { x: 122, y: 6,  w: 76, h: 68, label: "Cửa sổ · thời tiết & rèm" },
       bedlamp: { x: 285, y: 96, w: 18, h: 28, label: "Đèn ngủ · bật/tắt" },
@@ -2730,31 +2731,9 @@ function emCenter(d) { const t = TYPES[d.type]; return [d.x + t.w / 2, d.y + t.h
    - Đèn, ly cà phê (phòng học): chỉ trượt dọc mặt bàn.
    - Đồ khác: thả lên một mặt phẳng (mặt bàn, mặt tủ đầu giường, mặt chăn) thì tự đặt sát mặt đó;
      thả phía trước thì đứng trên sàn; chỗ khác đứng trên sàn. */
-function clampPos(d) {
-  const t = TYPES[d.type], cfg = ROOMCFG[ROOM.cur];
-  if (t.deskOnly) { d.x = clamp(d.x, 94, 226 - t.w); d.y = 115 - t.h; return; }
-  d.x = clamp(d.x, 0, W - t.w);
-  const cx = d.x + t.w / 2; let base = d.y + t.h, done = false;
-  if (d.type === "cat") {   // mèo kéo lại gần giường mèo thì tự nằm vào; kéo ra xa thì tách khỏi giường
-    const bed = cfg.list().find(i => i.type === "catbed" && cx >= i.x - 4 && cx <= i.x + TYPES.catbed.w + 4 && Math.abs(base - (i.y + TYPES.catbed.h)) <= 14);
-    if (bed) { d.x = bed.x + 3; d.y = bed.y + 8 - t.h; d.bedId = bed.id; return; }
-    d.bedId = null;
-  }
-  if (t.floorOnly) {   // chậu cây lớn: chỉ đứng trên sàn, đi khắp phòng (không lên bàn / giá)
-    base = clamp(base, ROOM.cur === "study" && cx > 90 && cx < 230 ? 160 : 138, FLOOR_MAX_BASE); d.y = base - t.h; return;
-  }
-  // Giá / ngăn: kéo đồ lại gần thì tự khớp vào, trượt dọc theo giá; kéo xuống sàn thì hết khớp
-  const sh = t.h <= 28 && (cfg.shelves || []).find(s => cx >= s.x0 && cx <= s.x1 && Math.abs(base - s.top) <= (s.tol || 13));
-  if (sh) { d.x = clamp(d.x, sh.x0, sh.x1 - t.w); d.y = sh.top - t.h; return; }
-  for (const s of cfg.surfaces) {
-    if (cx >= s.x0 && cx <= s.x1) {
-      if (base < s.snapBelow) { d.x = clamp(d.x, s.x0 + 2, s.x1 - 2 - t.w); base = s.top; }
-      else base = clamp(base, s.front, FLOOR_MAX_BASE);
-      done = true; break;
-    }
-  }
-  if (!done) base = clamp(base, FLOOR_MIN_BASE, FLOOR_MAX_BASE);
-  d.y = base - t.h;
+function clampPos(d) {   // quy tắc đặt đồ BR-03→06: areas/items-audio/engine/placement.ts
+  const cfg = ROOMCFG[ROOM.cur];
+  Object.assign(d, Placement.clampPos(d, TYPES[d.type], ROOM.cur, cfg, cfg.list(), TYPES.catbed));
 }
 function syncCats(bedObj) {   // kéo giường mèo thì mèo đang nằm trên đó đi theo
   const b = bedObj.data; if (b.type !== "catbed") return;
@@ -2808,8 +2787,11 @@ function removeItem(id) {
   const cfg = ROOMCFG[ROOM.cur]; cfg.setList(cfg.list().filter(i => i.id !== id));
   closePop(); save();
 }
+/* Thông báo ngắn cho người dùng (ví dụ phòng đã đủ đồ): trang Căn phòng (Room.tsx) hiện ở ô role="status" dưới màn hình */
+function notify(msg) { window.dispatchEvent(new CustomEvent("focuspace:notice", { detail: msg })); }
 function addItem(type, x, y) {
-  if (ROOMCFG[ROOM.cur].list().length >= MAX_ITEMS_PER_ROOM) return;   // BR-06 / AC-04.2: phòng đủ đồ thì không thêm
+  if (!Placement.canAdd(ROOMCFG[ROOM.cur].list().length)) { notify(Placement.ROOM_FULL_MESSAGE); return; }   // BR-06 / AC-04.2: phòng đủ 25 đồ thì không thêm, chỉ thông báo
+  if (!Placement.canPlaceIn(type, ROOM.cur)) return;   // BR-05: giường mèo chỉ ở Phòng ngủ
   const t = TYPES[type];
   const d = { id: uid(), type, x: x - t.w / 2, y: y - t.h / 2, on: type !== "clock", vol: t.vol ?? 0.5, track: 0 };   // đồng hồ: tích tắc mặc định tắt
   if (type === "frame") d.art = Math.random() * ART_N | 0;   // mỗi khung ảnh mới nhận một tranh ngẫu nhiên
@@ -2987,13 +2969,13 @@ const PHASE_LABEL = { focus: "Focus", short: "Nghỉ ngắn", long: "Nghỉ dài
 function savePomoCfg() { try { localStorage.setItem(POMO_KEY, JSON.stringify(pomoCfg)); } catch { /* trình duyệt chặn lưu: vẫn dùng trong phiên */ } }
 function pomoToggle() {
   if (pomo.running) { pomo.running = false; pomo.remaining = Math.max(0, Math.ceil((pomo.endAt - Date.now()) / 1000)); }
-  else { pomo.running = true; pomo.endAt = Date.now() + pomo.remaining * 1000; }
+  else { pomo.running = true; pomo.endAt = Date.now() + pomo.remaining * 1000; tel.pomodoroStart(pomo.mode, phaseSeconds(pomoCfg, pomo.mode)); }   // phiên đã mở (tiếp tục sau Tạm dừng) thì telemetry bỏ qua
   renderPomo();
 }
 function pomoPause() { if (pomo.running) pomoToggle(); }
 function pomoSetPhase(phase) { pomo.mode = phase; pomo.running = false; pomo.remaining = phaseSeconds(pomoCfg, phase); renderPomo(); }
-function pomoReset() { pomo.done = 0; pomoSetPhase("focus"); }   // Đặt lại vòng: về phiên Focus đầu tiên (AC-05.4)
-function pomoSkip() { if (pomo.mode === "focus") return; if (pomo.mode === "long") pomo.done = 0; pomoSetPhase("focus"); }
+function pomoReset() { tel.pomodoroEnd("reset"); pomo.done = 0; pomoSetPhase("focus"); }   // Đặt lại vòng: về phiên Focus đầu tiên (AC-05.4)
+function pomoSkip() { if (pomo.mode === "focus") return; tel.pomodoroEnd("reset"); if (pomo.mode === "long") pomo.done = 0; pomoSetPhase("focus"); }
 /* Đổi nhịp: đang dừng thì áp dụng ngay; đang chạy thì phiên hiện tại giữ nguyên, nhịp mới dùng từ phiên sau (AC-05.5) */
 function pomoSetRhythm(id) {
   pomoCfg = { ...pomoCfg, rhythm: id }; savePomoCfg();
@@ -3080,6 +3062,7 @@ setInterval(() => {
   if (shouldTick(pomo.running, prev, pomo.remaining)) tickClocks();
   if (pomo.remaining <= 0) {   // hết giờ: chuông, sang giai đoạn kế tiếp của vòng và dừng chờ bấm Bắt đầu (AC-05.3, AC-05.7)
     if (ctx && BUF.bell) { const s = ctx.createBufferSource(); s.buffer = BUF.bell; const g = ctx.createGain(); g.gain.value = 0.8; s.connect(g); g.connect(master); s.start(); }
+    tel.pomodoroEnd("completed");   // AC-05.3
     const nx = nextPhase(pomo.mode, pomo.done, rhythmOf(pomoCfg).rounds);
     pomo.done = nx.done; pomoSetPhase(nx.phase);
     return;
@@ -3088,28 +3071,30 @@ setInterval(() => {
 }, 250);
 
 /* Hẹn giờ ngủ (chỉ Phòng ngủ): chọn Tắt/15/30/60 phút ở bảng mở từ header hoặc popover đồng hồ treo tường. Hai phút cuối, toàn bộ âm thanh nhỏ dần đều về 0 rồi dừng hẳn. */
-const sleep = { min: 0, remaining: 0, running: false, endAt: 0 };   // min: mức đã chọn; chọn xong chờ bấm Bắt đầu như Pomodoro
-function sleepRem() { return sleep.running ? Math.max(0, Math.ceil((sleep.endAt - Date.now()) / 1000)) : sleep.remaining; }
+const sleep = { ...SleepTimer.SLEEP_OFF };   // min: mức đã chọn; chọn xong chờ bấm Bắt đầu như Pomodoro (logic: areas/bedroom/engine/sleepTimer.ts)
+function sleepRem() { return SleepTimer.sleepRemaining(sleep, Date.now()); }
 function renderSleep() {
   const el = $("sleepMini"), rem = sleepRem();
   document.querySelectorAll("[data-sl]").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.sl === sleep.min)));
   document.querySelectorAll("[data-sleep-time]").forEach(t => { t.textContent = sleep.min ? fmt(rem) : "--:--"; });
   document.querySelectorAll("[data-sleep-play]").forEach(b => { b.hidden = !sleep.min; b.textContent = sleep.running ? "Tạm dừng" : "Bắt đầu"; });
-  el.classList.toggle("fading", sleep.running && rem <= 120);
+  el.classList.toggle("fading", sleep.running && rem <= SleepTimer.FADE_SEC);
 }
 function sleepSet(min) {   // chọn mức: hiện số phút, chờ bấm Bắt đầu
-  sleep.min = min; sleep.running = false; sleep.endAt = 0; sleep.remaining = min * 60;
+  Object.assign(sleep, SleepTimer.sleepSet(min));
   if (ctx) ramp(fade.gain, 1, 0.2);
   renderSleep(); if (!$("sleepPanel").hidden) renderSleepPanel();
 }
 function sleepToggle() {   // Bắt đầu / Tạm dừng; tạm dừng trong 2 phút cuối thì âm thanh trở lại mức bình thường
   if (!sleep.min) return;
-  if (sleep.running) { sleep.remaining = sleepRem(); sleep.running = false; sleep.endAt = 0; if (ctx) ramp(fade.gain, 1, 0.2); }
-  else if (sleep.remaining > 0) { sleep.running = true; sleep.endAt = Date.now() + sleep.remaining * 1000; }
+  const wasRunning = sleep.running;
+  Object.assign(sleep, SleepTimer.sleepToggle(sleep, Date.now()));
+  if (wasRunning && ctx) ramp(fade.gain, 1, 0.2);
+  if (!wasRunning && sleep.running) tel.track("sleep_timer_set");
   renderSleep();
 }
 /* Bảng Hẹn giờ ngủ: cùng kiểu bảng Nhịp học của Pomodoro, bấm số giờ trên header để mở */
-const SLEEP_OPTS = [[0, "Tắt", "Âm thanh phát liên tục"], [15, "15 phút", "Nhỏ dần trong 2 phút cuối rồi tắt"], [30, "30 phút", "Nhỏ dần trong 2 phút cuối rồi tắt"], [60, "60 phút", "Nhỏ dần trong 2 phút cuối rồi tắt"]];
+const SLEEP_OPTS = SleepTimer.SLEEP_OPTIONS.map(m => m ? [m, m + " phút", "Nhỏ dần trong 2 phút cuối rồi tắt"] : [0, "Tắt", "Âm thanh phát liên tục"]);
 function renderSleepPanel() {
   const panel = $("sleepPanel"), a = document.activeElement, keep = a && panel.contains(a) && a.dataset.slp;
   panel.innerHTML = `<div class="pp-head"><span>Hẹn giờ ngủ</span><button type="button" class="pp-x" data-pp="close" aria-label="Đóng">${CHEV_X}</button></div>
@@ -3138,9 +3123,10 @@ document.addEventListener("click", e => {
 });
 setInterval(() => {
   if (!sleep.running) return;
-  const rem = (sleep.endAt - Date.now()) / 1000;
-  if (rem <= 0) {
-    sleep.endAt = 0; sleep.min = 0; sleep.remaining = 0; sleep.running = false;
+  const now = Date.now(), rem = (sleep.endAt - now) / 1000;
+  if (SleepTimer.sleepFinished(sleep, now)) {
+    Object.assign(sleep, SleepTimer.SLEEP_OFF);
+    tel.track("sleep_timer_completed");
     if (ctx) {
       ramp(fade.gain, 0, 0.1);
       setTimeout(() => ctx.suspend().then(() => {
@@ -3150,7 +3136,7 @@ setInterval(() => {
     }
     renderSleep(); return;
   }
-  if (rem <= 120 && ctx) ramp(fade.gain, rem / 120, 0.25);
+  if (rem <= SleepTimer.FADE_SEC && ctx) ramp(fade.gain, SleepTimer.sleepGain(rem), 0.25);   // 2 phút cuối âm tổng giảm dần
   renderSleep();
 }, 250);
 let wallTk = false;
@@ -3340,6 +3326,7 @@ function setScene(id) {
   save();
 }
 function setupRoom() {
+  tel.track("room_visit", ROOM.cur);
   renderRoomUI();
   applyFire(); redrawBg();
   buildHotspots();
@@ -3352,8 +3339,7 @@ function teardownRoom() {
   itemsById.clear(); lampObj = null;
 }
 
-/* ---------- Mũi tên đi giữa các phòng (Phòng ngủ ← Phòng học → Sân vườn; bấm cửa nhà để vào) ---------- */
-const NAVS = { study: [{ d: "l", to: "out", label: "Ra sân vườn" }, { d: "r", to: "bed", label: "Sang phòng ngủ" }], bed: [{ d: "l", to: "study", label: "Về phòng học" }], out: [{ door: true, to: "study", label: "Vào phòng học" }] };
+/* ---------- Mũi tên đi giữa các phòng (Phòng ngủ ← Phòng học → Sân vườn; bấm cửa nhà để vào) — bảng NAVS ở areas/study/engine/rooms.ts ---------- */
 function buildNav() {
   document.querySelectorAll(".nav-arrow,.nav-door").forEach(n => n.remove());
   (NAVS[ROOM.cur] || []).forEach(n => {
@@ -3366,14 +3352,14 @@ function buildNav() {
 }
 const roomEl = document.getElementById("room");
 function switchRoom(to) {
-  if (to === ROOM.cur || ROOM.busy) return;
+  if (!canSwitch(ROOM.cur, to, ROOM.busy)) return;   // đang chuyển thì bỏ qua lệnh mới (AC-01.2)
   ROOM.busy = true; closePop(); closeTray(); sleepCancel(); openPomoPanel(false); openSleepPanel(false);
-  if (to === "bed") pomoPause();   // vào Phòng ngủ: Pomodoro tự tạm dừng, giữ số giờ còn lại (AC-05.8)
-  if (to !== "out") state.lastIndoor = to; else if (ROOM.cur !== "out") state.lastIndoor = ROOM.cur;   // nhớ phòng trong nhà gần nhất để vào lại
+  if (pausesPomodoro(to)) pomoPause();   // vào Phòng ngủ: Pomodoro tự tạm dừng, giữ số giờ còn lại (AC-05.8)
+  state.lastIndoor = lastIndoorAfter(ROOM.cur, to, state.lastIndoor);   // nhớ phòng trong nhà gần nhất để vào lại
   if (ctx) { ramp(roomOut[ROOM.cur].gain, 0, 0.3); ramp(roomOut[to].gain, 1, 0.3); }   // cross-fade âm thanh nền
   fadeEl.classList.add("on");                                                          // mờ tối 0.3s
   setTimeout(() => {
-    teardownRoom(); ROOM.cur = to; state.room = to; setupRoom(); buildNav(); save();
+    teardownRoom(); ROOM.cur = to; state.room = to; setupRoom(); buildNav(); save(false);   // chuyển phòng không tính là tương tác đồ vật
     fadeEl.classList.remove("on");
     setTimeout(() => { ROOM.busy = false; }, 320);
   }, 320);
@@ -3387,6 +3373,6 @@ setupRoom(); buildNav();
 requestAnimationFrame(loop);
 // Nhạc Lo-fi: bài đang chọn của tai nghe, radio, đĩa than đã được dựng nền qua lofiBuf() khi gắn âm thanh lúc khởi động
 // Hook kiểm thử
-window.__focuspace = { spatial, state, D_MAX, W_HALF, LISTENERS, itemsById, windowEm, bedWindowEm, sceneEm, outHeadEm, setScene, sceneBuf, roomOut, fade, sleep, ROOM, switchRoom,
+window.__focuspace = { tel, spatial, state, D_MAX, W_HALF, LISTENERS, itemsById, windowEm, bedWindowEm, sceneEm, outHeadEm, setScene, sceneBuf, roomOut, fade, sleep, ROOM, switchRoom,
   sleepRemaining: s => { sleep.running = true; sleep.endAt = Date.now() + s * 1000; }, pomo, get pomoCfg() { return pomoCfg; }, pomoSetRhythm, pomoSetCustom, pomoSkip, pomoReset, fireEm, lofiCache };
 }

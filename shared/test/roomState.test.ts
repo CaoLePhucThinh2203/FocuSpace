@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { RoomStateSchema } from "../src/roomState";
-import { flatToV4, v4ToFlat } from "../src/migrate";
+import { flatToV4 } from "../src/migrate";
 import { MAX_ITEMS_PER_ROOM } from "../src/constants";
 
 const flat = {
