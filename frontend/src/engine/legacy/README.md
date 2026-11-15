@@ -1,26 +1,31 @@
-# Tách engine Căn phòng (roomEngine.js → module)
+# Engine Căn phòng (`roomEngine.js`) — PA B: chỉ tách logic thuần
 
-`roomEngine.js` là phần `<script>` của `prototype/web/room.html`, chạy nguyên trong trang `/room` (`frontend/src/areas/study/pages/Room.tsx`) để có sản phẩm chạy được ngay (mốc demo 15/11/2026).
-Việc tiếp theo (S3–S4, theo `docs/PLAN.md` Phase 1–5 và `docs/TASKS.md`): mỗi người chuyển khối của mình sang module TypeScript, viết test, rồi xóa khối đó khỏi file này. Làm từng khối một, sau mỗi khối mở `/room` kiểm tra vẫn chạy.
+`roomEngine.js` là phần `<script>` của `prototype/web/room.html`, chạy trong trang `/room` (`frontend/src/areas/study/pages/Room.tsx`). Từ PRD v5.5 các thay đổi đã duyệt (âm nền, Pomodoro theo vòng, Hẹn giờ ngủ, màu lông mèo, N12–N15…) được sửa thẳng ở file này, nên **đây là nguồn logic và hằng số hiện hành**; `prototype/FocuSpace-Semi-Sandbox.html` chỉ dùng để đối chiếu hình, màu.
 
-| Dòng (khoảng) | Khối trong roomEngine.js | Chuyển sang | Người | Task |
-|---|---|---|---|---|
-| 12–88 | HẰNG SỐ PHÒNG (TYPES, SCENES, SLOTS, LOFI…) | `shared/src/constants.ts`, `shared/src/catalog.ts` (đã có phần danh mục) | Hưng | H3 |
-| 89–98 | CÔNG THỨC SPATIAL AUDIO | `shared/src/spatial.ts` (đã có, có test) | Hưng | H5 |
-| 99–206 | TRẠNG THÁI (loadState, save) | `shared/src/roomState.ts`, `shared/src/migrate.ts` (đã có) + `frontend/src/store/room.ts` (Zustand, phần chung) | Thịnh, Lộc | T6, L4 |
-| 207–455 | AUDIO ENGINE | `frontend/src/areas/items-audio/engine/audio/` | Hưng | H7, H8 |
-| 456–478 | PIXEL HELPERS | `frontend/src/areas/study/engine/pixel.ts` | Thịnh | T9 |
-| 479–571 | LỚP TĨNH (Phòng học) | `frontend/src/areas/study/engine/static.ts` | Thịnh | T9 |
-| 572–724 | SPRITES ĐỒ VẬT | `frontend/src/areas/items-audio/engine/sprites.ts` | Hưng | H9 |
-| 725–818 | LỚP HOẠT HỌA | `frontend/src/areas/study/engine/animation.ts` | Thịnh | T9 |
-| 819–826 | ĐỊNH TUYẾN ÂM THANH + HẸN GIỜ NGỦ | `areas/items-audio/engine/audio/routing.ts`, `areas/bedroom/engine/sleepTimer.ts` | Hưng, Lộc | H7, L3 |
-| 827–1343 | PHÒNG NGỦ | `frontend/src/areas/bedroom/engine/bed.ts` (+ âm thanh phòng ngủ) | Lộc | L5 |
-| 1344–2473 | SÂN VƯỜN | `frontend/src/areas/garden/engine/out.ts`, `sceneAudio.ts` | Nhiên | N5, N6 |
-| 2474–2522 | PHÒNG: cấu hình từng phòng | `frontend/src/areas/study/engine/rooms.ts` | Thịnh | T7 |
-| 2523–2843 | KHUNG PHÒNG, ĐỒ VẬT, KÉO THẢ, THANH CÔNG CỤ | `areas/items-audio/engine/placement.ts` + `areas/items-audio/components/ItemTray.tsx` | Hưng | H4, H9 |
-| 2844–2903 | POMODORO + HẸN GIỜ NGỦ | `areas/study/engine/pomodoro.ts`, `areas/bedroom/engine/sleepTimer.ts` + component | Thịnh, Lộc | T7, L6 |
-| 2904–3050 | POPOVER | `areas/items-audio/components/ItemPopover.tsx`, `VolumeMixer.tsx` | Hưng | H10 |
-| 3051–3119 | CHUYỂN PHÒNG | `areas/study/engine/rooms.ts` + `areas/study/components/RoomNav.tsx` | Thịnh | T7 |
-| 3120–hết | KHỞI ĐỘNG | `areas/study/engine/index.ts` (`mountRoom`) | Thịnh | T10 |
+**Quyết định 15/11/2026 (PA B, `docs/PLAN.md` §6):** phần vẽ canvas, âm thanh Web Audio, khay, popover, mixer **giữ trong file này** (không tách sang React/TS). Chỉ tách **hàm thuần** có quy tắc nghiệp vụ (BR/AC) ra module TypeScript kèm unit test; engine import và gọi lại.
 
-Quy tắc khi tách: giữ nguyên hằng số và công thức (CLAUDE.md, mục Constraint); hàm thuần đưa vào `shared/` hoặc `engine/logic/` kèm unit test; phần đụng DOM/canvas để trong `engine/render/` hoặc component React.
+## Hàm thuần đã tách
+
+| Module | Khối trong `roomEngine.js` gọi lại | Quy tắc | Người |
+|---|---|---|---|
+| `shared/src/spatial.ts`, `catalog.ts`, `scenes.ts`, `roomState.ts`, `migrate.ts` | HẰNG SỐ PHÒNG, CÔNG THỨC SPATIAL AUDIO, TRẠNG THÁI (định dạng lưu, đồng bộ) | BR-06, BR-07, BR-12 | Hưng, Nhiên, Thịnh, Lộc |
+| `areas/study/engine/pomodoro.ts` | POMODORO | BR-01, AC-05.3–05.7 | Thịnh |
+| `areas/study/engine/rooms.ts` | CHUYỂN PHÒNG (`NAVS`, `switchRoom`) | FR-NAV-01→03, AC-01.2, AC-05.8 | Thịnh |
+| `areas/bedroom/engine/sleepTimer.ts` | HẸN GIỜ NGỦ | BR-02, FR-TIME-03 | Lộc |
+| `areas/items-audio/engine/placement.ts` | KHUNG PHÒNG — đồ vật di động (`clampPos`, `addItem`), `ROOMCFG.surfaces/shelves` | BR-03→06, AC-04.2, AC-04.4 | Hưng |
+| `lib/time.ts` | POMODORO (tiếng tích tắc) | AC-05.6 | Thịnh |
+
+## Giữ nguyên trong `roomEngine.js` (tìm theo tiêu đề khối `=====`)
+
+| Khối | Chủ khu vực |
+|---|---|
+| AUDIO ENGINE, ĐỊNH TUYẾN ÂM THANH THEO PHÒNG, SPRITES ĐỒ VẬT, POPOVER (đồ vật, mixer), thanh công cụ + khay, kéo thả | Hưng |
+| SÂN VƯỜN (vẽ, âm khung cảnh) | Nhiên |
+| PHÒNG NGỦ (vẽ, âm phòng ngủ), giao diện Hẹn giờ ngủ | Lộc |
+| PIXEL HELPERS, LỚP TĨNH, LỚP HOẠT HỌA, PHÒNG (cấu hình), giao diện Pomodoro, KHỞI ĐỘNG | Thịnh |
+
+Mỗi người vẫn sửa khối của mình trong file này (PR gán Thịnh duyệt vì đây là file chung). Thêm quy tắc mới thì viết thành hàm thuần trong thư mục khu vực, test trước, rồi gọi từ engine.
+
+## Hook kiểm thử
+
+Cuối file engine gắn `window.__focuspace` (state, ROOM, sleep, pomo, switchRoom…) để test E2E đọc trạng thái; kiểu khai báo ở `frontend/e2e/focuspaceHook.ts`. Engine báo thông điệp ngắn cho người dùng bằng sự kiện `focuspace:notice` (ví dụ "Phòng đã đầy…"), `Room.tsx` hiện ở ô `role="status"`.

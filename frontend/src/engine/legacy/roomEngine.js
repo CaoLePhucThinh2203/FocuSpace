@@ -2,10 +2,10 @@
 /* eslint-disable */
 /**
  * Engine Căn phòng — chép nguyên phần <script> của prototype/web/room.html (bản đã duyệt, Lighthouse cách 2).
- * Đây là bước 1 của việc tách prototype: chạy được ngay trong trang /room.
- * Bước 2 (S3–S4, theo docs/PLAN.md Phase 1–5): tách từng khối có tiêu đề "=====" dưới đây sang
- * shared/ và frontend/src/engine/{logic,render,audio}/ — xem legacy/README.md.
- * Engine đọc/ghi LocalStorage khóa "focuspace.room.v4"; frontend/src/lib/roomSync.ts đồng bộ khóa này với /room-state.
+ * Chạy trong trang /room; từ PRD v5.5 các thay đổi đã duyệt sửa thẳng ở đây, nên đây là nguồn logic hiện hành.
+ * PA B (15/11/2026): vẽ canvas, âm thanh, khay, popover giữ trong file này; quy tắc nghiệp vụ là hàm thuần ở
+ * shared/ và frontend/src/areas/<khu-vực>/engine/ (import bên dưới) — xem legacy/README.md.
+ * Engine đọc/ghi LocalStorage khóa "focuspace.room.v4"; frontend/src/areas/study/roomSync.ts đồng bộ khóa này với /room-state.
  */
 import { shouldTick } from "../../lib/time";
 import { RHYTHMS, RHYTHM_IDS, nextPhase, parseConfig, phaseSeconds, rhythmOf, setCustom } from "../../areas/study/engine/pomodoro";
