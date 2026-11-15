@@ -12,9 +12,11 @@ import { RHYTHMS, RHYTHM_IDS, nextPhase, parseConfig, phaseSeconds, rhythmOf, se
 import { NAVS, canSwitch, lastIndoorAfter, pausesPomodoro } from "../../areas/study/engine/rooms";
 import * as SleepTimer from "../../areas/bedroom/engine/sleepTimer";
 import * as Placement from "../../areas/items-audio/engine/placement";
+import { startRoomTelemetry } from "../../areas/garden/telemetry";
 
 export function startRoomEngine() {
 "use strict";
+const tel = startRoomTelemetry();   // N10: phiên sử dụng, Pomodoro, lỗi client → POST /telemetry/batch (areas/garden/telemetry.ts)
 /* ============================================================
    HẰNG SỐ PHÒNG (đơn vị: pixel logic của căn phòng 320×180)
    ============================================================ */
@@ -235,11 +237,12 @@ function box(el) {
   return { left, top, width: r.height, height: r.width, right: left + r.height, bottom: top + r.width };
 }
 let saveTimer = 0;
-function save() {   // lưu sau 250 ms (không còn chip "Đã lưu" ở header)
+function save(interaction = true) {   // lưu sau 250 ms (không còn chip "Đã lưu" ở header); mỗi lần người dùng đổi phòng/đồ là một tương tác (FR-TEL-01)
+  if (interaction) tel.track("interaction");
   clearTimeout(saveTimer);
   saveTimer = setTimeout(() => {
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
-    catch (e) { console.warn("FocuSpace: trình duyệt chặn lưu cục bộ", e); }
+    catch (e) { console.warn("FocuSpace: trình duyệt chặn lưu cục bộ", e); tel.error("storage_write", String(e)); }
   }, 250);
 }
 
@@ -247,7 +250,8 @@ function save() {   // lưu sau 250 ms (không còn chip "Đã lưu" ở header)
    AUDIO ENGINE (Web Audio API — PRD 5.1, 6.2)
    ============================================================ */
 const AC = window.AudioContext || window.webkitAudioContext;
-const ctx = AC ? new AC() : null;
+const ctx = (() => { try { return AC ? new AC() : null; } catch (e) { tel.error("audio_context_create", String(e)); return null; } })();
+if (!AC) tel.error("audio_context_create", "Trình duyệt không hỗ trợ Web Audio");
 function masterGainOf() { return state.masterOn ? state.masterVol / 0.8 * 0.75 : 0; }   // 80% = mức gốc (0.75), kéo tới 100% để to hơn
 let master = null;
 if (ctx) {
@@ -542,7 +546,7 @@ function unlockAudio() {
   ctx.resume().then(() => {
     audioReady = true;
     const note = document.getElementById("sleepNote"); if (note) note.hidden = true;   // âm thanh trở lại sau khi hết giờ ngủ (AC-06.2)
-  }).catch(() => {});
+  }).catch(e => tel.error("audio_context_resume", String(e)));
 }
 document.addEventListener("pointerdown", unlockAudio, true);
 document.addEventListener("keydown", unlockAudio, true);
@@ -2965,13 +2969,13 @@ const PHASE_LABEL = { focus: "Focus", short: "Nghỉ ngắn", long: "Nghỉ dài
 function savePomoCfg() { try { localStorage.setItem(POMO_KEY, JSON.stringify(pomoCfg)); } catch { /* trình duyệt chặn lưu: vẫn dùng trong phiên */ } }
 function pomoToggle() {
   if (pomo.running) { pomo.running = false; pomo.remaining = Math.max(0, Math.ceil((pomo.endAt - Date.now()) / 1000)); }
-  else { pomo.running = true; pomo.endAt = Date.now() + pomo.remaining * 1000; }
+  else { pomo.running = true; pomo.endAt = Date.now() + pomo.remaining * 1000; tel.pomodoroStart(pomo.mode, phaseSeconds(pomoCfg, pomo.mode)); }   // phiên đã mở (tiếp tục sau Tạm dừng) thì telemetry bỏ qua
   renderPomo();
 }
 function pomoPause() { if (pomo.running) pomoToggle(); }
 function pomoSetPhase(phase) { pomo.mode = phase; pomo.running = false; pomo.remaining = phaseSeconds(pomoCfg, phase); renderPomo(); }
-function pomoReset() { pomo.done = 0; pomoSetPhase("focus"); }   // Đặt lại vòng: về phiên Focus đầu tiên (AC-05.4)
-function pomoSkip() { if (pomo.mode === "focus") return; if (pomo.mode === "long") pomo.done = 0; pomoSetPhase("focus"); }
+function pomoReset() { tel.pomodoroEnd("reset"); pomo.done = 0; pomoSetPhase("focus"); }   // Đặt lại vòng: về phiên Focus đầu tiên (AC-05.4)
+function pomoSkip() { if (pomo.mode === "focus") return; tel.pomodoroEnd("reset"); if (pomo.mode === "long") pomo.done = 0; pomoSetPhase("focus"); }
 /* Đổi nhịp: đang dừng thì áp dụng ngay; đang chạy thì phiên hiện tại giữ nguyên, nhịp mới dùng từ phiên sau (AC-05.5) */
 function pomoSetRhythm(id) {
   pomoCfg = { ...pomoCfg, rhythm: id }; savePomoCfg();
@@ -3058,6 +3062,7 @@ setInterval(() => {
   if (shouldTick(pomo.running, prev, pomo.remaining)) tickClocks();
   if (pomo.remaining <= 0) {   // hết giờ: chuông, sang giai đoạn kế tiếp của vòng và dừng chờ bấm Bắt đầu (AC-05.3, AC-05.7)
     if (ctx && BUF.bell) { const s = ctx.createBufferSource(); s.buffer = BUF.bell; const g = ctx.createGain(); g.gain.value = 0.8; s.connect(g); g.connect(master); s.start(); }
+    tel.pomodoroEnd("completed");   // AC-05.3
     const nx = nextPhase(pomo.mode, pomo.done, rhythmOf(pomoCfg).rounds);
     pomo.done = nx.done; pomoSetPhase(nx.phase);
     return;
@@ -3085,6 +3090,7 @@ function sleepToggle() {   // Bắt đầu / Tạm dừng; tạm dừng trong 2 
   const wasRunning = sleep.running;
   Object.assign(sleep, SleepTimer.sleepToggle(sleep, Date.now()));
   if (wasRunning && ctx) ramp(fade.gain, 1, 0.2);
+  if (!wasRunning && sleep.running) tel.track("sleep_timer_set");
   renderSleep();
 }
 /* Bảng Hẹn giờ ngủ: cùng kiểu bảng Nhịp học của Pomodoro, bấm số giờ trên header để mở */
@@ -3120,6 +3126,7 @@ setInterval(() => {
   const now = Date.now(), rem = (sleep.endAt - now) / 1000;
   if (SleepTimer.sleepFinished(sleep, now)) {
     Object.assign(sleep, SleepTimer.SLEEP_OFF);
+    tel.track("sleep_timer_completed");
     if (ctx) {
       ramp(fade.gain, 0, 0.1);
       setTimeout(() => ctx.suspend().then(() => {
@@ -3319,6 +3326,7 @@ function setScene(id) {
   save();
 }
 function setupRoom() {
+  tel.track("room_visit", ROOM.cur);
   renderRoomUI();
   applyFire(); redrawBg();
   buildHotspots();
@@ -3351,7 +3359,7 @@ function switchRoom(to) {
   if (ctx) { ramp(roomOut[ROOM.cur].gain, 0, 0.3); ramp(roomOut[to].gain, 1, 0.3); }   // cross-fade âm thanh nền
   fadeEl.classList.add("on");                                                          // mờ tối 0.3s
   setTimeout(() => {
-    teardownRoom(); ROOM.cur = to; state.room = to; setupRoom(); buildNav(); save();
+    teardownRoom(); ROOM.cur = to; state.room = to; setupRoom(); buildNav(); save(false);   // chuyển phòng không tính là tương tác đồ vật
     fadeEl.classList.remove("on");
     setTimeout(() => { ROOM.busy = false; }, 320);
   }, 320);
@@ -3365,6 +3373,6 @@ setupRoom(); buildNav();
 requestAnimationFrame(loop);
 // Nhạc Lo-fi: bài đang chọn của tai nghe, radio, đĩa than đã được dựng nền qua lofiBuf() khi gắn âm thanh lúc khởi động
 // Hook kiểm thử
-window.__focuspace = { spatial, state, D_MAX, W_HALF, LISTENERS, itemsById, windowEm, bedWindowEm, sceneEm, outHeadEm, setScene, sceneBuf, roomOut, fade, sleep, ROOM, switchRoom,
+window.__focuspace = { tel, spatial, state, D_MAX, W_HALF, LISTENERS, itemsById, windowEm, bedWindowEm, sceneEm, outHeadEm, setScene, sceneBuf, roomOut, fade, sleep, ROOM, switchRoom,
   sleepRemaining: s => { sleep.running = true; sleep.endAt = Date.now() + s * 1000; }, pomo, get pomoCfg() { return pomoCfg; }, pomoSetRhythm, pomoSetCustom, pomoSkip, pomoReset, fireEm, lofiCache };
 }
