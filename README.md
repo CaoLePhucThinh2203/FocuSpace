@@ -18,6 +18,7 @@ npm run dev                                   # API: http://localhost:3000/api/v
 ```
 
 Lệnh khác: `npm test` (unit + integration), `npm run test:e2e` (Playwright), `npm run lint`, `npm run build`.
+Integration test backend tự dựng một PostgreSQL 16 tạm (`embedded-postgres`, DB `focuspace_test`) rồi xóa khi xong, không đụng `DATABASE_URL` trong `backend/.env`; muốn dùng PostgreSQL có sẵn thì đặt `TEST_DATABASE_URL` (chỉ chấp nhận localhost — CI dùng cách này).
 Ràng buộc CHECK của CSDL: xem `backend/prisma/checks.sql` (thêm bằng một migration SQL sau migration đầu).
 
 ## Deploy (Vercel + Render + Neon, gói miễn phí)

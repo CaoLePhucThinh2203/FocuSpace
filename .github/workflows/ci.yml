@@ -13,6 +13,8 @@ jobs:
         options: --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
     env:
       DATABASE_URL: postgresql://postgres:postgres@localhost:5432/focuspace_test?schema=public
+      # Integration test backend dùng DB này thay cho embedded-postgres (backend/test/setup/globalSetup.ts)
+      TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/focuspace_test?schema=public
       JWT_SECRET: ci-secret-khong-dung-that-0123456789
     steps:
       - uses: actions/checkout@v4
