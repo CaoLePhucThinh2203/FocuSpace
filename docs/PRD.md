@@ -8,7 +8,7 @@ Căn phòng Semi-Sandbox · Phòng học · Phòng ngủ · Sân vườn
 |---|---|
 | **Chủ sở hữu (Product Owner / PM)** | Cao Lê Phúc Thịnh (theo PRD Semi-Sandbox gốc) |
 | **Đội ngũ tham gia** | Tuấn Hưng (đồ vật, âm thanh) · Đình Nhiên (Sân vườn) · Tuấn Lộc (Phòng ngủ) · Phúc Thịnh (Phòng học, quản lý repo, các trang còn lại) · chi tiết docs/PLAN.md mục 2 |
-| **Phiên bản / trạng thái** | v5.9 (font tự host, 15/11/2026) · v5.8 (thống nhất 25 đồ, 15/11/2026) · v5.7 (Pomodoro theo vòng 15/11/2026) · v5.6 (rút gọn 15/11/2026) · v5.0 phê duyệt 07/11/2026 · v5.1 – v5.4 duyệt ở buổi họp kế hoạch 13/11/2026 · v5.5 (sửa giao diện, âm thanh 15/11) chờ duyệt |
+| **Phiên bản / trạng thái** | v5.10 (chữ chú thích Căn phòng 12 px, 15/11/2026) · v5.9 (font tự host, 15/11/2026) · v5.8 (thống nhất 25 đồ, 15/11/2026) · v5.7 (Pomodoro theo vòng 15/11/2026) · v5.6 (rút gọn 15/11/2026) · v5.0 phê duyệt 07/11/2026 · v5.1 – v5.4 duyệt ở buổi họp kế hoạch 13/11/2026 · v5.5 (sửa giao diện, âm thanh 15/11) chờ duyệt |
 | **Tài liệu liên quan** | Tài liệu Kiến trúc giải pháp · API Docs · docs/DATABASE.md · docs/PLAN.md · Final Project Brief CSB25022 · FocuSpace_Diagrams.drawio · Chương 1 Phân tích hệ thống (FocuSpace_Chuong2_PhanTich.docx) |
 
 > **Quy tắc nguồn:** Khi hai nguồn mâu thuẫn, nguồn mới hơn thắng: tài liệu này \> prototype FocuSpace-Semi-Sandbox.html \> PRD .docx cũ. Mọi hành vi giao diện mô tả theo prototype FocuSpace-Semi-Sandbox.html. Yêu cầu của đề bài đồ án môn Web (CSB25022) đứng trên mọi nguồn.
@@ -858,6 +858,8 @@ Mỗi tiêu chí viết theo dạng **Cho trước – Khi – Thì**, kiểm đ
 
 - Mỗi trang có thẻ title và meta description riêng; html lang="vi"; mọi nút và hình có nhãn truy cập.
 
+- Chữ trên trang tối thiểu 12 px (Lighthouse "legible font sizes"): v5.10 nâng nhãn vùng bấm, nhãn mũi tên chuyển phòng, tooltip thanh công cụ và nhãn "Focus" / "Hẹn giờ ngủ" trên header Căn phòng từ 11 px (prototype) lên 12 px.
+
 ## 6.2 Bảo mật & Quyền riêng tư (Security & Compliance)
 
 - Toàn bộ kết nối qua HTTPS.
@@ -955,3 +957,4 @@ Mọi câu hỏi mở đã chốt (Q-03, Q-04, Q-07 trước 07/11; còn lại �
 | v5.7 | 15/11/2026 | Pomodoro theo vòng của kỹ thuật Pomodoro: thêm nghỉ dài, chấm tiến độ, bảng Nhịp học (Cổ điển, Sâu, Nhẹ, Tuỳ chỉnh) mở từ số giờ ở header; bỏ nút ▲▼ ±1/±10 ở Pomodoro và Hẹn giờ ngủ; Hẹn giờ ngủ trên header cùng kiểu Pomodoro mini, bảng chọn Tắt / 15 / 30 / 60 phút (bỏ mức 45), chọn xong bấm Bắt đầu / Tạm dừng; vào Phòng ngủ thì Pomodoro tự tạm dừng, ô Hẹn giờ ngủ thế chỗ. Sửa US-07, BR-01, Tính năng G, FR-UI-02, FR-TIME-01→03, FR-SAVE-04, AC-05.3→05.5, AC-06.3; thêm AC-05.7, AC-05.8. |
 | v5.8 | 15/11/2026 | Thống nhất giới hạn đồ vật với code (G12): BR-06, FR-ITEM-05, Tính năng E, AC-04.2, Q-16 đổi 40 → 25 đồ mỗi phòng; đủ 25 đồ thì không thêm, chỉ hiện thông báo “Phòng đã đầy — hãy xóa bớt đồ để thêm mới”. Tính năng G, I: bỏ nhãn [Đề xuất] — `abandoned` gửi bằng `fetch keepalive` khi rời trang (N10); Bỏ qua lượt nghỉ ghi `reset`. |
 | v5.9 | 15/11/2026 | 6.1: font Be Vietnam Pro tự host, bỏ CSS Google Fonts chặn hiển thị; ảnh xem trước đồ vật bỏ siêu dữ liệu `caBX`. Không đổi FR, AC (AC-12.6 vẫn một font Be Vietnam Pro). |
+| v5.10 | 15/11/2026 | 6.1: chữ chú thích Căn phòng (nhãn vùng bấm, nhãn mũi tên, tooltip thanh công cụ, nhãn Focus / Hẹn giờ ngủ) 11 px → 12 px để đạt Lighthouse "legible font sizes"; khác prototype 1 px. Không đổi FR, AC. |

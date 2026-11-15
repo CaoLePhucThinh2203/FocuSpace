@@ -14,7 +14,7 @@ Cách đo chung: Lighthouse 12.6.1, cấu hình mobile mặc định, Chrome hea
 | /account | — (chưa đo) | 100 / 100 / 100 / 100 | 100, 100, 100 | 1,3 s | 1,8 s | 20 ms | 0 | `2026-11-15/account.json` |
 | /about | — (chưa đo) | 100 / 100 / 100 / 100 | 100, 100, 100 | 1,3 s | 1,7 s | 0 ms | 0 | `2026-11-15/about.json` |
 
-`/stats`, `/account` đo ở chế độ khách (lời mời đăng nhập / form). Còn lại chưa đạt 100: `/room` Best Practices 96 do chữ chú thích 11 px (nhãn vùng bấm `.hot .tag`, `.nav-arrow .tag`, tooltip `.tb-tip`) lấy nguyên từ prototype — sửa là đổi thiết kế giao diện nên chưa làm.
+`/stats`, `/account` đo ở chế độ khách (lời mời đăng nhập / form). `/room` Best Practices 96 lúc đo do chữ chú thích 11 px (nhãn vùng bấm `.hot .tag`, `.nav-arrow .tag`, tooltip `.tb-tip`, nhãn `.mode` trên header) lấy từ prototype — chỉ 31,65% chữ ≥ 12 px; đã nâng lên 12 px (PRD v5.10), đo lại trên bản build ở máy: Best Practices 100, 100% chữ đủ cỡ.
 
 ## Nhật ký tối ưu
 
@@ -32,6 +32,7 @@ Cách đo chung: Lighthouse 12.6.1, cấu hình mobile mặc định, Chrome hea
 | 15/11 | CSS Google Fonts chặn hiển thị 0,9–1,8 s; ảnh xem trước còn 98 KiB siêu dữ liệu `caBX` | Tự host Be Vietnam Pro (OFL, woff2 theo bộ chữ, `optional`, tải trước 400/700); bỏ `caBX` (101,5 KB → 3,5 KB) | `public/fonts/`, `styles/index.css`, `index.html`, `public/previews/` | 9994510, 599b7fa · #40 | Thịnh |
 | 15/11 | CLS 0,327 trên Chrome desktop: thanh cuộn xuất hiện muộn làm nội dung lệch | `scrollbar-gutter: stable` (Căn phòng đặt lại `auto`); Thư viện cao tối thiểu một màn hình; E2E `uc07-thu-vien-cls.spec.ts` | `styles/index.css`, `engine/room.css`, `Library.tsx` | 4001f9f · #41 | Thịnh |
 | 15/11 | Import vòng qua `@focuspace/shared/src/catalog` | `shared` khai báo `"sideEffects": false`, Thư viện import `@focuspace/shared` như nơi khác (kích thước JS không đổi, không lẫn Zod) | `shared/package.json`, `Library.tsx` | nhánh `chore/don-toi-uu` | Thịnh |
+| 15/11 | `/room` Best Practices 96: chỉ 31,65% chữ ≥ 12 px (nhãn chú thích 11 px từ prototype) | Nâng nhãn vùng bấm, nhãn mũi tên, tooltip, nhãn `.mode` lên 12 px — Best Practices 100 (PRD v5.10) | `areas/study/engine/room.css` | nhánh `fix/chu-nhan-12px` | Thịnh |
 
 ## Ghi chú đo
 
