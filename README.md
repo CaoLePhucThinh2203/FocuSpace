@@ -69,7 +69,7 @@ FocuSpace/
 └── prototype/
     ├── FocuSpace-Semi-Sandbox.html   # bản gốc Căn phòng
     ├── web/                          # prototype 6 trang (mở index.html), Lighthouse theo cách 2
-    └── so-sanh-lighthouse/           # đo Lighthouse: cách 1 vs cách 2 (đã chọn cách 2)
+    └── so-sanh-lighthouse/           # đo Lighthouse: cách 1 vs cách 2 (chọn cách 2; PRD v5.5 đổi sang dựng âm thanh sau cú nhấp đầu)
 ```
 
 Repo: https://github.com/CaoLePhucThinh2203/FocuSpace · Triển khai: Vercel + Render + Neon (link ghi khi hoàn tất ở S5).

@@ -1,36 +1,40 @@
-# Báo cáo Lighthouse (L12 — Tuấn Lộc)
+# Báo cáo Lighthouse (L12 — Tuấn Lộc; tối ưu H12 — Tuấn Hưng)
 
-Đo Lighthouse mobile cho 6 trang, lưu file HTML/JSON trước và sau tối ưu vào thư mục này. Mục tiêu ≥ 90 cả 4 hạng mục (AC-NF.1).
+Mục tiêu: ≥ 90 cả 4 hạng mục (Performance, Accessibility, Best Practices, SEO) ở mọi trang, cấu hình mobile (AC-NF.1, PRD 6.1).
+Cách đo chung: Lighthouse 12.6.1, cấu hình mobile mặc định, Chrome headless, bản triển khai https://focuspace-iota.vercel.app, mỗi trang 3 lần, ghi lần có Performance trung vị. File JSON đầy đủ của lần đo cuối nằm trong thư mục ngày đo (mở bằng [Lighthouse Viewer](https://googlechrome.github.io/lighthouse/viewer/)).
 
-| Trang | Trước (P/A/BP/SEO) | Sau (P/A/BP/SEO) | Thay đổi đã làm |
-|---|---|---|---|
-| / | | | |
-| /room | | | (H12 — Hưng) |
-| /library | | | |
-| /stats | | | |
-| /account | | | |
-| /about | | | |
+## Kết quả cuối — 15/11/2026 (`2026-11-15/`)
 
-## 15/11/2026 — Font tự host, ảnh xem trước nhẹ (H12)
+| Trang | Trước tối ưu (P) | Sau: P / A / BP / SEO | Performance 3 lần | FCP | LCP | TBT | CLS | File |
+|---|---|---|---|---|---|---|---|---|
+| / | — (chưa đo) | 100 / 100 / 100 / 100 | 99, 100, 100 | 1,3 s | 1,7 s | 0 ms | 0 | `2026-11-15/home.json` |
+| /room | 60 (TBT 6,2 s, PRD v5.5) | 95 / 100 / 96 / 100 | 95, 91, 95 | 2,1 s | 2,4 s | 90 ms | 0 | `2026-11-15/room.json` |
+| /library | 84 (CLS 0,327) | 100 / 100 / 100 / 100 | 100, 100, 100 | 1,3 s | 1,7 s | 0 ms | 0 | `2026-11-15/library.json` |
+| /stats | — (chưa đo) | 100 / 100 / 100 / 100 | 100, 98, 100 | 1,2 s | 1,6 s | 0 ms | 0 | `2026-11-15/stats.json` |
+| /account | — (chưa đo) | 100 / 100 / 100 / 100 | 100, 100, 100 | 1,3 s | 1,8 s | 20 ms | 0 | `2026-11-15/account.json` |
+| /about | — (chưa đo) | 100 / 100 / 100 / 100 | 100, 100, 100 | 1,3 s | 1,7 s | 0 ms | 0 | `2026-11-15/about.json` |
 
-**Vấn đề** (Lighthouse mobile, bản Vercel, `/library`): CSS của Google Fonts chặn hiển thị khoảng 0,9–1,8 giây; 17 ảnh `previews/item-*.png` mỗi ảnh mang khoảng 5,7 KB siêu dữ liệu `caBX` (tổng 98 KiB thừa).
+`/stats`, `/account` đo ở chế độ khách (lời mời đăng nhập / form). Còn lại chưa đạt 100: `/room` Best Practices 96 do chữ chú thích 11 px (nhãn vùng bấm `.hot .tag`, `.nav-arrow .tag`, tooltip `.tb-tip`) lấy nguyên từ prototype — sửa là đổi thiết kế giao diện nên chưa làm.
 
-**Thay đổi:** font Be Vietnam Pro tự host trong `frontend/public/fonts/` (giấy phép OFL, 12 file woff2 theo bộ chữ, `font-display: optional`, tải trước độ đậm 400 và 700), bỏ mọi yêu cầu tới `fonts.googleapis.com` / `fonts.gstatic.com`; bỏ khối `caBX` khỏi 17 ảnh (101,5 KB → 3,5 KB, điểm ảnh giữ nguyên).
+## Nhật ký tối ưu
 
-**Cách đo:** Lighthouse 12.6.1, cấu hình mobile mặc định, Chrome headless, bản build `vite preview` trên máy, mỗi trang 3 lần. `/library` lúc đo không có backend nên ở trạng thái "Không tải được thư viện" (giống nhau trước và sau; Best Practices 96 do lỗi gọi API trong console).
+| Ngày | Vấn đề (Lighthouse) | Thay đổi | File | Commit / PR | Người |
+|---|---|---|---|---|---|
+| 14–15/11 | `/room` Performance 60, TBT 6,2 s: dựng toàn bộ âm thanh tổng hợp lúc mở trang | Dựng âm thanh sau cú nhấp/phím đầu tiên, mỗi nguồn một tác vụ; font không chặn hiển thị (thay quyết định "cách 2" — PRD v5.5) | `engine/legacy/roomEngine.js` (khối AUDIO ENGINE), `index.html` | a8ebd6a · #19 | Hưng |
+| 15/11 | "Đã ghi lỗi vào console" (401 khi khách gọi `/auth/refresh`); thiếu `robots.txt` | Khách chưa từng đăng nhập không gọi refresh; thêm `robots.txt` | `lib/api.ts`, `public/robots.txt` | 798acea · #20 | Hưng |
+| 15/11 | CSS chính chặn hiển thị | Plugin build nhúng CSS chính vào `index.html` | `vite.config.ts` | 7a0b305 · #21 | Hưng |
+| 15/11 | File không tồn tại trả `index.html` (lỗi MIME, SEO) | Vercel chỉ chuyển về `index.html` cho đường dẫn không có dấu chấm | `vercel.json` | 4f3cabc · #26 | Hưng |
+| 15/11 | LCP Trang chủ (ảnh đầu trang) tải muộn | Tải trước ảnh LCP ngay khi đọc HTML | `index.html` | e3ddd5e · #27 | Hưng |
+| 15/11 | `/library` CLS: khung chờ khác kích thước thẻ thật | Khung chờ cùng kích thước, chừa sẵn dòng "N đồ vật" | `areas/study/pages/Library.tsx` | f906c50 · #32 | Hưng |
+| 15/11 | CLS: thanh điều hướng hiện muộn, đẩy trang xuống | `Suspense` đặt trong khung trang | `areas/study/components/Layout.tsx` | e5b8800 · #36 | Hưng |
+| 15/11 | Ảnh xem trước nặng; JS Thư viện kéo theo Zod (~14 KiB) | Bỏ siêu dữ liệu ảnh; Thư viện chỉ lấy phần catalog của `shared` | `public/previews/`, `Library.tsx` | 4c98e5a, 81200ff · #37, #38 | Hưng |
+| 15/11 | CLS 0,327 do đổi font giữa chừng | Tải CSS Google Fonts kiểu thường với `display=optional` | `index.html` | d82663b · #39 | Hưng |
+| 15/11 | CSS Google Fonts chặn hiển thị 0,9–1,8 s; ảnh xem trước còn 98 KiB siêu dữ liệu `caBX` | Tự host Be Vietnam Pro (OFL, woff2 theo bộ chữ, `optional`, tải trước 400/700); bỏ `caBX` (101,5 KB → 3,5 KB) | `public/fonts/`, `styles/index.css`, `index.html`, `public/previews/` | 9994510, 599b7fa · #40 | Thịnh |
+| 15/11 | CLS 0,327 trên Chrome desktop: thanh cuộn xuất hiện muộn làm nội dung lệch | `scrollbar-gutter: stable` (Căn phòng đặt lại `auto`); Thư viện cao tối thiểu một màn hình; E2E `uc07-thu-vien-cls.spec.ts` | `styles/index.css`, `engine/room.css`, `Library.tsx` | 4001f9f · #41 | Thịnh |
+| 15/11 | Import vòng qua `@focuspace/shared/src/catalog` | `shared` khai báo `"sideEffects": false`, Thư viện import `@focuspace/shared` như nơi khác (kích thước JS không đổi, không lẫn Zod) | `shared/package.json`, `Library.tsx` | nhánh `chore/don-toi-uu` | Thịnh |
 
-| Trang | Performance trước | Performance sau | FCP trước → sau (trung vị) | LCP trước → sau | CLS | A / BP / SEO |
-|---|---|---|---|---|---|---|
-| / | 93, 93, 93 | 95, 95, 95 | 2,53 s → 1,91 s | 2,68 s → 2,76 s | 0 | 100 / 100 / 100 |
-| /library | 92, 93, 92 | 95, 95, 96 | 2,57 s → 1,90 s | 2,65 s → 2,61 s | 0,054 (trạng thái lỗi) | 100 / 96 / 100 |
-| /about | 94, 93, 93 | 97, 97, 97 | 2,54 s → 1,83 s | 2,62 s → 2,30 s | 0 | 100 / 100 / 100 |
+## Ghi chú đo
 
-Đo bản Vercel `/library` trước thay đổi (có dữ liệu thật): Performance 88 / 96 / 91, CLS 0. Đo lại trên Vercel sau khi PR được merge và triển khai.
-
-## 15/11/2026 — CLS trang Thư viện do thanh cuộn xuất hiện muộn
-
-**Vấn đề:** Lighthouse trong Chrome desktop trên Windows báo CLS 0,327 ở `/library` (`<main>` 0,296, `<footer>` 0,031), trong khi Lighthouse headless và mobile đo CLS 0. Nguyên nhân: lúc danh sách đang tải, trang ngắn hơn màn hình nên không có thanh cuộn và chân trang lọt vào khung nhìn; khi 17 đồ vật về, trang dài ra, Chrome chèn thanh cuộn 15 px làm toàn bộ nội dung căn giữa lệch sang trái và chân trang bị đẩy ra ngoài. Headless ẩn thanh cuộn nên không thấy.
-
-**Thay đổi:** `html { scrollbar-gutter: stable }` cho các trang thường (Căn phòng đặt lại `auto` vì không cuộn); `<main>` của Thư viện cao tối thiểu bằng màn hình.
-
-**Đo** (Chrome hiện thanh cuộn, viewport desktop 1280×800, layout-shift qua PerformanceObserver): `/library` 0,352 → 0 (kể cả API chậm 1,2 giây); `/account` 0,036 → 0,020; `/stats` 0,058 → 0,032; `/`, `/about` 0 → 0; mobile và tablet 0. E2E `uc07-thu-vien-cls.spec.ts` giữ điều kiện này để chặn lỗi lặp lại.
+- **Font tự host (PR #40)** — đo trên bản build `vite preview` ở máy, mỗi trang 3 lần: Performance `/` 93 → 95, `/library` 92–93 → 95–96, `/about` 93–94 → 97; FCP khoảng 2,55 s → 1,9 s. Bản Vercel `/library` trước thay đổi: 88 / 96 / 91.
+- **CLS do thanh cuộn (PR #41)** — Lighthouse headless và mobile ẩn thanh cuộn nên đo CLS 0; Chrome desktop trên Windows hiện thanh cuộn nên thấy lỗi. Đo bằng PerformanceObserver khi hiện thanh cuộn, viewport 1280×800: `/library` 0,352 → 0 (kể cả API chậm 1,2 giây), `/account` 0,036 → 0,020, `/stats` 0,058 → 0,032, `/` và `/about` 0.
+- `prototype/so-sanh-lighthouse/` là bằng chứng đo cách 1 / cách 2 trên prototype (07–13/11), giữ nguyên.

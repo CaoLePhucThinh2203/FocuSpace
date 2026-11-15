@@ -1,7 +1,7 @@
 // @ts-nocheck
 /* eslint-disable */
 /**
- * Engine Căn phòng — chép nguyên phần <script> của prototype/web/room.html (bản đã duyệt, Lighthouse cách 2).
+ * Engine Căn phòng — chép nguyên phần <script> của prototype/web/room.html (bản đã duyệt); từ PRD v5.5 âm thanh dựng sau cú nhấp đầu (H12).
  * Chạy trong trang /room; từ PRD v5.5 các thay đổi đã duyệt sửa thẳng ở đây, nên đây là nguồn logic hiện hành.
  * PA B (15/11/2026): vẽ canvas, âm thanh, khay, popover giữ trong file này; quy tắc nghiệp vụ là hàm thuần ở
  * shared/ và frontend/src/areas/<khu-vực>/engine/ (import bên dưới) — xem legacy/README.md.

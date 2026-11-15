@@ -5,7 +5,7 @@
 ## Thư mục này (frontend)
 
 - `engine/placement.ts` — quy tắc đặt đồ BR-03→06, hình học mặt bàn/giá/tủ, giới hạn 25 đồ và câu thông báo "Phòng đã đầy…" (H4, có test)
-- `lighthouse-room.md` — số đo Lighthouse `/room` trước/sau (H12)
+- Số đo Lighthouse `/room` trước/sau và nhật ký tối ưu (H12): `docs/reports/lighthouse/README.md`
 - Danh mục 17 đồ vật và công thức âm thanh không gian nằm ở `shared/src/catalog.ts`, `shared/src/spatial.ts` (H3, H5)
 
 ## Phần trong `frontend/src/engine/legacy/roomEngine.js` (PA B)

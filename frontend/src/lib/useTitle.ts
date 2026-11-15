@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-/** Tiêu đề và meta description riêng cho từng trang (Lighthouse SEO, cách 2). */
+/** Tiêu đề và meta description riêng cho từng trang (Lighthouse SEO, PRD 6.1). */
 export function useTitle(title: string, description?: string) {
   useEffect(() => {
     document.title = title;
