@@ -8,7 +8,8 @@
  * Engine đọc/ghi LocalStorage khóa "focuspace.room.v4"; frontend/src/lib/roomSync.ts đồng bộ khóa này với /room-state.
  */
 import { shouldTick } from "../../lib/time";
-import { RHYTHMS, RHYTHM_IDS, nextPhase, parseConfig, phaseSeconds, rhythmOf, setCustom } from "../../lib/pomodoro";
+import { RHYTHMS, RHYTHM_IDS, nextPhase, parseConfig, phaseSeconds, rhythmOf, setCustom } from "../../areas/study/engine/pomodoro";
+import { NAVS, canSwitch, lastIndoorAfter, pausesPomodoro } from "../../areas/study/engine/rooms";
 
 export function startRoomEngine() {
 "use strict";
@@ -206,7 +207,7 @@ function loadState() {
   } catch (e) { return d; }
 }
 const state = loadState();
-/* Pomodoro theo vòng: Focus → nghỉ ngắn, lặp lại; đủ số phiên của nhịp thì nghỉ dài (lib/pomodoro.ts). Nhịp đã chọn lưu riêng ở POMO_KEY. */
+/* Pomodoro theo vòng: Focus → nghỉ ngắn, lặp lại; đủ số phiên của nhịp thì nghỉ dài (areas/study/engine/pomodoro.ts). Nhịp đã chọn lưu riêng ở POMO_KEY. */
 const POMO_KEY = "focuspace.pomo.v1";
 let pomoCfg = (() => { try { return parseConfig(localStorage.getItem(POMO_KEY)); } catch { return parseConfig(null); } })();
 const pomo = { mode: "focus", done: 0, remaining: phaseSeconds(pomoCfg, "focus"), running: false, endAt: 0 };   // mode: focus | short | long; done: số phiên Focus đã xong trong vòng
@@ -3352,8 +3353,7 @@ function teardownRoom() {
   itemsById.clear(); lampObj = null;
 }
 
-/* ---------- Mũi tên đi giữa các phòng (Phòng ngủ ← Phòng học → Sân vườn; bấm cửa nhà để vào) ---------- */
-const NAVS = { study: [{ d: "l", to: "out", label: "Ra sân vườn" }, { d: "r", to: "bed", label: "Sang phòng ngủ" }], bed: [{ d: "l", to: "study", label: "Về phòng học" }], out: [{ door: true, to: "study", label: "Vào phòng học" }] };
+/* ---------- Mũi tên đi giữa các phòng (Phòng ngủ ← Phòng học → Sân vườn; bấm cửa nhà để vào) — bảng NAVS ở areas/study/engine/rooms.ts ---------- */
 function buildNav() {
   document.querySelectorAll(".nav-arrow,.nav-door").forEach(n => n.remove());
   (NAVS[ROOM.cur] || []).forEach(n => {
@@ -3366,10 +3366,10 @@ function buildNav() {
 }
 const roomEl = document.getElementById("room");
 function switchRoom(to) {
-  if (to === ROOM.cur || ROOM.busy) return;
+  if (!canSwitch(ROOM.cur, to, ROOM.busy)) return;   // đang chuyển thì bỏ qua lệnh mới (AC-01.2)
   ROOM.busy = true; closePop(); closeTray(); sleepCancel(); openPomoPanel(false); openSleepPanel(false);
-  if (to === "bed") pomoPause();   // vào Phòng ngủ: Pomodoro tự tạm dừng, giữ số giờ còn lại (AC-05.8)
-  if (to !== "out") state.lastIndoor = to; else if (ROOM.cur !== "out") state.lastIndoor = ROOM.cur;   // nhớ phòng trong nhà gần nhất để vào lại
+  if (pausesPomodoro(to)) pomoPause();   // vào Phòng ngủ: Pomodoro tự tạm dừng, giữ số giờ còn lại (AC-05.8)
+  state.lastIndoor = lastIndoorAfter(ROOM.cur, to, state.lastIndoor);   // nhớ phòng trong nhà gần nhất để vào lại
   if (ctx) { ramp(roomOut[ROOM.cur].gain, 0, 0.3); ramp(roomOut[to].gain, 1, 0.3); }   // cross-fade âm thanh nền
   fadeEl.classList.add("on");                                                          // mờ tối 0.3s
   setTimeout(() => {
