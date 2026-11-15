@@ -405,7 +405,7 @@ function meowFill(d, len, c) {   // tiếng "meo": cao độ vút lên rồi tr�
     let v = 0;
     for (let k = 1; k <= 8; k++) v += Math.sin(k * ph + c * 0.3) * Math.exp(-Math.pow(k * f0 - F, 2) / (2 * 450 * 450)) / Math.sqrt(k);
     br += 0.3 * ((r() * 2 - 1) - br);   // hơi thở nhẹ
-    d[i] = (v * 0.32 + br * 0.025) * env;
+    d[i] = (v * 0.32 + br * 0.025 * (1 - u) * (1 - u)) * env;   // hơi thở tắt dần về cuối: hết tiếng rè "xì" ở đuôi tiếng meo
   }
 }
 function softPurrFill(d, len, c) {   // rù rù êm: nhịp mềm ~23 Hz, hơi thở chậm 3 giây, lọc thấp — không còn tiếng meo
@@ -793,7 +793,7 @@ const catWake = new Map(), CAT_MEOW_AT = 5, CAT_WAKE_END = 34;   // mèo đang t
 function wakeCat(o) {   // bấm mèo: mở mắt, nhìn người dùng, kêu "meo", rồi ngủ tiếp
   if (catWake.has(o.data.id)) return;
   catWake.set(o.data.id, frame);
-  const purr = v => { if (o.em && o.em.cur) ramp(o.em.cur.g.gain, v, v ? 0.6 : 0.15); };   // tắt tiếng rù rù khi mèo thức, bật lại khi ngủ tiếp
+  const purr = v => { if (o.em && o.em.cur) ramp(o.em.cur.g.gain, v, v ? 2.5 : 0.15); };   // rù rù trở lại thật chậm (2,5 giây), không bật lên đột ngột ngay sau tiếng meo   // tắt tiếng rù rù khi mèo thức, bật lại khi ngủ tiếp
   purr(0); setTimeout(() => purr(1), CAT_WAKE_END * 100);
   setTimeout(() => {
     if (o.em) o.em.oneShot(BUF.meow, 1.2);
@@ -1150,6 +1150,16 @@ function drawWallClock0(c, f) {                  // đồng hồ treo tường t
   pline(c, X, Y, bx, by, "#a3361d");
   R(c, X, Y, 1, 1, "#c0781e");
 }
+/* Nến (đồ trang trí) phát sáng: đục bóng tối ("hole") và toả quầng cam ("glow") quanh ngọn lửa, lập lòe; toạ độ lớp sáng = logic / 2 */
+function candleLight(c, pass, flick) {
+  itemsById.forEach(o => {
+    if (o.data.type !== "candle") return;
+    const x = (o.data.x + 3) / 2, y = (o.data.y + 1) / 2, r = (pass === "hole" ? 14 : 11) * flick;
+    const g = c.createRadialGradient(x, y, 0, x, y, r);
+    g.addColorStop(0, pass === "hole" ? "rgba(0,0,0,.85)" : `rgba(255,170,80,${0.24 * flick})`); g.addColorStop(1, "rgba(0,0,0,0)");
+    c.fillStyle = g; c.fillRect(x - r, y - r, r * 2, r * 2);
+  });
+}
 function drawLightBed(f) {
   const c = li, bs = state.bed, lamp = bs.lampOn, g = CURTAIN_GEO.bed;
   c.globalCompositeOperation = "source-over";
@@ -1161,7 +1171,10 @@ function drawLightBed(f) {
   if (lamp) { const gd = c.createRadialGradient(147, 52, 0, 147, 52, 38); gd.addColorStop(0, "rgba(0,0,0,.9)"); gd.addColorStop(1, "rgba(0,0,0,0)"); c.fillStyle = gd; c.fillRect(0, 0, 160, 90); }
   if (open > 0) { c.fillStyle = `rgba(0,0,0,${bs.weather === "stars" ? 0.78 : 0.52})`; c.fillRect(gl / 2, BW.gy / 2, open / 2, BW.gh / 2); }
   if (!lamp) { c.fillStyle = "rgba(0,0,0,.30)"; c.fillRect(BART.x / 2, BART.y / 2, 18, 14); }   // tranh nhô nhẹ khỏi bóng tối
+  const cf = 0.9 + Math.random() * 0.1;
+  candleLight(c, "hole", cf);
   c.globalCompositeOperation = "source-over";
+  candleLight(c, "glow", cf);
   if (lamp) {                                          // đèn ngủ: quầng vàng ấm quanh đèn, lan về phía giường
     const gw2 = c.createRadialGradient(147, 54, 0, 147, 54, 34); gw2.addColorStop(0, `rgba(247,208,112,${0.17 + 0.02 * ((f >> 3) % 2)})`); gw2.addColorStop(1, "rgba(247,208,112,0)");
     c.fillStyle = gw2; c.fillRect(0, 0, 160, 90);
@@ -1403,11 +1416,13 @@ function drawLight(f) {
   const flick = 0.9 + Math.random() * 0.1;
   if (state.lampOn && lampObj) hole((lampObj.data.x + 10) / 2, (lampObj.data.y + 6) / 2, 34, 0.95);
   if (state.fireOn) hole(149 + FDX() / 2, 52 - FY / 2, 26 * flick, 0.9);
+  candleLight(c, "hole", flick);
   if (open > 0) { c.fillStyle = `rgba(0,0,0,${w === "clear" || w === "sunset" ? 0.78 : 0.4})`; c.fillRect(gl / 2, 9, open / 2, 26); }   // chỉ đục đúng phần kính còn hở
   c.globalCompositeOperation = "source-over";
   const glow = (x, y, r, col) => { const g = c.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, col); g.addColorStop(1, "rgba(0,0,0,0)"); c.fillStyle = g; c.fillRect(0, 0, 160, 90); };
   if (state.lampOn && lampObj) glow((lampObj.data.x + 10) / 2, (lampObj.data.y + 8) / 2, 30, "rgba(255,196,110,.20)");
   if (state.fireOn) glow(149 + FDX() / 2, 54 - FY / 2, 24 * flick, `rgba(255,120,50,${0.16 * flick})`);
+  candleLight(c, "glow", flick);
   {                                                    // ánh sáng toả khắp phòng từ mép trên cửa sổ, nghiêng nhẹ sang trái; kính hở cho qua đủ, rèm chặn bớt (lọt khoảng 22%)
     const day = w === "clear" || w === "sunset", col = w === "sunset" ? "255,170,150" : day ? "255,240,200" : flash ? "200,220,255" : "110,140,210", base = day ? 0.17 : flash ? 0.24 : 0.07;
     if (open > 6) { c.fillStyle = `rgba(${col},${(day ? 0.10 : flash ? 0.30 : 0.08) * k})`; c.fillRect(gl / 2, 9, open / 2, 26); }
