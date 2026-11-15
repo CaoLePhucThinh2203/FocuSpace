@@ -33,6 +33,7 @@ Ràng buộc CHECK của CSDL: xem `backend/prisma/checks.sql` (thêm bằng m�
 Base (Thịnh) chạy được một mình. Mỗi khu vực tự cắm vào, **không sửa file của base**:
 - Frontend: thêm `frontend/src/areas/<khu-vực>/index.ts` export `area` (route, mục điều hướng, hàm `setup`) — xem `frontend/src/lib/areas.ts`.
 - Backend: `backend/src/areas/<khu-vực>/routes.ts` export hàm `...Routes(db)`; `seed.ts` export hàm `seed...(db)` — base tự nạp (`backend/src/lib/areas.ts`).
+- Căn phòng (PA B): engine `frontend/src/engine/legacy/roomEngine.js` lo vẽ, âm thanh, khay, popover; quy tắc nghiệp vụ là hàm thuần có test trong `frontend/src/areas/<khu-vực>/engine/` (`rooms.ts`, `pomodoro.ts`, `sleepTimer.ts`, `placement.ts`) — xem `frontend/src/engine/legacy/README.md`.
 - Mỗi người: tạo nhánh từ `main` → thêm file trong thư mục khu vực của mình → mở PR → CI xanh + 1 người duyệt → merge.
 
 ## Thành viên
@@ -53,6 +54,7 @@ FocuSpace/
 ├── backend/           # Express + Prisma: API /api/v1, schema, seeder; src/areas/<khu vực>
 ├── frontend/          # React + Vite + Tailwind: 6 trang; src/areas/<khu vực>
 │                      #   khu vực: items-audio (Hưng) · garden (Nhiên) · bedroom (Lộc) · study (Thịnh)
+│                      #   src/engine/legacy/roomEngine.js: engine Căn phòng (vẽ canvas, Web Audio)
 ├── .github/           # mẫu issue, PR
 ├── docs/
 │   ├── PRD.md · ARCHITECTURE.md · API.md · DATABASE.md
