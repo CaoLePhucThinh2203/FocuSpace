@@ -1,6 +1,6 @@
 {
   "rewrites": [
     { "source": "/api/:path*", "destination": "https://focuspace-api.onrender.com/api/:path*" },
-    { "source": "/((?!assets/|previews/).*)", "destination": "/index.html" }
+    { "source": "/((?!assets/|previews/|\\.well-known/)[^.]*)", "destination": "/index.html" }
   ]
 }
