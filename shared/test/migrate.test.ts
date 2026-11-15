@@ -21,7 +21,13 @@ describe("migrate (L4)", () => {
     expect(back.items[0].type).toBe("lamp");
     expect(back.bed.items[0].type).toBe("radio");
   });
+  it("giữ màu lông mèo khi chuyển đổi", () => {
+    const f = { ...flat, bed: { ...flat.bed, items: [{ id: "m1", type: "cat", x: 206, y: 79, on: true, vol: 0.5, track: 0, coat: 2 }] } };
+    const v = flatToV4(f);
+    expect(v.bed.items[0].coat).toBe(2);
+    expect(v4ToFlat(v).bed.items[0].coat).toBe(2);
+  });
   it.todo("LocalStorage rỗng hoặc JSON hỏng trả trạng thái mặc định");
   it.todo("bản cũ có “ngăn” (shelf, slot) đổi thành đồ vật trên giá");
-  it.todo("quá 40 đồ thì cắt bớt");
+  it.todo("quá 25 đồ thì cắt bớt");
 });

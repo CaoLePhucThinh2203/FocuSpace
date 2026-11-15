@@ -24,8 +24,8 @@ Mỗi người chỉ sửa thư mục của mình; sửa chỗ khác thì mở P
 
 | Thành viên | Số issue | Khu vực |
 |---|---|---|
-| Tuấn Hưng | 12 | Đồ vật, bảng đồ vật, âm thanh |
-| Đình Nhiên | 14 | Sân vườn (gồm tinh chỉnh hình ảnh 15/11), telemetry, GA4/Sentry |
+| Tuấn Hưng | 13 | Đồ vật, bảng đồ vật, âm thanh |
+| Đình Nhiên | 15 | Sân vườn (gồm tinh chỉnh hình ảnh 15/11), telemetry, GA4/Sentry |
 | Tuấn Lộc | 13 | Phòng ngủ, Hẹn giờ ngủ, auth, `/me`, thống kê (API + trang) |
 | Phúc Thịnh | 18 | Phòng học, repo, khung Căn phòng, 4 trang còn lại, đồng bộ |
 | Cả nhóm | 12 | Wireframe review, review chéo, self-report, video, tài khoản dịch vụ, triển khai |
@@ -48,6 +48,7 @@ Mỗi người chỉ sửa thư mục của mình; sửa chỗ khác thì mở P
 | H10 | S4 | `feat(items): popover đồ vật + Volume mixer` | UC.03 | AC-03.4 xanh; pan cập nhật < 30 ms |
 | H11 | S4 | `feat(api): GET /catalog/items lọc room, group` ⓓ | UC.07 | Integration test 200/400; `Cache-Control` 1 giờ |
 | H12 | S5 | `perf(room): tối ưu Lighthouse Căn phòng (tách mã, title + meta — cách 2)` ⓓ | AC-NF.1 | Báo cáo trước/sau trong `docs/reports/lighthouse/` |
+| H13 | S4 | `feat(items): mèo đổi màu lông (Cam, Xám tro, Kem) + rõ màu dưới ánh trăng Phòng ngủ` | UC.03, UC.04 | Bấm mèo → popover có hàng "Màu lông" 3 nút, đổi ngay và lưu như chọn thảm; mèo nằm trong vệt trăng giữ màu lông (đục bóng tối 55% theo hình mèo); `coat` 0–2 trong schema + migrate giữ `coat`, test xanh; Thịnh duyệt phần `shared/` |
 
 ## Đình Nhiên — Sân vườn
 
@@ -67,6 +68,7 @@ Mỗi người chỉ sửa thư mục của mình; sửa chỗ khác thì mở P
 | N12 | S4 | `feat(render): Sân vườn — bồn hoa và dây hoa ở chân cửa sổ nhà gỗ` | UC.02 | Ảnh chụp 5 cảnh: chân 2 cửa sổ có bồn hoa + 2 vòng dây hoa; dùng màu hoa/lá sẵn có của prototype |
 | N13 | S4 | `feat(render): Núi băng — thêm núi thấp, hạ hàng thông, sửa phản chiếu hồ` | UC.02 | Ảnh chụp Núi băng: 2 núi tách rời, núi cao giữ nguyên, núi thấp theo phác thảo (đỉnh bằng, bậc hụt bên phải), thông thấp hơn, bóng dưới hồ khớp |
 | N14 | S4 | `feat(render): lối đá Thành phố, Khu rừng theo đường vòng của Đồi ven biển` | UC.02 | Lối đá thưa (5 viên) cùng đường với Đồi ven biển, màu đá giữ nguyên; Bãi biển không đổi |
+| N15 | S4 | `fix(render): Thành phố — đèn cửa chính đè lên khung cửa sổ trái, cửa sổ tròn gác mất viền và chữ thập` | UC.02 | Ảnh chụp cảnh Thành phố: khung cửa sổ trái nguyên vẹn; đèn cửa chính nằm trên tường phía trên cửa; cửa sổ tròn có kính sáng, viền gỗ và chữ thập như các cảnh khác, quầng sáng phủ lên khung (vẽ khung trước, sáng sau — PA1 đã chọn 15/11); 4 cảnh còn lại không đổi |
 
 ## Tuấn Lộc — Phòng ngủ, tài khoản & thống kê
 
@@ -124,4 +126,4 @@ Mỗi người chỉ sửa thư mục của mình; sửa chỗ khác thì mở P
 | G9 | S2 ✅ | `docs(plan): PRD, PLAN, Kiến trúc, API, DATABASE, Chương 1 Phân tích hệ thống` | Thịnh (cả nhóm góp nội dung khu vực mình) | ✅ các file trong `docs/` |
 | G10 | S3 | `chore(obs): tạo tài khoản GA4, Sentry; gửi mã đo lường và DSN` | Thịnh | Nhiên nhận mã qua kênh riêng, không commit |
 | G11 | S5 | `chore(deploy): triển khai Vercel (frontend) + Render (backend) + Neon (PostgreSQL)` | Thịnh | Link chạy được ghi trong README; migrate + seed trên Neon |
-| G12 | S3 | `feat(shared): giảm MAX_ITEMS_PER_ROOM 40 → 25 (BR-06), chặn thêm đồ khi đủ 25` | Nhiên đề xuất; Thịnh duyệt (`shared/`)| Test schema từ chối 26 đồ; AC-04.2 xanh; PRD (BR-06, AC-04.2), API Phụ lục A, DATABASE cập nhật cùng PR |
+| G12 | S3 | `feat(shared): giảm MAX_ITEMS_PER_ROOM 40 → 25 (BR-06), chặn thêm đồ khi đủ 25` | Nhiên đề xuất; Thịnh duyệt (`shared/`), Hưng duyệt (`placement`) | Test schema từ chối 26 đồ; AC-04.2 xanh; PRD (BR-06, AC-04.2), API Phụ lục A, DATABASE cập nhật cùng PR |

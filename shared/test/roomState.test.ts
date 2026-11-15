@@ -19,6 +19,13 @@ describe("RoomState v4 (API Phụ lục A)", () => {
     v.study.items = Array.from({ length: MAX_ITEMS_PER_ROOM + 1 }, (_, i) => ({ id: "p" + i, type: "plant", x: 10, y: 10, on: true, vol: 0 }));
     expect(RoomStateSchema.safeParse(v).success).toBe(false);
   });
+  it("nhận màu lông mèo 0–2, từ chối số ngoài bảng màu", () => {
+    const v = flatToV4(flat);
+    v.bed.items = [{ id: "m1", type: "cat", x: 206, y: 79, on: true, vol: 0.5, coat: 2 }];
+    expect(RoomStateSchema.safeParse(v).success).toBe(true);
+    v.bed.items[0].coat = 3;
+    expect(RoomStateSchema.safeParse(v).success).toBe(false);
+  });
   it("từ chối đồ của Phòng ngủ đặt trong Phòng học", () => {
     const v = flatToV4(flat);
     v.study.items.push({ id: "r1", type: "radio", x: 10, y: 10, on: true, vol: 0.5 });

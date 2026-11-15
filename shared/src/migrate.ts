@@ -78,6 +78,7 @@ function cleanItem(i: Flat) {
   const o: Flat = { id: String(i.id).slice(0, 16), type: i.type, x: i.x, y: i.y, on: i.on !== false, vol: i.vol ?? 0.5 };
   if (Number.isInteger(i.track)) o.track = i.track;
   if (Number.isInteger(i.art)) o.art = i.art;
+  if (Number.isInteger(i.coat)) o.coat = i.coat;
   if (i.bedId !== undefined) o.bedId = i.bedId;
   return o as RoomState["study"]["items"][number];
 }
