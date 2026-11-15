@@ -8,7 +8,7 @@ Căn phòng Semi-Sandbox · Phòng học · Phòng ngủ · Sân vườn
 |---|---|
 | **Chủ sở hữu (Product Owner / PM)** | Cao Lê Phúc Thịnh (theo PRD Semi-Sandbox gốc) |
 | **Đội ngũ tham gia** | Tuấn Hưng (đồ vật, âm thanh) · Đình Nhiên (Sân vườn) · Tuấn Lộc (Phòng ngủ) · Phúc Thịnh (Phòng học, quản lý repo, các trang còn lại) · chi tiết docs/PLAN.md mục 2 |
-| **Phiên bản / trạng thái** | v5.7 (Pomodoro theo vòng 15/11/2026) · v5.6 (rút gọn 15/11/2026) · v5.0 phê duyệt 07/11/2026 · v5.1 – v5.4 duyệt ở buổi họp kế hoạch 13/11/2026 · v5.5 (sửa giao diện, âm thanh 15/11) chờ duyệt |
+| **Phiên bản / trạng thái** | v5.8 (thống nhất 25 đồ, 15/11/2026) · v5.7 (Pomodoro theo vòng 15/11/2026) · v5.6 (rút gọn 15/11/2026) · v5.0 phê duyệt 07/11/2026 · v5.1 – v5.4 duyệt ở buổi họp kế hoạch 13/11/2026 · v5.5 (sửa giao diện, âm thanh 15/11) chờ duyệt |
 | **Tài liệu liên quan** | Tài liệu Kiến trúc giải pháp · API Docs · docs/DATABASE.md · docs/PLAN.md · Final Project Brief CSB25022 · FocuSpace_Diagrams.drawio · Chương 1 Phân tích hệ thống (FocuSpace_Chuong2_PhanTich.docx) |
 
 > **Quy tắc nguồn:** Khi hai nguồn mâu thuẫn, nguồn mới hơn thắng: tài liệu này \> prototype FocuSpace-Semi-Sandbox.html \> PRD .docx cũ. Mọi hành vi giao diện mô tả theo prototype FocuSpace-Semi-Sandbox.html. Yêu cầu của đề bài đồ án môn Web (CSB25022) đứng trên mọi nguồn.
@@ -371,7 +371,7 @@ Mức ưu tiên: **P0** bắt buộc trong bản nộp, **P1** nên có, **P2** 
 
 - Hai đồ trên cùng tầng giá có thể chồng nhau (Q-01).
 
-- Phòng đã có 40 đồ vật (BR-06): không thêm, hiện thông báo **“Phòng đã đầy — hãy xóa bớt đồ để thêm mới”** (Q-16).
+- Phòng đã có 25 đồ vật (BR-06): không thêm, chỉ hiện thông báo **“Phòng đã đầy — hãy xóa bớt đồ để thêm mới”** (Q-16).
 
 ![Hình 5](images/prd-hinh-4.png)
 
@@ -683,7 +683,7 @@ Mỗi gạch đầu dòng ở Tính năng A–M ứng với một hoặc vài m�
 | FR-ITEM-02 | Thêm đồ: kéo thẻ từ khay thả vào phòng, hoặc bấm/Enter/Space để đặt xuống sàn | P0 | UC.04 | AC-04.1 |
 | FR-ITEM-03 | Xóa đồ: thả lên thanh công cụ, nút “Xóa khỏi phòng”, phím Delete/Backspace | P0 | UC.04 | AC-04.5 |
 | FR-ITEM-04 | Di chuyển đồ: kéo thả, phím mũi tên 2 đơn vị (Shift: 8); khớp tầng giá; thứ tự vẽ theo toạ độ Y | P0 | UC.04 | AC-04.4, AC-04.5 |
-| FR-ITEM-05 | Quy tắc đặt: giữ trong khung phòng, chậu cây lớn chỉ đứng sàn, tối đa 40 đồ mỗi phòng (BR-03→06) | P0 | UC.04 | AC-04.2, AC-04.4 |
+| FR-ITEM-05 | Quy tắc đặt: giữ trong khung phòng, chậu cây lớn chỉ đứng sàn, tối đa 25 đồ mỗi phòng (BR-03→06) | P0 | UC.04 | AC-04.2, AC-04.4 |
 | FR-ITEM-06 | Popover đồ phát âm: công tắc, âm lượng, chọn bài (Radio, Đĩa than), thanh Trái/Phải, hệ số suy giảm, nút Xóa; Đồng hồ có bảng Pomodoro | P0 | UC.03, UC.04 | AC-03.4 |
 | FR-ITEM-07 | Khung ảnh: “Đổi bức tranh khác” (10 tranh pixel) | P0 | UC.02 | — |
 | FR-ITEM-08 | Giường mèo: mèo lại gần thì tự nằm vào, kéo giường thì mèo đi theo | P1 | UC.04 | AC-04.4 |
@@ -746,7 +746,7 @@ Mỗi gạch đầu dòng ở Tính năng A–M ứng với một hoặc vài m�
 | BR-03  | Đèn bàn và ly cà phê luôn có đúng 1 cái, chỉ nằm trên mặt bàn, không xóa được.                                                                                                                                                                                                                                                                                        |
 | BR-04  | Thứ tự đặt đồ: (1) đèn/ly chỉ trượt mặt bàn → (2) mèo gần giường mèo (±4 px ngang, đáy ±14 px) thì nằm vào → (3) chậu cây lớn chỉ đứng sàn (đáy y 138–178; trước bàn Phòng học đáy ≥ 160) → (4) đồ cao ≤ 28 px gần tầng giá (≤ 13 px; ngăn tủ 9 px) thì khớp → (5) bề mặt: phía trên thì đặt sát mặt, phía trước thì đứng sàn → (6) còn lại đứng sàn (đáy y 112–178). |
 | BR-05  | Giường mèo chỉ đặt được trong Phòng ngủ.                                                                                                                                                                                                                                                                                                                              |
-| BR-06  | Tối đa 40 đồ vật mỗi phòng; tổng dữ liệu phòng ≤ 64 KB.                                                                                                                                                                                                                                                                                                               |
+| BR-06  | Tối đa 25 đồ vật mỗi phòng; tổng dữ liệu phòng ≤ 64 KB.                                                                                                                                                                                                                                                                                                               |
 | BR-07  | Master 80% = mức chuẩn; gain = (bật ? 1 : 0) × âm lượng / 0,8 × 0,75.                                                                                                                                                                                                                                                                                                 |
 | BR-08  | Mật khẩu ≥ 8 ký tự; email không phân biệt hoa thường và là duy nhất.                                                                                                                                                                                                                                                                                                  |
 | BR-09  | Đăng ký tối đa 10 lần mỗi 15 phút cho mỗi IP; đăng nhập tối đa 10 lần mỗi 15 phút theo IP + email (khớp API 4.2–4.3).                                                                                                                                                                                                                                                                                                             |
@@ -795,7 +795,7 @@ Mỗi tiêu chí viết theo dạng **Cho trước – Khi – Thì**, kiểm đ
 | AC-03.4 | UC.03 | Đặt Tivi ở góc trái | Mở popover Tivi | Thanh Trái/Phải lệch trái; pan cập nhật < 30 ms khi kéo |
 | AC-03.5 | UC.03 | Radio, đĩa than, hộp nhạc, đồng hồ, cửa sổ, lò sưởi đang phát | Kéo nguồn tới bất kỳ vị trí nào | Gain khoảng cách giữ 0,8 và pan = 0; Tivi, mèo vẫn đổi theo vị trí |
 | AC-04.1 | UC.04 | Khay "Đồ vật phát âm thanh" đang mở | Kéo thẻ Mèo ngủ thả vào phòng | Mèo xuất hiện ở vị trí hợp lệ, có tiếng rù rù; phòng được lưu |
-| AC-04.2 | UC.04 | Phòng đã có 40 đồ vật | Thả thêm một đồ | Không thêm; hiện thông báo "Phòng đã đầy — hãy xóa bớt đồ để thêm mới" (BR-06, Q-16) |
+| AC-04.2 | UC.04 | Phòng đã có 25 đồ vật | Thả hoặc bấm thêm một đồ | Không thêm; chỉ hiện thông báo "Phòng đã đầy — hãy xóa bớt đồ để thêm mới" (BR-06, Q-16) |
 | AC-04.3 | UC.04 | Đèn bàn trên mặt bàn | Thả đèn lên thanh công cụ | Đèn không bị xóa, quay về mặt bàn (BR-03) |
 | AC-04.4 | UC.04 *(unit)* | Đồ cao ≤ 28 px gần tầng giá ≤ 13 px | Thả đồ | Đồ khớp vào tầng giá; chậu cây lớn chỉ đứng sàn; giường mèo chỉ đặt được ở Phòng ngủ (BR-04, BR-05) |
 | AC-04.5 | UC.04 | Một đồ vật đang được chọn | Nhấn mũi tên phải / Shift + mũi tên phải / Delete | Đồ dịch 2 / 8 đơn vị; Delete xóa đồ (trừ đèn bàn, ly cà phê) |
@@ -924,7 +924,7 @@ Mọi câu hỏi mở đã chốt (Q-03, Q-04, Q-07 trước 07/11; còn lại �
 | Q-13 | Không có tài khoản demo hay số liệu mẫu; nhóm tự dùng thật vài ngày trước khi quay video |
 | Q-14 | Không làm banner đồng ý GA4; trang Giới thiệu có mục Quyền riêng tư |
 | Q-15 | Email từng thành viên (thinh.cao240924, loc.dau240925, hung.nguyen240919, nhien.truong240960 @vnuk.udn.vn); repo https://github.com/CaoLePhucThinh2203/FocuSpace |
-| Q-16 | Thông báo khi đủ 40 đồ vật: “Phòng đã đầy — hãy xóa bớt đồ để thêm mới” |
+| Q-16 | Thông báo khi đủ 25 đồ vật (G12 giảm từ 40): “Phòng đã đầy — hãy xóa bớt đồ để thêm mới” |
 | Q-17 | Bảng mã FR cuối mục 5.1; đổi tên, đăng xuất = FR-ACC-08; xóa tài khoản = FR-ACC-07 |
 
 ## 8.2 Rủi ro và phương án dự phòng
@@ -953,3 +953,4 @@ Mọi câu hỏi mở đã chốt (Q-03, Q-04, Q-07 trước 07/11; còn lại �
 | v5.5 | 15/11/2026 | Sửa theo góp ý giao diện và âm thanh: một font Be Vietnam Pro; header dùng chung, menu 1 hàng từ 768 px; Trang chủ "Mô tả & Tính năng"; bỏ chip âm thanh, chip lưu; âm nền; 6 bài Lo-fi; chỉnh ±1/±10 phút cho Pomodoro, Hẹn giờ ngủ; điện thoại dựng dọc tự xoay ngang; Lighthouse /room dựng âm thanh sau cú nhấp đầu. FR và AC liên quan: FR-UI-02, FR-SAVE-01/03, FR-AUD-02/06, FR-TIME-01/03, FR-PAGE-02/03; AC-01.5, 03.5, 05.5, 05.6, 06.3, 12.4–12.6. |
 | v5.6 | 15/11/2026 | Rút gọn: bỏ bảng thông tin trùng ở đầu, ghi chú [Cần xác nhận] đã có lời giải; 7.2 dẫn sang PLAN; 8.1 thành bảng quyết định đã chốt; 6.2 cookie SameSite=None theo cách triển khai. |
 | v5.7 | 15/11/2026 | Pomodoro theo vòng của kỹ thuật Pomodoro: thêm nghỉ dài, chấm tiến độ, bảng Nhịp học (Cổ điển, Sâu, Nhẹ, Tuỳ chỉnh) mở từ số giờ ở header; bỏ nút ▲▼ ±1/±10 ở Pomodoro và Hẹn giờ ngủ; Hẹn giờ ngủ trên header cùng kiểu Pomodoro mini, bảng chọn Tắt / 15 / 30 / 60 phút (bỏ mức 45), chọn xong bấm Bắt đầu / Tạm dừng; vào Phòng ngủ thì Pomodoro tự tạm dừng, ô Hẹn giờ ngủ thế chỗ. Sửa US-07, BR-01, Tính năng G, FR-UI-02, FR-TIME-01→03, FR-SAVE-04, AC-05.3→05.5, AC-06.3; thêm AC-05.7, AC-05.8. |
+| v5.8 | 15/11/2026 | Thống nhất giới hạn đồ vật với code (G12): BR-06, FR-ITEM-05, Tính năng E, AC-04.2, Q-16 đổi 40 → 25 đồ mỗi phòng; đủ 25 đồ thì không thêm, chỉ hiện thông báo “Phòng đã đầy — hãy xóa bớt đồ để thêm mới”. Không đổi FR khác. |
