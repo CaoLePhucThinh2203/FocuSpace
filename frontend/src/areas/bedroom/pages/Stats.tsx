@@ -33,7 +33,7 @@ export default function Stats() {
   if (!user) {
     return (
       <main className="mx-auto grid max-w-xl gap-4 px-4 py-20 text-center">
-        <h1 className="font-display text-3xl font-bold">Thống kê học tập</h1>
+        <h1 className="font-display text-2xl font-bold sm:text-3xl">Thống kê học tập</h1>
         <p className="text-muted">Đăng nhập để xem số phút tập trung và các phiên Pomodoro của bạn.</p>
         <Link to="/account" className="btn btn-primary mx-auto">Đăng nhập</Link>
       </main>
@@ -46,10 +46,10 @@ export default function Stats() {
     <main className="mx-auto max-w-6xl px-4 py-10">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="font-display text-3xl font-bold">Thống kê học tập</h1>
+          <h1 className="font-display text-2xl font-bold sm:text-3xl">Thống kê học tập</h1>
           <p className="mt-2 text-muted">Chào {user.displayName}, đây là kết quả của bạn.</p>
         </div>
-        <div className="flex gap-2" role="group" aria-label="Khoảng thời gian">
+        <div className="flex flex-wrap gap-2" role="group" aria-label="Khoảng thời gian">
           {RANGES.map(([v, l]) => (
             <button key={v} type="button" className={`btn px-3 py-1.5 ${range === v ? "border-amber text-amber" : ""}`} aria-pressed={range === v} onClick={() => setRange(v)}>{l}</button>
           ))}
@@ -74,7 +74,7 @@ export default function Stats() {
             ].map(([l, v]) => (
               <li key={l} className="card p-4">
                 <p className="text-xs uppercase tracking-wide text-muted">{l}</p>
-                <p className="mt-1 font-digit text-4xl text-amber">{v}</p>
+                <p className="mt-1 font-digit text-3xl font-semibold text-amber">{v}</p>
               </li>
             ))}
           </ul>
