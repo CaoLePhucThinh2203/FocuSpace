@@ -4,17 +4,18 @@ export const ROOM_MARKUP = `<div class="app grid h-full grid-rows-[auto_auto_1fr
     <div class="site-head flex min-w-0 items-center gap-4" id="siteHead"></div>
     <div class="room-name text-[13px] text-muted">Phòng: <b class="font-semibold text-ink" id="roomName">Góc học tập ấm áp</b></div>
     <div class="spacer flex-1"></div>
-    <div class="pomo-mini" title="Pomodoro">
-      <span class="mode" id="pomoMiniMode">Focus</span>
-      <span class="time" id="pomoMiniTime">25:00</span>
+    <div class="pomo-mini">
+      <div class="pm-label"><span class="mode" id="pomoMiniMode">Focus</span><span class="pm-dots" id="pomoDots" role="img" aria-label="Vòng này: 0 / 4 phiên Focus"></span></div>
+      <button type="button" class="time pm-trig" id="pomoTrig" aria-haspopup="dialog" aria-expanded="false" aria-controls="pomoPanel" title="Đổi nhịp học"><span id="pomoMiniTime">25:00</span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5 6 7.5 9 4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <button class="btn" id="pomoMiniBtn" type="button">Bắt đầu</button>
+      <div class="pomo-panel" id="pomoPanel" role="dialog" aria-label="Nhịp học" hidden></div>
     </div>
     <div class="sleep-mini" id="sleepMini" hidden>
       <span class="mode">Hẹn giờ ngủ</span>
       <div class="seg" role="group" aria-label="Hẹn giờ ngủ">
         <button type="button" data-sl="0" aria-pressed="true">Tắt</button><button type="button" data-sl="15" aria-pressed="false">15p</button><button type="button" data-sl="30" aria-pressed="false">30p</button><button type="button" data-sl="45" aria-pressed="false">45p</button><button type="button" data-sl="60" aria-pressed="false">60p</button>
       </div>
-      <span class="time" id="sleepTime">--:--</span>
+      <span class="time" id="sleepTime" data-sleep-time>--:--</span>
       <span class="sleep-note" id="sleepNote" role="status" hidden>Đã hết giờ ngủ · chạm để bật lại</span>
     </div>
   </header>
