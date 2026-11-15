@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { RoomStateSchema } from "../src/roomState";
 import { flatToV4, v4ToFlat } from "../src/migrate";
+import { MAX_ITEMS_PER_ROOM } from "../src/constants";
 
 const flat = {
   room: "study", lastIndoor: "study", weather: "rain", curtain: "open", windowOn: true, windowVol: 0.6,
@@ -13,9 +14,9 @@ const flat = {
 
 /** T6 — Phúc Thịnh: schema RoomState v4. */
 describe("RoomState v4 (API Phụ lục A)", () => {
-  it("từ chối quá 40 đồ (BR-06)", () => {
+  it("từ chối quá 25 đồ (BR-06)", () => {
     const v = flatToV4(flat);
-    v.study.items = Array.from({ length: 41 }, (_, i) => ({ id: "p" + i, type: "plant", x: 10, y: 10, on: true, vol: 0 }));
+    v.study.items = Array.from({ length: MAX_ITEMS_PER_ROOM + 1 }, (_, i) => ({ id: "p" + i, type: "plant", x: 10, y: 10, on: true, vol: 0 }));
     expect(RoomStateSchema.safeParse(v).success).toBe(false);
   });
   it("từ chối đồ của Phòng ngủ đặt trong Phòng học", () => {
