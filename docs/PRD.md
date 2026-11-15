@@ -4,11 +4,11 @@ Căn phòng Semi-Sandbox · Phòng học · Phòng ngủ · Sân vườn
 
 # 1. Thông tin chung (Metadata)
 
-| **Tên sản phẩm / tính năng** | FocuSpace — Căn phòng Semi-Sandbox ba không gian (Góc học tập ấm áp · Phòng ngủ yên tĩnh · Sân vườn · xích đu dưới gốc cây), bản chính thức |
+| **Tên sản phẩm / tính năng** | FocuSpace — Căn phòng Semi-Sandbox ba không gian (Phòng học · Phòng ngủ · Sân vườn), bản chính thức |
 |---|---|
 | **Chủ sở hữu (Product Owner / PM)** | Cao Lê Phúc Thịnh (theo PRD Semi-Sandbox gốc) |
 | **Đội ngũ tham gia** | Tuấn Hưng (đồ vật, âm thanh) · Đình Nhiên (Sân vườn) · Tuấn Lộc (Phòng ngủ) · Phúc Thịnh (Phòng học, quản lý repo, các trang còn lại) · chi tiết docs/PLAN.md mục 2 |
-| **Phiên bản / trạng thái** | v5.10 (chữ chú thích Căn phòng 12 px, 15/11/2026) · v5.9 (font tự host, 15/11/2026) · v5.8 (thống nhất 25 đồ, 15/11/2026) · v5.7 (Pomodoro theo vòng 15/11/2026) · v5.6 (rút gọn 15/11/2026) · v5.0 phê duyệt 07/11/2026 · v5.1 – v5.4 duyệt ở buổi họp kế hoạch 13/11/2026 · v5.5 (sửa giao diện, âm thanh 15/11) chờ duyệt |
+| **Phiên bản / trạng thái** | v5.11 (văn phong giao diện đơn giản, 15/11/2026) · v5.10 (chữ chú thích Căn phòng 12 px, 15/11/2026) · v5.9 (font tự host, 15/11/2026) · v5.8 (thống nhất 25 đồ, 15/11/2026) · v5.7 (Pomodoro theo vòng 15/11/2026) · v5.6 (rút gọn 15/11/2026) · v5.0 phê duyệt 07/11/2026 · v5.1 – v5.4 duyệt ở buổi họp kế hoạch 13/11/2026 · v5.5 (sửa giao diện, âm thanh 15/11) chờ duyệt |
 | **Tài liệu liên quan** | Tài liệu Kiến trúc giải pháp · API Docs · docs/DATABASE.md · docs/PLAN.md · Final Project Brief CSB25022 · FocuSpace_Diagrams.drawio · Chương 1 Phân tích hệ thống (FocuSpace_Chuong2_PhanTich.docx) |
 
 > **Quy tắc nguồn:** Khi hai nguồn mâu thuẫn, nguồn mới hơn thắng: tài liệu này \> prototype FocuSpace-Semi-Sandbox.html \> PRD .docx cũ. Mọi hành vi giao diện mô tả theo prototype FocuSpace-Semi-Sandbox.html. Yêu cầu của đề bài đồ án môn Web (CSB25022) đứng trên mọi nguồn.
@@ -37,11 +37,11 @@ FocuSpace giải quyết bốn vấn đề của người học và làm việc 
 
 ### Trong phạm vi (In-scope)
 
-- Ba không gian dựng sẵn: Góc học tập ấm áp, Phòng ngủ yên tĩnh, Sân vườn · xích đu dưới gốc cây; chuyển phòng bằng mũi tên và cửa nhà.
+- Ba không gian dựng sẵn: Phòng học, Phòng ngủ, Sân vườn; chuyển phòng bằng mũi tên và cửa nhà.
 
 - Đồ vật phát âm và đồ trang trí kéo thả, tự bám bề mặt, giá để đồ, ngăn tủ, giường mèo.
 
-- Âm thanh không gian 2D theo vị trí, Volume mixer có âm lượng tổng (Master).
+- Âm thanh không gian 2D theo vị trí, Bảng âm lượng có âm lượng tổng (Master).
 
 - Thời tiết cửa sổ, rèm 3 mức, lò sưởi, thảm đổi họa tiết, đèn; 5 khung cảnh Sân vườn có ảnh xem trước.
 
@@ -79,7 +79,7 @@ FocuSpace giải quyết bốn vấn đề của người học và làm việc 
 
 | **Thao tác**                                                | **Có?** | **Ghi chú**                                               |
 |-------------------------------------------------------------|---------|-----------------------------------------------------------|
-| Bật/tắt âm thanh đồ vật                                     | CÓ      | Chuyển mượt 0,2 giây; làm trong popover hoặc Volume mixer |
+| Bật/tắt âm thanh đồ vật                                     | CÓ      | Chuyển mượt 0,2 giây; làm trong popover hoặc Bảng âm lượng |
 | Thêm đồ vật từ khay                                         | CÓ      | Khay mở xuống dưới thanh công cụ                          |
 | Xóa đồ vật                                                  | CÓ      | Trừ đèn bàn và ly cà phê                                  |
 | Di chuyển đồ vật                                            | CÓ      | Theo quy tắc đặt đồ (mục 5, BR-04)                        |
@@ -203,7 +203,7 @@ Mức ưu tiên: **P0** bắt buộc trong bản nộp, **P1** nên có, **P2** 
 
 - Thanh đầu trang: header dùng chung với các trang khác (logo, 5 liên kết trang trên một hàng từ 768 px, nút ☰ dưới 768 px), tên phòng, Pomodoro mini (Phòng học, Sân vườn; bấm số giờ mở bảng Nhịp học), Hẹn giờ ngủ cùng kiểu Pomodoro mini: bấm số giờ mở bảng Tắt / 15 / 30 / 60 phút, chọn xong bấm Bắt đầu / Tạm dừng (Phòng ngủ, thay chỗ Pomodoro mini). Không còn chip âm thanh và chip lưu (v5.5).
 
-- Thanh công cụ: Đồ vật phát âm thanh, Đồ vật trang trí, Volume mixer, Khung cảnh. Sân vườn chỉ có Volume mixer và Khung cảnh; trong nhà ẩn Khung cảnh. Chip “N nguồn âm đang hoạt động” cập nhật mỗi 0,7 giây.
+- Thanh công cụ: Đồ vật phát âm thanh, Đồ vật trang trí, Bảng âm lượng, Khung cảnh. Sân vườn chỉ có Bảng âm lượng và Khung cảnh; trong nhà ẩn Khung cảnh. Chip “N nguồn âm đang hoạt động” cập nhật mỗi 0,7 giây.
 
 - Điều hướng: Phòng học — mũi tên trái “Ra sân vườn”, mũi tên phải “Sang phòng ngủ”; Phòng ngủ — mũi tên trái “Về phòng học”; Sân vườn — bấm cửa chính ngôi nhà “Vào phòng học”.
 
@@ -233,9 +233,9 @@ Mức ưu tiên: **P0** bắt buộc trong bản nộp, **P1** nên có, **P2** 
 
 ![Hình 2](images/prd-hinh-1.png)
 
-*Hình 2 — Góc học tập ấm áp: thanh đầu trang, thanh công cụ và hai mũi tên chuyển phòng*
+*Hình 2 — Phòng học: thanh đầu trang, thanh công cụ và hai mũi tên chuyển phòng*
 
-### Tính năng B — Góc học tập ấm áp (FR-STUDY) · P0
+### Tính năng B — Phòng học (FR-STUDY) · P0
 
 **Use case liên quan:** UC.02 – Tùy biến môi trường phòng
 
@@ -251,7 +251,7 @@ Mức ưu tiên: **P0** bắt buộc trong bản nộp, **P1** nên có, **P2** 
 
 - Tai nghe trên tai nhân vật: bật/tắt, âm lượng, 3 bài Lo-fi có tên (Chiều mưa, Cà phê sáng, Đêm thư viện), mỗi bài khoảng 1 phút gồm mở đầu – A – B – A – kết; dùng chung với Sân vườn, phát thẳng vào tai, không có tiếng rè.
 
-- Đèn bàn, ly cà phê chỉ trượt dọc mặt bàn, không xóa được. Khay Âm thanh: Tivi CRT, Mèo ngủ, Đồng hồ Pomodoro.
+- Đèn bàn, ly cà phê chỉ trượt dọc mặt bàn, không xóa được. Khay Âm thanh: Tivi cũ, Mèo ngủ, Đồng hồ Pomodoro.
 
 - Mặc định lần đầu: Mưa rơi, rèm mở, âm cửa sổ 60%, lò sưởi bên phải đang cháy 50%, thảm Đỏ rượu, đèn bàn bật, ly cà phê, chậu cây lớn ở (296, 125), giá trống, tai nghe tắt.
 
@@ -269,7 +269,7 @@ Mức ưu tiên: **P0** bắt buộc trong bản nộp, **P1** nên có, **P2** 
 
 - Người dùng cố xóa đèn bàn hoặc ly cà phê: không có nút xóa; thả lên thanh công cụ cũng không xóa.
 
-### Tính năng C — Phòng ngủ yên tĩnh (FR-BED) · P0
+### Tính năng C — Phòng ngủ (FR-BED) · P0
 
 **Use case liên quan:** UC.02 – Tùy biến môi trường phòng
 
@@ -305,9 +305,9 @@ Mức ưu tiên: **P0** bắt buộc trong bản nộp, **P1** nên có, **P2** 
 
 ![Hình 3](images/prd-hinh-2.png)
 
-*Hình 3 — Phòng ngủ yên tĩnh: Hẹn giờ ngủ trên thanh đầu trang, giá treo tường, tủ đầu giường*
+*Hình 3 — Phòng ngủ: Hẹn giờ ngủ trên thanh đầu trang, giá treo tường, tủ đầu giường*
 
-### Tính năng D — Sân vườn · xích đu dưới gốc cây (FR-OUT) · P0
+### Tính năng D — Sân vườn (FR-OUT) · P0
 
 **Use case liên quan:** UC.02 – Tùy biến môi trường phòng; UC.01 – Chuyển không gian (vào/ra Sân vườn)
 
@@ -345,7 +345,7 @@ Mức ưu tiên: **P0** bắt buộc trong bản nộp, **P1** nên có, **P2** 
 
 **Logic hoạt động**
 
-- Danh mục: Tivi CRT 26×26, Mèo ngủ 24×13, Đồng hồ Pomodoro 24×12, Radio 20×12, Máy xông 14×16, Đĩa than 26×16, Hộp nhạc 14×16, Quạt bàn 18×22 (phát âm); Chậu cây lớn 24×50, Giường mèo 30×10 (chỉ Phòng ngủ), Chậu cây, Xương rồng, Chồng sách, Khung ảnh, Nến (trang trí); Đèn bàn, Ly cà phê (cố định trên bàn).
+- Danh mục: Tivi cũ 26×26, Mèo ngủ 24×13, Đồng hồ Pomodoro 24×12, Radio 20×12, Máy xông 14×16, Đĩa than 26×16, Hộp nhạc 14×16, Quạt bàn 18×22 (phát âm); Chậu cây lớn 24×50, Giường mèo 30×10 (chỉ Phòng ngủ), Chậu cây, Xương rồng, Chồng sách, Khung ảnh, Nến (trang trí); Đèn bàn, Ly cà phê (cố định trên bàn).
 
 - Thêm: kéo thẻ từ khay thả vào phòng; bấm thẻ hoặc focus thẻ rồi Enter/Space thì đồ được đặt xuống sàn ở vị trí ngang ngẫu nhiên. Xóa: thả lên thanh công cụ (“Thả để xóa”), nút “Xóa khỏi phòng”, hoặc phím Delete/Backspace.
 
@@ -357,7 +357,7 @@ Mức ưu tiên: **P0** bắt buộc trong bản nộp, **P1** nên có, **P2** 
 
 **Luồng chính (Happy path)**
 
-1.  Mở khay Âm thanh → kéo Tivi CRT vào góc trái phòng.
+1.  Mở khay Âm thanh → kéo Tivi cũ vào góc trái phòng.
 
 2.  Thanh Trái/Phải trong popover cho thấy âm lệch trái; tai trái nghe rõ hơn.
 
@@ -377,7 +377,7 @@ Mức ưu tiên: **P0** bắt buộc trong bản nộp, **P1** nên có, **P2** 
 
 *Hình 5 — Khay Đồ vật phát âm thanh mở xuống dưới thanh công cụ*
 
-### Tính năng F — Âm thanh không gian & Volume mixer (FR-AUD) · P0
+### Tính năng F — Âm thanh không gian & Bảng âm lượng (FR-AUD) · P0
 
 **Use case liên quan:** UC.03 – Điều chỉnh âm thanh
 
@@ -393,7 +393,7 @@ Mức ưu tiên: **P0** bắt buộc trong bản nộp, **P1** nên có, **P2** 
 
 - Mọi thay đổi bật/tắt, âm lượng chuyển mượt 0,2 giây (Master 0,1 giây), không có tiếng nổ.
 
-- Volume mixer: hàng đầu “Âm lượng tổng (Master)” mặc định 80%; bên dưới là mọi nguồn âm của phòng hiện tại, mỗi hàng có công tắc và thanh trượt.
+- Bảng âm lượng: hàng đầu “Âm lượng tổng” mặc định 80%; bên dưới là mọi nguồn âm của phòng hiện tại, mỗi hàng có công tắc và thanh trượt.
 
 - Tiếng mèo: rù rù êm liên tục (nhịp khoảng 23 Hz, hơi thở chậm 3 giây), không nhấp nhô to nhỏ. Bấm vào mèo: mèo mở mắt, kêu “meo” một tiếng kèm chữ “Meow!”, rồi ngủ tiếp và rù rù trở lại.
 
@@ -403,7 +403,7 @@ Mức ưu tiên: **P0** bắt buộc trong bản nộp, **P1** nên có, **P2** 
 
 1.  Người dùng nhấp lần đầu vào phòng → AudioContext chạy, âm thanh bắt đầu phát.
 
-2.  Mở Volume mixer → kéo Master xuống 50% → mọi âm nhỏ lại ở cả ba không gian.
+2.  Mở Bảng âm lượng → kéo Master xuống 50% → mọi âm nhỏ lại ở cả ba không gian.
 
 3.  Tắt riêng tiếng lò sưởi ngay trong mixer.
 
@@ -417,7 +417,7 @@ Mức ưu tiên: **P0** bắt buộc trong bản nộp, **P1** nên có, **P2** 
 
 ![Hình 6](images/prd-hinh-5.png)
 
-*Hình 6 — Volume mixer với hàng Master ở đầu*
+*Hình 6 — Bảng âm lượng với hàng Master ở đầu*
 
 ### Tính năng G — Pomodoro và Hẹn giờ ngủ (FR-TIME) · P0
 
@@ -653,7 +653,7 @@ Mỗi gạch đầu dòng ở Tính năng A–M ứng với một hoặc vài m�
 |---|---|---|---|---|
 | FR-UI-01 | Bố cục ba hàng: thanh đầu trang · thanh công cụ · sân khấu 16:9 phóng nguyên tỷ lệ 320×180 | P0 | UC.01 | AC-NF.3 |
 | FR-UI-02 | Thanh đầu trang: header dùng chung (logo, 5 liên kết trang), tên phòng, Pomodoro mini (Phòng học, Sân vườn) hoặc Hẹn giờ ngủ chỉ có lựa chọn (Phòng ngủ); không còn chip âm thanh, chip lưu | P0 | UC.01 | AC-12.4, AC-05.8 |
-| FR-UI-03 | Thanh công cụ theo không gian (Đồ vật phát âm, Trang trí, Volume mixer, Khung cảnh) và chip số nguồn âm cập nhật 0,7 giây | P0 | UC.01 | — |
+| FR-UI-03 | Thanh công cụ theo không gian (Đồ vật phát âm, Trang trí, Bảng âm lượng, Khung cảnh) và chip số nguồn âm cập nhật 0,7 giây | P0 | UC.01 | — |
 | FR-UI-04 | Popover và khay: mở một cái mỗi lần; Escape hoặc bấm ra ngoài thì đóng, trạng thái không đổi | P0 | UC.01, UC.02 | AC-02.2 |
 | FR-UI-05 | Tone màu theo phòng: Phòng học nâu gỗ, Phòng ngủ tím than, Sân vườn xanh rêu | P0 | UC.01 | AC-01.1 |
 | FR-UI-06 | Màn hình < 720 px: sân khấu chiếm hết chiều rộng, mũi tên 40–44 px, khay toàn màn hình trừ lề 16 px | P0 | UC.01 | AC-NF.3 |
@@ -666,7 +666,7 @@ Mỗi gạch đầu dòng ở Tính năng A–M ứng với một hoặc vài m�
 | FR-STUDY-04 | Thảm dưới bàn 4 họa tiết | P0 | UC.02 | — |
 | FR-STUDY-05 | Tai nghe nhân vật: bật/tắt, âm lượng, 3 bài Lo-fi có tên (khoảng 1 phút mỗi bài), dùng chung với Sân vườn | P0 | UC.02, UC.03 | — |
 | FR-STUDY-06 | Đèn bàn, ly cà phê chỉ trượt dọc mặt bàn, không xóa được | P0 | UC.04 | AC-04.3 |
-| FR-STUDY-07 | Khay Âm thanh Phòng học: Tivi CRT, Mèo ngủ, Đồng hồ Pomodoro | P0 | UC.04 | — |
+| FR-STUDY-07 | Khay Âm thanh Phòng học: Tivi cũ, Mèo ngủ, Đồng hồ Pomodoro | P0 | UC.04 | — |
 | FR-STUDY-08 | Trạng thái mặc định lần đầu của Phòng học (Mưa rơi, lò sưởi phải 50%, thảm Đỏ rượu, đèn bàn, ly, chậu cây lớn) | P0 | UC.01 | — |
 | FR-BED-01 | Cảnh tĩnh Phòng ngủ: giường, tủ đầu giường, giá treo tường 3 tầng, dây đèn, người ngủ có nhịp thở; điểm nghe (286, 92) | P0 | UC.01 | — |
 | FR-BED-02 | Cửa sổ 3 thời tiết (Đêm sao, Mưa đêm, Tuyết rơi), rèm 3 mức, công tắc và âm lượng | P0 | UC.02 | — |
@@ -690,7 +690,7 @@ Mỗi gạch đầu dòng ở Tính năng A–M ứng với một hoặc vài m�
 | FR-AUD-01 | Chuỗi xử lý mỗi nguồn âm: nguồn lặp → highpass (nếu có) → âm lượng → suy giảm khoảng cách → pan → chuyển phòng → hẹn giờ ngủ → Master | P0 | UC.03 | — |
 | FR-AUD-02 | Âm thanh không gian 2D: gain và pan theo vị trí đồ so với điểm nghe; góc xa nhất gain ≥ 0,15. Âm nền (nhạc, tích tắc, cửa sổ, lò sưởi): gain 0,8, pan 0 ở mọi vị trí | P0 | UC.03 | AC-03.3, AC-03.4, AC-03.5 |
 | FR-AUD-03 | Mọi thay đổi bật/tắt, âm lượng chuyển mượt 0,2 giây (Master 0,1 giây), không tiếng nổ | P0 | UC.03 | AC-03.2 |
-| FR-AUD-04 | Volume mixer: hàng Master (mặc định 80%) và mọi nguồn âm của phòng hiện tại, mỗi hàng có công tắc và thanh trượt | P0 | UC.03 | AC-03.2 |
+| FR-AUD-04 | Bảng âm lượng: hàng Master (mặc định 80%) và mọi nguồn âm của phòng hiện tại, mỗi hàng có công tắc và thanh trượt | P0 | UC.03 | AC-03.2 |
 | FR-AUD-05 | Tiếng mèo rù rù liên tục; bấm vào mèo thì mở mắt, kêu “meo”, rồi ngủ tiếp | P0 | UC.03, UC.04 | AC-04.1 |
 | FR-AUD-06 | Âm thanh tổng hợp bằng code, dựng sau cú nhấp đầu tiên (mỗi nguồn một tác vụ); cảnh đổi hình ngay cả khi âm chưa dựng xong | P0 | UC.03 | — |
 | FR-AUD-07 | AudioContext chỉ bật sau cú nhấp/phím đầu tiên; không tạo được thì app vẫn chạy phần hình và ghi lỗi | P0 | UC.03 | AC-03.1 |
@@ -761,7 +761,7 @@ Bản thiết kế đã duyệt là prototype tương tác prototype/FocuSpace-S
 
 ![Hình 7](images/prd-hinh-6.png)
 
-*Hình 7 — Sân vườn · xích đu dưới gốc cây (cảnh Khu rừng mặc định)*
+*Hình 7 — Sân vườn (cảnh Khu rừng mặc định)*
 
 ### Bố cục các trang (cơ sở cho wireframe)
 
@@ -790,7 +790,7 @@ Mỗi tiêu chí viết theo dạng **Cho trước – Khi – Thì**, kiểm đ
 | AC-02.3 | UC.02 | Đang ở Sân vườn | Mở "Khung cảnh", chọn "Bãi biển" | Hình đổi ngay, âm nền đổi sang sóng biển; lựa chọn được lưu |
 | AC-02.4 | UC.02 | Lò sưởi bên phải | Chọn "Bên trái" | Lò sưởi và đồ trên mặt lò dời sang trái, tranh dời tới x 58 |
 | AC-03.1 | UC.03 | Mới mở trang, chưa nhấp | Nhấp lần đầu vào phòng | AudioContext chuyển sang trạng thái `running`, âm thanh bắt đầu phát |
-| AC-03.2 | UC.03 | Volume mixer đang mở | Kéo Master xuống 50% | Mọi nguồn âm nhỏ lại tương ứng trong 0,1 giây, không tiếng nổ |
+| AC-03.2 | UC.03 | Bảng âm lượng đang mở | Kéo Master xuống 50% | Mọi nguồn âm nhỏ lại tương ứng trong 0,1 giây, không tiếng nổ |
 | AC-03.3 | UC.03 *(unit)* | Một nguồn âm bật, âm lượng v, Master 80% | Tính gain | gain = v / 0,8 × 0,75 (BR-07); đồ ở góc xa nhất có gain khoảng cách ≥ 0,15 |
 | AC-03.4 | UC.03 | Đặt Tivi ở góc trái | Mở popover Tivi | Thanh Trái/Phải lệch trái; pan cập nhật < 30 ms khi kéo |
 | AC-03.5 | UC.03 | Radio, đĩa than, hộp nhạc, đồng hồ, cửa sổ, lò sưởi đang phát | Kéo nguồn tới bất kỳ vị trí nào | Gain khoảng cách giữ 0,8 và pan = 0; Tivi, mèo vẫn đổi theo vị trí |
@@ -958,3 +958,4 @@ Mọi câu hỏi mở đã chốt (Q-03, Q-04, Q-07 trước 07/11; còn lại �
 | v5.8 | 15/11/2026 | Thống nhất giới hạn đồ vật với code (G12): BR-06, FR-ITEM-05, Tính năng E, AC-04.2, Q-16 đổi 40 → 25 đồ mỗi phòng; đủ 25 đồ thì không thêm, chỉ hiện thông báo “Phòng đã đầy — hãy xóa bớt đồ để thêm mới”. Tính năng G, I: bỏ nhãn [Đề xuất] — `abandoned` gửi bằng `fetch keepalive` khi rời trang (N10); Bỏ qua lượt nghỉ ghi `reset`. |
 | v5.9 | 15/11/2026 | 6.1: font Be Vietnam Pro tự host, bỏ CSS Google Fonts chặn hiển thị; ảnh xem trước đồ vật bỏ siêu dữ liệu `caBX`. Không đổi FR, AC (AC-12.6 vẫn một font Be Vietnam Pro). |
 | v5.10 | 15/11/2026 | 6.1: chữ chú thích Căn phòng (nhãn vùng bấm, nhãn mũi tên, tooltip thanh công cụ, nhãn Focus / Hẹn giờ ngủ) 11 px → 12 px để đạt Lighthouse "legible font sizes"; khác prototype 1 px. Không đổi FR, AC. |
+| v5.11 | 15/11/2026 | Văn phong giao diện đơn giản, thực tế: tên phòng hiển thị Phòng học / Phòng ngủ / Sân vườn (thay Góc học tập ấm áp / Phòng ngủ yên tĩnh / Sân vườn · xích đu dưới gốc cây); Tivi CRT → Tivi cũ; Volume mixer → Bảng âm lượng, “Âm lượng tổng (Master)” → “Âm lượng tổng”; mô tả 17 đồ vật và 5 khung cảnh nói thẳng âm thanh phát ra (ví dụ Máy xông tinh dầu: “Tiếng bọt nước”); viết lại lời giới thiệu Trang chủ, Giới thiệu & Liên hệ. Không đổi FR, AC (chỉ đổi chữ hiển thị). |

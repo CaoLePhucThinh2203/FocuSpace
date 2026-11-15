@@ -9,10 +9,10 @@ const TEAM = [
   { name: "Tuấn Lộc", role: "Phòng ngủ, tài khoản & thống kê (API), trang Thống kê", email: "loc.dau240925@vnuk.udn.vn" },
 ];
 const PROBLEMS = [
-  ["Ảnh tĩnh nhanh nhàm.", "Ba không gian có hoạt họa và câu chuyện thay cho “chấm icon trên ảnh phong cảnh”."],
-  ["Mệt vì phải tự sắp xếp.", "Phòng dựng sẵn; bạn chỉ chỉnh âm thanh, thời tiết và vài đồ vật."],
-  ["Âm thanh phẳng, chói tai.", "Âm thanh không gian 2D theo vị trí đồ vật, lọc dải trầm cho dễ nghe lâu."],
-  ["Phải bật nhiều ứng dụng.", "Pomodoro, nhạc nền và hẹn giờ ngủ nằm chung một chỗ."],
+  ["Ảnh nền tĩnh dễ chán.", "Phòng có chuyển động (nhân vật, mưa, lửa) nên nhìn lâu không chán."],
+  ["Mất thời gian sắp xếp.", "Phòng có sẵn; bạn chỉ chỉnh âm thanh, thời tiết và thêm vài đồ vật."],
+  ["Âm thanh khó nghe lâu.", "Âm thanh nghe theo vị trí đồ vật, đã giảm tiếng trầm ồn để đeo tai nghe lâu không mệt."],
+  ["Phải mở nhiều ứng dụng.", "Pomodoro, nhạc nền và hẹn giờ ngủ ở cùng một trang."],
 ];
 
 /** Giới thiệu & Liên hệ (FR-PAGE-05, UC.12). */
@@ -22,7 +22,7 @@ export default function About() {
     <main className="mx-auto grid max-w-4xl gap-12 px-4 py-10 [&>*]:min-w-0">
       <section aria-labelledby="h-goal">
         <h1 id="h-goal" className="font-display text-2xl font-bold sm:text-3xl">Về FocuSpace</h1>
-        <p className="mt-4 text-base text-muted">FocuSpace là căn phòng pixel art Lo-fi dành cho người học và làm việc buổi tối bằng tai nghe. Chúng tôi muốn giải quyết bốn vấn đề:</p>
+        <p className="mt-4 text-base text-muted">FocuSpace là phòng học ảo dạng pixel, có nhạc Lo-fi, dành cho người hay học và làm việc buổi tối bằng tai nghe. Trang web giải quyết bốn vấn đề:</p>
         <ul className="mt-4 grid gap-3 sm:grid-cols-2">
           {PROBLEMS.map(([b, t]) => (
             <li key={b} className="card p-4"><b className="text-amber">{b}</b> <span className="text-muted">{t}</span></li>
@@ -35,8 +35,8 @@ export default function About() {
         <ol className="mt-4 grid list-decimal gap-2 pl-6 marker:font-display marker:text-amber">
           <li>Mở <a href="/room" className="text-amber underline">Căn phòng</a> và nhấp một lần để bật âm thanh (nên đeo tai nghe).</li>
           <li>Bấm cửa sổ để đổi thời tiết, bấm lò sưởi để chỉnh tiếng củi.</li>
-          <li>Kéo đồ vật từ thanh công cụ vào phòng; kéo qua trái/phải để nghe âm lệch tai.</li>
-          <li>Bấm <b>Bắt đầu</b> ở Pomodoro trên đầu trang; ra Sân vườn nghỉ giữa giờ bằng mũi tên trái.</li>
+          <li>Kéo đồ vật từ thanh công cụ vào phòng; đặt đồ bên trái thì tiếng nghe lệch về tai trái.</li>
+          <li>Bấm <b>Bắt đầu</b> ở Pomodoro trên đầu trang. Giờ nghỉ thì bấm mũi tên trái để ra Sân vườn.</li>
           <li>Đăng nhập ở trang <Link to="/account" className="text-amber underline">Tài khoản</Link> để đồng bộ phòng và xem thống kê.</li>
         </ol>
       </section>

@@ -235,14 +235,14 @@ Dữ liệu seeder (lấy nguyên từ hằng số `TYPES`, `STUDY_TYPES`, `BED_
 
 | sort | code | name | group | w×h | Phòng học | Phòng ngủ | default_vol | description |
 |---|---|---|---|---|---|---|---|---|
-| 1 | tv | Tivi CRT | sound | 26×26 | ✓ | | 0.35 | Nhiễu sóng trắng |
-| 2 | cat | Mèo ngủ | sound | 24×13 | ✓ | ✓ | 0.6 | Rù rù khẽ, êm dịu |
-| 3 | clock | Đồng hồ Pomodoro | sound | 24×12 | ✓ | ✓ | 0.4 | Tích tắc nhẹ, đếm giờ Pomodoro |
+| 1 | tv | Tivi cũ | sound | 26×26 | ✓ | | 0.35 | Tiếng rè nhiễu sóng |
+| 2 | cat | Mèo ngủ | sound | 24×13 | ✓ | ✓ | 0.6 | Tiếng mèo rù rù |
+| 3 | clock | Đồng hồ Pomodoro | sound | 24×12 | ✓ | ✓ | 0.4 | Đếm giờ học, có tiếng tích tắc |
 | 4 | radio | Radio | sound | 20×12 | | ✓ | 0.5 | Nhạc Lo-fi |
-| 5 | diffuser | Máy xông tinh dầu | sound | 14×16 | | ✓ | 0.4 | Nước sủi bọt lăn tăn |
-| 6 | vinyl | Đĩa than | sound | 26×16 | | ✓ | 0.5 | Lofi Sleep, rãnh đĩa |
-| 7 | musicbox | Hộp nhạc | sound | 14×16 | | ✓ | 0.45 | Nhạc chuông ru ngủ |
-| 8 | fan | Quạt bàn | sound | 18×22 | | ✓ | 0.35 | Gió nhẹ ru ngủ |
+| 5 | diffuser | Máy xông tinh dầu | sound | 14×16 | | ✓ | 0.4 | Tiếng bọt nước |
+| 6 | vinyl | Đĩa than | sound | 26×16 | | ✓ | 0.5 | Nhạc chậm, có tiếng rè đĩa |
+| 7 | musicbox | Hộp nhạc | sound | 14×16 | | ✓ | 0.45 | Nhạc chuông nhẹ |
+| 8 | fan | Quạt bàn | sound | 18×22 | | ✓ | 0.35 | Tiếng quạt gió |
 | 9 | bigplant | Chậu cây lớn | decor | 24×50 | ✓ | ✓ | | |
 | 10 | catbed | Giường mèo | decor | 30×10 | | ✓ | | |
 | 11 | plant | Chậu cây | decor | 12×16 | ✓ | ✓ | | |
@@ -250,8 +250,8 @@ Dữ liệu seeder (lấy nguyên từ hằng số `TYPES`, `STUDY_TYPES`, `BED_
 | 13 | books | Chồng sách | decor | 14×10 | ✓ | ✓ | | |
 | 14 | frame | Khung ảnh | decor | 14×12 | ✓ | ✓ | | |
 | 15 | candle | Nến | decor | 6×12 | ✓ | ✓ | | |
-| 16 | lamp | Đèn bàn | desk | 20×24 | ✓ | | | Ánh sáng vàng ấm |
-| 17 | cup | Ly cà phê | desk | 12×14 | ✓ | | | Kéo để di chuyển |
+| 16 | lamp | Đèn bàn | desk | 20×24 | ✓ | | | Chiếu sáng bàn học |
+| 17 | cup | Ly cà phê | desk | 12×14 | ✓ | | | Đồ trang trí trên bàn |
 
 `removable = false` cho `lamp`, `cup`; còn lại `true`.
 
@@ -269,11 +269,11 @@ Dữ liệu seeder (hằng số `SCENES` của prototype; mặc định theo `DE
 
 | sort | code | name | is_default | description |
 |---|---|---|---|---|
-| 1 | city | Thành phố | | Buổi tối, xe cộ lofi chill êm dịu |
-| 2 | forest | Khu rừng | ✓ | Gió xào xạc lá, chim hót |
-| 3 | beach | Bãi biển | | Sóng vỗ bờ, hải âu |
-| 4 | glacier | Núi băng | | Hồ núi, suối băng róc rách êm |
-| 5 | hill | Đồi ven biển | | Biển xa, mây trôi, gió nhẹ |
+| 1 | city | Thành phố | | Tiếng xe cộ buổi tối |
+| 2 | forest | Khu rừng | ✓ | Tiếng gió và chim hót |
+| 3 | beach | Bãi biển | | Tiếng sóng biển và hải âu |
+| 4 | glacier | Núi băng | | Tiếng suối chảy |
+| 5 | hill | Đồi ven biển | | Tiếng gió và sóng xa |
 
 ## 4. Ánh xạ API ↔ bảng
 

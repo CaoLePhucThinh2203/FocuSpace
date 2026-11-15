@@ -16,7 +16,7 @@ Tài liệu mô tả thiết kế giải pháp CNTT cho FocuSpace bản chính t
 
 ## 1.2 Phạm vi
 
-- Yêu cầu chức năng: ba không gian, đồ vật kéo thả, âm thanh không gian 2D, Volume mixer, Pomodoro, Hẹn giờ ngủ, lưu cục bộ, tài khoản, đồng bộ cloud, đo KPI, website 6 trang với Thư viện và Thống kê lấy dữ liệu từ cơ sở dữ liệu, theo dõi bằng Google Analytics 4 và Sentry (PRD mục 5).
+- Yêu cầu chức năng: ba không gian, đồ vật kéo thả, âm thanh không gian 2D, Bảng âm lượng, Pomodoro, Hẹn giờ ngủ, lưu cục bộ, tài khoản, đồng bộ cloud, đo KPI, website 6 trang với Thư viện và Thống kê lấy dữ liệu từ cơ sở dữ liệu, theo dõi bằng Google Analytics 4 và Sentry (PRD mục 5).
 
 - Yêu cầu phi chức năng: hiệu năng, sẵn sàng, bảo mật, tương thích (PRD mục 6).
 
@@ -121,7 +121,7 @@ Hai khối lớn: **ứng dụng trong trình duyệt** chịu toàn bộ trải
 
 | **Lớp (Chương 1, Class C2/C3)** | **Module mã nguồn** (`frontend/src/`, `backend/src/`) |
 |---|---|
-| GiaoDienCanPhong | `areas/study/pages/Room.tsx` (header chung, hộp thoại hợp nhất, ô thông báo), `areas/study/engine/markup.ts` + `room.css` (khung Căn phòng); thanh công cụ, khay, popover, Volume mixer, khay Khung cảnh, ô Hẹn giờ ngủ dựng trong `engine/legacy/roomEngine.js` |
+| GiaoDienCanPhong | `areas/study/pages/Room.tsx` (header chung, hộp thoại hợp nhất, ô thông báo), `areas/study/engine/markup.ts` + `room.css` (khung Căn phòng); thanh công cụ, khay, popover, Bảng âm lượng, khay Khung cảnh, ô Hẹn giờ ngủ dựng trong `engine/legacy/roomEngine.js` |
 | RoomEngine | `engine/legacy/roomEngine.js` (vẽ ba không gian, vòng lặp, khởi động) + `areas/study/engine/rooms.ts` (bảng chuyển phòng, quy tắc chuyển) |
 | QuanLyDoVat | `areas/items-audio/engine/placement.ts` (+ `shared/src/spatial.ts`) |
 | AmThanhKhongGian | `engine/legacy/roomEngine.js` (khối AUDIO ENGINE, ĐỊNH TUYẾN ÂM THANH THEO PHÒNG, âm Phòng ngủ, âm khung cảnh) + `shared/src/spatial.ts` (công thức gain/pan) |

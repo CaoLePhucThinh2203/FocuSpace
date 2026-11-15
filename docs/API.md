@@ -1066,13 +1066,13 @@ Ví dụ rút gọn (đủ 5 mục, xếp theo sort_order):
     {
       "code": "city",
       "name": "Thành phố",
-      "description": "Buổi tối, xe cộ lofi chill êm dịu",
+      "description": "Tiếng xe cộ buổi tối",
       "isDefault": false
     },
     {
       "code": "forest",
       "name": "Khu rừng",
-      "description": "Gió xào xạc lá, chim hót",
+      "description": "Tiếng gió và chim hót",
       "isDefault": true
     }
   ],

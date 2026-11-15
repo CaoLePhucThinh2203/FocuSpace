@@ -31,8 +31,8 @@ const STORAGE_KEY = "focuspace.room.v4";   // v6: khóa lưu mới để lần m
 
 /* Đồ vật phát âm thanh (di chuyển tự do, có Spatial Audio) */
 const TYPES = {
-  tv:        { group: "sound", name: "Tivi CRT",   sub: "Nhiễu sóng trắng", w: 26, h: 26, sound: true, hp: true,  vol: 0.35 },
-  cat:       { group: "sound", name: "Mèo ngủ",    sub: "Rù rù khẽ, êm dịu",      w: 24, h: 13, sound: true, hp: false, vol: 0.6, gain: 1 / 3 },   // rù rù còn 1/3
+  tv:        { group: "sound", name: "Tivi cũ",     sub: "Tiếng rè nhiễu sóng", w: 26, h: 26, sound: true, hp: true,  vol: 0.35 },
+  cat:       { group: "sound", name: "Mèo ngủ",    sub: "Tiếng mèo rù rù",      w: 24, h: 13, sound: true, hp: false, vol: 0.6, gain: 1 / 3 },   // rù rù còn 1/3
   /* Đồ trang trí (không âm thanh) */
   plant:  { group: "decor", name: "Chậu cây",    w: 12, h: 16 },
   cactus: { group: "decor", name: "Xương rồng",  w: 10, h: 14 },
@@ -40,15 +40,15 @@ const TYPES = {
   frame:  { group: "decor", name: "Khung ảnh",   w: 14, h: 12 },
   candle: { group: "decor", name: "Nến",         w: 6,  h: 12 },
   /* Đồ trên bàn: chỉ kéo dọc mặt bàn, không xóa được */
-  lamp: { group: "desk", name: "Đèn bàn",     sub: "Ánh sáng vàng ấm", w: 20, h: 24, deskOnly: true, fixed: true },
-  cup:  { group: "desk", name: "Ly cà phê",   sub: "Kéo để di chuyển", w: 12, h: 14, deskOnly: true, fixed: true },
+  lamp: { group: "desk", name: "Đèn bàn",     sub: "Chiếu sáng bàn học", w: 20, h: 24, deskOnly: true, fixed: true },
+  cup:  { group: "desk", name: "Ly cà phê",   sub: "Đồ trang trí trên bàn", w: 12, h: 14, deskOnly: true, fixed: true },
   /* Đồ vật phòng ngủ (phát âm thanh, di chuyển tự do) */
-  diffuser: { group: "sound", name: "Máy xông tinh dầu", sub: "Nước sủi bọt lăn tăn",    w: 14, h: 16, sound: true, hp: false, vol: 0.4 },
-  vinyl:    { group: "sound", name: "Đĩa than",          sub: "Lofi Sleep, rãnh đĩa",    w: 26, h: 16, sound: true, hp: false, vol: 0.5, bg: true },
-  musicbox: { group: "sound", name: "Hộp nhạc",          sub: "Nhạc chuông ru ngủ",      w: 14, h: 16, sound: true, hp: false, vol: 0.45, bg: true },
-  fan:      { group: "sound", name: "Quạt bàn",          sub: "Gió nhẹ ru ngủ",          w: 18, h: 22, sound: true, hp: false, vol: 0.35 },
+  diffuser: { group: "sound", name: "Máy xông tinh dầu", sub: "Tiếng bọt nước",    w: 14, h: 16, sound: true, hp: false, vol: 0.4 },
+  vinyl:    { group: "sound", name: "Đĩa than",          sub: "Nhạc chậm, có tiếng rè đĩa",    w: 26, h: 16, sound: true, hp: false, vol: 0.5, bg: true },
+  musicbox: { group: "sound", name: "Hộp nhạc",          sub: "Nhạc chuông nhẹ",      w: 14, h: 16, sound: true, hp: false, vol: 0.45, bg: true },
+  fan:      { group: "sound", name: "Quạt bàn",          sub: "Tiếng quạt gió",          w: 18, h: 22, sound: true, hp: false, vol: 0.35 },
   radio:    { group: "sound", name: "Radio",             sub: "Nhạc Lo-fi",              w: 20, h: 12, sound: true, hp: false, vol: 0.5, bg: true },
-  clock:    { group: "sound", name: "Đồng hồ Pomodoro",  sub: "Tích tắc nhẹ, đếm giờ Pomodoro", w: 24, h: 12, sound: true, hp: false, vol: 0.4, bg: true },
+  clock:    { group: "sound", name: "Đồng hồ Pomodoro",  sub: "Đếm giờ học, có tiếng tích tắc", w: 24, h: 12, sound: true, hp: false, vol: 0.4, bg: true },
   bigplant: { group: "decor", name: "Chậu cây lớn",      w: 24, h: 50, floorOnly: true },
   catbed:   { group: "decor", name: "Giường mèo",        w: 30, h: 10, bedOnly: true },
 };
@@ -56,22 +56,22 @@ const STUDY_TYPES = new Set(["tv", "cat", "clock", "bigplant", "plant", "cactus"
 const BED_ITEM_TYPES = new Set(["catbed", "radio", "diffuser", "vinyl", "musicbox", "fan", "cat", "clock", "bigplant", "plant", "cactus", "books", "frame", "candle"]);
 const CAT_COATS = [{ n: "Cam", a: "#e08a3c", b: "#f2b27a", c: "#b8642a", d: "#c9742f" }, { n: "Xám tro", a: "#9a98a6", b: "#d2d0da", c: "#6a6878", d: "#7e7c8c" }, { n: "Kem", a: "#e9d7b6", b: "#f8ecd8", c: "#c6a77c", d: "#d3bd98" }];   // màu lông mèo: thân, trong tai, vằn, bóng bụng (Cam = màu gốc prototype)
 const TRAYS = {
-  sound: { title: "Đồ vật phát âm thanh", note: "Kéo vào phòng. Bấm đồ vật để chỉnh âm lượng.", types: ["tv", "headphone", "cat"] },
-  decor: { title: "Đồ vật trang trí",     note: "Chỉ để làm đẹp, không phát âm thanh.",         types: ["bigplant", "catbed", "plant", "cactus", "books", "frame", "candle"] },
+  sound: { title: "Đồ vật phát âm thanh", note: "Kéo vào phòng. Bấm vào đồ vật để chỉnh âm lượng.", types: ["tv", "headphone", "cat"] },
+  decor: { title: "Đồ vật trang trí",     note: "Không phát âm thanh.",         types: ["bigplant", "catbed", "plant", "cactus", "books", "frame", "candle"] },
 };
 const WEATHERS = [
-  { id: "clear", label: "Thoáng đãng" },
+  { id: "clear", label: "Trời quang" },
   { id: "rain",  label: "Mưa rơi" },
   { id: "storm", label: "Sấm giông" },
   { id: "sunset", label: "Hoàng hôn" },
 ];
 /* Khung cảnh phía sau lưng ở sân vườn (mỗi cảnh có âm thanh nền riêng) */
 const SCENES = [
-  { id: "city",    label: "Thành phố", sub: "Buổi tối, xe cộ lofi chill êm dịu" },
-  { id: "forest",  label: "Khu rừng",  sub: "Gió xào xạc lá, chim hót" },
-  { id: "beach",   label: "Bãi biển",  sub: "Sóng vỗ bờ, hải âu" },
-  { id: "glacier", label: "Núi băng",  sub: "Hồ núi, suối băng róc rách êm" },
-  { id: "hill",    label: "Đồi ven biển", sub: "Biển xa, mây trôi, gió nhẹ" },
+  { id: "city",    label: "Thành phố", sub: "Tiếng xe cộ buổi tối" },
+  { id: "forest",  label: "Khu rừng",  sub: "Tiếng gió và chim hót" },
+  { id: "beach",   label: "Bãi biển",  sub: "Tiếng sóng biển và hải âu" },
+  { id: "glacier", label: "Núi băng",  sub: "Tiếng suối chảy" },
+  { id: "hill",    label: "Đồi ven biển", sub: "Tiếng gió và sóng xa" },
 ];
 const SCENE_IDS = SCENES.map(s => s.id);
 const ART_N = 10;   // số tranh nhỏ ngẫu nhiên của vật phẩm Khung ảnh
@@ -2624,7 +2624,7 @@ function loop(t) {
 const ROOM = { cur: state.room, busy: false };
 const ROOMCFG = {
   study: {
-    name: "Góc học tập ấm áp",
+    name: "Phòng học",
     hint: "Mẹo: kéo Tivi hoặc Mèo quanh phòng để nghe âm thanh đổi hướng tai. Bấm tai nghe để phát nhạc, bấm cửa sổ để đổi thời tiết và kéo rèm, bấm kệ sách để thêm đồ.",
     sound: ["tv", "cat", "clock"],
     list: () => state.items, setList: v => { state.items = v; },
@@ -2638,7 +2638,7 @@ const ROOMCFG = {
     },
   },
   bed: {
-    name: "Phòng ngủ yên tĩnh",
+    name: "Phòng ngủ",
     hint: "Mẹo: bấm giá treo tường hoặc ngăn trên tủ đầu giường để đặt quạt, máy xông, đĩa than, hộp nhạc, radio hoặc đồng hồ Pomodoro; radio, đĩa than, hộp nhạc là âm nền nghe đều hai tai; kéo máy xông, quạt hoặc mèo ra góc xa để thành tiếng nền mờ. Bấm đèn ngủ để tắt đèn.",
     sound: ["radio", "diffuser", "vinyl", "musicbox", "fan", "cat", "clock"],
     list: () => state.bed.items, setList: v => { state.bed.items = v; },
@@ -2652,7 +2652,7 @@ const ROOMCFG = {
     },
   },
   out: {
-    name: "Sân vườn · xích đu dưới gốc cây",
+    name: "Sân vườn",
     hint: "Mẹo: bấm biểu tượng Khung cảnh ở thanh công cụ để xem trước và đổi Thành phố, Khu rừng, Bãi biển, Núi băng; âm thanh nền đổi theo. Bấm tai nghe để phát nhạc Lo-fi. Thanh bên trái đưa bạn về phòng học hoặc phòng ngủ.",
     sound: [],
     list: () => [], setList: () => {},
@@ -2693,8 +2693,8 @@ sceneEm.scale = SCENE_GAIN;
 const outHeadEm = new Emitter(160, 100, false, roomOut.out, LISTENERS.out);           // tai nghe của người ngồi xích đu (dùng chung cài đặt với tai nghe phòng học)
 const BED_WEATHERS = [
   { id: "stars", label: "Đêm sao",  sub: "Tiếng dế mèn" },
-  { id: "rain",  label: "Mưa đêm",  sub: "Mưa êm rơi trên mái" },
-  { id: "wind",  label: "Tuyết rơi", sub: "Tuyết rơi lặng, gió khẽ ngoài hiên" },
+  { id: "rain",  label: "Mưa đêm",  sub: "Tiếng mưa trên mái" },
+  { id: "wind",  label: "Tuyết rơi", sub: "Tiếng gió nhẹ" },
 ];
 const BED_WEATHER_BUF = { stars: "stars", rain: "roof", wind: "wind" };
 function applyWindow() { windowEm.play(BUF.clear && BUF[state.weather]); windowEm.setLevel(state.windowOn, state.windowVol); }
@@ -2873,7 +2873,7 @@ function closeTray() {
 }
 function mixerRows() {
   const cur = ROOM.cur, rows = [], push = (label, get, set) => rows.push({ label, get, set });
-  rows.push({ label: "Âm lượng tổng (Master)", master: true, get: () => [state.masterOn, state.masterVol], set: (on, v) => { state.masterOn = on; state.masterVol = v; if (ctx) ramp(master.gain, masterGainOf(), 0.1); } });   // điều khiển toàn bộ âm thanh
+  rows.push({ label: "Âm lượng tổng", master: true, get: () => [state.masterOn, state.masterVol], set: (on, v) => { state.masterOn = on; state.masterVol = v; if (ctx) ramp(master.gain, masterGainOf(), 0.1); } });   // điều khiển toàn bộ âm thanh
   if (cur === "study") {
     push("Cửa sổ · " + WEATHERS.find(w => w.id === state.weather).label, () => [state.windowOn, state.windowVol], (on, v) => { state.windowOn = on; state.windowVol = v; applyWindow(); });
     push("Lò sưởi", () => [state.fireOn, state.fireVol], (on, v) => { state.fireOn = on; state.fireVol = v; applyFire(); });
@@ -2899,7 +2899,7 @@ function updateMix() {
 setInterval(updateMix, 700);
 function renderMixer() {
   const rows = mixerRows();
-  tray.innerHTML = `<h3>Volume mixer</h3><p class="note">Thanh Master ở trên cùng chỉnh tổng âm lượng cả phòng; bên dưới chỉnh riêng từng nguồn.</p><div class="mix">${rows.map((r, i) => { const [on, v] = r.get(); return `<div class="mrow${r.master ? " master" : ""}"><div class="row"><span>${r.label}</span><button type="button" class="switch" role="switch" data-mi="${i}" aria-checked="${on}" aria-label="${r.label}"></button></div><div class="mvrow"><input type="range" min="0" max="100" value="${Math.round(v * 100)}" data-mv="${i}" aria-label="Âm lượng ${r.label}"><output class="mpct" id="mp${i}">${Math.round(v * 100)}%</output></div></div>`; }).join("")}</div>`;
+  tray.innerHTML = `<h3>Bảng âm lượng</h3><p class="note">Dòng đầu chỉnh âm lượng cả phòng, các dòng dưới chỉnh từng nguồn.</p><div class="mix">${rows.map((r, i) => { const [on, v] = r.get(); return `<div class="mrow${r.master ? " master" : ""}"><div class="row"><span>${r.label}</span><button type="button" class="switch" role="switch" data-mi="${i}" aria-checked="${on}" aria-label="${r.label}"></button></div><div class="mvrow"><input type="range" min="0" max="100" value="${Math.round(v * 100)}" data-mv="${i}" aria-label="Âm lượng ${r.label}"><output class="mpct" id="mp${i}">${Math.round(v * 100)}%</output></div></div>`; }).join("")}</div>`;
   tray.querySelectorAll("[data-mi]").forEach(b => b.addEventListener("click", () => {
     const r = rows[+b.dataset.mi], [on, v] = r.get(); r.set(!on, v); b.setAttribute("aria-checked", String(!on)); save(); updateMix();
   }));
@@ -2914,7 +2914,7 @@ function drawScenePreview(c2, sc) {
   c2.imageSmoothingEnabled = false; c2.drawImage(t, 0, 0, c2.canvas.width, c2.canvas.height);
 }
 function renderSceneTray() {
-  tray.innerHTML = `<h3>Khung cảnh</h3><p class="note">Xem trước và bấm để đổi khung cảnh phía sau sân vườn.</p><div class="scenes">${SCENES.map(s => `<button type="button" class="scn" data-sc="${s.id}" aria-pressed="${state.out.scene === s.id}"><canvas width="160" height="90"></canvas><b>${s.label}</b><small>${s.sub}</small></button>`).join("")}</div>`;
+  tray.innerHTML = `<h3>Khung cảnh</h3><p class="note">Bấm vào ảnh để đổi khung cảnh.</p><div class="scenes">${SCENES.map(s => `<button type="button" class="scn" data-sc="${s.id}" aria-pressed="${state.out.scene === s.id}"><canvas width="160" height="90"></canvas><b>${s.label}</b><small>${s.sub}</small></button>`).join("")}</div>`;
   tray.querySelectorAll(".scn").forEach(b => { drawScenePreview(b.querySelector("canvas").getContext("2d"), b.dataset.sc); b.addEventListener("click", () => setScene(b.dataset.sc)); });
 }
 function openTray(kind) {
@@ -3169,7 +3169,7 @@ function sw(id, on, label) { return `<div class="row"><span>${label}</span><butt
 function volRow(id, v) { return `<div class="vol"><div class="row"><label class="lbl" for="${id}">Âm lượng</label><span id="${id}Val">${Math.round(v * 100)}%</span></div><input type="range" id="${id}" min="0" max="100" value="${Math.round(v * 100)}"></div>`; }
 function spatialRow(em) {
   const sp = em.sp;
-  if (sp.bg) return `<div class="spatial"><span>Âm nền · to đều mọi vị trí, nghe đều hai tai</span></div>`;
+  if (sp.bg) return `<div class="spatial"><span>Âm nền: nghe đều hai tai ở mọi vị trí</span></div>`;
   return `<div class="spatial"><div class="meter-row"><span>Trái</span><span>${panLabel(sp.pan)}</span><span>Phải</span></div><div class="meter"><i style="left:${(sp.pan + 1) / 2 * 100}%"></i></div><span>Suy giảm theo khoảng cách: ${sp.gain.toFixed(2)} · cách điểm nghe ${Math.round(sp.d)} px</span></div>`;
 }
 function bindSwitch(id, get, set) {
@@ -3225,11 +3225,11 @@ function openPop(key, anchor) {
       }
     };
   } else if (key === "bedlamp") {
-    html = head("Đèn ngủ đầu giường", "Tắt đèn để phòng tối hẳn, chỉ còn ánh trăng.") + sw("bOn", state.bed.lampOn, "Bật đèn");
+    html = head("Đèn ngủ", "Tắt đèn thì phòng chỉ còn ánh trăng.") + sw("bOn", state.bed.lampOn, "Bật đèn");
     bind = () => bindSwitch("bOn", () => state.bed.lampOn, v => { state.bed.lampOn = v; playClick(); });
   } else if (key === "headphone") {
     const isH = true, st = state.headphone, em = headEm, apply = applyHeadphone;
-    html = head(isH ? "Tai nghe" : "Radio", isH ? "Nhạc Lo-fi phát thẳng vào tai nghe." : "Nhạc Lo-fi từ chiếc radio trong tủ đầu giường.") +
+    html = head(isH ? "Tai nghe" : "Radio", isH ? "Phát nhạc Lo-fi qua tai nghe." : "Phát nhạc Lo-fi.") +
       sw("rOn", st.on, isH ? "Phát nhạc" : "Bật radio") + volRow("rVol", st.vol) +
       `<div class="row"><span class="lbl">Bài Lo-fi</span></div><div class="seg list" role="group" aria-label="Chọn bài">${LOFI.map((l, i) => `<button type="button" data-t="${i}" aria-pressed="${(st.track | 0) === i}">${l.name}</button>`).join("")}</div>` +
       (isH ? "" : spatialRow(em));
@@ -3243,14 +3243,14 @@ function openPop(key, anchor) {
     };
   } else if (key === "wallclock") {
     const wc = state.bed.clock;
-    html = head("Đồng hồ treo tường", "Chiếc đồng hồ kim quay đều. Đặt hẹn giờ ngủ ngay tại đây.") + sw("wcOn", wc.on, "Tiếng tích tắc") + volRow("wcVol", wc.vol) +
+    html = head("Đồng hồ treo tường", "Có tiếng tích tắc. Đặt hẹn giờ ngủ tại đây.") + sw("wcOn", wc.on, "Tiếng tích tắc") + volRow("wcVol", wc.vol) +
       `<div class="section"><h4>Hẹn giờ ngủ</h4><div class="pomo-box"><div class="seg" role="group" aria-label="Hẹn giờ ngủ">${[0, 15, 30, 60].map(m => `<button type="button" data-sl="${m}" aria-pressed="${sleep.min === m}">${m ? m + "p" : "Tắt"}</button>`).join("")}</div><div class="big" data-sleep-time>${sleep.min ? fmt(sleepRem()) : "--:--"}</div><button type="button" class="btn primary" data-sleep-play${sleep.min ? "" : " hidden"}>${sleep.running ? "Tạm dừng" : "Bắt đầu"}</button></div></div>`;
     bind = () => {
       bindSwitch("wcOn", () => wc.on, v => { wc.on = v; applyWallClock(); });
       bindVol("wcVol", v => { wc.vol = v; applyWallClock(); });
     };
   } else if (key === "fireplace") {
-    html = head("Lò sưởi", "Tiếng củi khô nổ lách tách.") + sw("fOn", state.fireOn, "Đốt lửa") + volRow("fVol", state.fireVol)  + `<div class="section"><h4>Vị trí lò sưởi</h4><div class="seg cols2"><button id="fSideL" aria-pressed="${state.fireSide === "left"}">Bên trái</button><button id="fSideR" aria-pressed="${state.fireSide !== "left"}">Bên phải</button></div></div>`;
+    html = head("Lò sưởi", "Tiếng củi cháy.") + sw("fOn", state.fireOn, "Đốt lửa") + volRow("fVol", state.fireVol)  + `<div class="section"><h4>Vị trí lò sưởi</h4><div class="seg cols2"><button id="fSideL" aria-pressed="${state.fireSide === "left"}">Bên trái</button><button id="fSideR" aria-pressed="${state.fireSide !== "left"}">Bên phải</button></div></div>`;
     bind = () => {
       [["fSideL", "left"], ["fSideR", "right"]].forEach(([id, v]) => pop.querySelector("#" + id).addEventListener("click", () => { state.fireSide = v; applyFire(); redrawBg(); buildHotspots(); layout(); save(); closePop(); }));
       bindSwitch("fOn", () => state.fireOn, v => { state.fireOn = v; applyFire(); });
@@ -3261,11 +3261,11 @@ function openPop(key, anchor) {
     html = head("Thảm", bed ? "Chọn họa tiết thảm dưới giường." : "Chọn họa tiết thảm dưới bàn.") + `<div class="seg cols2">${list.map((r, i) => `<button id="rug${i}" aria-pressed="${cur === i}">${r.n}</button>`).join("")}</div>`;
     bind = () => list.forEach((r, i) => pop.querySelector("#rug" + i).addEventListener("click", () => { if (bed) state.rug = i; else state.studyRug = i; redrawBg(); save(); const a = popAnchor; closePop(); openPop("rug", a); }));
   } else if (o.data.type === "lamp") {
-    html = head("Đèn bàn", "Ánh sáng vàng ấm chiếu xuống trang sách. Kéo để dời dọc mặt bàn.") + sw("lOn", state.lampOn, "Bật đèn");
+    html = head("Đèn bàn", "Chiếu sáng bàn học. Kéo để dời dọc mặt bàn.") + sw("lOn", state.lampOn, "Bật đèn");
     bind = () => bindSwitch("lOn", () => state.lampOn, v => { state.lampOn = v; playClick(); });
   } else if (o.data.type === "clock") {
     const d = o.data;
-    html = head("Đồng hồ Pomodoro", "Đếm giờ Focus/Nghỉ, dùng chung với Pomodoro ở góc trên. Đổi nhịp học bằng cách bấm số giờ ở góc trên. Kéo lên giá hoặc đặt lên bàn.") + sw("iOn", d.on, "Tiếng tích tắc khi đếm") + volRow("iVol", d.vol) + `<div class="section"><h4>Pomodoro</h4>${pomoBox()}</div><button type="button" class="btn danger" id="iDel">Xóa khỏi phòng</button>`;
+    html = head("Đồng hồ Pomodoro", "Dùng chung bộ đếm với Pomodoro trên đầu trang. Bấm số giờ trên đầu trang để đổi nhịp học.") + sw("iOn", d.on, "Tiếng tích tắc khi đếm") + volRow("iVol", d.vol) + `<div class="section"><h4>Pomodoro</h4>${pomoBox()}</div><button type="button" class="btn danger" id="iDel">Xóa khỏi phòng</button>`;
     bind = () => {
       bindSwitch("iOn", () => d.on, v => { d.on = v; applyItemAudio(o); });
       bindVol("iVol", v => { d.vol = v; o.em.setLevel(d.on, v); });
@@ -3274,18 +3274,18 @@ function openPop(key, anchor) {
     };
   } else if (!TYPES[o.data.type].sound) {
     const d = o.data, t = TYPES[d.type];
-    html = head(t.name, d.type === "frame" ? "Mỗi khung ảnh có một bức tranh pixel ngẫu nhiên." : "Đồ trang trí, không phát âm thanh.") + (d.type === "frame" ? `<button type="button" class="btn" id="iArt">Đổi bức tranh khác</button> ` : "") + `<button type="button" class="btn danger" id="iDel">Xóa khỏi phòng</button>`;
+    html = head(t.name, d.type === "frame" ? "Mỗi khung ảnh có một bức tranh ngẫu nhiên." : "Không phát âm thanh.") + (d.type === "frame" ? `<button type="button" class="btn" id="iArt">Đổi bức tranh khác</button> ` : "") + `<button type="button" class="btn danger" id="iDel">Xóa khỏi phòng</button>`;
     bind = () => {
       pop.querySelector("#iDel").addEventListener("click", () => removeItem(d.id));
       const ba = pop.querySelector("#iArt"); if (ba) ba.addEventListener("click", () => { d.art = (d.art + 1 + (Math.random() * (ART_N - 1) | 0)) % ART_N; drawItemSprite(o); save(); });
     };
   } else {
     const d = o.data, t = TYPES[d.type];
-    const onLabel = { tv: "Bật tivi", headphone: "Phát nhạc", cat: "Tiếng rù rù", diffuser: "Bật máy xông", vinyl: "Phát đĩa than", musicbox: "Lên dây cót", fan: "Bật quạt", radio: "Bật radio" }[d.type];
+    const onLabel = { tv: "Bật tivi", headphone: "Phát nhạc", cat: "Tiếng rù rù", diffuser: "Bật máy xông", vinyl: "Phát đĩa than", musicbox: "Bật hộp nhạc", fan: "Bật quạt", radio: "Bật radio" }[d.type];
     const tracks = d.type === "headphone" || d.type === "radio" ? LOFI : d.type === "vinyl" ? SLEEP_LOFI : null;
     html = head(t.name, t.sub + ".") + sw("iOn", d.on, onLabel) + volRow("iVol", d.vol);
     if (d.type === "cat") html += `<div class="row"><span class="lbl">Màu lông</span></div><div class="seg" role="group" aria-label="Chọn màu lông">${CAT_COATS.map((k, i) => `<button type="button" data-coat="${i}" aria-pressed="${(d.coat | 0) === i}">${k.n}</button>`).join("")}</div>`;
-    if (tracks) html += `<div class="row"><span class="lbl">${d.type === "vinyl" ? "Đĩa Lofi Sleep" : "Bài Lo-fi"}</span></div><div class="seg list" role="group" aria-label="Chọn bài">${tracks.map((l, i) => `<button type="button" data-t="${i}" aria-pressed="${(d.track | 0) === i}">${l.name}</button>`).join("")}</div>`;
+    if (tracks) html += `<div class="row"><span class="lbl">${d.type === "vinyl" ? "Bài nhạc" : "Bài Lo-fi"}</span></div><div class="seg list" role="group" aria-label="Chọn bài">${tracks.map((l, i) => `<button type="button" data-t="${i}" aria-pressed="${(d.track | 0) === i}">${l.name}</button>`).join("")}</div>`;
     html += spatialRow(o.em) + `<button type="button" class="btn danger" id="iDel">Xóa khỏi phòng</button>`;
     bind = () => {
       bindSwitch("iOn", () => d.on, v => { d.on = v; applyItemAudio(o); });
@@ -3319,7 +3319,7 @@ const ICON_MOON = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="tru
 const ICON_BOOK = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 4h6a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H3z"/><path d="M21 4h-6a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h7z"/></svg>`;
 const ICON_TREE = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a6 6 0 0 0-5.6 8.1A4.5 4.5 0 0 0 7.5 19H11v3h2v-3h3.5a4.5 4.5 0 0 0 1.1-8.9A6 6 0 0 0 12 2z"/></svg>`;
 const ICON_HOME = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3 2 12h3v8h5v-5h4v5h5v-8h3z"/><rect x="16" y="4" width="2" height="4"/></svg>`;
-const NAV = [["bed", "Phòng ngủ yên tĩnh", ICON_MOON], ["study", "Góc học tập ấm áp", ICON_BOOK], ["out", "Sân vườn", ICON_TREE]];
+const NAV = [["bed", "Phòng ngủ", ICON_MOON], ["study", "Phòng học", ICON_BOOK], ["out", "Sân vườn", ICON_TREE]];
 roomNav.innerHTML = NAV.map(([k, l, ic]) => `<button type="button" class="tb-btn" data-go="${k}" aria-label="${l}" aria-pressed="false">${ic}<span class="tb-tip">${l}</span></button>`).join("");
 roomNav.querySelectorAll("[data-go]").forEach(b => b.addEventListener("click", () => switchRoom(b.dataset.go)));
 function renderRoomUI() {

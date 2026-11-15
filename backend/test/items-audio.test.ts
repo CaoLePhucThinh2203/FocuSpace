@@ -8,7 +8,7 @@ describe("GET /catalog/items (H6, H11) — integration", () => {
     const r = await request(app).get("/api/v1/catalog/items");
     expect(r.status).toBe(200);
     expect(r.body.items).toHaveLength(17);
-    expect(r.body.items[0]).toEqual({ code: "tv", name: "Tivi CRT", description: "Nhiễu sóng trắng", group: "sound", width: 26, height: 26, rooms: ["study"], defaultVol: 0.35, removable: true });
+    expect(r.body.items[0]).toEqual({ code: "tv", name: "Tivi cũ", description: "Tiếng rè nhiễu sóng", group: "sound", width: 26, height: 26, rooms: ["study"], defaultVol: 0.35, removable: true });
   });
 
   it("lọc room=bed&group=sound trả 7 đồ (AC-07.2)", async () => {

@@ -2,7 +2,7 @@
 export const ROOM_MARKUP = `<div class="app grid h-full grid-rows-[auto_auto_1fr] gap-3 py-3 narrow:h-auto narrow:min-h-full">
   <header class="top flex min-w-0 flex-wrap items-center gap-x-4 gap-y-2">
     <div class="site-head flex min-w-0 items-center gap-4" id="siteHead"></div>
-    <div class="room-name text-[13px] text-muted">Phòng: <b class="font-semibold text-ink" id="roomName">Góc học tập ấm áp</b></div>
+    <div class="room-name text-[13px] text-muted">Phòng: <b class="font-semibold text-ink" id="roomName">Phòng học</b></div>
     <div class="spacer flex-1"></div>
     <div class="pomo-mini">
       <div class="pm-label"><span class="mode" id="pomoMiniMode">Focus</span><span class="pm-dots" id="pomoDots" role="img" aria-label="Vòng này: 0 / 4 phiên Focus"></span></div>
@@ -28,9 +28,9 @@ export const ROOM_MARKUP = `<div class="app grid h-full grid-rows-[auto_auto_1fr
         <svg viewBox="0 0 12 12" fill="currentColor" shape-rendering="crispEdges"><rect x="5" y="0" width="2" height="2"/><rect x="2" y="2" width="3" height="2"/><rect x="7" y="2" width="3" height="2"/><rect x="5" y="3" width="2" height="5"/><rect x="3" y="8" width="6" height="1"/><rect x="4" y="9" width="4" height="3"/></svg>
         <span class="tb-tip">Đồ vật trang trí</span>
       </button>
-      <button type="button" class="tb-btn" data-tray="mixer" aria-pressed="false" aria-label="Volume mixer">
+      <button type="button" class="tb-btn" data-tray="mixer" aria-pressed="false" aria-label="Bảng âm lượng">
         <svg viewBox="0 0 12 12" fill="currentColor" shape-rendering="crispEdges"><rect x="0" y="4" width="2" height="4"/><rect x="2" y="3" width="1" height="6"/><rect x="3" y="2" width="1" height="8"/><rect x="4" y="1" width="1" height="10"/><rect x="6" y="4" width="1" height="4"/><rect x="8" y="2" width="1" height="8"/><rect x="10" y="4" width="1" height="4"/></svg>
-        <span class="tb-tip">Volume mixer</span>
+        <span class="tb-tip">Bảng âm lượng</span>
       </button>
       <button type="button" class="tb-btn" data-tray="scene" aria-pressed="false" aria-label="Khung cảnh" hidden>
         <svg viewBox="0 0 12 12" fill="currentColor" shape-rendering="crispEdges"><rect x="0" y="1" width="12" height="1"/><rect x="0" y="10" width="12" height="1"/><rect x="0" y="1" width="1" height="10"/><rect x="11" y="1" width="1" height="10"/><rect x="8" y="3" width="2" height="2"/><rect x="2" y="8" width="8" height="2"/><rect x="3" y="7" width="3" height="1"/><rect x="4" y="6" width="1" height="1"/><rect x="7" y="7" width="2" height="1"/></svg>
