@@ -451,7 +451,7 @@ Mức ưu tiên: **P0** bắt buộc trong bản nộp, **P1** nên có, **P2** 
 
 - Tải lại trang: bộ đếm Pomodoro và Hẹn giờ ngủ không được giữ, nhịp học đã chọn vẫn giữ (FR-SAVE-04); phiên Pomodoro đang chạy được ghi kết quả `abandoned`.
 
-- Kết quả phiên Pomodoro: `completed` khi hết giờ; `reset` khi bấm Đặt lại; `abandoned` khi phiên đang chạy mà người dùng tải lại hoặc đóng tab. **[Đề xuất]** Kết quả `abandoned` được ghi vào lô gửi khi tab bị ẩn bằng `fetch keepalive`.
+- Kết quả phiên Pomodoro: `completed` khi hết giờ; `reset` khi bấm Đặt lại; `abandoned` khi phiên đang chạy mà người dùng tải lại hoặc đóng tab — ghi vào lô gửi ngay lúc rời trang bằng `fetch keepalive`. Bấm "Bỏ qua lượt nghỉ" khi lượt nghỉ đang mở ghi `reset`.
 
 ### Tính năng H — Lưu trữ, tài khoản và đồng bộ (FR-SAVE, FR-ACC) · P0/P1
 
@@ -497,7 +497,7 @@ Mức ưu tiên: **P0** bắt buộc trong bản nộp, **P1** nên có, **P2** 
 
 - Ghi phiên sử dụng: bắt đầu/kết thúc, thời gian tới thao tác đầu tiên, số lần tương tác, không gian đã ghé, phiên ngủ hẹn giờ chạy hết hay không.
 
-- Ghi phiên Pomodoro (chế độ, thời lượng, hoàn thành / đặt lại / bỏ dở) và lỗi Audio Context. Kết quả theo quy tắc ở Tính năng G: `completed` (hết giờ), `reset` (bấm Đặt lại), `abandoned` (phiên đang chạy khi tải lại hoặc đóng tab; **[Đề xuất]** gửi trong lô khi tab bị ẩn bằng `fetch keepalive`).
+- Ghi phiên Pomodoro (chế độ, thời lượng, hoàn thành / đặt lại / bỏ dở) và lỗi Audio Context. Kết quả theo quy tắc ở Tính năng G: `completed` (hết giờ), `reset` (bấm Đặt lại), `abandoned` (phiên đang chạy khi tải lại hoặc đóng tab; gửi trong lô lúc rời trang bằng `fetch keepalive`). Lô gửi lỗi được giữ trên trình duyệt để lần sau gửi lại; chỉ gửi theo chu kỳ khi có thay đổi.
 
 - Gửi theo lô mỗi 60 giây hoặc khi ẩn tab; khách dùng id ẩn danh của trình duyệt.
 
@@ -953,4 +953,4 @@ Mọi câu hỏi mở đã chốt (Q-03, Q-04, Q-07 trước 07/11; còn lại �
 | v5.5 | 15/11/2026 | Sửa theo góp ý giao diện và âm thanh: một font Be Vietnam Pro; header dùng chung, menu 1 hàng từ 768 px; Trang chủ "Mô tả & Tính năng"; bỏ chip âm thanh, chip lưu; âm nền; 6 bài Lo-fi; chỉnh ±1/±10 phút cho Pomodoro, Hẹn giờ ngủ; điện thoại dựng dọc tự xoay ngang; Lighthouse /room dựng âm thanh sau cú nhấp đầu. FR và AC liên quan: FR-UI-02, FR-SAVE-01/03, FR-AUD-02/06, FR-TIME-01/03, FR-PAGE-02/03; AC-01.5, 03.5, 05.5, 05.6, 06.3, 12.4–12.6. |
 | v5.6 | 15/11/2026 | Rút gọn: bỏ bảng thông tin trùng ở đầu, ghi chú [Cần xác nhận] đã có lời giải; 7.2 dẫn sang PLAN; 8.1 thành bảng quyết định đã chốt; 6.2 cookie SameSite=None theo cách triển khai. |
 | v5.7 | 15/11/2026 | Pomodoro theo vòng của kỹ thuật Pomodoro: thêm nghỉ dài, chấm tiến độ, bảng Nhịp học (Cổ điển, Sâu, Nhẹ, Tuỳ chỉnh) mở từ số giờ ở header; bỏ nút ▲▼ ±1/±10 ở Pomodoro và Hẹn giờ ngủ; Hẹn giờ ngủ trên header cùng kiểu Pomodoro mini, bảng chọn Tắt / 15 / 30 / 60 phút (bỏ mức 45), chọn xong bấm Bắt đầu / Tạm dừng; vào Phòng ngủ thì Pomodoro tự tạm dừng, ô Hẹn giờ ngủ thế chỗ. Sửa US-07, BR-01, Tính năng G, FR-UI-02, FR-TIME-01→03, FR-SAVE-04, AC-05.3→05.5, AC-06.3; thêm AC-05.7, AC-05.8. |
-| v5.8 | 15/11/2026 | Thống nhất giới hạn đồ vật với code (G12): BR-06, FR-ITEM-05, Tính năng E, AC-04.2, Q-16 đổi 40 → 25 đồ mỗi phòng; đủ 25 đồ thì không thêm, chỉ hiện thông báo “Phòng đã đầy — hãy xóa bớt đồ để thêm mới”. Không đổi FR khác. |
+| v5.8 | 15/11/2026 | Thống nhất giới hạn đồ vật với code (G12): BR-06, FR-ITEM-05, Tính năng E, AC-04.2, Q-16 đổi 40 → 25 đồ mỗi phòng; đủ 25 đồ thì không thêm, chỉ hiện thông báo “Phòng đã đầy — hãy xóa bớt đồ để thêm mới”. Tính năng G, I: bỏ nhãn [Đề xuất] — `abandoned` gửi bằng `fetch keepalive` khi rời trang (N10); Bỏ qua lượt nghỉ ghi `reset`. |

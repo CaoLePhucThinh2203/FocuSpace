@@ -201,7 +201,7 @@ Ghi chú: `user_id` NULL khi Khách; gắn khi gửi lô kèm access token; đ�
 
 Index: `(usage_session_id)`.
 
-Ý nghĩa `outcome` (PRD Tính năng G): `completed` — hết giờ; `reset` — người dùng bấm Đặt lại; `abandoned` — phiên đang chạy khi tải lại hoặc đóng tab (**[Đề xuất]** gửi trong lô khi tab bị ẩn bằng `fetch keepalive`).
+Ý nghĩa `outcome` (PRD Tính năng G): `completed` — hết giờ; `reset` — người dùng bấm Đặt lại; `abandoned` — phiên đang chạy khi tải lại hoặc đóng tab (gửi trong lô lúc rời trang bằng `fetch keepalive`, N10).
 
 ### 3.6 `client_errors`
 
