@@ -14,6 +14,7 @@ export const ItemSchema = z.object({
   vol,
   track: z.number().int().min(0).max(2).optional(),
   art: z.number().int().min(0).max(9).optional(),
+  coat: z.number().int().min(0).max(2).optional(),   // màu lông mèo: 0 Cam, 1 Xám tro, 2 Kem
   bedId: z.string().max(16).nullable().optional(),
 });
 export type Item = z.infer<typeof ItemSchema>;

@@ -50,6 +50,7 @@ const TYPES = {
 };
 const STUDY_TYPES = new Set(["tv", "cat", "clock", "bigplant", "plant", "cactus", "books", "frame", "candle", "lamp", "cup"]);
 const BED_ITEM_TYPES = new Set(["catbed", "radio", "diffuser", "vinyl", "musicbox", "fan", "cat", "clock", "bigplant", "plant", "cactus", "books", "frame", "candle"]);
+const CAT_COATS = [{ n: "Cam", a: "#e08a3c", b: "#f2b27a", c: "#b8642a", d: "#c9742f" }, { n: "Xám tro", a: "#9a98a6", b: "#d2d0da", c: "#6a6878", d: "#7e7c8c" }, { n: "Kem", a: "#e9d7b6", b: "#f8ecd8", c: "#c6a77c", d: "#d3bd98" }];   // màu lông mèo: thân, trong tai, vằn, bóng bụng (Cam = màu gốc prototype)
 const TRAYS = {
   sound: { title: "Đồ vật phát âm thanh", note: "Kéo vào phòng. Bấm đồ vật để chỉnh âm lượng.", types: ["tv", "headphone", "cat"] },
   decor: { title: "Đồ vật trang trí",     note: "Chỉ để làm đẹp, không phát âm thanh.",         types: ["bigplant", "catbed", "plant", "cactus", "books", "frame", "candle"] },
@@ -135,7 +136,7 @@ function loadBed(b, d) {
   const items = Array.isArray(b.items) ? b.items.filter(i => i && BED_ITEM_TYPES.has(i.type)).map(i => {
     const t = TYPES[i.type], sl = SLOTS[i.slot];   // bản cũ: đồ nằm trong "ngăn" → đổi thành vị trí tự do trên giá
     return { id: String(i.id || uid()), type: i.type, x: sl ? sl.cx - t.w / 2 : num(i.x, 100), y: sl ? sl.bottom - t.h : num(i.y, 100),
-      on: i.on !== false, vol: clamp(num(i.vol, t.vol ?? 0.5), 0, 1), track: i.track | 0, art: i.art };
+      on: i.on !== false, vol: clamp(num(i.vol, t.vol ?? 0.5), 0, 1), track: i.track | 0, art: i.art, coat: i.type === "cat" ? clamp(i.coat | 0, 0, CAT_COATS.length - 1) : undefined };
   }) : d.items;
   if (Array.isArray(b.shelf)) b.shelf.slice(0, 3).forEach((v, i) => {   // bản cũ: đồ đặt theo ngăn → đổi thành đồ vật thật
     const t = TYPES[v], sl = SLOTS["s" + i];
@@ -175,7 +176,7 @@ function loadState() {
     const s = JSON.parse(raw);
     const items = Array.isArray(s.items) ? s.items.filter(i => i && STUDY_TYPES.has(i.type)).map(i => ({
       id: String(i.id || uid()), type: i.type, x: num(i.x, 100), y: num(i.y, 100),
-      on: i.on !== false, vol: clamp(num(i.vol, TYPES[i.type].vol ?? 0.5), 0, 1), track: i.track | 0, art: i.art,
+      on: i.on !== false, vol: clamp(num(i.vol, TYPES[i.type].vol ?? 0.5), 0, 1), track: i.track | 0, art: i.art, coat: i.type === "cat" ? clamp(i.coat | 0, 0, CAT_COATS.length - 1) : undefined,
     })) : d.items;
     ["lamp", "cup"].forEach(k => { if (!items.some(i => i.type === k)) items.push(d.items.find(i => i.type === k)); });
     {   // lò sưởi dịch lên 16 px: đồ đang đứng trên mặt lò cũ (đáy y = 56) dời lên mặt lò mới (đáy y = 40)
@@ -405,7 +406,7 @@ function meowFill(d, len, c) {   // tiếng "meo": cao độ vút lên rồi tr�
     let v = 0;
     for (let k = 1; k <= 8; k++) v += Math.sin(k * ph + c * 0.3) * Math.exp(-Math.pow(k * f0 - F, 2) / (2 * 450 * 450)) / Math.sqrt(k);
     br += 0.3 * ((r() * 2 - 1) - br);   // hơi thở nhẹ
-    d[i] = (v * 0.32 + br * 0.025 * (1 - u) * (1 - u)) * env;   // hơi thở tắt dần về cuối: hết tiếng rè "xì" ở đuôi tiếng meo
+    d[i] = (v * 0.32 + br * 0.025) * env;
   }
 }
 function softPurrFill(d, len, c) {   // rù rù êm: nhịp mềm ~23 Hz, hơi thở chậm 3 giây, lọc thấp — không còn tiếng meo
@@ -693,15 +694,16 @@ const SPRITES = {
   },
   cat(c, it, f) {
     c.clearRect(0, 0, 24, 13);
+    const K = CAT_COATS[it.coat | 0] || CAT_COATS[0];   // màu lông đang chọn
     const w = catWake.has(it.id) ? f - catWake.get(it.id) : -1;   // số nhịp (10 FPS) kể từ lúc được bấm
     if (w > CAT_WAKE_END) catWake.delete(it.id);
     const awake = w >= 0 && w <= CAT_WAKE_END, open = awake && w >= 2 && w <= CAT_WAKE_END - 4, up = open ? 1 : 0;
     const br = f % 24 < 12 ? 0 : 0.6;
-    disc(c, 13.5, 8, 10, 4.6 + br, "#e08a3c");
-    disc(c, 5.5, 7.5 - up, 4.2, 3.8, "#e08a3c");   // đầu: ngẩng lên 1px khi thức
-    R(c, 2, 3 - up, 2, 2, "#e08a3c"); R(c, 7, 3 - up, 2, 2, "#e08a3c"); R(c, 2, 2 - up * 2, 1, 1 + up, "#e08a3c"); R(c, 8, 2 - up * 2, 1, 1 + up, "#e08a3c"); R(c, 2, 4 - up, 1, 1, "#f2b27a"); R(c, 8, 4 - up, 1, 1, "#f2b27a");
-    [11, 14, 17].forEach(x => R(c, x, 4, 1, 3, "#b8642a"));
-    R(c, 6, 11, 16, 2, "#c9742f"); R(c, 5, 11, 2, 1, "#c9742f");
+    disc(c, 13.5, 8, 10, 4.6 + br, K.a);
+    disc(c, 5.5, 7.5 - up, 4.2, 3.8, K.a);   // đầu: ngẩng lên 1px khi thức
+    R(c, 2, 3 - up, 2, 2, K.a); R(c, 7, 3 - up, 2, 2, K.a); R(c, 2, 2 - up * 2, 1, 1 + up, K.a); R(c, 8, 2 - up * 2, 1, 1 + up, K.a); R(c, 2, 4 - up, 1, 1, K.b); R(c, 8, 4 - up, 1, 1, K.b);
+    [11, 14, 17].forEach(x => R(c, x, 4, 1, 3, K.c));
+    R(c, 6, 11, 16, 2, K.d); R(c, 5, 11, 2, 1, K.d);
     if (open) {   // mắt mở to, đồng tử dọc nhìn thẳng ra người dùng
       [3, 7].forEach(x => { R(c, x, 6, 2, 2, "#e8d24a"); R(c, x + 1, 6, 1, 2, "#2a1a0a"); R(c, x, 6, 1, 1, "#fff6c8"); });
     } else if (awake) {   // hé mắt (lúc mới thức / lúc buồn ngủ lại)
@@ -793,7 +795,7 @@ const catWake = new Map(), CAT_MEOW_AT = 5, CAT_WAKE_END = 34;   // mèo đang t
 function wakeCat(o) {   // bấm mèo: mở mắt, nhìn người dùng, kêu "meo", rồi ngủ tiếp
   if (catWake.has(o.data.id)) return;
   catWake.set(o.data.id, frame);
-  const purr = v => { if (o.em && o.em.cur) ramp(o.em.cur.g.gain, v, v ? 2.5 : 0.15); };   // rù rù trở lại thật chậm (2,5 giây), không bật lên đột ngột ngay sau tiếng meo   // tắt tiếng rù rù khi mèo thức, bật lại khi ngủ tiếp
+  const purr = v => { if (o.em && o.em.cur) ramp(o.em.cur.g.gain, v, v ? 0.6 : 0.15); };   // tắt tiếng rù rù khi mèo thức, bật lại khi ngủ tiếp
   purr(0); setTimeout(() => purr(1), CAT_WAKE_END * 100);
   setTimeout(() => {
     if (o.em) o.em.oneShot(BUF.meow, 1.2);
@@ -1150,16 +1152,6 @@ function drawWallClock0(c, f) {                  // đồng hồ treo tường t
   pline(c, X, Y, bx, by, "#a3361d");
   R(c, X, Y, 1, 1, "#c0781e");
 }
-/* Nến (đồ trang trí) phát sáng: đục bóng tối ("hole") và toả quầng cam ("glow") quanh ngọn lửa, lập lòe; toạ độ lớp sáng = logic / 2 */
-function candleLight(c, pass, flick) {
-  itemsById.forEach(o => {
-    if (o.data.type !== "candle") return;
-    const x = (o.data.x + 3) / 2, y = (o.data.y + 1) / 2, r = (pass === "hole" ? 14 : 11) * flick;
-    const g = c.createRadialGradient(x, y, 0, x, y, r);
-    g.addColorStop(0, pass === "hole" ? "rgba(0,0,0,.85)" : `rgba(255,170,80,${0.24 * flick})`); g.addColorStop(1, "rgba(0,0,0,0)");
-    c.fillStyle = g; c.fillRect(x - r, y - r, r * 2, r * 2);
-  });
-}
 function drawLightBed(f) {
   const c = li, bs = state.bed, lamp = bs.lampOn, g = CURTAIN_GEO.bed;
   c.globalCompositeOperation = "source-over";
@@ -1171,10 +1163,7 @@ function drawLightBed(f) {
   if (lamp) { const gd = c.createRadialGradient(147, 52, 0, 147, 52, 38); gd.addColorStop(0, "rgba(0,0,0,.9)"); gd.addColorStop(1, "rgba(0,0,0,0)"); c.fillStyle = gd; c.fillRect(0, 0, 160, 90); }
   if (open > 0) { c.fillStyle = `rgba(0,0,0,${bs.weather === "stars" ? 0.78 : 0.52})`; c.fillRect(gl / 2, BW.gy / 2, open / 2, BW.gh / 2); }
   if (!lamp) { c.fillStyle = "rgba(0,0,0,.30)"; c.fillRect(BART.x / 2, BART.y / 2, 18, 14); }   // tranh nhô nhẹ khỏi bóng tối
-  const cf = 0.9 + Math.random() * 0.1;
-  candleLight(c, "hole", cf);
   c.globalCompositeOperation = "source-over";
-  candleLight(c, "glow", cf);
   if (lamp) {                                          // đèn ngủ: quầng vàng ấm quanh đèn, lan về phía giường
     const gw2 = c.createRadialGradient(147, 54, 0, 147, 54, 34); gw2.addColorStop(0, `rgba(247,208,112,${0.17 + 0.02 * ((f >> 3) % 2)})`); gw2.addColorStop(1, "rgba(247,208,112,0)");
     c.fillStyle = gw2; c.fillRect(0, 0, 160, 90);
@@ -1206,6 +1195,13 @@ function drawLightBed(f) {
       const xx = x0 + ow * ((i * 0.37 + 0.12) % 1) + dx * t + Math.sin(f * 0.05 + i * 2) * 1.5;
       c.fillStyle = `rgba(225,235,255,${0.4 * tw * mw * k})`; c.fillRect(Math.floor(xx), Math.floor(yy), 1, 1);
     }
+    itemsById.forEach(o => {   // mèo nằm trong vệt trăng: đục bớt bóng tối theo đúng hình mèo (55%) để màu lông rõ hơn
+      if (o.data.type !== "cat") return;
+      const lit = Math.min(1, p2.getImageData(Math.round(o.data.x + 12), Math.round(o.data.y + 9), 1, 1).data[3] / 255 * 1.6) * mw * k;
+      if (lit <= 0.02) return;
+      c.globalCompositeOperation = "destination-out"; c.globalAlpha = 0.55 * lit; c.drawImage(o.ctx.canvas, o.data.x / 2, o.data.y / 2, 12, 6.5);
+      c.globalCompositeOperation = "source-over"; c.globalAlpha = 1;
+    });
   }
   if (!lamp) {                                         // tranh dạ quang: trăng, sao và đường núi phát sáng xanh ngọc rất khẽ
     const pl = 0.85 + 0.15 * Math.sin(f * 0.08), px = v => Math.floor(v / 2);
@@ -1345,10 +1341,7 @@ function FDX() { return state.fireSide === "left" ? -266 : 0; }
 function drawFire(c, f) { c.save(); c.translate(FDX(), -FY); drawFire0(c, f); c.restore(); }
 function drawFire0(c, f) {
   R(c, 290, 116, 16, 3, "#5a3a22"); R(c, 292, 113, 12, 3, "#6b4429"); R(c, 292, 113, 12, 1, "#86552f");
-  if (!state.fireOn) {
-    for (let i = 0; i < 5; i++) if (Math.random() < 0.5) R(c, 292 + i * 3, 115, 1, 1, "#8a2e14");
-    return;
-  }
+  if (!state.fireOn) return;   // tắt lửa: chỉ còn củi, không vẽ than đỏ nhấp nháy
   for (let col = 0; col < 20; col++) {
     const x = 288 + col, base = Math.sin(Math.PI * (col + 0.5) / 20) * 20, h = base * (0.55 + Math.random() * 0.55);
     R(c, x, 116 - h, 1, h, "#e2552b"); R(c, x, 116 - h * 0.7, 1, h * 0.7, "#ff9a3c"); R(c, x, 116 - h * 0.38, 1, h * 0.38, "#ffd36b");
@@ -1416,13 +1409,11 @@ function drawLight(f) {
   const flick = 0.9 + Math.random() * 0.1;
   if (state.lampOn && lampObj) hole((lampObj.data.x + 10) / 2, (lampObj.data.y + 6) / 2, 34, 0.95);
   if (state.fireOn) hole(149 + FDX() / 2, 52 - FY / 2, 26 * flick, 0.9);
-  candleLight(c, "hole", flick);
   if (open > 0) { c.fillStyle = `rgba(0,0,0,${w === "clear" || w === "sunset" ? 0.78 : 0.4})`; c.fillRect(gl / 2, 9, open / 2, 26); }   // chỉ đục đúng phần kính còn hở
   c.globalCompositeOperation = "source-over";
   const glow = (x, y, r, col) => { const g = c.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, col); g.addColorStop(1, "rgba(0,0,0,0)"); c.fillStyle = g; c.fillRect(0, 0, 160, 90); };
   if (state.lampOn && lampObj) glow((lampObj.data.x + 10) / 2, (lampObj.data.y + 8) / 2, 30, "rgba(255,196,110,.20)");
   if (state.fireOn) glow(149 + FDX() / 2, 54 - FY / 2, 24 * flick, `rgba(255,120,50,${0.16 * flick})`);
-  candleLight(c, "glow", flick);
   {                                                    // ánh sáng toả khắp phòng từ mép trên cửa sổ, nghiêng nhẹ sang trái; kính hở cho qua đủ, rèm chặn bớt (lọt khoảng 22%)
     const day = w === "clear" || w === "sunset", col = w === "sunset" ? "255,170,150" : day ? "255,240,200" : flash ? "200,220,255" : "110,140,210", base = day ? 0.17 : flash ? 0.24 : 0.07;
     if (open > 6) { c.fillStyle = `rgba(${col},${(day ? 0.10 : flash ? 0.30 : 0.08) * k})`; c.fillRect(gl / 2, 9, open / 2, 26); }
@@ -3210,12 +3201,17 @@ function openPop(key, anchor) {
     const onLabel = { tv: "Bật tivi", headphone: "Phát nhạc", cat: "Tiếng rù rù", diffuser: "Bật máy xông", vinyl: "Phát đĩa than", musicbox: "Lên dây cót", fan: "Bật quạt", radio: "Bật radio" }[d.type];
     const tracks = d.type === "headphone" || d.type === "radio" ? LOFI : d.type === "vinyl" ? SLEEP_LOFI : null;
     html = head(t.name, t.sub + ".") + sw("iOn", d.on, onLabel) + volRow("iVol", d.vol);
+    if (d.type === "cat") html += `<div class="row"><span class="lbl">Màu lông</span></div><div class="seg" role="group" aria-label="Chọn màu lông">${CAT_COATS.map((k, i) => `<button type="button" data-coat="${i}" aria-pressed="${(d.coat | 0) === i}">${k.n}</button>`).join("")}</div>`;
     if (tracks) html += `<div class="row"><span class="lbl">${d.type === "vinyl" ? "Đĩa Lofi Sleep" : "Bài Lo-fi"}</span></div><div class="seg list" role="group" aria-label="Chọn bài">${tracks.map((l, i) => `<button type="button" data-t="${i}" aria-pressed="${(d.track | 0) === i}">${l.name}</button>`).join("")}</div>`;
     html += spatialRow(o.em) + `<button type="button" class="btn danger" id="iDel">Xóa khỏi phòng</button>`;
     bind = () => {
       bindSwitch("iOn", () => d.on, v => { d.on = v; applyItemAudio(o); });
       bindVol("iVol", v => { d.vol = v; o.em.setLevel(d.on, v); });
       pop.querySelector("#iDel").addEventListener("click", () => removeItem(d.id));
+      pop.querySelectorAll("[data-coat]").forEach(b => b.addEventListener("click", () => {   // đổi màu lông như đổi họa tiết thảm
+        d.coat = +b.dataset.coat; drawItemSprite(o); save();
+        pop.querySelectorAll("[data-coat]").forEach(x => x.setAttribute("aria-pressed", x === b));
+      }));
       pop.querySelectorAll("[data-t]").forEach(b => b.addEventListener("click", () => {
         d.track = +b.dataset.t; applyItemAudio(o); save();
         pop.querySelectorAll("[data-t]").forEach(x => x.setAttribute("aria-pressed", x === b));
