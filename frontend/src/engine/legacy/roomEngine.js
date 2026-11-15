@@ -1331,10 +1331,7 @@ function FDX() { return state.fireSide === "left" ? -266 : 0; }
 function drawFire(c, f) { c.save(); c.translate(FDX(), -FY); drawFire0(c, f); c.restore(); }
 function drawFire0(c, f) {
   R(c, 290, 116, 16, 3, "#5a3a22"); R(c, 292, 113, 12, 3, "#6b4429"); R(c, 292, 113, 12, 1, "#86552f");
-  if (!state.fireOn) {
-    for (let i = 0; i < 5; i++) if (Math.random() < 0.5) R(c, 292 + i * 3, 115, 1, 1, "#8a2e14");
-    return;
-  }
+  if (!state.fireOn) return;   // tắt lửa: chỉ còn củi, không vẽ than đỏ nhấp nháy
   for (let col = 0; col < 20; col++) {
     const x = 288 + col, base = Math.sin(Math.PI * (col + 0.5) / 20) * 20, h = base * (0.55 + Math.random() * 0.55);
     R(c, x, 116 - h, 1, h, "#e2552b"); R(c, x, 116 - h * 0.7, 1, h * 0.7, "#ff9a3c"); R(c, x, 116 - h * 0.38, 1, h * 0.38, "#ffd36b");

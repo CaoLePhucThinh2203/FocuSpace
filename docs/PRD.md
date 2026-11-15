@@ -245,7 +245,7 @@ Mức ưu tiên: **P0** bắt buộc trong bản nộp, **P1** nên có, **P2** 
 
 - Cửa sổ lớn: 4 thời tiết Thoáng đãng, Mưa rơi, Sấm giông, Hoàng hôn; rèm Mở / Che một phần / Che kín; công tắc và âm lượng âm ngoài trời.
 
-- Lò sưởi: bật/tắt lửa và tiếng củi, âm lượng, vị trí Bên trái/Bên phải; mặt trên lò là bề mặt đặt đồ; lò ở bên trái thì tranh tự dời sang x 58.
+- Lò sưởi: bật/tắt lửa và tiếng củi (tắt lửa thì chỉ còn củi, không còn than đỏ nhấp nháy), âm lượng, vị trí Bên trái/Bên phải; mặt trên lò là bề mặt đặt đồ; lò ở bên trái thì tranh tự dời sang x 58.
 
 - Thảm dưới bàn: 4 họa tiết Đỏ rượu (mặc định), Xanh rêu, Xanh lam, Kem len.
 
@@ -660,7 +660,7 @@ Mỗi gạch đầu dòng ở Tính năng A–M ứng với một hoặc vài m�
 | FR-NAV-03 | Ghi nhớ phòng đang ở, mở lại vào đúng phòng | P0 | UC.01 | — |
 | FR-STUDY-01 | Cảnh tĩnh Phòng học: tường gỗ, bàn, nhân vật ngồi học có hoạt ảnh, tranh, giá 3 tầng; điểm nghe (160, 100) | P0 | UC.01 | — |
 | FR-STUDY-02 | Cửa sổ 4 thời tiết, rèm 3 mức, công tắc và âm lượng âm ngoài trời | P0 | UC.02 | AC-02.1 |
-| FR-STUDY-03 | Lò sưởi: bật/tắt lửa và tiếng củi (âm nền), âm lượng, vị trí Trái/Phải (tranh tự dời); đáy chân lò ở hàng sàn 1 (y 120); mặt lò (y 40) là bề mặt đặt đồ | P0 | UC.02, UC.03 | AC-02.4 |
+| FR-STUDY-03 | Lò sưởi: bật/tắt lửa và tiếng củi (âm nền; tắt lửa thì chỉ còn củi, không vẽ than đỏ), âm lượng, vị trí Trái/Phải (tranh tự dời); đáy chân lò ở hàng sàn 1 (y 120); mặt lò (y 40) là bề mặt đặt đồ | P0 | UC.02, UC.03 | AC-02.4 |
 | FR-STUDY-04 | Thảm dưới bàn 4 họa tiết | P0 | UC.02 | — |
 | FR-STUDY-05 | Tai nghe nhân vật: bật/tắt, âm lượng, 3 bài Lo-fi có tên (khoảng 1 phút mỗi bài), dùng chung với Sân vườn | P0 | UC.02, UC.03 | — |
 | FR-STUDY-06 | Đèn bàn, ly cà phê chỉ trượt dọc mặt bàn, không xóa được | P0 | UC.04 | AC-04.3 |
