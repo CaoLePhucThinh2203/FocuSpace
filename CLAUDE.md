@@ -13,9 +13,9 @@ Quy trình bắt buộc theo `docs/references/PlanDesignWeb.docx` (Role + Skill 
 
 1. **Planning → Review Plan → Code.** Trước mỗi task, viết kế hoạch ngắn (file sẽ sửa, test sẽ thêm, AC liên quan ở PRD 5.4) và chờ duyệt. Dùng model mạnh cho planning và review plan, model nhanh hơn để code theo kế hoạch đã duyệt.
 2. **Test trước, code sau.** Bật test `it.todo`/`test.fixme` ứng với BR hoặc AC của task, chạy cho thấy đỏ, code tới khi xanh. Đủ 3 loại: unit (Vitest), integration (Vitest + Supertest, DB `focuspace_test`), E2E (Playwright, file `ucXX-<tên>.spec.ts`). Code xong luôn chạy lại test; lỗi thì tự sửa trước khi báo xong.
-3. **Chuyển từ prototype.** Tìm đúng mục trong `prototype/FocuSpace-Semi-Sandbox.html` (theo tiêu đề chú thích như "LỚP TĨNH", "SPRITES", "AUDIO ENGINE", "SÂN VƯỜN"), chép logic và hằng số sang module TypeScript, giữ nguyên toạ độ, màu, công thức. Không vẽ lại, không "cải tiến" hình hay âm thanh.
+3. **Căn phòng theo PA B.** Nguồn logic và hằng số hiện hành là `frontend/src/engine/legacy/roomEngine.js` (chép từ prototype, đã có các thay đổi PRD v5.5+); tìm khối theo tiêu đề chú thích ("LỚP TĨNH", "SPRITES ĐỒ VẬT", "AUDIO ENGINE", "SÂN VƯỜN"…), không theo số dòng. Vẽ, âm thanh, khay, popover sửa ngay trong engine; quy tắc nghiệp vụ (BR/AC) viết thành hàm thuần TypeScript trong `frontend/src/areas/<khu-vực>/engine/` (hoặc `shared/`) kèm unit test, engine import và gọi lại (`frontend/src/engine/legacy/README.md`). Giữ nguyên toạ độ, màu, công thức; đối chiếu hình với `prototype/FocuSpace-Semi-Sandbox.html`. Không vẽ lại, không "cải tiến" hình hay âm thanh.
 4. **Git theo issue.** Mỗi task = 1 issue trong `docs/TASKS.md` = 1 nhánh `feat/<số>-<mô-tả>` = 1 PR có `Closes #<số>` và mã UC; commit nhỏ, đúng Conventional Commits có số issue.
-5. **Ranh giới khu vực.** Chỉ sửa thư mục thuộc khu vực của thành viên đang làm; cần đổi giao diện chung (`shared/roomState.ts`, `store/`, `ui/Header`, `ui/Toolbar`, `persistence/local.ts`) thì đề xuất trong PR và gán Phúc Thịnh duyệt.
+5. **Ranh giới khu vực.** Chỉ sửa thư mục thuộc khu vực của thành viên đang làm; cần đổi phần chung (`shared/`, `frontend/src/{App.tsx, main.tsx, lib/, store/, styles/}`, `frontend/src/engine/legacy/roomEngine.js`, `backend/src/{app.ts, routes/, middleware/, lib/}`, `backend/prisma/`) thì đề xuất trong PR và gán Phúc Thịnh duyệt (`docs/PLAN.md` §2).
 6. **Đồng bộ tài liệu.** Đổi hành vi thì cập nhật PRD (FR, AC), API, DATABASE và biểu đồ liên quan trong cùng PR (bản `.md` là bản duy nhất, không còn bản Word song song).
 
 ## Rules
@@ -36,7 +36,7 @@ Quy trình bắt buộc theo `docs/references/PlanDesignWeb.docx` (Role + Skill 
 | Phần | Tài liệu |
 |---|---|
 | Phân tích | `docs/analysis/FocuSpace_Diagrams.drawio` · `docs/analysis/FocuSpace_Chuong2_PhanTich.docx` (Chương 1 Phân tích hệ thống) |
-| Frontend | `prototype/FocuSpace-Semi-Sandbox.html` · `docs/PRD.md` (5.4 AC) · `docs/ARCHITECTURE.md` · `docs/API.md` · `docs/wireframes/` (FocuSpace_Wireframes.drawio + PNG) · biểu đồ Sequence/Class tương ứng (C2, C3) |
+| Frontend | `frontend/src/engine/legacy/README.md` · `prototype/FocuSpace-Semi-Sandbox.html` · `docs/PRD.md` (5.4 AC) · `docs/ARCHITECTURE.md` · `docs/API.md` · `docs/wireframes/` (FocuSpace_Wireframes.drawio + PNG) · biểu đồ Sequence/Class tương ứng (C2, C3) |
 | Backend | `docs/PRD.md` · `docs/ARCHITECTURE.md` · `docs/DATABASE.md` · `docs/API.md` · biểu đồ Sequence/Class tương ứng (C1, C3) |
 | Kế hoạch | `docs/PLAN.md` · `docs/TASKS.md` · `docs/references/PlanDesignWeb.docx` (quy trình) · đề bài đồ án (`docs/references/Web Basic - Final Project Brief - CSB25022 - VNUK.docx`) |
 
@@ -58,7 +58,7 @@ Quy trình bắt buộc theo `docs/references/PlanDesignWeb.docx` (Role + Skill 
 - JSON API: khóa `camelCase`; DB: `snake_case` (Prisma `@map`).
 - API dưới `/api/v1`, lỗi theo định dạng `{ error: { code, message, details? } }` (`docs/API.md` 3.3).
 - Toạ độ phòng: hệ logic 320×180.
-- Room Engine (`frontend/src/engine/`) là TypeScript thuần, không import React.
+- Room Engine (`frontend/src/engine/legacy/roomEngine.js` + hàm thuần ở `frontend/src/areas/*/engine/`) không import React; hàm thuần không đụng DOM, Web Audio.
 - Backend phân lớp routes → services → Prisma; `createApp({ db })` để test được.
 - Giao diện ngoài canvas dùng utility class Tailwind; màu và font khai báo bằng `@theme` trong `frontend/src/styles/index.css`, lấy từ prototype.
 - Đồ họa và âm thanh tạo bằng code, chuyển từ prototype — không thêm file ảnh/âm thanh.
@@ -67,7 +67,7 @@ Quy trình bắt buộc theo `docs/references/PlanDesignWeb.docx` (Role + Skill 
 
 ### Không được sửa
 
-- `prototype/` — bản thiết kế đã duyệt (`FocuSpace-Semi-Sandbox.html` bản gốc, nguồn logic và hằng số; `web/` prototype 6 trang, Căn phòng viết bằng Tailwind, tối ưu Lighthouse theo cách 2: chỉ thêm title + meta, nhạc Lo-fi vẫn dựng nền khi mở trang; `so-sanh-lighthouse/` bằng chứng đo trước/sau).
+- `prototype/` — bản thiết kế đã duyệt (`FocuSpace-Semi-Sandbox.html` bản gốc, dùng đối chiếu hình, màu — logic hiện hành ở `roomEngine.js`; `web/` prototype 6 trang, Căn phòng viết bằng Tailwind, tối ưu Lighthouse theo cách 2: chỉ thêm title + meta, nhạc Lo-fi vẫn dựng nền khi mở trang; `so-sanh-lighthouse/` bằng chứng đo trước/sau).
 - `docs/references/` — đề bài và quy trình, chỉ đọc.
 - `docs/analysis/FocuSpace_Chuong2_PhanTich.docx` — chỉ sửa khi người dùng yêu cầu.
 - `Focus_Space .mp4`.
@@ -82,3 +82,4 @@ Quy trình bắt buộc theo `docs/references/PlanDesignWeb.docx` (Role + Skill 
 | 13/11/2026 (lần 2) | Đường dẫn 2 file phân tích chuyển vào `docs/`. |
 | 13/11/2026 (lần 3) | Chuyển từ `docs/` ra thư mục gốc; bỏ bản Word song song (chỉ giữ `.md`); đường dẫn mới: `docs/analysis/`, `docs/references/`, `docs/images/`, `prototype/web/`. |
 | 13/11/2026 (lần 4) | drawio thêm trang ERD; ảnh Kiến trúc Hình 2, 4 xuất từ drawio. |
+| 15/11/2026 | PA B cho Căn phòng: Skill 3 lấy `roomEngine.js` làm nguồn logic, chỉ tách hàm thuần có test; Skill 5 và Quy ước ghi đúng đường dẫn phần chung, Room Engine. |
