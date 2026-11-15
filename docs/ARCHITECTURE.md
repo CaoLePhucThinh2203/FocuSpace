@@ -5,7 +5,7 @@ Solution Architecture Document — FocuSpace bản chính thức
 | | |
 |---|---|
 | **Sản phẩm** | FocuSpace — web app pixel art Lo-fi Semi-Sandbox |
-| **Phiên bản** | v1.5 (PA B cho Căn phòng 15/11/2026) · v1.4 (rút gọn 14/11/2026) · v1.0 duyệt 07/11, v1.1–v1.3 duyệt ở buổi họp 13/11/2026 |
+| **Phiên bản** | v1.6 (font tự host 15/11/2026) · v1.5 (PA B cho Căn phòng 15/11/2026) · v1.4 (rút gọn 14/11/2026) · v1.0 duyệt 07/11, v1.1–v1.3 duyệt ở buổi họp 13/11/2026 |
 | **Nguồn** | docs/PRD.md · docs/DATABASE.md · docs/API.md · docs/PLAN.md · docs/analysis/FocuSpace_Diagrams.drawio · prototype/ |
 
 # 1. Giới thiệu & Tổng quan dự án
@@ -195,7 +195,7 @@ AudioContext được tạo ở trạng thái tạm dừng và chỉ bật sau c
 | REST/JSON qua HTTPS             | Có        | Toàn bộ giao tiếp client ↔ backend, tiền tố /api/v1 (chi tiết trong API Docs)                  |
 | Cookie httpOnly                 | Có        | Chỉ cho refresh token, phạm vi /api/v1/auth                                                    |
 | fetch keepalive                 | Có        | Lần đồng bộ cuối khi đóng tab                                                                  |
-| Google Fonts                    | Có        | Font Press Start 2P, Be Vietnam Pro, Pixelify Sans, VT323; có font dự phòng nếu không tải được |
+| Google Fonts                    | Không     | Từ v1.6 font Be Vietnam Pro tự host trong `frontend/public/fonts/` (giấy phép OFL), `@font-face` nằm trong CSS chính nhúng vào trang; không tải được thì dùng font hệ thống |
 | Google Analytics 4 (gtag.js) | Có | Lượt xem trang và sự kiện; chỉ ở bản production; không gửi dữ liệu cá nhân |
 | Sentry | Có | SDK frontend và backend gửi lỗi qua HTTPS; DSN đặt trong biến môi trường |
 
@@ -285,3 +285,4 @@ Các lớp trang (TrangChu, TrangGioiThieu, TrangThuVien, TrangThongKe, TrangTai
 | v1.1–v1.3 | 10–13/11/2026 | Bổ sung theo đề bài CSB25022; đồng bộ Chương 1 (ánh xạ lớp ↔ module/bảng, Phụ lục A); Hình 2 là Sequence UC.09, ERD vẽ trong drawio; chốt triển khai Vercel + Render + Neon. Duyệt ở buổi họp 13/11. |
 | v1.4 | 14/11/2026 | Rút gọn: bỏ phần [Đề xuất] ngoài phạm vi đồ án (bản đồ năng lực, DR, kiến trúc tham chiếu khi mở rộng và Hình 5, WAF, metrics, báo giá); bảng ánh xạ lớp ↔ module theo thư mục khu vực thật; 3.5 và 4.2 ghi đúng cấu hình `render.yaml`, `vercel.json`, CI; cookie SameSite=None. |
 | v1.5 | 15/11/2026 | PA B: 3.2 và bảng ánh xạ lớp ↔ module ghi đúng phần giữ trong `roomEngine.js` và hàm thuần đã tách (rooms, pomodoro, sleepTimer, placement). |
+| v1.6 | 15/11/2026 | 3.4: font Be Vietnam Pro tự host thay Google Fonts (bỏ yêu cầu CSS chặn hiển thị, Lighthouse H12). |
