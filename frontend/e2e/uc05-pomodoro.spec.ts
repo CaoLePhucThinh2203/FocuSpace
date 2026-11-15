@@ -1,9 +1,10 @@
 import { expect, test, type Page } from "@playwright/test";
+import type { HookWindow } from "./focuspaceHook";
 
 /** Mở Căn phòng và chờ engine chạy (hook kiểm thử window.__focuspace). */
 async function openRoom(page: Page) {
   await page.goto("/room");
-  await page.waitForFunction(() => !!(window as any).__focuspace);
+  await page.waitForFunction(() => !!(window as unknown as HookWindow).__focuspace);
 }
 
 test.describe("UC.05 Pomodoro (Thịnh)", () => {
@@ -23,7 +24,7 @@ test.describe("UC.05 Pomodoro (Thịnh)", () => {
   test("AC-05.5 ▲▼ trái ±1 phút, phải ±10 phút; khóa khi đang chạy", async ({ page }) => {
     await openRoom(page);
     const r = await page.evaluate(() => {
-      const F = (window as any).__focuspace;
+      const F = (window as unknown as HookWindow).__focuspace;
       F.pomoAdjust(1); const a = F.pomo.remaining;
       F.pomoAdjust(10); const b = F.pomo.remaining;
       F.pomoAdjust(-10); F.pomoAdjust(-1); const c = F.pomo.remaining;

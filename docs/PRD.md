@@ -349,7 +349,7 @@ Mức ưu tiên: **P0** bắt buộc trong bản nộp, **P1** nên có, **P2** 
 
 **Luồng ngoại lệ / lỗi (Edge cases)**
 
-- Âm các cảnh chưa dựng xong (dựng nền lần lượt sau khi mở trang): cảnh vẫn đổi hình ngay, âm vào ngay khi dựng xong, không giật.
+- Âm các cảnh chưa dựng xong (dựng lần lượt sau cú nhấp đầu tiên): cảnh vẫn đổi hình ngay, âm vào ngay khi dựng xong, không giật.
 
 - Đổi cảnh liên tục: âm cũ cross-fade ra, không chồng nhiều lớp.
 
@@ -415,7 +415,7 @@ Mức ưu tiên: **P0** bắt buộc trong bản nộp, **P1** nên có, **P2** 
 
 - Tiếng mèo: rù rù êm liên tục (nhịp khoảng 23 Hz, hơi thở chậm 3 giây), không nhấp nhô to nhỏ. Bấm vào mèo: mèo mở mắt, kêu “meo” một tiếng kèm chữ “Meow!”, rồi ngủ tiếp và rù rù trở lại.
 
-- Âm thanh tổng hợp bằng code; nhạc Lo-fi dựng nền; AudioContext chỉ bật sau cú nhấp/phím đầu tiên.
+- Âm thanh tổng hợp bằng code; AudioContext chỉ bật sau cú nhấp/phím đầu tiên, và mọi âm thanh (kể cả nhạc Lo-fi) cũng chỉ dựng từ lúc đó, mỗi nguồn một tác vụ riêng (v5.5, tối ưu Lighthouse: Tuấn Hưng, H12).
 
 **Luồng chính (Happy path)**
 
@@ -708,7 +708,7 @@ Mỗi gạch đầu dòng ở Tính năng A–M ứng với một hoặc vài m�
 | FR-AUD-03 | Mọi thay đổi bật/tắt, âm lượng chuyển mượt 0,2 giây (Master 0,1 giây), không tiếng nổ | P0 | UC.03 | AC-03.2 |
 | FR-AUD-04 | Volume mixer: hàng Master (mặc định 80%) và mọi nguồn âm của phòng hiện tại, mỗi hàng có công tắc và thanh trượt | P0 | UC.03 | AC-03.2 |
 | FR-AUD-05 | Tiếng mèo rù rù liên tục; bấm vào mèo thì mở mắt, kêu “meo”, rồi ngủ tiếp | P0 | UC.03, UC.04 | AC-04.1 |
-| FR-AUD-06 | Âm thanh tổng hợp bằng code; nhạc Lo-fi và âm khung cảnh dựng nền, cảnh đổi hình ngay cả khi âm chưa dựng xong | P0 | UC.03 | — |
+| FR-AUD-06 | Âm thanh tổng hợp bằng code, dựng sau cú nhấp đầu tiên (mỗi nguồn một tác vụ); cảnh đổi hình ngay cả khi âm chưa dựng xong | P0 | UC.03 | — |
 | FR-AUD-07 | AudioContext chỉ bật sau cú nhấp/phím đầu tiên; không tạo được thì app vẫn chạy phần hình và ghi lỗi | P0 | UC.03 | AC-03.1 |
 | FR-TIME-01 | Pomodoro mặc định Focus 25 phút / Nghỉ 5 phút, chỉnh được ±1/±10 phút (1–120) khi đang dừng; Bắt đầu, Tạm dừng, Đặt lại; chuông khi hết phiên rồi tự chuyển chế độ; tích tắc chỉ khi đang chạy | P0 | UC.05 | AC-05.3, AC-05.4, AC-05.5, AC-05.6 |
 | FR-TIME-02 | Một bộ đếm dùng chung cho ba không gian (Pomodoro mini, popover Đồng hồ); tính theo thời điểm kết thúc nên không trôi khi tab ẩn | P0 | UC.05 | AC-05.1, AC-05.2 |
@@ -868,7 +868,7 @@ Mỗi tiêu chí viết theo dạng **Cho trước – Khi – Thì**, kiểm đ
 
 - Google Lighthouse (cấu hình mobile): Performance, Accessibility, Best Practices và SEO đều ≥ 90 ở cả 6 trang; đo trước và sau khi tối ưu, lưu báo cáo vào docs/reports/lighthouse/.
 
-- Tách mã theo trang: engine vẽ và âm thanh chỉ tải ở Căn phòng; nhạc Lo-fi dựng nền ngay khi mở Căn phòng như prototype (đã đo, nhóm chọn cách 2 ngày 13/11/2026: chỉ thêm title và meta description, không dời việc dựng nhạc); hình xem trước ở Trang chủ chỉ vẽ khi cuộn tới; Tailwind chỉ giữ các class được dùng.
+- Tách mã theo trang: engine vẽ và âm thanh chỉ tải ở Căn phòng; v5.5 (15/11/2026, Tuấn Hưng – H12): đo Lighthouse /room bản triển khai được Hiệu suất 60, Total Blocking Time 6,2 giây do dựng toàn bộ âm thanh lúc mở trang, nên đổi sang dựng âm thanh sau cú nhấp đầu tiên (trình duyệt vẫn chưa cho phát tiếng trước cú nhấp) và tải font Google không chặn hiển thị; thay quyết định cách 2 ngày 13/11/2026; hình xem trước ở Trang chủ chỉ vẽ khi cuộn tới; Tailwind chỉ giữ các class được dùng.
 
 - Mỗi trang có thẻ title và meta description riêng; html lang="vi"; mọi nút và hình có nhãn truy cập.
 
@@ -964,7 +964,7 @@ Thứ tự phát triển theo docs/PLAN.md: Phase 0 Khởi tạo → 1 Dữ li�
 | API hoặc database ngừng hoạt động                                   | Không đồng bộ được             | Kiến trúc local-first: app vẫn chạy và lưu cục bộ, tự đồng bộ lại khi có mạng                    |
 | Giả định “người bạn học ảo” không tạo động lực như kỳ vọng          | KPI phiên thấp                 | Thu phản hồi UAT về nhân vật, nhịp thở/lật sách để chỉnh hoạt ảnh                                |
 | Phạm vi lớn so với 2 tuần lập trình (S3–S5) | Trễ hạn nộp | Làm P0 trước theo thứ tự sprint; dời P1 (xung đột hai thiết bị, xóa tài khoản) nếu trễ; cuối mỗi sprint luôn có bản chạy được |
-| Trang Căn phòng tải nặng làm điểm Lighthouse thấp | Mất điểm tối ưu | Tách mã theo trang, title và meta description cho từng trang (cách 2, `prototype/so-sanh-lighthouse/`), đo Lighthouse mỗi sprint |
+| Trang Căn phòng tải nặng làm điểm Lighthouse thấp | Mất điểm tối ưu | Tách mã theo trang, title và meta description cho từng trang, dựng âm thanh sau cú nhấp đầu tiên, font không chặn hiển thị (v5.5, Tuấn Hưng – H12), đo Lighthouse mỗi sprint |
 | Trình chặn quảng cáo chặn Google Analytics | Thiếu số liệu hành vi | Telemetry riêng vẫn ghi KPI; không chức năng nào phụ thuộc Google Analytics |
 
 # 9. Lịch sử thay đổi
@@ -978,4 +978,4 @@ Thứ tự phát triển theo docs/PLAN.md: Phase 0 Khởi tạo → 1 Dữ li�
 | v5.4 | 13/11/2026 | Thêm bảng mã yêu cầu chức năng cuối mục 5.1 (85 mã FR, đóng Q-17): giữ nguyên mã cũ, thêm FR-ACC-08 (đổi tên, đăng xuất) và đánh mã FR-PAGE-01→08, FR-LIB-01→06, FR-STAT-01→06, FR-OBS-01→04; bảng 3.2, 3.3 tham chiếu mã cụ thể. Bỏ mốc Go-live 10/12/2026, mốc cuối là nộp đồ án 27/11/2026 (Q-08). 2.4, 8.2 sửa thời gian theo lịch 27/10 → 27/11. Trạng thái: v5.1 – v5.4 đã duyệt ở buổi họp kế hoạch 13/11/2026. |
 | v5.4 (bổ sung) | 13/11/2026 | 6.1 và 8.2: tối ưu Lighthouse theo cách 2 đã chọn (title + meta description; nhạc Lo-fi vẫn dựng nền ngay khi mở Căn phòng). |
 | v5.4 (bổ sung 2) | 13/11/2026 | Chốt Q-01, Q-02, Q-05, Q-06, Q-09, Q-10, Q-13 → Q-16; Tính năng J ghi email thành viên, link GitHub, mục Quyền riêng tư và năm học; câu thông báo đủ 40 đồ vật (Tính năng E, AC-04.2). |
-| v5.5 | 15/11/2026 | Sửa theo góp ý giao diện và âm thanh: một font Be Vietnam Pro; header dùng chung kể cả Căn phòng, 5 liên kết một hàng từ 768 px (FR-PAGE-02, 03, AC-12.4); Trang chủ bỏ ô “Pixel art…”, đổi “Vì sao chọn FocuSpace” thành “Mô tả & Tính năng”, bỏ 2 nút cuối trang (AC-12.5, 12.6); bỏ chip âm thanh, chip lưu (FR-UI-02, FR-SAVE-01, 03, AC-02.1, 03.1, 04.1, 06.1); âm nền cho nhạc, tích tắc, cửa sổ, lò sưởi (FR-AUD-02, AC-03.5); tiếng rè chỉ ở đĩa than; 6 bài Lo-fi có tên, dài khoảng 1 phút, dựng khi cần; rù rù mèo 1/3, âm khung cảnh 50%; lò sưởi dịch lên hàng sàn 1; hoàng hôn ở cửa sổ vẽ theo cảnh Bãi biển; Pomodoro và Hẹn giờ ngủ chỉnh ±1/±10 phút, tích tắc chỉ khi đếm và mặc định tắt (FR-TIME-01, 03, AC-05.5, 05.6, 06.3); hitbox thảm phòng ngủ khớp hình; điện thoại dựng dọc tự xoay ngang (AC-01.5). |
+| v5.5 | 15/11/2026 | Sửa theo góp ý giao diện và âm thanh: một font Be Vietnam Pro; header dùng chung kể cả Căn phòng, 5 liên kết một hàng từ 768 px (FR-PAGE-02, 03, AC-12.4); Trang chủ bỏ ô “Pixel art…”, đổi “Vì sao chọn FocuSpace” thành “Mô tả & Tính năng”, bỏ 2 nút cuối trang (AC-12.5, 12.6); bỏ chip âm thanh, chip lưu (FR-UI-02, FR-SAVE-01, 03, AC-02.1, 03.1, 04.1, 06.1); âm nền cho nhạc, tích tắc, cửa sổ, lò sưởi (FR-AUD-02, AC-03.5); tiếng rè chỉ ở đĩa than; 6 bài Lo-fi có tên, dài khoảng 1 phút, dựng khi cần; rù rù mèo 1/3, âm khung cảnh 50%; lò sưởi dịch lên hàng sàn 1; hoàng hôn ở cửa sổ vẽ theo cảnh Bãi biển; Pomodoro và Hẹn giờ ngủ chỉnh ±1/±10 phút, tích tắc chỉ khi đếm và mặc định tắt (FR-TIME-01, 03, AC-05.5, 05.6, 06.3); hitbox thảm phòng ngủ khớp hình; điện thoại dựng dọc tự xoay ngang (AC-01.5). Lighthouse /room (Tuấn Hưng, H12): âm thanh dựng sau cú nhấp đầu tiên, font tải không chặn hiển thị (6.1, 8.2, FR-AUD-06). |
