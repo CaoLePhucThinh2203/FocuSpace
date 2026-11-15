@@ -7,10 +7,11 @@
   --color-rain: #8fb3d9; --color-danger: #e0705a; --color-ok: #8fd49a; --color-deep: #120c09; --color-shadow: #0b0806;
   --color-bed: #171230; --color-bed-line: #32285c; --color-bed-amber: #f7d070;
   --color-out: #15251d; --color-out-line: #2f5242; --color-out-amber: #f2c14e;
-  --font-logo: "Press Start 2P", "Pixelify Sans", "Courier New", monospace;
-  --font-display: "Pixelify Sans", "Courier New", monospace;
+  /* Một font cho toàn site: mọi biến font trỏ về Be Vietnam Pro */
   --font-body: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-digit: "VT323", "Courier New", monospace;
+  --font-logo: var(--font-body);
+  --font-display: var(--font-body);
+  --font-digit: var(--font-body);
 }
 @layer base {
   html { color-scheme: dark; }
