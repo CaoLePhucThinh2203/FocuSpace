@@ -9,15 +9,16 @@ test.describe("UC.06 Hẹn giờ ngủ (Lộc)", () => {
     await page.goto("/");
   });
 
-  test("AC-06.3 ▲▼ ở header chỉnh hẹn giờ: đang tắt bấm ▲ 10 phút thì bắt đầu 10:00, ▼ 1 phút còn 9:00", async ({ page }) => {
+  test("AC-06.3 header Phòng ngủ chỉ có lựa chọn Tắt/15/30/45/60, không có nút chỉnh", async ({ page }) => {
     await page.goto("/room");
     await page.waitForFunction(() => !!(window as unknown as HookWindow).__focuspace);
     await page.evaluate(() => (window as unknown as HookWindow).__focuspace.switchRoom("bed"));
-    const box = page.locator('#sleepMini [data-adj="sleep"]');
+    const box = page.locator("#sleepMini");
     await expect(box).toBeVisible();
-    await box.getByRole("button", { name: "Tăng 10 phút" }).click();
-    await expect(page.locator("#sleepTime")).toHaveText(/^(10:00|09:5\d)$/);
-    await box.getByRole("button", { name: "Giảm 1 phút" }).click();
-    await expect(page.locator("#sleepTime")).toHaveText(/^(09:00|08:5\d)$/);
+    await expect(box.locator("[data-step]")).toHaveCount(0);
+    await box.getByRole("button", { name: "15p" }).click();
+    await expect(page.locator("#sleepTime")).toHaveText(/^(15:00|14:5\d)$/);
+    await box.getByRole("button", { name: "Tắt" }).click();
+    await expect(page.locator("#sleepTime")).toHaveText("--:--");
   });
 });

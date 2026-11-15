@@ -14,28 +14,49 @@ test.describe("UC.05 Pomodoro (Thịnh)", () => {
   test.fixme("AC-05.2 tab ẩn không trôi giờ", async ({ page }) => {
     await page.goto("/");
   });
-  test.fixme("AC-05.3 hết giờ chuông + chuyển Nghỉ theo độ dài đã đặt (mặc định 5:00)", async ({ page }) => {
+  test.fixme("AC-05.3 hết giờ chuông + chuyển Nghỉ ngắn theo nhịp đã chọn (mặc định 5:00)", async ({ page }) => {
     await page.goto("/");
   });
-  test.fixme("AC-05.4 Đặt lại về độ dài Focus đã đặt (mặc định 25:00)", async ({ page }) => {
+  test.fixme("AC-05.4 Đặt lại vòng về phiên Focus đầu tiên (mặc định 25:00)", async ({ page }) => {
     await page.goto("/");
   });
 
-  test("AC-05.5 ▲▼ trái ±1 phút, phải ±10 phút; khóa khi đang chạy", async ({ page }) => {
+  test("AC-05.5 chọn nhịp học: đang dừng áp dụng ngay, đang chạy áp dụng từ phiên sau", async ({ page }) => {
     await openRoom(page);
-    const r = await page.evaluate(() => {
+    await page.locator("#pomoTrig").click();
+    const panel = page.locator("#pomoPanel");
+    await expect(panel).toBeVisible();
+    await panel.getByRole("radio", { name: /Sâu/ }).click();
+    await expect(page.locator("#pomoMiniTime")).toHaveText("50:00");
+    await page.locator("#pomoMiniBtn").click();
+    await panel.getByRole("radio", { name: /Nhẹ/ }).click();
+    await expect(panel.getByRole("status")).toContainText("phiên sau");
+    await expect(page.locator("#pomoMiniTime")).toHaveText(/^(50:00|49:5\d)$/);
+  });
+
+  test("AC-05.7 đủ 4 phiên Focus thì nghỉ dài, xong nghỉ dài bắt đầu vòng mới", async ({ page }) => {
+    await openRoom(page);
+    const end = () => page.evaluate(() => {
       const F = (window as unknown as HookWindow).__focuspace;
-      F.pomoAdjust(1); const a = F.pomo.remaining;
-      F.pomoAdjust(10); const b = F.pomo.remaining;
-      F.pomoAdjust(-10); F.pomoAdjust(-1); const c = F.pomo.remaining;
-      (document.getElementById("pomoMiniBtn") as HTMLButtonElement).click();
-      F.pomoAdjust(10); const d = F.pomo.remaining;
-      (document.getElementById("pomoMiniBtn") as HTMLButtonElement).click();
-      return { a, b, c, d };
+      if (!F.pomo.running) (document.getElementById("pomoMiniBtn") as HTMLButtonElement).click();
+      F.pomo.endAt = Date.now() - 1;
     });
-    expect(r.a).toBe(26 * 60);
-    expect(r.b).toBe(36 * 60);
-    expect(r.c).toBe(25 * 60);
-    expect(r.d).toBeLessThanOrEqual(25 * 60);   // đang chạy thì không chỉnh
+    const phases: string[] = [];
+    for (let i = 0; i < 8; i++) {
+      await end();
+      await page.waitForFunction(() => !(window as unknown as HookWindow).__focuspace.pomo.running);
+      phases.push(await page.evaluate(() => (window as unknown as HookWindow).__focuspace.pomo.mode));
+    }
+    expect(phases).toEqual(["short", "focus", "short", "focus", "short", "focus", "long", "focus"]);
+    expect(await page.evaluate(() => (window as unknown as HookWindow).__focuspace.pomo.done)).toBe(0);
+  });
+
+  test("AC-05.8 vào Phòng ngủ thì Pomodoro tự tạm dừng và ẩn khỏi header", async ({ page }) => {
+    await openRoom(page);
+    await page.locator("#pomoMiniBtn").click();
+    await page.evaluate(() => (window as unknown as HookWindow).__focuspace.switchRoom("bed"));
+    await expect(page.locator(".pomo-mini")).toBeHidden();
+    await expect(page.locator("#sleepMini")).toBeVisible();
+    expect(await page.evaluate(() => (window as unknown as HookWindow).__focuspace.pomo.running)).toBe(false);
   });
 });
