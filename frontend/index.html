@@ -11,12 +11,13 @@
     />
     <!-- H12 — Tuấn Hưng: ở Trang chủ, tải ảnh lớn đầu trang (LCP) ngay khi đọc HTML, không chờ React dựng trang -->
     <script>if (location.pathname === "/") { var l = document.createElement("link"); l.rel = "preload"; l.as = "image"; l.href = "/previews/room-study.webp"; l.setAttribute("fetchpriority", "high"); document.head.appendChild(l); }</script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- H12 — Tuấn Hưng: tải CSS font theo cách thường (chặn hiển thị, ~1 lượt mạng nhờ preconnect) để trình duyệt biết @font-face ngay từ lần vẽ đầu.
-         Trước đây dùng mẹo media="print" (tải sau): chữ vẽ bằng font hệ thống trước, CSS font về sau mới khai báo Be Vietnam Pro → chữ đổi font, trang nhảy (CLS 0,327 "Phông chữ trên web đã tải").
-         display=optional: font không kịp trong ~100 ms thì giữ font hệ thống cho cả lần xem đó, không đổi giữa chừng. -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=optional" />
+    <!-- H12: font Be Vietnam Pro tự host (frontend/public/fonts, giấy phép OFL), @font-face nằm trong CSS chính đã nhúng vào trang:
+         không còn yêu cầu CSS tới Google chặn hiển thị. Tải trước độ đậm 400 (chữ thường) và 700 (tiêu đề) của bộ Latin + tiếng Việt;
+         font-display: optional nên font không kịp thì giữ font hệ thống cho cả lần xem đó, không đổi giữa chừng (CLS 0). -->
+    <link rel="preload" href="/fonts/be-vietnam-pro-400-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/be-vietnam-pro-400-vietnamese.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/be-vietnam-pro-700-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/be-vietnam-pro-700-vietnamese.woff2" as="font" type="font/woff2" crossorigin />
   </head>
   <body>
     <div id="root"></div>
