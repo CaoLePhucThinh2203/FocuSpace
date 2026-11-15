@@ -29,7 +29,6 @@ describe("API cơ bản", () => {
     const r = await request(app).get("/api/v1/khong-co");
     expect(r.status).toBe(404);
   });
-  it.todo("đăng ký → đăng nhập → refresh xoay vòng (cần PostgreSQL test)");
-  it.todo("PUT /room-state baseRevision cũ trả 409 REVISION_CONFLICT (AC-09.2)");
-  it.todo("POST /telemetry/batch gửi trùng không nhân đôi dòng");
+  // Đăng ký/đăng nhập/refresh, 409 REVISION_CONFLICT, telemetry gửi trùng: integration test trên PostgreSQL thật
+  // ở bedroom.test.ts, study.test.ts, garden.test.ts (DB tạm dựng trong test/setup/globalSetup.ts).
 });
