@@ -65,7 +65,7 @@
   .site-head { @apply min-h-10; }
   .pomo-mini, .sleep-mini { @apply inline-flex items-center gap-2 border border-line bg-panel pt-[2px] pr-1 pb-[2px] pl-[10px]; }
   .sleep-mini { @apply relative; }
-  .pomo-mini .mode, .sleep-mini .mode { @apply text-[11px] uppercase tracking-[.08em] text-muted; }
+  .pomo-mini .mode, .sleep-mini .mode { @apply text-[12px] uppercase tracking-[.08em] text-muted; }
   .pomo-mini .time, .sleep-mini .time { @apply font-num text-[19px] font-semibold leading-none tabular-nums text-amber; }
   .sleep-note { @apply text-[12px] font-semibold text-rain; }
   .sleep-mini.fading .time { @apply text-rain; }
@@ -117,7 +117,7 @@
   .tb-btn { @apply relative grid size-[42px] cursor-pointer place-items-center px-[6px] py-px border border-transparent bg-panel-2 text-ink hover:border-amber; }
   .tb-btn svg { @apply size-[22px]; }
   .tb-btn[aria-pressed="true"] { @apply bg-amber text-amber-ink; }
-  .tb-tip { @apply pointer-events-none absolute top-[calc(100%+8px)] left-1/2 z-[60] -translate-x-1/2 whitespace-nowrap border border-line bg-panel px-[7px] py-[2px] text-[11px] text-ink opacity-0 transition-opacity duration-150 narrow:hidden; }
+  .tb-tip { @apply pointer-events-none absolute top-[calc(100%+8px)] left-1/2 z-[60] -translate-x-1/2 whitespace-nowrap border border-line bg-panel px-[7px] py-[2px] text-[12px] text-ink opacity-0 transition-opacity duration-150 narrow:hidden; }
   .tb-btn:hover .tb-tip, .tb-btn:focus-visible .tb-tip { @apply opacity-100; }
   .toolbar.tray-open .tb-tip { @apply hidden; }
   /* Giữ đúng prototype gốc: nền và chữ cùng màu đỏ */
@@ -159,7 +159,7 @@
   .obj canvas { @apply pointer-events-none block size-full; image-rendering: pixelated; }
   .meow { @apply pointer-events-none absolute bottom-full left-[-6px] mb-1 whitespace-nowrap border border-line bg-panel px-[7px] py-[2px] text-[12px] font-bold text-ink shadow-[2px_2px_0_var(--shadow)] animate-[meowPop_1.4s_steps(7)_forwards]; }
   .hot { @apply absolute z-[1] cursor-pointer border border-dashed border-transparent bg-none p-0 hover:border-[rgba(243,168,75,.85)] focus-visible:border-[rgba(243,168,75,.85)] focus-visible:outline-none; }
-  .hot .tag, .nav-door .tag { @apply pointer-events-none absolute left-1/2 -translate-x-1/2 whitespace-nowrap border border-line bg-panel px-[6px] py-px text-[11px] opacity-0 transition-opacity duration-150; }
+  .hot .tag, .nav-door .tag { @apply pointer-events-none absolute left-1/2 -translate-x-1/2 whitespace-nowrap border border-line bg-panel px-[6px] py-px text-[12px] opacity-0 transition-opacity duration-150; }
   .hot .tag { @apply top-[-22px]; }
   .nav-door .tag { @apply top-[-24px] text-ink; }
   .hot:hover .tag, .hot:focus-visible .tag, .nav-door:hover .tag, .nav-door:focus-visible .tag { @apply opacity-100; }
@@ -167,7 +167,7 @@
   .nav-arrow svg { @apply h-auto w-[55%]; }
   .nav-arrow.l { @apply col-start-1 justify-self-start; }
   .nav-arrow.r { @apply col-start-3 justify-self-end; }
-  .nav-arrow .tag { @apply pointer-events-none absolute top-[calc(100%+6px)] whitespace-nowrap border border-line bg-panel px-[6px] py-px text-[11px] text-ink opacity-0 transition-opacity duration-150; }
+  .nav-arrow .tag { @apply pointer-events-none absolute top-[calc(100%+6px)] whitespace-nowrap border border-line bg-panel px-[6px] py-px text-[12px] text-ink opacity-0 transition-opacity duration-150; }
   .nav-arrow.l .tag { @apply left-0; }
   .nav-arrow.r .tag { @apply right-0; }
   .nav-arrow:hover .tag, .nav-arrow:focus-visible .tag { @apply opacity-100; }
