@@ -9,6 +9,8 @@
       name="description"
       content="FocuSpace: căn phòng pixel art có sẵn bàn học, âm thanh không gian 2D, Pomodoro và hẹn giờ ngủ. Vào là học được ngay."
     />
+    <!-- H12 — Tuấn Hưng: ở Trang chủ, tải ảnh lớn đầu trang (LCP) ngay khi đọc HTML, không chờ React dựng trang -->
+    <script>if (location.pathname === "/") { var l = document.createElement("link"); l.rel = "preload"; l.as = "image"; l.href = "/previews/room-study.webp"; l.setAttribute("fetchpriority", "high"); document.head.appendChild(l); }</script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!-- H12 — Tuấn Hưng: font tải không chặn hiển thị (Lighthouse: Render-blocking requests): chữ hiện ngay bằng font hệ thống rồi đổi sang Be Vietnam Pro -->
