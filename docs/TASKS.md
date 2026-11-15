@@ -5,6 +5,7 @@
 > Mỗi dòng = **1 GitHub Issue**: tiêu đề đúng như cột "Issue", gán người, milestone = sprint, nhãn `area:*`, `type:*`, `P0/P1`. Mở nhánh `feat/<số>-<mô-tả>`, PR có `Closes #<số>` và mã UC.
 > Cột **Xong khi** là điều kiện đóng issue (Definition of Done): test liên quan xanh, PR được 1 người khác duyệt, CI xanh.
 > Phần backend và việc chung (đánh dấu ⓓ) đã chốt 13/11/2026; trang Thống kê chuyển từ Thịnh (T15 cũ) sang Lộc (L13).
+> **PA B (15/11/2026, `docs/PLAN.md` §2):** việc vẽ, âm thanh, khay, popover của Căn phòng (H7–H10, H13, N5–N7, N12–N15, L5, L6, T9, T10) làm thẳng trong `frontend/src/engine/legacy/roomEngine.js`, không tách module; issue đóng khi E2E/ảnh chụp đạt. Quy tắc nghiệp vụ là hàm thuần có test: T7 `rooms.ts` + `pomodoro.ts`, L3 `sleepTimer.ts`, H4 `placement.ts` (đã xong 15/11).
 
 Nhãn khu vực: `area:items-audio` (Hưng) · `area:garden` (Nhiên) · `area:bedroom` (Lộc) · `area:study` · `area:pages` · `area:repo` (Thịnh) · `area:backend` · `area:shared`.
 
@@ -39,7 +40,7 @@ Mỗi người chỉ sửa thư mục của mình; sửa chỗ khác thì mở P
 | H1 | S3 | `test(items): khung unit test placement, spatial, catalog` | UC.03, UC.04 | Có `it.todo` cho BR-03→07, AC-03.3, AC-04.4 |
 | H2 | S3 | `test(e2e): khung uc03-dieu-chinh-am-thanh, uc04-sap-xep-do-vat` | AC-03.x, AC-04.x | Mỗi AC là một `test.fixme` |
 | H3 | S3 | `feat(shared): catalog.ts 17 loại đồ vật từ prototype TYPES` | UC.04, UC.07 | Test đủ 17 loại, kích thước, phòng, nhóm |
-| H4 | S3 | `feat(engine): placement.ts quy tắc đặt đồ BR-03→06` | UC.04 | Unit test mỗi nhánh BR-04, giường mèo BR-05, ≤ 25 đồ |
+| H4 | S3 | `feat(engine): placement.ts quy tắc đặt đồ BR-03→06` | UC.04 | Unit test mỗi nhánh BR-04, giường mèo BR-05, ≤ 25 đồ; đủ 25 đồ thì không thêm, chỉ hiện “Phòng đã đầy — hãy xóa bớt đồ để thêm mới” (AC-04.2) |
 | H5 | S3 | `feat(engine): spatial.ts gain/pan BR-07` | UC.03 | AC-03.3 xanh |
 | H6 | S3 | `feat(db): bảng item_types + seeder đồ vật` ⓓ | UC.07 | `prisma db seed` chạy 2 lần vẫn 17 dòng |
 | H7 | S4 | `feat(audio): AudioContext sau cú nhấp đầu, đồ thị âm, Master` | UC.03 | AC-03.1, AC-03.2 xanh; lỗi tạo → ghi telemetry |
@@ -76,7 +77,7 @@ Mỗi người chỉ sửa thư mục của mình; sửa chỗ khác thì mở P
 |---|---|---|---|---|
 | L1 | S1 ✅ | `docs(wireframe): wireframe Figma Thống kê, Tài khoản` | UC.08, UC.10, UC.11 | ✅ Figma desktop + mobile, nhóm duyệt |
 | L2 | S3 | `test(api): khung integration test auth, me, stats` ⓓ | UC.08, UC.10, UC.11 | Liệt kê đủ mã trạng thái API §3.2 |
-| L3 | S3 | `feat(engine): sleepTimer.ts Tắt/15/30/45/60, giảm dần 2 phút cuối` | UC.06 | Unit test BR-02 |
+| L3 | S3 | `feat(engine): sleepTimer.ts Tắt/15/30/60, giảm dần 2 phút cuối` | UC.06 | Unit test BR-02; chọn xong chờ Bắt đầu, có Tạm dừng (PRD v5.7) |
 | L4 | S3 | `feat(shared): migrate.ts dữ liệu prototype → v4` | UC.09 | Test: rỗng, JSON hỏng, bản phẳng `ver: 3`, > 25 đồ |
 | L5 | S4 | `feat(render): Phòng ngủ — cửa sổ 3 thời tiết, rèm, đồng hồ tường, đèn ngủ, thảm, kệ` | UC.02 | Ảnh chụp khớp prototype |
 | L6 | S4 | `feat(bedroom): giao diện Hẹn giờ ngủ + thông báo hết giờ` | UC.06 | AC-06.1, AC-06.2, AC-01.4 xanh |
@@ -98,7 +99,7 @@ Mỗi người chỉ sửa thư mục của mình; sửa chỗ khác thì mở P
 | T4 | S1 ✅ | `docs(wireframe): wireframe Figma Căn phòng, Thư viện` | UC.01–UC.07 | ✅ Figma desktop + mobile, nhóm duyệt |
 | T5 | S3 | `feat(shared): chốt giao diện RoomState, drawX(ctx,state,t), audio.register, telemetry.track` | — | 3 người còn lại duyệt PR |
 | T6 | S3 | `feat(shared): roomState.ts Zod schema v4 + defaults Phòng học` | UC.09 | Test giới hạn 25 đồ, ≤ 64 KB |
-| T7 | S3 | `feat(engine): rooms.ts chuyển phòng, pomodoro.ts` | UC.01, UC.05 | AC-01.2, AC-05.2 (unit) xanh |
+| T7 | S3 | `feat(engine): rooms.ts chuyển phòng, pomodoro.ts` | UC.01, UC.05 | AC-01.2, AC-05.2 (unit) xanh; cả hai nằm ở `areas/study/engine/` |
 | T8 | S3 | `feat(db): schema.prisma + migration đầu` ⓓ | Task 3a | `prisma migrate deploy` chạy trên DB trống |
 | T9 | S4 | `feat(render): Phòng học — bàn, nhân vật, cửa sổ 4 thời tiết, rèm, lò sưởi, thảm, đèn` | UC.02 | AC-02.1, AC-02.4 xanh; ảnh chụp khớp prototype |
 | T10 | S4 | `feat(room): Header, Toolbar, store Zustand, chip lưu, LocalStorage 250 ms` | UC.01, UC.05 | AC-01.1, AC-02.2, AC-05.1, AC-05.3, AC-05.4 xanh |
