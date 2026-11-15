@@ -43,4 +43,15 @@ test.describe("UC.12 Trang chủ, Giới thiệu (Thịnh)", () => {
     const fonts = await page.evaluate(() => [...document.querySelectorAll("h1, h2, h3, p, a, button")].map((e) => getComputedStyle(e).fontFamily.split(",")[0].replace(/"/g, "").trim()));
     expect(new Set(fonts)).toEqual(new Set(["Be Vietnam Pro"]));
   });
+
+  test("AC-12.6 font Be Vietnam Pro tự host được tải thật, không gọi Google Fonts (H12)", async ({ page }) => {
+    const google: string[] = [];
+    page.on("request", (r) => { if (/fonts\.(googleapis|gstatic)\.com/.test(r.url())) google.push(r.url()); });
+    await page.goto("/about");
+    await expect(page.locator("main h1")).toBeVisible();
+    await page.evaluate(() => document.fonts.ready);
+    const loaded = await page.evaluate(() => [...document.fonts].filter((f) => f.status === "loaded").map((f) => `${f.family.replace(/"/g, "")} ${f.weight}`));
+    expect(loaded).toContain("Be Vietnam Pro 400");
+    expect(google).toEqual([]);
+  });
 });
