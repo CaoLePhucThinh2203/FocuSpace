@@ -11,7 +11,7 @@ export const ROOM_MARKUP = `<div class="app grid h-full grid-rows-[auto_auto_1fr
       <div class="pomo-panel" id="pomoPanel" role="dialog" aria-label="Nhịp học" hidden></div>
     </div>
     <div class="sleep-mini" id="sleepMini" hidden>
-      <div class="pm-label"><span class="mode">Hẹn giờ ngủ</span><span class="sleep-note" id="sleepNote" role="status" hidden>Hết giờ · chạm để bật lại</span></div>
+      <div class="pm-label"><span class="mode">Hẹn giờ ngủ</span><span class="sleep-note" id="sleepNote" role="status" hidden>Đã hết giờ ngủ · chạm để bật lại</span></div>
       <button type="button" class="time pm-trig" id="sleepTrig" aria-haspopup="dialog" aria-expanded="false" aria-controls="sleepPanel" title="Chọn hẹn giờ ngủ"><span id="sleepTime" data-sleep-time>--:--</span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5 6 7.5 9 4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <button class="btn" id="sleepPlay" type="button" data-sleep-play hidden>Bắt đầu</button>
       <div class="pomo-panel" id="sleepPanel" role="dialog" aria-label="Hẹn giờ ngủ" hidden></div>
