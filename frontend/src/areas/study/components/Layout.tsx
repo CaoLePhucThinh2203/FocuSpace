@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { NavBar } from "./NavBar";
 import { Footer } from "./Footer";
@@ -14,7 +14,11 @@ export function Layout() {
   return (
     <>
       <NavBar />
-      <Outlet />
+      {/* Suspense đặt TRONG khung: thanh điều hướng hiện ngay, chỉ phần thân chờ tải trang.
+          Nếu đặt ngoài (App.tsx), thanh điều hướng xuất hiện muộn và đẩy cả trang xuống (Lighthouse CLS 0,296). */}
+      <Suspense fallback={<main className="min-h-screen" aria-busy="true" />}>
+        <Outlet />
+      </Suspense>
       <Footer />
     </>
   );
