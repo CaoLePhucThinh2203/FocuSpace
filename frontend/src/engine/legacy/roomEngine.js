@@ -435,11 +435,19 @@ function bellFill(d, len) {
   });
 }
 
-const BUF = ctx ? {
-  clear: mkBuf(8, birdsFill), rain: mkBuf(6, rainFill(false)), storm: mkBuf(12, stormFill),
-  fire: mkBuf(6, fireFill), tv: mkBuf(3, staticFill), cat: mkLoopBuf(6, softPurrFill), meow: mkBuf(0.75, meowFill), tick: mkBuf(0.06, softTickFill(1150)), tock: mkBuf(0.06, softTickFill(950)),
-  flip: mkBuf(0.35, flipFill), click: mkBuf(0.05, clickFill), bell: mkBuf(3.2, bellFill, 1),
-} : {};
+/* H12 — Tuấn Hưng (tối ưu Lighthouse /room). Âm thanh tổng hợp chỉ dựng sau cú nhấp/phím đầu tiên (trình duyệt cũng chỉ cho phát tiếng từ lúc đó), mỗi bộ đệm dựng khi
+   được dùng lần đầu rồi giữ lại: mở trang không còn tác vụ dài nhiều giây trên luồng chính (Lighthouse: Total Blocking Time). */
+let audioWanted = false;
+const BUF = {};
+function lazyBuf(defs) {
+  if (!ctx) return;
+  Object.entries(defs).forEach(([k, make]) => { let v = null; Object.defineProperty(BUF, k, { enumerable: true, get: () => v || (audioWanted ? (v = make()) : null) }); });
+}
+lazyBuf({
+  clear: () => mkBuf(8, birdsFill), rain: () => mkBuf(6, rainFill(false)), storm: () => mkBuf(12, stormFill),
+  fire: () => mkBuf(6, fireFill), tv: () => mkBuf(3, staticFill), cat: () => mkLoopBuf(6, softPurrFill), meow: () => mkBuf(0.75, meowFill), tick: () => mkBuf(0.06, softTickFill(1150)), tock: () => mkBuf(0.06, softTickFill(950)),
+  flip: () => mkBuf(0.35, flipFill), click: () => mkBuf(0.05, clickFill), bell: () => mkBuf(3.2, bellFill, 1),
+});
 
 async function renderLofi(def, idx, crackle) {   // crackle: tiếng rè rãnh đĩa (chỉ đĩa than)
   const OAC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
@@ -509,7 +517,7 @@ function lofiBuf(kind, i) {
   i = clamp(i | 0, 0, 2);
   if (lofiCache[kind][i]) return lofiCache[kind][i];
   const key = kind + i;
-  if (!ctx || lofiPending[key]) return null;
+  if (!ctx || !audioWanted || lofiPending[key]) return null;
   lofiPending[key] = renderLofi((kind === "sleep" ? SLEEP_LOFI : LOFI)[i], (kind === "sleep" ? 10 : 0) + i, kind === "sleep").then(b => {
     delete lofiPending[key];
     if (!b) return;
@@ -524,6 +532,7 @@ function lofiBuf(kind, i) {
 let audioReady = false;
 function unlockAudio() {
   if (!ctx || audioReady) return;
+  if (!audioWanted) { audioWanted = true; setTimeout(startAudio, 0); }
   ctx.resume().then(() => {
     audioReady = true;
     const note = document.getElementById("sleepNote"); if (note) note.hidden = true;   // âm thanh trở lại sau khi hết giờ ngủ (AC-06.2)
@@ -1312,11 +1321,11 @@ const SLEEP_LOFI = [   // nhạc Lofi Sleep (đĩa than): nhịp chậm, hợp �
   { name: "Gió khẽ",  bpm: 54, seed: 13, lead: "flute", drums: "none",
     chords: [[45, 48, 52, 55], [41, 45, 48, 52], [43, 47, 50, 53], [40, 44, 47, 52]], chordsB: [[41, 45, 48, 52], [43, 47, 50, 53], [45, 48, 52, 55], [40, 44, 47, 52]] },
 ];
-if (ctx) Object.assign(BUF, {
-  stars: mkBuf(8, cricketsFill), wind: mkLoopBuf(20, snowNightFill), roof: mkBuf(8, roofRainFill),
-  bubble: mkBuf(6, bubbleFill), musicbox: mkBuf(12, musicboxFill), fan: mkLoopBuf(6, fanFill),
+lazyBuf({
+  stars: () => mkBuf(8, cricketsFill), wind: () => mkLoopBuf(20, snowNightFill), roof: () => mkBuf(8, roofRainFill),
+  bubble: () => mkBuf(6, bubbleFill), musicbox: () => mkBuf(12, musicboxFill), fan: () => mkLoopBuf(6, fanFill),
+  sunset: () => mkBuf(14, wavesFill),
 });
-if (ctx) BUF.sunset = mkBuf(14, wavesFill);
 
 function FDX() { return state.fireSide === "left" ? -266 : 0; }
 function drawFire(c, f) { c.save(); c.translate(FDX(), -FY); drawFire0(c, f); c.restore(); }
@@ -2438,7 +2447,8 @@ function scheduleCityExtras() {   // thỉnh thoảng (20–40 giây, trung bìn
     scheduleCityExtras();
   }, (20 + Math.random() * 20) * 1000);
 }
-if (ctx) { BUF.horn = mkBuf(0.8, hornFill); BUF.chatter = mkBuf(2.8, chatterFill); scheduleCityExtras(); }
+lazyBuf({ horn: () => mkBuf(0.8, hornFill), chatter: () => mkBuf(2.8, chatterFill) });
+if (ctx) scheduleCityExtras();
 function forestFill(d, len, c) {
   const LOOP = 16, r = rng(141 + c * 5), rs = rng(911); let p = 0, q = 0, u = 0;
   for (let i = 0; i < len; i++) {   // gió xào xạc qua tán lá
@@ -2511,7 +2521,7 @@ function hillFill(d, len, c) {   // biển xa lặng: sóng vỗ thưa và êm, 
   }
 }
 function sceneBuf(id) {
-  if (!ctx) return null;
+  if (!ctx || !audioWanted) return null;
   if (!sceneBufs[id]) sceneBufs[id] = { city: () => mkLoopBuf(30, cityFill), forest: () => mkLoopBuf(16, forestFill), beach: () => mkLoopBuf(16, beachFill), glacier: () => mkLoopBuf(18, glacierFill), hill: () => mkLoopBuf(20, hillFill) }[id]();
   return sceneBufs[id];
 }
@@ -2651,8 +2661,13 @@ function playClick() {
   const s = ctx.createBufferSource(); s.buffer = BUF.click; const g = ctx.createGain(); g.gain.value = 0.8; s.connect(g); g.connect(master); s.start();
 }
 if (ctx) {
-  applyWindow(); applyFire(); applyBedWindow(); applyHeadphone(); applyWallClock(); applyScene();
+  applyWindow(); applyFire(); applyBedWindow(); applyHeadphone(); applyWallClock(); applyScene();   // chỉ đặt mức âm; bộ đệm dựng sau cú nhấp đầu (startAudio)
   ["study", "bed", "out"].forEach(k => { roomOut[k].gain.value = ROOM.cur === k ? 1 : 0; });
+}
+function startAudio() {   // sau cú nhấp đầu: dựng và gắn âm thanh, mỗi nguồn một tác vụ riêng để không chặn luồng chính lâu
+  const steps = [() => itemsById.forEach(applyItemAudio), applyHeadphone, applyWindow, applyFire, applyBedWindow, applyWallClock, applyScene];
+  steps.forEach((f, i) => setTimeout(f, i * 50));
+  SCENE_IDS.forEach((id, i) => setTimeout(() => sceneBuf(id), 1500 + 400 * i));   // dựng sẵn âm các khung cảnh còn lại, mỗi cảnh một nhịp
 }
 
 /* ---------- Vùng bấm cố định (cửa sổ, lò sưởi, kệ sách, đèn ngủ) ---------- */
@@ -3239,7 +3254,6 @@ function switchRoom(to) {
     setTimeout(() => { ROOM.busy = false; }, 320);
   }, 320);
 }
-setTimeout(() => { SCENE_IDS.forEach((id, i) => setTimeout(() => sceneBuf(id), 300 * (i + 1))); }, 1500);   // dựng sẵn âm thanh các cảnh còn lại, mỗi cảnh một nhịp để không giật
 
 /* ============================================================
    KHỞI ĐỘNG
