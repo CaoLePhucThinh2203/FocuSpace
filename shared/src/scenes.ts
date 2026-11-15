@@ -8,11 +8,11 @@ export interface Scene {
 }
 
 export const SCENES: Scene[] = [
-  { code: "city", name: "Thành phố", description: "Buổi tối, xe cộ lofi chill êm dịu", isDefault: false, sortOrder: 1 },
-  { code: "forest", name: "Khu rừng", description: "Gió xào xạc lá, chim hót", isDefault: true, sortOrder: 2 },
-  { code: "beach", name: "Bãi biển", description: "Sóng vỗ bờ, hải âu", isDefault: false, sortOrder: 3 },
-  { code: "glacier", name: "Núi băng", description: "Hồ núi, suối băng róc rách êm", isDefault: false, sortOrder: 4 },
-  { code: "hill", name: "Đồi ven biển", description: "Biển xa, mây trôi, gió nhẹ", isDefault: false, sortOrder: 5 },
+  { code: "city", name: "Thành phố", description: "Tiếng xe cộ buổi tối", isDefault: false, sortOrder: 1 },
+  { code: "forest", name: "Khu rừng", description: "Tiếng gió và chim hót", isDefault: true, sortOrder: 2 },
+  { code: "beach", name: "Bãi biển", description: "Tiếng sóng biển và hải âu", isDefault: false, sortOrder: 3 },
+  { code: "glacier", name: "Núi băng", description: "Tiếng suối chảy", isDefault: false, sortOrder: 4 },
+  { code: "hill", name: "Đồi ven biển", description: "Tiếng gió và sóng xa", isDefault: false, sortOrder: 5 },
 ];
 
 export const SCENE_CODES = SCENES.map((s) => s.code);
