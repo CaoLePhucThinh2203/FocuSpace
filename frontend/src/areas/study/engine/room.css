@@ -71,7 +71,7 @@
   .sleep-mini.fading .time { @apply text-rain; }
   .sleep-mini .seg { @apply inline-grid grid-cols-[repeat(5,auto)]; }
   .sleep-mini .seg button { @apply px-2 py-[5px]; }
-  /* Pomodoro trên header: giai đoạn + chấm tiến độ của vòng, số giờ mở bảng Nhịp học */
+  /* Pomodoro trên header: giai đoạn + chấm tiến độ của vòng, số giờ mở bảng Nhịp học. Bảng nằm trên lớp ánh sáng (#lightCv z-400), ngang popover (.pop z-1000) */
   .pomo-mini { @apply relative; }
   .pm-label { @apply grid gap-[3px]; }
   .pm-dots { @apply flex gap-[3px]; }
@@ -80,7 +80,7 @@
   .pm-dots i.cur { @apply border-amber; }
   .pm-trig { @apply inline-flex cursor-pointer items-center gap-1 border border-transparent bg-transparent px-1 py-[2px] hover:border-line aria-expanded:border-amber; }
   .pm-trig svg { @apply size-3; }
-  .pomo-panel { @apply absolute top-[calc(100%+8px)] right-0 z-[90] grid w-[340px] gap-3 border border-line bg-panel-a p-3 text-ink shadow-[3px_3px_0_var(--shadow),0_10px_24px_rgba(0,0,0,.45)] backdrop-blur-[6px]
+  .pomo-panel { @apply absolute top-[calc(100%+8px)] right-0 z-[1000] grid w-[340px] gap-3 border border-line bg-panel p-3 text-ink shadow-[3px_3px_0_var(--shadow),0_10px_24px_rgba(0,0,0,.45)] backdrop-blur-[6px]
                         narrow:fixed narrow:inset-x-2 narrow:top-auto narrow:bottom-2 narrow:w-auto narrow:max-h-[75vh] narrow:overflow-auto; }
   .pomo-panel[hidden] { @apply hidden; }
   .pp-head { @apply flex items-center justify-between text-[12px] font-bold uppercase tracking-[.1em] text-muted; }
