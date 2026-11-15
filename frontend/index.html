@@ -13,10 +13,10 @@
     <script>if (location.pathname === "/") { var l = document.createElement("link"); l.rel = "preload"; l.as = "image"; l.href = "/previews/room-study.webp"; l.setAttribute("fetchpriority", "high"); document.head.appendChild(l); }</script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- H12 — Tuấn Hưng: font tải không chặn hiển thị (Lighthouse: Render-blocking requests): chữ hiện ngay bằng font hệ thống rồi đổi sang Be Vietnam Pro -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" /></noscript>
+    <!-- H12 — Tuấn Hưng: font tải không chặn hiển thị; display=optional: font về muộn thì giữ font hệ thống, không đổi giữa chừng làm nhảy bố cục (CLS) (Lighthouse: Render-blocking requests): chữ hiện ngay bằng font hệ thống rồi đổi sang Be Vietnam Pro -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=optional" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=optional" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=optional" /></noscript>
   </head>
   <body>
     <div id="root"></div>
