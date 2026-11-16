@@ -8,7 +8,7 @@ Căn phòng Semi-Sandbox · Phòng học · Phòng ngủ · Sân vườn
 |---|---|
 | **Chủ sở hữu (Product Owner / PM)** | Cao Lê Phúc Thịnh (theo PRD Semi-Sandbox gốc) |
 | **Đội ngũ tham gia** | Tuấn Hưng (đồ vật, âm thanh) · Đình Nhiên (Sân vườn) · Tuấn Lộc (Phòng ngủ) · Phúc Thịnh (Phòng học, quản lý repo, các trang còn lại) · chi tiết docs/PLAN.md mục 2 |
-| **Phiên bản / trạng thái** | v5.13 (rù rù 1/5, máy xông bỏ tiếng xì, Thành phố bỏ tiếng nói chuyện, 16/11/2026) · v5.12 (tiếng mèo, máy xông còn 1/10, theo số đo thật, 16/11/2026) · v5.11 (văn phong giao diện đơn giản, 15/11/2026) · v5.10 (chữ chú thích Căn phòng 12 px, 15/11/2026) · v5.9 (font tự host, 15/11/2026) · v5.8 (thống nhất 25 đồ, 15/11/2026) · v5.7 (Pomodoro theo vòng 15/11/2026) · v5.6 (rút gọn 15/11/2026) · v5.0 phê duyệt 07/11/2026 · v5.1 – v5.4 duyệt ở buổi họp kế hoạch 13/11/2026 · v5.5 (sửa giao diện, âm thanh 15/11) chờ duyệt |
+| **Phiên bản / trạng thái** | v5.14 (đổi bài nhạc: báo đang chuẩn bị, chuyển 1,5 giây, giữ bài vừa nghe, 16/11/2026) · v5.13 (rù rù 1/5, máy xông bỏ tiếng xì, Thành phố bỏ tiếng nói chuyện, 16/11/2026) · v5.12 (tiếng mèo, máy xông còn 1/10, theo số đo thật, 16/11/2026) · v5.11 (văn phong giao diện đơn giản, 15/11/2026) · v5.10 (chữ chú thích Căn phòng 12 px, 15/11/2026) · v5.9 (font tự host, 15/11/2026) · v5.8 (thống nhất 25 đồ, 15/11/2026) · v5.7 (Pomodoro theo vòng 15/11/2026) · v5.6 (rút gọn 15/11/2026) · v5.0 phê duyệt 07/11/2026 · v5.1 – v5.4 duyệt ở buổi họp kế hoạch 13/11/2026 · v5.5 (sửa giao diện, âm thanh 15/11) chờ duyệt |
 | **Tài liệu liên quan** | Tài liệu Kiến trúc giải pháp · API Docs · docs/DATABASE.md · docs/PLAN.md · Final Project Brief CSB25022 · FocuSpace_Diagrams.drawio · Chương 1 Phân tích hệ thống (FocuSpace_Chuong2_PhanTich.docx) |
 
 > **Quy tắc nguồn:** Khi hai nguồn mâu thuẫn, nguồn mới hơn thắng: tài liệu này \> prototype FocuSpace-Semi-Sandbox.html \> PRD .docx cũ. Mọi hành vi giao diện mô tả theo prototype FocuSpace-Semi-Sandbox.html. Yêu cầu của đề bài đồ án môn Web (CSB25022) đứng trên mọi nguồn.
@@ -151,7 +151,7 @@ Hệ thống có hai tác nhân. **Khách** là người dùng chưa đăng nh�
 |---|---|---|---|---|---|
 | UC.01 | Chuyển không gian | Khách, Thành viên | US-01, US-09 | FR-UI-01→06, FR-NAV-01→03, FR-STUDY-01, 08, FR-BED-01, 07, FR-OUT-01, 04, FR-PAGE-03; BR-02 | High |
 | UC.02 | Tùy biến môi trường phòng | Khách, Thành viên | US-02, US-04, US-09 | FR-STUDY-02→05, FR-BED-02→05, FR-OUT-02, 03, FR-ITEM-07, FR-SAVE-01, 03 | High |
-| UC.03 | Điều chỉnh âm thanh | Khách, Thành viên | US-03, US-04, US-10 | FR-AUD-01→07; BR-07 | High |
+| UC.03 | Điều chỉnh âm thanh | Khách, Thành viên | US-03, US-04, US-10 | FR-AUD-01→08; BR-07 | High |
 | UC.04 | Sắp xếp đồ vật | Khách, Thành viên | US-03, US-05 | FR-ITEM-01→06, 08, FR-STUDY-06, 07, FR-BED-06; BR-03, BR-04, BR-05, BR-06 | High |
 | UC.05 | Sử dụng bộ đếm Pomodoro | Khách, Thành viên | US-07 | FR-TIME-01, 02, FR-SAVE-04, FR-TEL-01→03; BR-01 | High |
 | UC.06 | Hẹn giờ ngủ | Khách, Thành viên | US-08 | FR-TIME-03, FR-SAVE-04, FR-TEL-01, 03; BR-02 | High |
@@ -696,6 +696,7 @@ Mỗi gạch đầu dòng ở Tính năng A–M ứng với một hoặc vài m�
 | FR-AUD-05 | Tiếng mèo rù rù liên tục; bấm vào mèo thì mở mắt, kêu “meo”, rồi ngủ tiếp | P0 | UC.03, UC.04 | AC-04.1 |
 | FR-AUD-06 | Âm thanh tổng hợp bằng code, dựng sau cú nhấp đầu tiên (mỗi nguồn một tác vụ); cảnh đổi hình ngay cả khi âm chưa dựng xong | P0 | UC.03 | — |
 | FR-AUD-07 | AudioContext chỉ bật sau cú nhấp/phím đầu tiên; không tạo được thì app vẫn chạy phần hình và ghi lỗi | P0 | UC.03 | AC-03.1 |
+| FR-AUD-08 | Đổi bài nhạc (tai nghe, radio, đĩa than): bài chưa dựng thì nút bài đang chọn hiện "Đang chuẩn bị…", bài cũ phát tiếp tới khi bài mới sẵn sàng; chuyển bằng đường cong giữ độ to đều trong 1,5 giây (bài cũ nhỏ dần, bài mới to dần từ đầu bài); ngoài các bài đang dùng, giữ thêm 1 bài vừa nghe trong bộ nhớ để quay lại phát ngay | P1 | UC.03 | AC-03.6 |
 | FR-TIME-01 | Pomodoro theo vòng: Focus → nghỉ ngắn, đủ số phiên thì nghỉ dài; 4 nhịp học (Cổ điển 25/5/15 ×4 mặc định, Sâu 50/10/30 ×2, Nhẹ 15/3/10 ×4, Tuỳ chỉnh 1–120 phút) chọn ở bảng Nhịp học khi bấm số giờ; đổi khi đang chạy áp dụng từ phiên sau; Bắt đầu, Tạm dừng, Bỏ qua lượt nghỉ, Đặt lại vòng; chuông khi hết giai đoạn; tích tắc chỉ khi đang chạy | P0 | UC.05 | AC-05.3, AC-05.4, AC-05.5, AC-05.6, AC-05.7 |
 | FR-TIME-02 | Một bộ đếm dùng chung cho Phòng học và Sân vườn (Pomodoro mini, popover Đồng hồ); vào Phòng ngủ thì tự tạm dừng; tính theo thời điểm kết thúc nên không trôi khi tab ẩn | P0 | UC.05 | AC-05.1, AC-05.2, AC-05.8 |
 | FR-TIME-03 | Hẹn giờ ngủ (chỉ Phòng ngủ): ô header cùng kiểu Pomodoro mini, bấm số giờ mở bảng Tắt / 15 / 30 / 60 phút, chọn xong bấm Bắt đầu / Tạm dừng; không có nút chỉnh; 2 phút cuối âm tổng giảm dần; hết giờ hiện thông báo trong ô Hẹn giờ ngủ, chạm để bật lại | P0 | UC.06 | AC-06.1, AC-06.2, AC-06.3 |
@@ -796,6 +797,7 @@ Mỗi tiêu chí viết theo dạng **Cho trước – Khi – Thì**, kiểm đ
 | AC-03.3 | UC.03 *(unit)* | Một nguồn âm bật, âm lượng v, Master 80% | Tính gain | gain = v / 0,8 × 0,75 (BR-07); đồ ở góc xa nhất có gain khoảng cách ≥ 0,15 |
 | AC-03.4 | UC.03 | Đặt Tivi ở góc trái | Mở popover Tivi | Thanh Trái/Phải lệch trái; pan cập nhật < 30 ms khi kéo |
 | AC-03.5 | UC.03 | Radio, đĩa than, hộp nhạc, đồng hồ, cửa sổ, lò sưởi đang phát | Kéo nguồn tới bất kỳ vị trí nào | Gain khoảng cách giữ 0,8 và pan = 0; Tivi, mèo vẫn đổi theo vị trí |
+| AC-03.6 | UC.03 | Tai nghe đang phát "Chiều mưa" | Chọn "Cà phê sáng", chờ, rồi chọn lại "Chiều mưa" | Trong lúc dựng, nút "Cà phê sáng" hiện "Đang chuẩn bị…" và bài cũ vẫn phát; bài mới vào bằng chuyển 1,5 giây; chọn lại "Chiều mưa" thì phát ngay, không hiện "Đang chuẩn bị…" |
 | AC-04.1 | UC.04 | Khay "Đồ vật phát âm thanh" đang mở | Kéo thẻ Mèo ngủ thả vào phòng | Mèo xuất hiện ở vị trí hợp lệ, có tiếng rù rù; phòng được lưu |
 | AC-04.2 | UC.04 | Phòng đã có 25 đồ vật | Thả hoặc bấm thêm một đồ | Không thêm; chỉ hiện thông báo "Phòng đã đầy — hãy xóa bớt đồ để thêm mới" (BR-06, Q-16) |
 | AC-04.3 | UC.04 | Đèn bàn trên mặt bàn | Thả đèn lên thanh công cụ | Đèn không bị xóa, quay về mặt bàn (BR-03) |
@@ -963,3 +965,4 @@ Mọi câu hỏi mở đã chốt (Q-03, Q-04, Q-07 trước 07/11; còn lại �
 | v5.11 | 15/11/2026 | Văn phong giao diện đơn giản, thực tế: tên phòng hiển thị Phòng học / Phòng ngủ / Sân vườn (thay Góc học tập ấm áp / Phòng ngủ yên tĩnh / Sân vườn · xích đu dưới gốc cây); Tivi CRT → Tivi cũ; Volume mixer → Bảng âm lượng, “Âm lượng tổng (Master)” → “Âm lượng tổng”; mô tả 17 đồ vật và 5 khung cảnh nói thẳng âm thanh phát ra (ví dụ Máy xông tinh dầu: “Tiếng bọt nước”); viết lại lời giới thiệu Trang chủ, Giới thiệu & Liên hệ. Không đổi FR, AC (chỉ đổi chữ hiển thị). |
 | v5.12 | 16/11/2026 | 5.1 âm thanh: tiếng rù rù của mèo và tiếng máy xông tinh dầu còn 1/10 mức cũ; rù rù dựng theo số đo mèo nhà (thở ra 22 Hz, hít vào 24 Hz, nhịp thở 2,5 giây, ngắt ngắn khi đổi chiều); máy xông đổi từ ~10 tiếng bọt/giây sang tiếng xì nhẹ và ùng ục thưa ~2 lần/giây, bọt trầm hơn. |
 | v5.13 | 16/11/2026 | 5.1 âm thanh: rù rù của mèo tăng lại gấp đôi (1/5 mức v5.11); máy xông bỏ tiếng xì hơi sương, chỉ còn tiếng ùng ục; khung cảnh Thành phố bỏ tiếng người nói chuyện, chỉ còn tiếng còi xe, 30–50 giây một lần (trước đây trung bình ~60 giây một tiếng còi). |
+| v5.14 | 16/11/2026 | Đổi bài nhạc (FR-AUD-08, AC-03.6): nút bài đang dựng hiện "Đang chuẩn bị…"; chuyển bài 1,5 giây theo đường cong giữ độ to đều (trước: 0,3 giây, tuyến tính, hụt giữa chừng); giữ thêm 1 bài vừa nghe trong bộ nhớ (khoảng 20–27 MB) để quay lại phát ngay. |
