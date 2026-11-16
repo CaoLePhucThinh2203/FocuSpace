@@ -351,7 +351,7 @@ Mức ưu tiên: **P0** bắt buộc trong bản nộp, **P1** nên có, **P2** 
 
 - Phím mũi tên dịch 2 đơn vị (Shift: 8); thứ tự hiển thị theo toạ độ Y.
 
-- Popover đồ phát âm: công tắc, âm lượng, chọn bài (Radio, Đĩa than), thanh Trái/Phải và hệ số suy giảm, nút Xóa. Đồng hồ Pomodoro có thêm bảng Pomodoro. Khung ảnh có “Đổi bức tranh khác” (10 tranh pixel tự vẽ).
+- Popover đồ phát âm: công tắc, âm lượng, chọn bài (Radio, Đĩa than), thanh Trái/Phải, nút Xóa (v5.17 bỏ dòng "Suy giảm theo khoảng cách … · cách điểm nghe … px"). Đồng hồ Pomodoro có thêm bảng Pomodoro. Khung ảnh có “Đổi bức tranh khác” (10 tranh pixel tự vẽ).
 
 - Giường mèo: mèo kéo lại gần thì tự nằm vào; kéo giường thì mèo đi theo (P1).
 
@@ -686,7 +686,7 @@ Mỗi gạch đầu dòng ở Tính năng A–M ứng với một hoặc vài m�
 | FR-ITEM-03 | Xóa đồ: thả lên thanh công cụ, nút “Xóa khỏi phòng”, phím Delete/Backspace | P0 | UC.04 | AC-04.5 |
 | FR-ITEM-04 | Di chuyển đồ: kéo thả, phím mũi tên 2 đơn vị (Shift: 8); khớp tầng giá; thứ tự vẽ theo toạ độ Y | P0 | UC.04 | AC-04.4, AC-04.5 |
 | FR-ITEM-05 | Quy tắc đặt: giữ trong khung phòng, chậu cây lớn chỉ đứng sàn, tối đa 25 đồ mỗi phòng (BR-03→06) | P0 | UC.04 | AC-04.2, AC-04.4 |
-| FR-ITEM-06 | Popover đồ phát âm: công tắc, âm lượng, chọn bài (Radio, Đĩa than), thanh Trái/Phải, hệ số suy giảm, nút Xóa; Đồng hồ có bảng Pomodoro | P0 | UC.03, UC.04 | AC-03.4 |
+| FR-ITEM-06 | Popover đồ phát âm: công tắc, âm lượng, chọn bài (Radio, Đĩa than), thanh Trái/Phải, nút Xóa; Đồng hồ có bảng Pomodoro | P0 | UC.03, UC.04 | AC-03.4 |
 | FR-ITEM-07 | Khung ảnh: “Đổi bức tranh khác” (10 tranh pixel) | P0 | UC.02 | — |
 | FR-ITEM-08 | Giường mèo: mèo lại gần thì tự nằm vào, kéo giường thì mèo đi theo | P1 | UC.04 | AC-04.4 |
 | FR-AUD-01 | Chuỗi xử lý mỗi nguồn âm: nguồn lặp → highpass (nếu có) → âm lượng → suy giảm khoảng cách → pan → chuyển phòng → hẹn giờ ngủ → Master | P0 | UC.03 | — |
@@ -968,4 +968,4 @@ Mọi câu hỏi mở đã chốt (Q-03, Q-04, Q-07 trước 07/11; còn lại �
 | v5.14 | 16/11/2026 | Đổi bài nhạc (FR-AUD-08, AC-03.6): nút bài đang dựng hiện "Đang chuẩn bị…"; chuyển bài 1,5 giây theo đường cong giữ độ to đều (trước: 0,3 giây, tuyến tính, hụt giữa chừng); giữ thêm 1 bài vừa nghe trong bộ nhớ (khoảng 20–27 MB) để quay lại phát ngay. |
 | v5.15 | 17/11/2026 | 6.1, AC-12.6: tải trước thêm độ đậm 500, 600 (bộ Latin, tiếng Việt). Trước đó với `font-display: optional` chỉ 400 và 700 được tải trước, nên menu, nút, tên phòng, giờ Pomodoro (nét 500, 600) thường hiện bằng Segoe UI; AC-12.6 nay kiểm tra font thật trình duyệt dùng. |
 | v5.16 | 17/11/2026 | Văn phong lần 2 (câu ngắn, tự nhiên): Trang chủ "Không gian ảo giúp tập trung.", "Để trải nghiệm tốt nhất, hãy đeo tai nghe.", nút "Xem thư viện", mục "Tính năng chính"; Giới thiệu, Thư viện, Tài khoản, Thống kê gọn lại ("Có lỗi, hãy thử lại.", ô "Số lần vào phòng", cột "Thời lượng", Thống kê lỗi có nút Thử lại như Thư viện); Căn phòng: tên tab "FocuSpace — Căn phòng", chip "Đang ngoại tuyến", hộp thoại hợp nhất ngắn hơn, "Đang phát N âm thanh", hết giờ ngủ hiện "Hết giờ ngủ · chạm để bật lại âm thanh" (AC-06.1); bỏ dấu thống nhất "Tùy", "tỏa". |
-| v5.17 | 17/11/2026 | Trang Giới thiệu & Liên hệ (FR-PAGE-05, bố cục không đổi): mục Về FocuSpace chỉ còn 1 câu giới thiệu (bỏ 4 cặp "vấn đề → lời giải"); Cách dùng nhanh 5 bước ngắn; vai trò thành viên không dùng tên công cụ; Quyền riêng tư 2 câu; ô liên hệ "Email" ghi rõ trưởng nhóm Phúc Thịnh. Trang chủ: mục "Có 3 không gian" mô tả 3 phòng cùng một kiểu; 3 điểm nổi bật (Phòng dựng sẵn, Âm thanh theo vị trí, Pomodoro và hẹn giờ ngủ) mỗi thẻ còn một câu ngắn. Thư viện: ảnh đồ vật bỏ viền. Căn phòng: dòng "Phòng: …" chuyển xuống cạnh thanh công cụ, dòng dưới ghi "Đang có: N nguồn âm thanh", bỏ chấm xanh. |
+| v5.17 | 17/11/2026 | Trang Giới thiệu & Liên hệ (FR-PAGE-05, bố cục không đổi): mục Về FocuSpace chỉ còn 1 câu giới thiệu (bỏ 4 cặp "vấn đề → lời giải"); Cách dùng nhanh 5 bước ngắn; vai trò thành viên không dùng tên công cụ; Quyền riêng tư 2 câu; ô liên hệ "Email" ghi rõ trưởng nhóm Phúc Thịnh. Trang chủ: mục "Có 3 không gian" mô tả 3 phòng cùng một kiểu; 3 điểm nổi bật (Phòng dựng sẵn, Âm thanh theo vị trí, Pomodoro và hẹn giờ ngủ) mỗi thẻ còn một câu ngắn. Thư viện: ảnh đồ vật bỏ viền. Căn phòng: dòng "Phòng: …" chuyển xuống cạnh thanh công cụ, dòng dưới ghi "Đang có: N nguồn âm thanh", bỏ chấm xanh; popover đồ phát âm bỏ dòng số suy giảm và khoảng cách (FR-ITEM-06). |
