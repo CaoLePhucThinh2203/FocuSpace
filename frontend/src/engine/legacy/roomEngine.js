@@ -2913,7 +2913,7 @@ function mixerRows() {
 }
 function updateMix() {
   const n = mixerRows().filter(r => { const [on, v] = r.get(); return !r.master && on && v > 0; }).length;
-  $("mixCount").textContent = "Đang phát " + n + " âm thanh";
+  $("mixCount").textContent = n + " nguồn âm thanh";
 }
 setInterval(updateMix, 700);
 function renderMixer() {

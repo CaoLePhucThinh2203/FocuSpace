@@ -39,7 +39,7 @@ export const ROOM_MARKUP = `<div class="app grid h-full grid-rows-[auto_auto_1fr
     </div>
     <div class="room-status grid gap-1">
       <div class="room-name text-[13px] text-muted">Phòng: <b class="font-semibold text-ink" id="roomName">Phòng học</b></div>
-      <span class="mixchip"><span class="dot"></span><span id="mixCount">Đang phát 0 âm thanh</span></span>
+      <div class="mixchip">Đang có: <b class="font-semibold text-ink" id="mixCount">0 nguồn âm thanh</b></div>
     </div>
     <div class="tray" id="tray" hidden></div>
   </div>
