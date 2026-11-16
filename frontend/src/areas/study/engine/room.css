@@ -123,8 +123,7 @@
   /* Giữ đúng prototype gốc: nền và chữ cùng màu đỏ */
   .drop-hint { @apply hidden self-center whitespace-nowrap bg-danger px-2 py-0 text-[12px] font-bold text-danger -translate-y-1/2 narrow:-translate-x-1/2 narrow:translate-y-0; }
   .toolbar.is-drop .drop-hint { @apply block; }
-  .mixchip { @apply inline-flex items-center gap-2 text-[12px] text-muted; }
-  .mixchip .dot { @apply size-[7px] bg-ok; }
+  .mixchip { @apply text-[13px] text-muted; }   /* "Đang có: N nguồn âm thanh", cùng kiểu dòng "Phòng: …" phía trên */
   .tray { @apply absolute top-[calc(100%+8px)] left-0 z-[80] grid max-h-[calc(100vh-150px)] w-[300px] gap-[10px] overflow-auto border border-line bg-panel-a p-3 shadow-[3px_3px_0_var(--shadow),0_10px_24px_rgba(0,0,0,.45)] narrow:w-[calc(100vw-32px)]; }
   .tray.wide { @apply w-[330px] narrow:w-[calc(100vw-32px)]; }
   .tray h3 { @apply m-0 font-pixel text-[15px] font-bold; }

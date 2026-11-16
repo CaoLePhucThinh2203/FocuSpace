@@ -194,7 +194,7 @@ Ghi chú: `user_id` NULL khi Khách; gắn khi gửi lô kèm access token; đ�
 | id | uuid | Không | | PK, client sinh; upsert |
 | usage_session_id | uuid | Không | | FK → usage_sessions.id, `ON DELETE CASCADE` |
 | mode | varchar(8) | Không | | `CHECK (mode IN ('focus','break'))`; Nghỉ ngắn và Nghỉ dài (PRD v5.7) đều ghi `break` |
-| planned_sec | int | Không | | > 0, theo nhịp học (Cổ điển: focus 1500, nghỉ ngắn 300, nghỉ dài 900; Tuỳ chỉnh 60–7200) |
+| planned_sec | int | Không | | > 0, theo nhịp học (Cổ điển: focus 1500, nghỉ ngắn 300, nghỉ dài 900; Tùy chỉnh 60–7200) |
 | started_at | timestamptz | Không | | API `pomodoros[].startedAt` |
 | ended_at | timestamptz | Có | | API `pomodoros[].endedAt` |
 | outcome | varchar(12) | Không | | `CHECK (outcome IN ('completed','reset','abandoned'))` |

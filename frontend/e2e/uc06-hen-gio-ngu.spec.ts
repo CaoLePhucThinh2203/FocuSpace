@@ -22,7 +22,7 @@ test.describe("UC.06 Hẹn giờ ngủ (Lộc)", () => {
     await expect.poll(() => page.evaluate(() => (window as unknown as HookWindow).__focuspace.fade?.gain.value ?? 1)).toBeLessThan(0.9);
     await page.evaluate(() => (window as unknown as HookWindow).__focuspace.sleepRemaining(1));
     await expect(page.locator("#sleepNote")).toBeVisible();
-    await expect(page.locator("#sleepNote")).toHaveText("Đã hết giờ ngủ · chạm để bật lại");
+    await expect(page.locator("#sleepNote")).toHaveText("Hết giờ ngủ · chạm để bật lại âm thanh");
     await expect(page.locator("#sleepTime")).toHaveText("--:--");
   });
   test("AC-06.2 chạm thông báo thì âm trở lại", async ({ page }) => {

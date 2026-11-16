@@ -12,10 +12,15 @@
     <!-- H12 — Tuấn Hưng: ở Trang chủ, tải ảnh lớn đầu trang (LCP) ngay khi đọc HTML, không chờ React dựng trang -->
     <script>if (location.pathname === "/") { var l = document.createElement("link"); l.rel = "preload"; l.as = "image"; l.href = "/previews/room-study.webp"; l.setAttribute("fetchpriority", "high"); document.head.appendChild(l); }</script>
     <!-- H12: font Be Vietnam Pro tự host (frontend/public/fonts, giấy phép OFL), @font-face nằm trong CSS chính đã nhúng vào trang:
-         không còn yêu cầu CSS tới Google chặn hiển thị. Tải trước độ đậm 400 (chữ thường) và 700 (tiêu đề) của bộ Latin + tiếng Việt;
-         font-display: optional nên font không kịp thì giữ font hệ thống cho cả lần xem đó, không đổi giữa chừng (CLS 0). -->
+         không còn yêu cầu CSS tới Google chặn hiển thị. Tải trước đủ 4 độ đậm đang dùng: 400 (chữ thường), 500 (menu), 600 (nút, giờ Pomodoro), 700 (tiêu đề), bộ Latin + tiếng Việt;
+         font-display: optional nên font không kịp thì giữ font hệ thống cho cả lần xem đó, không đổi giữa chừng (CLS 0).
+         Trước 17/11 chỉ tải trước 400 và 700: chữ nét 500, 600 thường về trễ và hiện bằng Segoe UI (PRD v5.15). -->
     <link rel="preload" href="/fonts/be-vietnam-pro-400-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/be-vietnam-pro-400-vietnamese.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/be-vietnam-pro-500-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/be-vietnam-pro-500-vietnamese.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/be-vietnam-pro-600-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/be-vietnam-pro-600-vietnamese.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/be-vietnam-pro-700-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/be-vietnam-pro-700-vietnamese.woff2" as="font" type="font/woff2" crossorigin />
   </head>

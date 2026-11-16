@@ -68,7 +68,7 @@ export default function Library() {
         {Array.from({ length: 6 }, (_, i) =>
           kind === "items" ? (
             <li key={i} className="card flex animate-pulse gap-4 p-4">
-              <div className="size-16 shrink-0 border border-line bg-panel" />
+              <div className="size-16 shrink-0 bg-panel" />
               <div className="h-24 flex-1" />
             </li>
           ) : (
@@ -86,7 +86,7 @@ export default function Library() {
     // min-h-screen: lúc danh sách đang tải, chân trang không lọt vào khung nhìn rồi bị đẩy xuống khi dữ liệu về (CLS)
     <main className="mx-auto min-h-screen max-w-6xl px-4 py-10">
       <h1 className="font-display text-2xl font-bold sm:text-3xl">Thư viện</h1>
-      <p className="mt-2 text-muted">Mọi đồ vật và khung cảnh có trong FocuSpace. Dữ liệu đọc từ cơ sở dữ liệu.</p>
+      <p className="mt-2 text-muted">Tất cả đồ vật, khung cảnh trong phòng.</p>
 
       <div className="mt-6 flex gap-2" role="tablist">
         {(["items", "scenes"] as const).map((t) => (
@@ -115,7 +115,7 @@ export default function Library() {
               <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {items.data.map((it) => (
                   <li key={it.code} className="card flex gap-4 p-4">
-                    <img src={`/previews/item-${it.code}.png`} alt="" width={64} height={64} loading="lazy" className="pixel size-16 shrink-0 border border-line bg-panel object-contain" />
+                    <img src={`/previews/item-${it.code}.png`} alt="" width={64} height={64} loading="lazy" className="pixel size-16 shrink-0 bg-panel object-contain" />
                     <div className="min-w-0 space-y-1">
                       <h2 className="font-display text-lg font-bold">{it.name}</h2>
                       {it.description && <p className="text-muted">{it.description}</p>}

@@ -2,7 +2,6 @@
 export const ROOM_MARKUP = `<div class="app grid h-full grid-rows-[auto_auto_1fr] gap-3 py-3 narrow:h-auto narrow:min-h-full">
   <header class="top flex min-w-0 flex-wrap items-center gap-x-4 gap-y-2">
     <div class="site-head flex min-w-0 items-center gap-4" id="siteHead"></div>
-    <div class="room-name text-[13px] text-muted">Phòng: <b class="font-semibold text-ink" id="roomName">Phòng học</b></div>
     <div class="spacer flex-1"></div>
     <div class="pomo-mini">
       <div class="pm-label"><span class="mode" id="pomoMiniMode">Focus</span><span class="pm-dots" id="pomoDots" role="img" aria-label="Vòng này: 0 / 4 phiên Focus"></span></div>
@@ -11,7 +10,7 @@ export const ROOM_MARKUP = `<div class="app grid h-full grid-rows-[auto_auto_1fr
       <div class="pomo-panel" id="pomoPanel" role="dialog" aria-label="Nhịp học" hidden></div>
     </div>
     <div class="sleep-mini" id="sleepMini" hidden>
-      <div class="pm-label"><span class="mode">Hẹn giờ ngủ</span><span class="sleep-note" id="sleepNote" role="status" hidden>Đã hết giờ ngủ · chạm để bật lại</span></div>
+      <div class="pm-label"><span class="mode">Hẹn giờ ngủ</span><span class="sleep-note" id="sleepNote" role="status" hidden>Hết giờ ngủ · chạm để bật lại âm thanh</span></div>
       <button type="button" class="time pm-trig" id="sleepTrig" aria-haspopup="dialog" aria-expanded="false" aria-controls="sleepPanel" title="Chọn hẹn giờ ngủ"><span id="sleepTime" data-sleep-time>--:--</span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5 6 7.5 9 4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <button class="btn" id="sleepPlay" type="button" data-sleep-play hidden>Bắt đầu</button>
       <div class="pomo-panel" id="sleepPanel" role="dialog" aria-label="Hẹn giờ ngủ" hidden></div>
@@ -38,7 +37,10 @@ export const ROOM_MARKUP = `<div class="app grid h-full grid-rows-[auto_auto_1fr
       </button>
       <span class="drop-hint">Thả để xóa</span>
     </div>
-    <span class="mixchip"><span class="dot"></span><span id="mixCount">0 nguồn âm đang hoạt động</span></span>
+    <div class="room-status grid gap-1">
+      <div class="room-name text-[13px] text-muted">Phòng: <b class="font-semibold text-ink" id="roomName">Phòng học</b></div>
+      <div class="mixchip">Đang có: <b class="font-semibold text-ink" id="mixCount">0 nguồn âm thanh</b></div>
+    </div>
     <div class="tray" id="tray" hidden></div>
   </div>
 

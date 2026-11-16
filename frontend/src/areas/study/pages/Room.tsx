@@ -15,7 +15,7 @@ type Merge = Extract<Awaited<ReturnType<typeof pullBeforeStart>>, { needMerge: t
  * để engine có tài liệu sạch; rời phòng cũng tải trang mới nên không cần dọn engine.
  */
 export default function Room() {
-  useTitle("FocuSpace — Căn phòng học Lo-fi", "Căn phòng pixel art có sẵn bàn học: âm thanh không gian 2D, thời tiết, Pomodoro và hẹn giờ ngủ. Nhấp vào phòng để bật âm thanh.");
+  useTitle("FocuSpace — Căn phòng", "Phòng học ảo có sẵn bàn học, nhạc Lo-fi, Pomodoro và hẹn giờ ngủ. Nhấp vào phòng để bật âm thanh.");
   const host = useRef<HTMLDivElement>(null);
   const started = useRef(false);
   const { user, ready } = useAuth();
@@ -62,7 +62,7 @@ export default function Room() {
       startAutoPush(
         user.id,
         () => { setNotice("Phòng đã được cập nhật từ thiết bị khác."); setTimeout(() => location.reload(), 1500); },
-        (off) => setNotice(off ? "Chưa đồng bộ – đang ngoại tuyến" : ""),
+        (off) => setNotice(off ? "Đang ngoại tuyến" : ""),
       );
     }
   }
@@ -87,7 +87,7 @@ export default function Room() {
         <div role="dialog" aria-modal="true" aria-labelledby="merge-title" className="fixed inset-0 z-[1000] grid place-items-center bg-black/70 p-4">
           <div className="grid w-full max-w-sm gap-4 border border-[#3e2c21] bg-[#211712] p-6 text-[#f2e4cf]">
             <h2 id="merge-title" className="text-xl font-bold">Giữ căn phòng nào?</h2>
-            <p className="text-sm text-[#b49b81]">Máy này có phòng đã bày khi chưa đăng nhập, tài khoản của bạn cũng đã có phòng. Bản không chọn sẽ bị ghi đè.</p>
+            <p className="text-sm text-[#b49b81]">Máy này và tài khoản đều có phòng. Phòng không chọn sẽ bị thay.</p>
             <button type="button" className="border border-[#f3a84b] bg-[#f3a84b] px-4 py-2 font-semibold text-[#2a1606]" onClick={() => void choose("local")}>Giữ phòng trên máy này</button>
             <button type="button" className="border border-[#3e2c21] px-4 py-2 font-semibold" onClick={() => void choose("cloud")}>Dùng phòng đã lưu trên tài khoản</button>
           </div>

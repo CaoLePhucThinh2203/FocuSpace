@@ -30,7 +30,7 @@ async function raw<T>(path: string, init: RequestInit = {}): Promise<T> {
   }
   if (res.status === 204) return undefined as T;
   const body = await res.json().catch(() => ({}));
-  if (!res.ok) throw new ApiError(res.status, body?.error?.code ?? "ERROR", body?.error?.message ?? "Có lỗi xảy ra.", body);
+  if (!res.ok) throw new ApiError(res.status, body?.error?.code ?? "ERROR", body?.error?.message ?? "Có lỗi, hãy thử lại.", body);
   return body as T;
 }
 
