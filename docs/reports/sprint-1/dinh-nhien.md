@@ -6,6 +6,7 @@
 | Issue | PR | Mô tả | Trạng thái |
 |---|---|---|---|
 | — | — | Thiết kế Sân vườn và 5 khung cảnh trên Figma/prototype | Xong |
+| G8 | — | Cùng cả nhóm dựng prototype Căn phòng `prototype/FocuSpace-Semi-Sandbox.html`: phần Sân vườn và các khung cảnh | Xong |
 | — | — | Wireframe Figma Trang chủ, Giới thiệu & Liên hệ (N1) | Xong |
 
 ## Khó khăn và cách xử lý
