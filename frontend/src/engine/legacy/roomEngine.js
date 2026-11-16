@@ -32,7 +32,7 @@ const STORAGE_KEY = "focuspace.room.v4";   // v6: khóa lưu mới để lần m
 /* Đồ vật phát âm thanh (di chuyển tự do, có Spatial Audio) */
 const TYPES = {
   tv:        { group: "sound", name: "Tivi cũ",     sub: "Tiếng rè nhiễu sóng", w: 26, h: 26, sound: true, hp: true,  vol: 0.35 },
-  cat:       { group: "sound", name: "Mèo ngủ",    sub: "Tiếng mèo rù rù",      w: 24, h: 13, sound: true, hp: false, vol: 0.6, gain: 1 / 30 },   // rù rù: 1/3 bản gốc, rồi còn 1/10 (16/11)
+  cat:       { group: "sound", name: "Mèo ngủ",    sub: "Tiếng mèo rù rù",      w: 24, h: 13, sound: true, hp: false, vol: 0.6, gain: 1 / 15 },   // rù rù: 1/5 mức trước 16/11 (bản gốc 1/3)
   /* Đồ trang trí (không âm thanh) */
   plant:  { group: "decor", name: "Chậu cây",    w: 12, h: 16 },
   cactus: { group: "decor", name: "Xương rồng",  w: 10, h: 14 },
@@ -270,7 +270,7 @@ function ramp(param, v, t) {
 const BG_GAIN = 0.8;
 class Emitter {
   constructor(x, y, hp, out, L, bg) {
-    this.L = L || LISTENERS.study; this.out = out || master; this.bg = !!bg; this.scale = 1;   // scale: hệ số âm lượng riêng của nguồn (mèo 1/30, máy xông 1/10, khung cảnh 1/2)
+    this.L = L || LISTENERS.study; this.out = out || master; this.bg = !!bg; this.scale = 1;   // scale: hệ số âm lượng riêng của nguồn (mèo 1/15, máy xông 1/10, khung cảnh 1/2)
     this.x = x; this.y = y; this.cur = null; this.sp = this.calc(x, y);
     if (!ctx) return;
     this.input = ctx.createGain();
@@ -1314,15 +1314,10 @@ function roofRainFill(d, len, c) {
   for (let i = 0; i < len; i++) { p = 0.94 * p + 0.06 * (r() * 2 - 1); q = 0.9 * q + 0.1 * p; d[i] = q * 2.6; }
   for (let k = 0; k < 40 * len / SR; k++) addDrop(d, Math.floor(r() * (len - 2000)), 700 + r() * 1100, 0.05 * r(), 0.02);
 }
-/* Máy xông tinh dầu siêu âm: máy thật rất êm (nhà sản xuất ghi ~18–26 dB). Nền là tiếng xì nhẹ của hơi sương, nhỏ to chậm;
-   thỉnh thoảng ùng ục khẽ: trung bình ~2 lần/giây, cách nhau không đều, đôi khi 2–3 bọt liền nhau; bọt trầm (200–600 Hz), cao độ nhích lên khi bọt vỡ. */
+/* Máy xông tinh dầu siêu âm: máy thật rất êm (nhà sản xuất ghi ~18–26 dB), chỉ nghe thỉnh thoảng ùng ục khẽ (không có tiếng xì hơi sương):
+   trung bình ~2 lần/giây, cách nhau không đều, đôi khi 2–3 bọt liền nhau; bọt trầm (200–600 Hz), cao độ nhích lên khi bọt vỡ. */
 function bubbleFill(d, len, c) {
-  const r = rng(91 + c); let p = 0, h = 0;
-  for (let i = 0; i < len; i++) {
-    const t = i / SR;
-    p += 0.35 * ((r() * 2 - 1) - p); h += 0.6 * (p - h);                              // xì: nhiễu dải trung–cao, đã làm mềm
-    d[i] = (p - h) * 0.74 * (0.8 + 0.2 * Math.sin(2 * Math.PI * t / 4.5 + c));
-  }
+  const r = rng(91 + c);
   const tail = Math.floor(0.12 * SR);
   for (let at = r() * 0.5 * SR; at < len - tail;) {
     const n = r() < 0.25 ? 2 + Math.floor(r() * 2) : 1;                              // một bọt, hoặc một chùm 2–3 bọt
@@ -2502,27 +2497,13 @@ function hornFill(d, len, c) {   // còi xe ở xa: 2 tông, 1–2 tiếng ngắ
     m = 0.85 * m + 0.15 * v; d[i] = m * 0.07 * (c ? 0.8 : 1);
   }
 }
-function chatterFill(d, len, c) {   // người đi đường nói chuyện xa: 2 giọng thay nhau, nghe được nhịp câu nhưng không rõ chữ
-  const r = rng(301 + c); let ph = 0, m = 0, m2 = 0;
-  const voices = [[0, 1.3, 135], [1.15, 2.6, 210]];   // [bắt đầu, kết thúc, cao độ]
-  for (let i = 0; i < len; i++) {
-    const t = i / SR; let v = 0;
-    for (const [a, b, f] of voices) {
-      if (t < a || t > b) continue;
-      const syl = Math.pow(Math.max(0, Math.sin(2 * Math.PI * 4.3 * (t - a) + Math.sin(t * 7) * 0.8)), 1.5), e = Math.min(1, (t - a) * 6, (b - t) * 6);
-      const f0 = f * (1 + 0.12 * Math.sin(2 * Math.PI * 1.1 * t + a)); ph += 2 * Math.PI * f0 / SR;
-      v += (Math.sin(ph) + 0.6 * Math.sin(2 * ph) + 0.35 * Math.sin(3 * ph) + (r() - 0.5) * 0.3) * syl * e;
-    }
-    m = 0.8 * m + 0.2 * v; m2 = 0.8 * m2 + 0.2 * m; d[i] = m2 * 0.1;   // lọc thấp 2 lần: giọng đục, ở xa
-  }
-}
-function scheduleCityExtras() {   // thỉnh thoảng (20–40 giây, trung bình 30 giây) có tiếng còi hoặc tiếng nói chuyện rất nhỏ ở khung cảnh thành phố
+function scheduleCityExtras() {   // thỉnh thoảng có tiếng còi xe rất nhỏ ở khung cảnh thành phố: 30–50 giây một lần, trung bình 40 giây (trước 16/11: ~60 giây, xen tiếng nói chuyện)
   setTimeout(() => {
-    if (ctx && ROOM.cur === "out" && state.out.scene === "city" && state.out.on) sceneEm.oneShot(Math.random() < 0.5 ? BUF.horn : BUF.chatter, (0.35 + Math.random() * 0.25) * 1.5 * SCENE_GAIN);
+    if (ctx && ROOM.cur === "out" && state.out.scene === "city" && state.out.on) sceneEm.oneShot(BUF.horn, (0.35 + Math.random() * 0.25) * 1.5 * SCENE_GAIN);
     scheduleCityExtras();
-  }, (20 + Math.random() * 20) * 1000);
+  }, (30 + Math.random() * 20) * 1000);
 }
-lazyBuf({ horn: () => mkBuf(0.8, hornFill), chatter: () => mkBuf(2.8, chatterFill) });
+lazyBuf({ horn: () => mkBuf(0.8, hornFill) });
 if (ctx) scheduleCityExtras();
 function forestFill(d, len, c) {
   const LOOP = 16, r = rng(141 + c * 5), rs = rng(911); let p = 0, q = 0, u = 0;
