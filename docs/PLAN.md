@@ -1,6 +1,6 @@
 # FocuSpace — Kế hoạch triển khai (PLAN.md)
 
-> Trạng thái: **Đã duyệt** ở buổi họp kế hoạch 13/11/2026 · rút gọn 14/11/2026 · PA B cho Căn phòng 15/11/2026.
+> Trạng thái: **Đã duyệt** ở buổi họp kế hoạch 13/11/2026 · rút gọn 14/11/2026 · PA B cho Căn phòng 15/11/2026 · rà soát trạng thái 15/11/2026.
 > Nguồn: đề bài `docs/references/Web Basic - Final Project Brief - CSB25022 - VNUK.docx` · `docs/PRD.md` · `docs/ARCHITECTURE.md` · `docs/API.md` · `docs/DATABASE.md` · `prototype/`.
 > Quy tắc nguồn: đề bài đồ án > PRD > prototype. Hành vi giao diện của Căn phòng lấy theo prototype.
 
@@ -55,13 +55,13 @@ Dự án bắt đầu **27/10/2026** (họp khởi động), **hạn hoàn thàn
 
 | Sprint | Ngày | Phase | Kết quả cuối sprint (mốc) | Hưng | Nhiên | Lộc | Thịnh |
 |---|---|---|---|---|---|---|---|
-| S1 ✅ | 27/10–07/11 | Thiết kế | Họp khởi động 27/10; wireframe Figma 6 trang; prototype Căn phòng (`prototype/FocuSpace-Semi-Sandbox.html`); PRD v5.0 duyệt 07/11 | Thiết kế đồ vật, bảng đồ vật, âm thanh trên Figma/prototype | Thiết kế Sân vườn | Thiết kế Phòng ngủ | Thiết kế Phòng học, các trang còn lại; dựng prototype |
+| S1 ✅ | 27/10–07/11 | Thiết kế | Họp khởi động 27/10; wireframe Figma 6 trang; prototype Căn phòng (`prototype/FocuSpace-Semi-Sandbox.html`); PRD v5.0 duyệt 07/11 | Thiết kế đồ vật, bảng đồ vật, âm thanh trên Figma/prototype | Thiết kế Sân vườn; dựng phần Sân vườn, 5 khung cảnh trong prototype Căn phòng | Thiết kế Phòng ngủ | Thiết kế Phòng học, các trang còn lại; dựng prototype |
 | S2 ✅ | 08/11–12/11 | Kế hoạch | PLAN, Kiến trúc, API, DATABASE; Chương 1 Phân tích hệ thống (UC, đặc tả, Activity, Sequence, Class); prototype 6 trang | Góp nội dung đồ vật, âm thanh cho PRD/API | Góp nội dung Sân vườn | Góp nội dung Phòng ngủ | Viết PLAN, tài liệu, phân tích hệ thống |
 | S3 | 13–17/11 | 0, 1, 2, 6 (bước 1–2) | Repo + Projects + mẫu issue/PR + bảo vệ nhánh; monorepo chạy, CI lint/test; khung test (test-first); `shared/`, logic engine có test; `schema.prisma`, migration đầu, seeder 17 + 5 | Khung test đồ vật, âm thanh; `catalog.ts`, `placement.ts`, `spatial.ts`; seeder đồ vật | Khung test telemetry; `defaults.ts` Sân vườn; seeder khung cảnh | Khung test auth; `sleepTimer.ts`; `migrate.ts` | Repo, CI, monorepo; chốt giao diện giữa các khu vực; `roomState.ts`, `rooms.ts`, `pomodoro.ts`; `schema.prisma`, migration |
 | S4 | 18–22/11 | 3, 4, 5, 6 (bắt đầu) | Ba không gian giống prototype ở chế độ khách; âm thanh không gian; Trang chủ, Giới thiệu bằng Tailwind; điều hướng 6 trang; endpoint auth, catalog, telemetry có test | Âm thanh, khay, kéo thả, mixer; `/catalog/items` | Render Sân vườn, ScenePicker, âm cảnh; `/catalog/scenes`, telemetry | Render Phòng ngủ, Hẹn giờ ngủ; auth | Render Phòng học, Header/Toolbar, lưu cục bộ, Trang chủ, Giới thiệu, NavBar/Footer |
 | S5 | 23–27/11 | 6 (còn lại), 7, 8 | Đủ 14 endpoint; Tài khoản, Thư viện, Thống kê lấy dữ liệu thật; đồng bộ; góp ý 2 nhóm khác + sửa theo góp ý; Lighthouse ≥ 90; GA4, Sentry; README; video; **nộp bài 27/11** | Review nhóm A; tối ưu Căn phòng | Gửi telemetry; review nhóm A; GA4, Sentry | `/me`, `/me/stats`, trang Thống kê; review nhóm B; Lighthouse, E2E responsive | `/room-state`, sync, hộp thoại hợp nhất; trang Thư viện, Tài khoản; triển khai Vercel + Render + Neon; review nhóm B; README, video, `received.md`, nộp bài |
 
-**Mốc demo cho giảng viên: Chủ nhật 15/11/2026** (chốt 13/11). Code nền đã có từ 13/11: monorepo, `shared/` có test, backend đủ 14 endpoint + Prisma + seeder, frontend React 6 trang nối API, Căn phòng chạy từ engine prototype (`frontend/src/engine/legacy/`) kèm đồng bộ `/room-state`. Từ 14/11: chạy thử, sửa lỗi, rồi tách engine thành module theo `frontend/src/engine/legacy/README.md`.
+**Mốc demo cho giảng viên: Chủ nhật 15/11/2026** (chốt 13/11). Code nền đã có từ 13/11: monorepo, `shared/` có test, backend đủ 14 endpoint + Prisma + seeder, frontend React 6 trang nối API, Căn phòng chạy từ engine prototype (`frontend/src/engine/legacy/`) kèm đồng bộ `/room-state`. Từ 14/11: chạy thử, sửa lỗi; 15/11 chốt PA B (vẽ, âm thanh giữ trong engine, chỉ tách quy tắc nghiệp vụ thành hàm thuần có test). Đến 15/11 phần lập trình của S3–S5 đã xong (trạng thái từng issue: cột Trạng thái trong `docs/TASKS.md`); S4, S5 còn kiểm tra bản triển khai, GA4/Sentry, review chéo, sửa theo góp ý, video và nộp bài.
 
 Đường găng (critical path): giao diện giữa các khu vực (đầu S3) → `shared/roomState.ts` (S3) → render từng phòng (S4) → sync (S5). S5 nặng nhất, nên review chéo bắt đầu ngay khi có bản chạy được ở cuối S4. Nếu trễ, cắt theo PRD §8.2: dời P1 (xung đột hai thiết bị, xóa tài khoản) trước, giữ đủ tiêu chí chấm điểm.
 
@@ -90,10 +90,10 @@ Cấu trúc thư mục thật và cách chạy xem `README.md`; công nghệ xem
 | P2 Logic engine | spatial (BR-07), placement (BR-03→06), pomodoro (BR-01), sleepTimer (BR-02), rooms | S3–S4 | Unit test từng BR | ✅ hàm thuần đã tách, engine gọi lại (15/11) |
 | P3 Render | Vẽ canvas ba không gian, giữ nguyên toạ độ, màu của prototype | S4 | So ảnh chụp với prototype | ✅ giữ trong `roomEngine.js` (PA B, không tách) |
 | P4 Âm thanh | AudioContext sau cú nhấp đầu, chuỗi xử lý mỗi nguồn, nhạc Lo-fi, cross-fade 0,3 s | S4 | Unit test công thức (`shared/src/spatial.ts`), E2E AC-03.x, nghe thử | ✅ giữ trong `roomEngine.js` (PA B, không tách) |
-| P5 Giao diện & lưu cục bộ | Tailwind, 6 route + 404, NavBar/Footer, khung Căn phòng, LocalStorage `focuspace.room.v4`, responsive 3 cỡ | S4 | E2E theo UC, chụp 375/768/1280 px | ✅ bản đầu |
-| P6 Backend & CSDL | `schema.prisma`, migration, seeder; 14 endpoint theo API Docs; rate limit, log, lỗi chuẩn | S3–S5 | Integration test (Supertest + PostgreSQL) | ✅ migration; endpoint theo khu vực |
-| P7 Tài khoản, đồng bộ & trang động | Tự refresh token, Tài khoản, đồng bộ `/room-state` + hộp thoại hợp nhất + 409, telemetry, Thư viện, Thống kê | S5 | E2E UC.07–UC.11 | Đang làm |
-| P8 Tối ưu, theo dõi & nộp bài | Lighthouse trước/sau ≥ 90 (title + meta, âm thanh sau cú nhấp đầu, font tự host — `docs/reports/lighthouse/`); GA4 + Sentry; triển khai Vercel + Render + Neon (Kiến trúc §3.5); sửa theo góp ý; README; video ≤ 10 phút | S5 | Đối chiếu bảng §1 và AC PRD 5.4 | Đã triển khai (14/11); Lighthouse đang tối ưu |
+| P5 Giao diện & lưu cục bộ | Tailwind, 6 route + 404, NavBar/Footer, khung Căn phòng, LocalStorage `focuspace.room.v4`, responsive 3 cỡ | S4 | E2E theo UC, chụp 375/768/1280 px | ✅ |
+| P6 Backend & CSDL | `schema.prisma`, migration, seeder; 14 endpoint theo API Docs; rate limit, log, lỗi chuẩn | S3–S5 | Integration test (Supertest + PostgreSQL) | ✅ 14 endpoint, integration test trên PostgreSQL 16 tạm (15/11) |
+| P7 Tài khoản, đồng bộ & trang động | Tự refresh token, Tài khoản, đồng bộ `/room-state` + hộp thoại hợp nhất + 409, telemetry, Thư viện, Thống kê | S5 | E2E UC.07–UC.11 | ✅ (15/11) |
+| P8 Tối ưu, theo dõi & nộp bài | Lighthouse trước/sau ≥ 90 (title + meta, âm thanh sau cú nhấp đầu, font tự host — `docs/reports/lighthouse/`); GA4 + Sentry; triển khai Vercel + Render + Neon (Kiến trúc §3.5); sửa theo góp ý; README; video ≤ 10 phút | S5 | Đối chiếu bảng §1 và AC PRD 5.4 | Đã triển khai (14/11); Lighthouse 6 trang ≥ 95 cả 4 hạng mục (15/11); README hoàn chỉnh. Còn: kiểm tra GA4/Sentry, sửa theo góp ý, video |
 
 ## Nguyên tắc chung
 
@@ -110,3 +110,4 @@ Cấu trúc thư mục thật và cách chạy xem `README.md`; công nghệ xem
 | 10–13/11/2026 | Đối chiếu đề bài CSB25022; đồng bộ Chương 1 Phân tích hệ thống; phân vai 4 khu vực, lịch 5 sprint từ 27/10 → 27/11; chốt triển khai Vercel + Render + Neon; mốc demo 15/11; code chia 4 thư mục khu vực. Duyệt ở buổi họp 13/11. |
 | 14/11/2026 | Rút gọn: bỏ cây thư mục và tech stack cũ (đã có ở README, Kiến trúc), gộp Phase 0–8 thành bảng §6 kèm trạng thái, bỏ mục "Review kế hoạch" (R1–R11 đã giải quyết), sửa đường dẫn engine. |
 | 15/11/2026 | Chốt PA B cho Căn phòng: giữ vẽ/âm thanh trong `roomEngine.js`, chỉ tách hàm thuần (rooms, pomodoro, sleepTimer, placement) có test; §2 ghi đúng đường dẫn thật; §6 cập nhật trạng thái P2–P4. |
+| 15/11/2026 (rà soát) | §3 bỏ câu "tách engine thành module" (đã thay bằng PA B), ghi rõ phần lập trình S3–S5 đã xong trong S3; S1 ghi Đình Nhiên dựng phần Sân vườn, 5 khung cảnh của prototype Căn phòng; §6 cập nhật trạng thái P5–P8. |
