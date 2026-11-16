@@ -13,4 +13,23 @@
 
 ## Việc sprint sau
 
+## Tự đánh giá mức đóng góp (1–5)# Self-report — Sprint 5 (23/11/2026 – 27/11/2026) — Đình Nhiên
+
+> Sprint chưa bắt đầu (khung soạn ngày 15/11/2026). Điền bảng cuối sprint, kèm số issue, PR và mã commit.
+
+## Việc đã làm
+| Issue | PR | Mô tả | Trạng thái |
+|---|---|---|---|
+| N11 | | Kiểm tra GA4 Realtime thấy `page_view`, Sentry nhận lỗi thử, không gửi dữ liệu cá nhân | Đang làm |
+| G4 | | Góp ý UI/UX cho nhóm A cùng Tuấn Hưng (`docs/reviews/given/dinh-nhien.md`) | Chưa làm |
+| G5 | | Sửa theo góp ý nhận được, mỗi góp ý một PR | Chưa làm |
+| G6 | | Quay clip demo phần Sân vườn, gửi Thịnh trước 26/11 | Xong |
+
+## Khó khăn và cách xử lý
+[Tự điền]
+
+## Việc sprint sau
+Không có (sprint cuối).
+
 ## Tự đánh giá mức đóng góp (1–5)
+[Tự điền]

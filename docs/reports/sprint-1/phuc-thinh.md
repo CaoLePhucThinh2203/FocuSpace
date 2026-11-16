@@ -6,7 +6,7 @@
 | Issue | PR | Mô tả | Trạng thái |
 |---|---|---|---|
 | — | — | Họp khởi động 27/10, ghi biên bản (G1) | Xong |
-| — | — | Dựng prototype Căn phòng `prototype/FocuSpace-Semi-Sandbox.html` (G8) | Xong |
+| — | — | Dựng prototype Căn phòng `prototype/FocuSpace-Semi-Sandbox.html` cùng cả nhóm (G8; Đình Nhiên làm phần Sân vườn, các khung cảnh) | Xong |
 | — | — | Thiết kế Phòng học và các trang còn lại trên Figma; wireframe Căn phòng, Thư viện (T4) | Xong |
 | — | — | Viết PRD v5.0 (duyệt 07/11) | Xong |
 
