@@ -29,7 +29,7 @@ describe("nhịp học (AC-05.5)", () => {
     expect(phaseSeconds(cfg, "focus")).toBe(50 * 60);
     expect(phaseSeconds(cfg, "short")).toBe(10 * 60);
   });
-  it("Tuỳ chỉnh kẹp trong 1–120 phút", () => {
+  it("Tùy chỉnh kẹp trong 1–120 phút", () => {
     const cfg = setCustom({ ...DEFAULT_CONFIG, rhythm: "custom" }, "focus", 500);
     expect(phaseSeconds(cfg, "focus")).toBe(120 * 60);
     expect(setCustom(cfg, "short", 0).custom.short).toBe(1);

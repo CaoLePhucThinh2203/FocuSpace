@@ -1190,7 +1190,7 @@ function drawWallClock0(c, f) {                  // đồng hồ treo tường t
   pline(c, X, Y, bx, by, "#a3361d");
   R(c, X, Y, 1, 1, "#c0781e");
 }
-/* Nến (đồ trang trí) phát sáng: đục bóng tối ("hole") và toả quầng cam ("glow") quanh ngọn lửa, lập lòe; toạ độ lớp sáng = logic / 2 */
+/* Nến (đồ trang trí) phát sáng: đục bóng tối ("hole") và tỏa quầng cam ("glow") quanh ngọn lửa, lập lòe; toạ độ lớp sáng = logic / 2 */
 function candleLight(c, pass, flick) {
   itemsById.forEach(o => {
     if (o.data.type !== "candle") return;
@@ -1473,7 +1473,7 @@ function drawLight(f) {
   if (state.lampOn && lampObj) glow((lampObj.data.x + 10) / 2, (lampObj.data.y + 8) / 2, 30, "rgba(255,196,110,.20)");
   if (state.fireOn) glow(149 + FDX() / 2, 54 - FY / 2, 24 * flick, `rgba(255,120,50,${0.16 * flick})`);
   candleLight(c, "glow", flick);
-  {                                                    // ánh sáng toả khắp phòng từ mép trên cửa sổ, nghiêng nhẹ sang trái; kính hở cho qua đủ, rèm chặn bớt (lọt khoảng 22%)
+  {                                                    // ánh sáng tỏa khắp phòng từ mép trên cửa sổ, nghiêng nhẹ sang trái; kính hở cho qua đủ, rèm chặn bớt (lọt khoảng 22%)
     const day = w === "clear" || w === "sunset", col = w === "sunset" ? "255,170,150" : day ? "255,240,200" : flash ? "200,220,255" : "110,140,210", base = day ? 0.17 : flash ? 0.24 : 0.07;
     if (open > 6) { c.fillStyle = `rgba(${col},${(day ? 0.10 : flash ? 0.30 : 0.08) * k})`; c.fillRect(gl / 2, 9, open / 2, 26); }
     // vẽ quạt sáng ra canvas phụ ở độ đậm đầy đủ rồi mới trộn một lần: tránh các lớp alpha quá thấp bị làm tròn gây lốm đốm
@@ -2647,7 +2647,6 @@ const ROOM = { cur: state.room, busy: false };
 const ROOMCFG = {
   study: {
     name: "Phòng học",
-    hint: "Mẹo: kéo Tivi hoặc Mèo quanh phòng để nghe âm thanh đổi hướng tai. Bấm tai nghe để phát nhạc, bấm cửa sổ để đổi thời tiết và kéo rèm, bấm kệ sách để thêm đồ.",
     sound: ["tv", "cat", "clock"],
     list: () => state.items, setList: v => { state.items = v; },
     get surfaces() { return Placement.studyGeometry(state.fireSide).surfaces; },   // mặt bàn + mặt trên lò sưởi (areas/items-audio/engine/placement.ts)
@@ -2661,7 +2660,6 @@ const ROOMCFG = {
   },
   bed: {
     name: "Phòng ngủ",
-    hint: "Mẹo: bấm giá treo tường hoặc ngăn trên tủ đầu giường để đặt quạt, máy xông, đĩa than, hộp nhạc, radio hoặc đồng hồ Pomodoro; radio, đĩa than, hộp nhạc là âm nền nghe đều hai tai; kéo máy xông, quạt hoặc mèo ra góc xa để thành tiếng nền mờ. Bấm đèn ngủ để tắt đèn.",
     sound: ["radio", "diffuser", "vinyl", "musicbox", "fan", "cat", "clock"],
     list: () => state.bed.items, setList: v => { state.bed.items = v; },
     shelves: Placement.BED_GEOMETRY.shelves,     // giá treo tường + ngăn trên tủ đầu giường (placement.ts)
@@ -2675,7 +2673,6 @@ const ROOMCFG = {
   },
   out: {
     name: "Sân vườn",
-    hint: "Mẹo: bấm biểu tượng Khung cảnh ở thanh công cụ để xem trước và đổi Thành phố, Khu rừng, Bãi biển, Núi băng; âm thanh nền đổi theo. Bấm tai nghe để phát nhạc Lo-fi. Thanh bên trái đưa bạn về phòng học hoặc phòng ngủ.",
     sound: [],
     list: () => [], setList: () => {},
     surfaces: [], shelves: [],
@@ -2916,7 +2913,7 @@ function mixerRows() {
 }
 function updateMix() {
   const n = mixerRows().filter(r => { const [on, v] = r.get(); return !r.master && on && v > 0; }).length;
-  $("mixCount").textContent = n + " nguồn âm đang hoạt động";
+  $("mixCount").textContent = "Đang phát " + n + " âm thanh";
 }
 setInterval(updateMix, 700);
 function renderMixer() {
@@ -3058,7 +3055,7 @@ function renderPomoPanel() {
   const list = RHYTHM_IDS.map(id => {
     const x = id === "custom" ? null : RHYTHMS[id], on = pomoCfg.rhythm === id;
     const desc = x ? `${x.focus} / ${x.short} phút · nghỉ dài ${x.long} sau ${x.rounds} phiên` : "Tự đặt 3 thời lượng, nghỉ dài sau 4 phiên";
-    return `<button type="button" role="radio" aria-checked="${on}" data-rh="${id}"><span class="pp-dot"></span><span><b>${x ? x.name : "Tuỳ chỉnh"}</b><small>${desc}</small></span></button>`;
+    return `<button type="button" role="radio" aria-checked="${on}" data-rh="${id}"><span class="pp-dot"></span><span><b>${x ? x.name : "Tùy chỉnh"}</b><small>${desc}</small></span></button>`;
   }).join("");
   const custom = pomoCfg.rhythm !== "custom" ? "" : `<div class="pp-custom">${CUSTOM_ROWS.map(([k, l, s]) => `<div class="pp-row"><span>${l}</span><span class="stp"><button type="button" data-cu="${k}" data-d="-${s}" aria-label="Giảm ${s} phút ${l.toLowerCase()}">−</button><output>${pomoCfg.custom[k]} phút</output><button type="button" data-cu="${k}" data-d="${s}" aria-label="Tăng ${s} phút ${l.toLowerCase()}">+</button></span></div>`).join("")}</div>`;
   let bar = "";
@@ -3168,7 +3165,7 @@ setInterval(() => {
       ramp(fade.gain, 0, 0.1);
       setTimeout(() => ctx.suspend().then(() => {
         fade.gain.value = 1; audioReady = false;
-        $("sleepNote").hidden = false;   // "Đã hết giờ ngủ · chạm để bật lại" (AC-06.1)
+        $("sleepNote").hidden = false;   // "Hết giờ ngủ · chạm để bật lại âm thanh" (AC-06.1)
       }).catch(() => {}), 150);
     }
     renderSleep(); return;
@@ -3288,7 +3285,7 @@ function openPop(key, anchor) {
     bind = () => bindSwitch("lOn", () => state.lampOn, v => { state.lampOn = v; playClick(); });
   } else if (o.data.type === "clock") {
     const d = o.data;
-    html = head("Đồng hồ Pomodoro", "Dùng chung bộ đếm với Pomodoro trên đầu trang. Bấm số giờ trên đầu trang để đổi nhịp học.") + sw("iOn", d.on, "Tiếng tích tắc khi đếm") + volRow("iVol", d.vol) + `<div class="section"><h4>Pomodoro</h4>${pomoBox()}</div><button type="button" class="btn danger" id="iDel">Xóa khỏi phòng</button>`;
+    html = head("Đồng hồ Pomodoro", "Dùng chung thời gian với Pomodoro góc trên phải.") + sw("iOn", d.on, "Tiếng tích tắc khi đếm") + volRow("iVol", d.vol) + `<div class="section"><h4>Pomodoro</h4>${pomoBox()}</div><button type="button" class="btn danger" id="iDel">Xóa khỏi phòng</button>`;
     bind = () => {
       bindSwitch("iOn", () => d.on, v => { d.on = v; applyItemAudio(o); });
       bindVol("iVol", v => { d.vol = v; o.em.setLevel(d.on, v); });

@@ -25,9 +25,9 @@ const clampMin = (v: unknown, d: number) => {
   return Number.isFinite(n) ? Math.min(MAX_MIN, Math.max(MIN_MIN, n)) : d;
 };
 
-/** Nhịp đang dùng (Tuỳ chỉnh lấy 3 thời lượng người dùng đặt, nghỉ dài sau 4 phiên). */
+/** Nhịp đang dùng (Tùy chỉnh lấy 3 thời lượng người dùng đặt, nghỉ dài sau 4 phiên). */
 export function rhythmOf(cfg: PomoConfig): Rhythm {
-  if (cfg.rhythm === "custom") return { name: "Tuỳ chỉnh", ...cfg.custom, rounds: CUSTOM_ROUNDS };
+  if (cfg.rhythm === "custom") return { name: "Tùy chỉnh", ...cfg.custom, rounds: CUSTOM_ROUNDS };
   return RHYTHMS[cfg.rhythm] ?? RHYTHMS.classic;
 }
 
@@ -61,7 +61,7 @@ export function parseConfig(raw: string | null): PomoConfig {
   }
 }
 
-/** Đổi một thời lượng Tuỳ chỉnh, kẹp trong 1–120 phút. */
+/** Đổi một thời lượng Tùy chỉnh, kẹp trong 1–120 phút. */
 export function setCustom(cfg: PomoConfig, key: Phase, minutes: number): PomoConfig {
   return { ...cfg, custom: { ...cfg.custom, [key]: clampMin(minutes, cfg.custom[key]) } };
 }
