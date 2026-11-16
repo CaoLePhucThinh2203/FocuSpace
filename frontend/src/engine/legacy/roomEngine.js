@@ -258,6 +258,19 @@ if (ctx) {
   try { ctx.suspend(); } catch (e) {}
   master = ctx.createGain(); master.gain.value = masterGainOf(); master.connect(ctx.destination);
 }
+/* Chuyển bài nhạc: bài cũ nhỏ dần theo cos, bài mới to dần theo sin (tổng công suất giữ đều, không hụt giữa chừng như chuyển tuyến tính).
+   Ghép từ các đoạn thẳng ngắn thay cho setValueCurveAtTime để ramp()/powerRamp() sau đó vẫn hủy được lịch cũ khi người dùng đổi bài liên tục. */
+const LOFI_XF = 1.5;
+function powerRamp(param, v, t) {
+  if (!ctx) return;
+  const now = ctx.currentTime, v0 = param.value, N = 12;
+  param.cancelScheduledValues(now);
+  param.setValueAtTime(v0, now);
+  for (let k = 1; k <= N; k++) {
+    const x = k / N, w = v > v0 ? Math.sin(Math.PI / 2 * x) : 1 - Math.cos(Math.PI / 2 * x);
+    param.linearRampToValueAtTime(v0 + (v - v0) * w, now + x * t);
+  }
+}
 function ramp(param, v, t) {
   if (!ctx) return;
   const now = ctx.currentTime;
@@ -286,16 +299,18 @@ class Emitter {
     if (this.panner) { this.dist.connect(this.panner); this.panner.connect(this.out); } else this.dist.connect(this.out);
     this.setPos(x, y, true);
   }
-  play(buf) {
+  play(buf, xf = 0.3) {   // xf: thời gian chuyển từ bộ đệm cũ sang mới (giây); đổi bài nhạc dùng LOFI_XF
     if (!ctx || !buf) return;
     if (this.cur && this.cur.s.buffer === buf) return;
-    const now = ctx.currentTime;
+    const now = ctx.currentTime, t = this.cur ? xf : 0.3;   // bật lần đầu (chưa có bộ đệm cũ) vẫn vào trong 0,3 giây
     const s = ctx.createBufferSource(); s.buffer = buf; s.loop = true;
-    const g = ctx.createGain(); g.gain.setValueAtTime(0, now); g.gain.linearRampToValueAtTime(1, now + 0.3);
+    const g = ctx.createGain(); g.gain.value = 0;
     s.connect(g); g.connect(this.input); s.start(now);
+    if (t > 0.3) powerRamp(g.gain, 1, t); else { g.gain.setValueAtTime(0, now); g.gain.linearRampToValueAtTime(1, now + t); }
     if (this.cur) {
-      const o = this.cur; ramp(o.g.gain, 0, 0.3);
-      try { o.s.stop(now + 0.35); } catch (e) {}
+      const o = this.cur;
+      if (t > 0.3) powerRamp(o.g.gain, 0, t); else ramp(o.g.gain, 0, t);
+      try { o.s.stop(now + t + 0.05); } catch (e) {}
     }
     this.cur = { s, g, start: now };
   }
@@ -523,6 +538,13 @@ async function renderLofi(def, idx, crackle) {   // crackle: tiếng rè rãnh �
 /* Bài Lo-fi dựng khi cần (bài đang chọn), không dựng cả 6 bài một lúc để tiết kiệm bộ nhớ.
    kind "lofi": tai nghe + radio (không rè); "sleep": đĩa than (có tiếng rè). */
 const lofiCache = { lofi: [], sleep: [] }, lofiPending = {};
+let lofiRecent = [];   // khóa bài theo thứ tự dùng gần nhất: ngoài các bài đang dùng, giữ thêm 1 bài vừa nghe để quay lại phát ngay
+/* Nút bài đang chọn trong popover hiện "Đang chuẩn bị…" khi bài đó còn đang dựng. */
+function renderTrackBusy() {
+  document.querySelectorAll(".pop [data-t][data-kind]").forEach(b => {
+    b.setAttribute("aria-busy", String(b.getAttribute("aria-pressed") === "true" && !!lofiPending[b.dataset.kind + b.dataset.t]));
+  });
+}
 function lofiInUse() {
   const u = new Set(["lofi" + (state.headphone.track | 0)]);
   const all = state.items.concat(state.bed.items);
@@ -531,17 +553,19 @@ function lofiInUse() {
 }
 function lofiBuf(kind, i) {
   i = clamp(i | 0, 0, 2);
-  if (lofiCache[kind][i]) return lofiCache[kind][i];
   const key = kind + i;
+  lofiRecent = [key].concat(lofiRecent.filter(k => k !== key));
+  if (lofiCache[kind][i]) return lofiCache[kind][i];
   if (!ctx || !audioWanted || lofiPending[key]) return null;
   lofiPending[key] = renderLofi((kind === "sleep" ? SLEEP_LOFI : LOFI)[i], (kind === "sleep" ? 10 : 0) + i, kind === "sleep").then(b => {
     delete lofiPending[key];
+    renderTrackBusy();
     if (!b) return;
     lofiCache[kind][i] = b;
-    const u = lofiInUse();   // bỏ bài không còn dùng khỏi bộ nhớ
-    ["lofi", "sleep"].forEach(k => lofiCache[k].forEach((x, j) => { if (x && !u.has(k + j)) lofiCache[k][j] = null; }));
+    const u = lofiInUse(), keep = lofiRecent.find(k => !u.has(k) && lofiCache[k.slice(0, -1)][+k.slice(-1)]);   // bỏ bài không còn dùng khỏi bộ nhớ, trừ 1 bài vừa nghe
+    ["lofi", "sleep"].forEach(k => lofiCache[k].forEach((x, j) => { if (x && !u.has(k + j) && k + j !== keep) lofiCache[k][j] = null; }));
     applyHeadphone(); applyRadio(); itemsById.forEach(o => { if (o.data.type === "vinyl") applyItemAudio(o); });
-  }).catch(() => { delete lofiPending[key]; });
+  }).catch(() => { delete lofiPending[key]; renderTrackBusy(); });
   return null;
 }
 
@@ -2702,8 +2726,8 @@ function applyFire() { FS.fireplace.x = state.fireSide === "left" ? 6 : 272; fir
 function applyFire0() { fireEm.play(BUF.fire); fireEm.setLevel(state.fireOn, state.fireVol); }
 function applyHeadphone() {
   const h = state.headphone, b = lofiBuf("lofi", h.track);
-  headEm.play(b); headEm.setLevel(h.on, h.vol);
-  outHeadEm.play(b); outHeadEm.setLevel(h.on, h.vol);   // cùng một tai nghe, nghe được cả trong nhà lẫn ngoài sân
+  headEm.play(b, LOFI_XF); headEm.setLevel(h.on, h.vol);
+  outHeadEm.play(b, LOFI_XF); outHeadEm.setLevel(h.on, h.vol);   // cùng một tai nghe, nghe được cả trong nhà lẫn ngoài sân
 }
 function applyScene() { const so = state.out; sceneEm.play(sceneBuf(so.scene)); sceneEm.setLevel(so.on, so.vol); }
 function applyRadio() { itemsById.forEach(o => { if (o.data.type === "radio") applyItemAudio(o); }); }
@@ -2783,7 +2807,7 @@ function itemBuffer(d) {
 }
 function applyItemAudio(o) {
   if (!ctx || !o.em) return;
-  o.em.play(itemBuffer(o.data));
+  o.em.play(itemBuffer(o.data), ["radio", "vinyl"].includes(o.data.type) ? LOFI_XF : 0.3);
   o.em.setLevel(o.data.on, o.data.vol);
   if (o.data.type === "cat") o.em.pulse(false);   // tiếng mèo kêu có nhịp riêng, không cần nhấp nhô to nhỏ
 }
@@ -3229,7 +3253,7 @@ function openPop(key, anchor) {
     const isH = true, st = state.headphone, em = headEm, apply = applyHeadphone;
     html = head(isH ? "Tai nghe" : "Radio", isH ? "Phát nhạc Lo-fi qua tai nghe." : "Phát nhạc Lo-fi.") +
       sw("rOn", st.on, isH ? "Phát nhạc" : "Bật radio") + volRow("rVol", st.vol) +
-      `<div class="row"><span class="lbl">Bài Lo-fi</span></div><div class="seg list" role="group" aria-label="Chọn bài">${LOFI.map((l, i) => `<button type="button" data-t="${i}" aria-pressed="${(st.track | 0) === i}">${l.name}</button>`).join("")}</div>` +
+      `<div class="row"><span class="lbl">Bài Lo-fi</span></div><div class="seg list" role="group" aria-label="Chọn bài">${LOFI.map((l, i) => `<button type="button" data-t="${i}" data-kind="lofi" aria-pressed="${(st.track | 0) === i}">${l.name}</button>`).join("")}</div>` +
       (isH ? "" : spatialRow(em));
     bind = () => {
       bindSwitch("rOn", () => st.on, v => { st.on = v; apply(); });
@@ -3237,6 +3261,7 @@ function openPop(key, anchor) {
       pop.querySelectorAll("[data-t]").forEach(b => b.addEventListener("click", () => {
         st.track = +b.dataset.t; apply(); save();
         pop.querySelectorAll("[data-t]").forEach(x => x.setAttribute("aria-pressed", x === b));
+        renderTrackBusy();
       }));
     };
   } else if (key === "wallclock") {
@@ -3283,7 +3308,7 @@ function openPop(key, anchor) {
     const tracks = d.type === "headphone" || d.type === "radio" ? LOFI : d.type === "vinyl" ? SLEEP_LOFI : null;
     html = head(t.name, t.sub + ".") + sw("iOn", d.on, onLabel) + volRow("iVol", d.vol);
     if (d.type === "cat") html += `<div class="row"><span class="lbl">Màu lông</span></div><div class="seg" role="group" aria-label="Chọn màu lông">${CAT_COATS.map((k, i) => `<button type="button" data-coat="${i}" aria-pressed="${(d.coat | 0) === i}">${k.n}</button>`).join("")}</div>`;
-    if (tracks) html += `<div class="row"><span class="lbl">${d.type === "vinyl" ? "Bài nhạc" : "Bài Lo-fi"}</span></div><div class="seg list" role="group" aria-label="Chọn bài">${tracks.map((l, i) => `<button type="button" data-t="${i}" aria-pressed="${(d.track | 0) === i}">${l.name}</button>`).join("")}</div>`;
+    if (tracks) html += `<div class="row"><span class="lbl">${d.type === "vinyl" ? "Bài nhạc" : "Bài Lo-fi"}</span></div><div class="seg list" role="group" aria-label="Chọn bài">${tracks.map((l, i) => `<button type="button" data-t="${i}" data-kind="${d.type === "vinyl" ? "sleep" : "lofi"}" aria-pressed="${(d.track | 0) === i}">${l.name}</button>`).join("")}</div>`;
     html += spatialRow(o.em) + `<button type="button" class="btn danger" id="iDel">Xóa khỏi phòng</button>`;
     bind = () => {
       bindSwitch("iOn", () => d.on, v => { d.on = v; applyItemAudio(o); });
@@ -3296,11 +3321,13 @@ function openPop(key, anchor) {
       pop.querySelectorAll("[data-t]").forEach(b => b.addEventListener("click", () => {
         d.track = +b.dataset.t; applyItemAudio(o); save();
         pop.querySelectorAll("[data-t]").forEach(x => x.setAttribute("aria-pressed", x === b));
+        renderTrackBusy();
       }));
     };
   }
   pop.innerHTML = html;
   document.body.appendChild(pop);
+  renderTrackBusy();
   pop.querySelector(".x").addEventListener("click", closePop);
   bind();
   const a = box(anchor), p = box(pop), { w: vw, h: vh } = vp();

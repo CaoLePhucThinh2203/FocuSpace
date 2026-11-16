@@ -206,6 +206,7 @@
   .pomo-box .big { @apply text-center font-num text-[36px] font-semibold leading-none tabular-nums text-amber; }
   .seg.list { @apply grid-cols-1; }
   .seg.list button { @apply border-r-0 border-b border-line text-left px-2 last:border-b-0; }
+  .seg.list button[aria-busy="true"]::after { content: " · Đang chuẩn bị…"; @apply font-normal; }   /* bài vừa chọn còn đang dựng (PRD v5.14) */
   .pomo-box .actions { @apply grid grid-cols-2 gap-[6px]; }
 
 }
