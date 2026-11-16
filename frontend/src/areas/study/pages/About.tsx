@@ -5,7 +5,7 @@ import { GITHUB_URL } from "../../../lib/pages";
 const TEAM = [
   { name: "Phúc Thịnh", role: "Phòng học, Trang chủ, Thư viện, Tài khoản, Giới thiệu; quản lý mã nguồn", email: "thinh.cao240924@vnuk.udn.vn" },
   { name: "Tuấn Hưng", role: "Đồ vật và âm thanh", email: "hung.nguyen240919@vnuk.udn.vn" },
-  { name: "Đình Nhiên", role: "Sân vườn, theo dõi lượt dùng và lỗi", email: "nhien.truong240960@vnuk.udn.vn" },
+  { name: "Đình Nhiên", role: "Sân vườn, thống kê lượt truy cập, ghi nhận lỗi trang web", email: "nhien.truong240960@vnuk.udn.vn" },
   { name: "Tuấn Lộc", role: "Phòng ngủ, đăng nhập, trang Thống kê", email: "loc.dau240925@vnuk.udn.vn" },
 ];
 
