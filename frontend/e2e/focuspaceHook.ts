@@ -16,5 +16,7 @@ export interface FocuspaceHook {
   switchRoom(to: RoomId): void;
   fireEm: { sp: SpatialInfo; setPos(x: number, y: number, instant?: boolean): void };
   windowEm: { sp: SpatialInfo };
+  outHeadEm: { cur: { s: { buffer: AudioBuffer | null }; g: { gain: { value: number } } } | null };
+  lofiCache: { lofi: (AudioBuffer | null)[]; sleep: (AudioBuffer | null)[] };
 }
 export type HookWindow = Window & { __focuspace: FocuspaceHook };

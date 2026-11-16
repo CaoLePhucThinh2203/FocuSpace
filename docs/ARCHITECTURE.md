@@ -38,7 +38,7 @@ Tài liệu mô tả thiết kế giải pháp CNTT cho FocuSpace bản chính t
 | Giao diện & điều hướng | Bố cục, thanh công cụ, popover, chuyển ba không gian       | FR-UI-01→06, FR-NAV-01→03, FR-PAGE-03 | UC.01, UC.12 |
 | Ba không gian          | Phòng học, Phòng ngủ, Sân vườn với 5 khung cảnh            | FR-STUDY-01→08, FR-BED-01→07, FR-OUT-01→04 | UC.02 |
 | Đồ vật                 | Danh mục 17 loại, thêm/xóa/kéo, quy tắc đặt, giường mèo    | FR-ITEM-01→08 | UC.04 |
-| Âm thanh               | Chuỗi xử lý, công thức gain/pan, mixer, Master, mèo        | FR-AUD-01→07              | UC.03 |
+| Âm thanh               | Chuỗi xử lý, công thức gain/pan, mixer, Master, mèo, đổi bài | FR-AUD-01→08              | UC.03 |
 | Thời gian              | Pomodoro, Hẹn giờ ngủ                                      | FR-TIME-01→03             | UC.05, UC.06 |
 | Lưu trữ                | LocalStorage, migrate dữ liệu cũ                           | FR-SAVE-01→04             | include Tự động lưu cục bộ |
 | Tài khoản & đồng bộ    | Khách, đăng ký/đăng nhập, đồng bộ, hợp nhất, xung đột, xóa | FR-ACC-01→08 | UC.08, UC.09, UC.11 |
