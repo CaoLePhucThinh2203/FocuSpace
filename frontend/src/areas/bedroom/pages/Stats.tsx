@@ -22,6 +22,7 @@ export default function Stats() {
   const [range, setRange] = useState("7d");
   const [data, setData] = useState<StatsRes | null>(null);
   const [err, setErr] = useState(false);
+  const [retry, setRetry] = useState(0);
 
   useEffect(() => {
     if (!user) return;
@@ -32,7 +33,7 @@ export default function Stats() {
       .then(() => api<StatsRes>(`/me/stats?range=${range}&tz=${encodeURIComponent(tz)}`))
       .then(setData)
       .catch(() => setErr(true));
-  }, [user, range]);
+  }, [user, range, retry]);
 
   if (!ready) return <main className="mx-auto max-w-6xl px-4 py-10" aria-busy="true" />;
   if (!user) {
@@ -61,7 +62,12 @@ export default function Stats() {
         </div>
       </div>
 
-      {err && <p className="card mt-6 p-6">Không tải được thống kê. Vui lòng thử lại.</p>}
+      {err && (
+        <div className="card mt-6 grid justify-items-start gap-3 p-6">
+          <p>Không tải được thống kê.</p>
+          <button type="button" className="btn" onClick={() => setRetry((n) => n + 1)}>Thử lại</button>
+        </div>
+      )}
       {!data && !err && <div className="card mt-6 h-64 animate-pulse" aria-busy="true" />}
       {data && (data.totals.pomodoroStarted === 0 && data.totals.sessions === 0 ? (
         <div className="card mt-6 grid justify-items-center gap-3 p-10 text-center">
@@ -75,7 +81,7 @@ export default function Stats() {
               ["Phút tập trung", data.totals.focusMinutes],
               ["Pomodoro hoàn thành", data.totals.pomodoroCompleted],
               ["Tỷ lệ hoàn thành", Math.round(data.totals.completionRate * 100) + "%"],
-              ["Phiên sử dụng", data.totals.sessions],
+              ["Số lần vào phòng", data.totals.sessions],
             ].map(([l, v]) => (
               <li key={l} className="card p-4">
                 <p className="text-xs uppercase tracking-wide text-muted">{l}</p>
@@ -105,7 +111,7 @@ export default function Stats() {
             <h2 id="h-recent" className="p-4 font-display text-lg font-bold">10 phiên gần nhất</h2>
             <table className="w-full min-w-[480px] text-left text-sm">
               <thead className="text-xs uppercase text-muted">
-                <tr><th className="p-3">Bắt đầu</th><th className="p-3">Chế độ</th><th className="p-3">Dự kiến</th><th className="p-3">Kết quả</th></tr>
+                <tr><th className="p-3">Bắt đầu</th><th className="p-3">Chế độ</th><th className="p-3">Thời lượng</th><th className="p-3">Kết quả</th></tr>
               </thead>
               <tbody className="divide-y divide-line">
                 {data.recent.map((p) => (

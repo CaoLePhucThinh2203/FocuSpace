@@ -6,23 +6,23 @@ const TEAM = [
   { name: "Phúc Thịnh", role: "Phòng học, quản lý repo, Trang chủ, Thư viện, Tài khoản, Giới thiệu", email: "thinh.cao240924@vnuk.udn.vn" },
   { name: "Tuấn Hưng", role: "Đồ vật, bảng đồ vật, âm thanh", email: "hung.nguyen240919@vnuk.udn.vn" },
   { name: "Đình Nhiên", role: "Sân vườn, Google Analytics, Sentry", email: "nhien.truong240960@vnuk.udn.vn" },
-  { name: "Tuấn Lộc", role: "Phòng ngủ, tài khoản & thống kê (API), trang Thống kê", email: "loc.dau240925@vnuk.udn.vn" },
+  { name: "Tuấn Lộc", role: "Phòng ngủ, đăng nhập, trang Thống kê", email: "loc.dau240925@vnuk.udn.vn" },
 ];
 const PROBLEMS = [
   ["Ảnh nền tĩnh dễ chán.", "Phòng có chuyển động (nhân vật, mưa, lửa) nên nhìn lâu không chán."],
   ["Mất thời gian sắp xếp.", "Phòng có sẵn; bạn chỉ chỉnh âm thanh, thời tiết và thêm vài đồ vật."],
-  ["Âm thanh khó nghe lâu.", "Âm thanh nghe theo vị trí đồ vật, đã giảm tiếng trầm ồn để đeo tai nghe lâu không mệt."],
+  ["Âm thanh khó nghe lâu.", "Âm thanh phát ra theo vị trí đồ vật."],
   ["Phải mở nhiều ứng dụng.", "Pomodoro, nhạc nền và hẹn giờ ngủ ở cùng một trang."],
 ];
 
 /** Giới thiệu & Liên hệ (FR-PAGE-05, UC.12). */
 export default function About() {
-  useTitle("Giới thiệu và liên hệ — FocuSpace", "Mục tiêu dự án FocuSpace, cách dùng nhanh, nhóm phát triển và thông tin liên hệ.");
+  useTitle("Giới thiệu & Liên hệ — FocuSpace", "Mục tiêu dự án FocuSpace, cách dùng nhanh, nhóm phát triển và thông tin liên hệ.");
   return (
     <main className="mx-auto grid max-w-4xl gap-12 px-4 py-10 [&>*]:min-w-0">
       <section aria-labelledby="h-goal">
         <h1 id="h-goal" className="font-display text-2xl font-bold sm:text-3xl">Về FocuSpace</h1>
-        <p className="mt-4 text-base text-muted">FocuSpace là phòng học ảo dạng pixel, có nhạc Lo-fi, dành cho người hay học và làm việc buổi tối bằng tai nghe. Trang web giải quyết bốn vấn đề:</p>
+        <p className="mt-4 text-base text-muted">FocuSpace là phòng học ảo dạng pixel, có nhạc Lo-fi, dành cho người hay đeo tai nghe học và làm việc buổi tối. Trang web giải quyết bốn vấn đề:</p>
         <ul className="mt-4 grid gap-3 sm:grid-cols-2">
           {PROBLEMS.map(([b, t]) => (
             <li key={b} className="card p-4"><b className="text-amber">{b}</b> <span className="text-muted">{t}</span></li>

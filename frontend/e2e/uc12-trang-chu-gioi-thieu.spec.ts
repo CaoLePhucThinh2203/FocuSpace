@@ -42,10 +42,10 @@ test.describe("UC.12 Trang chủ, Giới thiệu (Thịnh)", () => {
     }
   });
 
-  test("AC-12.5 trang chủ: không còn ô Pixel art, tiêu đề Mô tả & Tính năng, không còn nút cuối trang", async ({ page }) => {
+  test("AC-12.5 trang chủ: không còn ô Pixel art, tiêu đề Tính năng chính, không còn nút cuối trang", async ({ page }) => {
     await page.goto("/");
     await expect(page.getByText("Pixel art · Lo-fi · Semi-Sandbox")).toHaveCount(0);
-    await expect(page.getByRole("heading", { name: "Mô tả & Tính năng" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Tính năng chính" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Vì sao chọn FocuSpace" })).toHaveCount(0);
     await expect(page.getByRole("link", { name: "Bắt đầu học ngay" })).toHaveCount(0);
     await expect(page.getByRole("link", { name: "Tìm hiểu thêm" })).toHaveCount(0);

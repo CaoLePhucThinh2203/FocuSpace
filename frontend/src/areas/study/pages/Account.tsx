@@ -50,7 +50,7 @@ function AuthForm() {
       if (mode === "login") { await login(email, password); track("login"); }
       else { await register(email, password, name.trim()); track("sign_up"); }
     } catch (err) {
-      setServerErr(err instanceof ApiError ? err.message : "Có lỗi xảy ra.");
+      setServerErr(err instanceof ApiError ? err.message : "Có lỗi, hãy thử lại.");
     } finally { setBusy(false); }
   }
 
@@ -92,11 +92,11 @@ function Profile() {
     const n = name.trim();
     if (!n || n.length > 40) { setNameErr(n ? "Tên hiển thị tối đa 40 ký tự." : "Tên hiển thị không được để trống."); return; }
     setNameErr("");
-    try { await rename(n); setMsg("Đã lưu tên mới."); } catch (err) { setNameErr(err instanceof ApiError ? err.message : "Có lỗi xảy ra."); }
+    try { await rename(n); setMsg("Đã lưu tên mới."); } catch (err) { setNameErr(err instanceof ApiError ? err.message : "Có lỗi, hãy thử lại."); }
   }
   async function doDelete(e: FormEvent) {
     e.preventDefault();
-    try { await deleteAccount(pw); } catch (err) { setDelErr(err instanceof ApiError ? err.message : "Có lỗi xảy ra."); }
+    try { await deleteAccount(pw); } catch (err) { setDelErr(err instanceof ApiError ? err.message : "Có lỗi, hãy thử lại."); }
   }
 
   return (
@@ -119,7 +119,7 @@ function Profile() {
         <div role="dialog" aria-modal="true" aria-labelledby="del-title" className="fixed inset-0 z-50 grid place-items-center bg-black/60 p-4">
           <form className="card grid w-full max-w-sm gap-4 p-6" onSubmit={doDelete}>
             <h2 id="del-title" className="font-display text-xl font-bold text-danger">Xóa tài khoản?</h2>
-            <p className="text-muted">Tài khoản và căn phòng lưu trên máy chủ sẽ bị xóa vĩnh viễn. Phòng trên máy này vẫn giữ.</p>
+            <p className="text-muted">Tài khoản và căn phòng lưu trên máy chủ sẽ bị xóa vĩnh viễn.</p>
             <Field label="Nhập mật khẩu để xác nhận" type="password" value={pw} onChange={setPw} error={delErr} autoComplete="current-password" />
             <div className="flex justify-end gap-2">
               <button type="button" className="btn" onClick={() => { setConfirmDel(false); setPw(""); setDelErr(""); }}>Hủy</button>
