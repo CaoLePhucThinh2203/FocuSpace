@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 import { useTitle } from "../../../lib/useTitle";
 
 const SPACES = [
-  { img: "/previews/room-study.webp", alt: "Phòng học", title: "Phòng học", text: "Bàn học, cửa sổ đổi được 4 kiểu thời tiết, lò sưởi, tai nghe phát nhạc Lo-fi." },
-  { img: "/previews/room-bed.webp", alt: "Phòng ngủ", title: "Phòng ngủ", text: "3 kiểu trời đêm, đĩa than, hộp nhạc, quạt bàn và hẹn giờ ngủ tự tắt âm thanh." },
-  { img: "/previews/room-out.webp", alt: "Sân vườn", title: "Sân vườn", text: "Có 5 khung cảnh: Thành phố, Khu rừng, Bãi biển, Núi băng, Đồi ven biển." },
+  { img: "/previews/room-study.webp", alt: "Phòng học", title: "Phòng học", text: "Nơi học tập trung: 4 kiểu thời tiết, lò sưởi, nhạc Lo-fi." },
+  { img: "/previews/room-bed.webp", alt: "Phòng ngủ", title: "Phòng ngủ", text: "Nơi thư giãn trước khi ngủ: 3 kiểu trời đêm, đĩa than, hẹn giờ ngủ." },
+  { img: "/previews/room-out.webp", alt: "Sân vườn", title: "Sân vườn", text: "Nơi nghỉ giữa giờ: 5 khung cảnh, xích đu, nhạc Lo-fi." },
 ];
 const FEATURES = [
   { title: "Phòng có sẵn", text: "Bàn ghế và nhân vật đã đặt sẵn. Bạn chỉ thêm vài đồ vật nếu muốn, không phải sắp xếp từ đầu." },
@@ -35,7 +35,7 @@ export default function Home() {
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-10" aria-labelledby="h-spaces">
-        <h2 id="h-spaces" className="font-display text-2xl font-bold">Ba phòng có sẵn</h2>
+        <h2 id="h-spaces" className="font-display text-2xl font-bold">Có 3 không gian</h2>
         <p className="mt-2 text-muted">Bấm mũi tên 2 bên để chuyển phòng.</p>
         <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {SPACES.map((s, i) => (
