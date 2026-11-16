@@ -8,7 +8,7 @@ Căn phòng Semi-Sandbox · Phòng học · Phòng ngủ · Sân vườn
 |---|---|
 | **Chủ sở hữu (Product Owner / PM)** | Cao Lê Phúc Thịnh (theo PRD Semi-Sandbox gốc) |
 | **Đội ngũ tham gia** | Tuấn Hưng (đồ vật, âm thanh) · Đình Nhiên (Sân vườn) · Tuấn Lộc (Phòng ngủ) · Phúc Thịnh (Phòng học, quản lý repo, các trang còn lại) · chi tiết docs/PLAN.md mục 2 |
-| **Phiên bản / trạng thái** | v5.11 (văn phong giao diện đơn giản, 15/11/2026) · v5.10 (chữ chú thích Căn phòng 12 px, 15/11/2026) · v5.9 (font tự host, 15/11/2026) · v5.8 (thống nhất 25 đồ, 15/11/2026) · v5.7 (Pomodoro theo vòng 15/11/2026) · v5.6 (rút gọn 15/11/2026) · v5.0 phê duyệt 07/11/2026 · v5.1 – v5.4 duyệt ở buổi họp kế hoạch 13/11/2026 · v5.5 (sửa giao diện, âm thanh 15/11) chờ duyệt |
+| **Phiên bản / trạng thái** | v5.12 (tiếng mèo, máy xông còn 1/10, theo số đo thật, 16/11/2026) · v5.11 (văn phong giao diện đơn giản, 15/11/2026) · v5.10 (chữ chú thích Căn phòng 12 px, 15/11/2026) · v5.9 (font tự host, 15/11/2026) · v5.8 (thống nhất 25 đồ, 15/11/2026) · v5.7 (Pomodoro theo vòng 15/11/2026) · v5.6 (rút gọn 15/11/2026) · v5.0 phê duyệt 07/11/2026 · v5.1 – v5.4 duyệt ở buổi họp kế hoạch 13/11/2026 · v5.5 (sửa giao diện, âm thanh 15/11) chờ duyệt |
 | **Tài liệu liên quan** | Tài liệu Kiến trúc giải pháp · API Docs · docs/DATABASE.md · docs/PLAN.md · Final Project Brief CSB25022 · FocuSpace_Diagrams.drawio · Chương 1 Phân tích hệ thống (FocuSpace_Chuong2_PhanTich.docx) |
 
 > **Quy tắc nguồn:** Khi hai nguồn mâu thuẫn, nguồn mới hơn thắng: tài liệu này \> prototype FocuSpace-Semi-Sandbox.html \> PRD .docx cũ. Mọi hành vi giao diện mô tả theo prototype FocuSpace-Semi-Sandbox.html. Yêu cầu của đề bài đồ án môn Web (CSB25022) đứng trên mọi nguồn.
@@ -387,7 +387,7 @@ Mức ưu tiên: **P0** bắt buộc trong bản nộp, **P1** nên có, **P2** 
 
 - **Âm nền (v5.5):** nguồn phát nhạc và âm liên tục không tính khoảng cách, không lệch tai: radio, đĩa than, hộp nhạc, tiếng tích tắc (Đồng hồ Pomodoro, đồng hồ treo tường), âm ngoài cửa sổ (Phòng học, Phòng ngủ) và lò sưởi. Các nguồn này có Gdist = 0,8 cố định và Pan = 0 ở mọi vị trí; popover ghi "Âm nền · nghe đều hai tai" thay cho thanh Trái/Phải. Các nguồn còn lại (Tivi, mèo, máy xông, quạt) vẫn theo công thức dưới đây.
 
-- Tiếng rè rãnh đĩa chỉ có ở đĩa than; tai nghe và radio phát nhạc sạch. Rù rù của mèo bằng 1/3 mức cũ; mọi âm của khung cảnh Sân vườn bằng 50% mức cũ.
+- Tiếng rè rãnh đĩa chỉ có ở đĩa than; tai nghe và radio phát nhạc sạch. Rù rù của mèo bằng 1/30 mức gốc (v5.12: còn 1/10 mức v5.11); tiếng máy xông tinh dầu bằng 1/10 mức v5.11; mọi âm của khung cảnh Sân vườn bằng 50% mức cũ.
 
 - Công thức: d = √((x−Lx)² + (y−Ly)²); Gdist = max(0,15; 1 − d/Dmax), Dmax = √(320² + 180²); Pan = clamp((x−Lx) / max(40; x\<Lx ? Lx : 320−Lx); −1; 1).
 
@@ -395,7 +395,9 @@ Mức ưu tiên: **P0** bắt buộc trong bản nộp, **P1** nên có, **P2** 
 
 - Bảng âm lượng: hàng đầu “Âm lượng tổng” mặc định 80%; bên dưới là mọi nguồn âm của phòng hiện tại, mỗi hàng có công tắc và thanh trượt.
 
-- Tiếng mèo: rù rù êm liên tục (nhịp khoảng 23 Hz, hơi thở chậm 3 giây), không nhấp nhô to nhỏ. Bấm vào mèo: mèo mở mắt, kêu “meo” một tiếng kèm chữ “Meow!”, rồi ngủ tiếp và rù rù trở lại.
+- Tiếng mèo: rù rù êm liên tục theo số đo mèo nhà (rung 21–27 Hz, kêu cả khi hít vào lẫn thở ra): một nhịp thở 2,5 giây, hít vào 40% thời gian ở 24 Hz và nhỏ hơn, thở ra 60% ở 22 Hz, ngắt khoảng 0,1 giây khi đổi chiều hơi thở; không nhấp nhô to nhỏ theo nhịp như nguồn khác.
+
+- Tiếng máy xông tinh dầu (v5.12): như máy siêu âm thật, rất êm; nền là tiếng xì nhẹ của hơi sương, thỉnh thoảng ùng ục khẽ (trung bình khoảng 2 lần/giây, cách nhau không đều, đôi khi 2–3 bọt liền nhau, bọt trầm 200–600 Hz). Bấm vào mèo: mèo mở mắt, kêu “meo” một tiếng kèm chữ “Meow!”, rồi ngủ tiếp và rù rù trở lại.
 
 - Âm thanh tổng hợp bằng code; AudioContext chỉ bật sau cú nhấp/phím đầu tiên, và mọi âm thanh (kể cả nhạc Lo-fi) cũng chỉ dựng từ lúc đó, mỗi nguồn một tác vụ riêng (v5.5, tối ưu Lighthouse: Tuấn Hưng, H12).
 
@@ -959,3 +961,4 @@ Mọi câu hỏi mở đã chốt (Q-03, Q-04, Q-07 trước 07/11; còn lại �
 | v5.9 | 15/11/2026 | 6.1: font Be Vietnam Pro tự host, bỏ CSS Google Fonts chặn hiển thị; ảnh xem trước đồ vật bỏ siêu dữ liệu `caBX`. Không đổi FR, AC (AC-12.6 vẫn một font Be Vietnam Pro). |
 | v5.10 | 15/11/2026 | 6.1: chữ chú thích Căn phòng (nhãn vùng bấm, nhãn mũi tên, tooltip thanh công cụ, nhãn Focus / Hẹn giờ ngủ) 11 px → 12 px để đạt Lighthouse "legible font sizes"; khác prototype 1 px. Không đổi FR, AC. |
 | v5.11 | 15/11/2026 | Văn phong giao diện đơn giản, thực tế: tên phòng hiển thị Phòng học / Phòng ngủ / Sân vườn (thay Góc học tập ấm áp / Phòng ngủ yên tĩnh / Sân vườn · xích đu dưới gốc cây); Tivi CRT → Tivi cũ; Volume mixer → Bảng âm lượng, “Âm lượng tổng (Master)” → “Âm lượng tổng”; mô tả 17 đồ vật và 5 khung cảnh nói thẳng âm thanh phát ra (ví dụ Máy xông tinh dầu: “Tiếng bọt nước”); viết lại lời giới thiệu Trang chủ, Giới thiệu & Liên hệ. Không đổi FR, AC (chỉ đổi chữ hiển thị). |
+| v5.12 | 16/11/2026 | 5.1 âm thanh: tiếng rù rù của mèo và tiếng máy xông tinh dầu còn 1/10 mức cũ; rù rù dựng theo số đo mèo nhà (thở ra 22 Hz, hít vào 24 Hz, nhịp thở 2,5 giây, ngắt ngắn khi đổi chiều); máy xông đổi từ ~10 tiếng bọt/giây sang tiếng xì nhẹ và ùng ục thưa ~2 lần/giây, bọt trầm hơn. |
