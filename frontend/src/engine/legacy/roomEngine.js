@@ -32,7 +32,7 @@ const STORAGE_KEY = "focuspace.room.v4";   // v6: khóa lưu mới để lần m
 /* Đồ vật phát âm thanh (di chuyển tự do, có Spatial Audio) */
 const TYPES = {
   tv:        { group: "sound", name: "Tivi cũ",     sub: "Tiếng rè nhiễu sóng", w: 26, h: 26, sound: true, hp: true,  vol: 0.35 },
-  cat:       { group: "sound", name: "Mèo ngủ",    sub: "Tiếng mèo rù rù",      w: 24, h: 13, sound: true, hp: false, vol: 0.6, gain: 1 / 3 },   // rù rù còn 1/3
+  cat:       { group: "sound", name: "Mèo ngủ",    sub: "Tiếng mèo rù rù",      w: 24, h: 13, sound: true, hp: false, vol: 0.6, gain: 1 / 30 },   // rù rù: 1/3 bản gốc, rồi còn 1/10 (16/11)
   /* Đồ trang trí (không âm thanh) */
   plant:  { group: "decor", name: "Chậu cây",    w: 12, h: 16 },
   cactus: { group: "decor", name: "Xương rồng",  w: 10, h: 14 },
@@ -43,7 +43,7 @@ const TYPES = {
   lamp: { group: "desk", name: "Đèn bàn",     sub: "Chiếu sáng bàn học", w: 20, h: 24, deskOnly: true, fixed: true },
   cup:  { group: "desk", name: "Ly cà phê",   sub: "Đồ trang trí trên bàn", w: 12, h: 14, deskOnly: true, fixed: true },
   /* Đồ vật phòng ngủ (phát âm thanh, di chuyển tự do) */
-  diffuser: { group: "sound", name: "Máy xông tinh dầu", sub: "Tiếng bọt nước",    w: 14, h: 16, sound: true, hp: false, vol: 0.4 },
+  diffuser: { group: "sound", name: "Máy xông tinh dầu", sub: "Tiếng bọt nước",    w: 14, h: 16, sound: true, hp: false, vol: 0.4, gain: 1 / 10 },   // còn 1/10 (16/11)
   vinyl:    { group: "sound", name: "Đĩa than",          sub: "Nhạc chậm, có tiếng rè đĩa",    w: 26, h: 16, sound: true, hp: false, vol: 0.5, bg: true },
   musicbox: { group: "sound", name: "Hộp nhạc",          sub: "Nhạc chuông nhẹ",      w: 14, h: 16, sound: true, hp: false, vol: 0.45, bg: true },
   fan:      { group: "sound", name: "Quạt bàn",          sub: "Tiếng quạt gió",          w: 18, h: 22, sound: true, hp: false, vol: 0.35 },
@@ -270,7 +270,7 @@ function ramp(param, v, t) {
 const BG_GAIN = 0.8;
 class Emitter {
   constructor(x, y, hp, out, L, bg) {
-    this.L = L || LISTENERS.study; this.out = out || master; this.bg = !!bg; this.scale = 1;   // scale: hệ số âm lượng riêng của nguồn (mèo 1/3, khung cảnh 1/2)
+    this.L = L || LISTENERS.study; this.out = out || master; this.bg = !!bg; this.scale = 1;   // scale: hệ số âm lượng riêng của nguồn (mèo 1/30, máy xông 1/10, khung cảnh 1/2)
     this.x = x; this.y = y; this.cur = null; this.sp = this.calc(x, y);
     if (!ctx) return;
     this.input = ctx.createGain();
@@ -417,14 +417,20 @@ function meowFill(d, len, c) {   // tiếng "meo": cao độ vút lên rồi tr�
     d[i] = (v * 0.32 + br * 0.025 * (1 - u) * (1 - u)) * env;   // hơi thở tắt dần về cuối: hết tiếng rè "xì" ở đuôi tiếng meo
   }
 }
-function softPurrFill(d, len, c) {   // rù rù êm: nhịp mềm ~23 Hz, hơi thở chậm 3 giây, lọc thấp — không còn tiếng meo
+/* Rù rù theo số đo mèo nhà (Schötz & Eklund; Eklund, Peters & Duthie): rung 21–27 Hz, kêu cả khi hít vào lẫn thở ra.
+   Một nhịp thở 2,5 giây (mèo nghỉ ~24 lần/phút): hít vào 40% ở 24 Hz, nhỏ hơn; thở ra 60% ở 22 Hz, to hơn; ngắt rất ngắn khi đổi chiều hơi thở. */
+const PURR_BREATH = 2.5, PURR_IN = 0.4;
+function softPurrFill(d, len, c) {
   const r = rng(41 + c); let p = 0, q = 0, ph = 0;
   for (let i = 0; i < len; i++) {
-    const t = i / SR, f0 = 23 + 1.2 * Math.sin(2 * Math.PI * t / 3);
-    ph += 2 * Math.PI * f0 / SR;
-    const am = Math.pow(0.5 + 0.5 * Math.sin(ph), 1.7), breath = 0.62 + 0.38 * Math.sin(2 * Math.PI * t / 3 - 1.2);
+    const t = i / SR, u = (t % PURR_BREATH) / PURR_BREATH, inhale = u < PURR_IN;
+    const x = inhale ? u / PURR_IN : (u - PURR_IN) / (1 - PURR_IN), phaseSec = (inhale ? PURR_IN : 1 - PURR_IN) * PURR_BREATH;
+    const edge = Math.min(1, Math.min(x, 1 - x) * phaseSec / 0.12);                  // ngắt ~0,1 giây lúc đổi chiều hơi thở
+    const breath = Math.sin(Math.PI / 2 * edge) * (inhale ? 0.7 : 1) * (0.85 + 0.15 * Math.sin(Math.PI * x));
+    ph += 2 * Math.PI * (inhale ? 24 : 22) / SR;
+    const am = Math.pow(0.5 + 0.5 * Math.sin(ph), 1.7);
     p += 0.03 * ((r() * 2 - 1) - p); q += 0.25 * (p - q);
-    d[i] = (q * 4.2 * am + 0.02 * Math.sin(2 * Math.PI * 46 * t) * am) * breath;
+    d[i] = (q * 3.6 * am + 0.017 * Math.sin(2 * ph) * am) * breath;   // cùng độ to trung bình với bản cũ
   }
 }
 function softTickFill(f) {   // tiếng "tách" trầm và êm (~1,1 kHz), ngắn, nhỏ — thay tiếng tích tắc 3,1 kHz cũ
@@ -455,7 +461,7 @@ function lazyBuf(defs) {
 }
 lazyBuf({
   clear: () => mkBuf(8, birdsFill), rain: () => mkBuf(6, rainFill(false)), storm: () => mkBuf(12, stormFill),
-  fire: () => mkBuf(6, fireFill), tv: () => mkBuf(3, staticFill), cat: () => mkLoopBuf(6, softPurrFill), meow: () => mkBuf(0.75, meowFill), tick: () => mkBuf(0.06, softTickFill(1150)), tock: () => mkBuf(0.06, softTickFill(950)),
+  fire: () => mkBuf(6, fireFill), tv: () => mkBuf(3, staticFill), cat: () => mkLoopBuf(5, softPurrFill), meow: () => mkBuf(0.75, meowFill), tick: () => mkBuf(0.06, softTickFill(1150)), tock: () => mkBuf(0.06, softTickFill(950)),
   flip: () => mkBuf(0.35, flipFill), click: () => mkBuf(0.05, clickFill), bell: () => mkBuf(3.2, bellFill, 1),
 });
 
@@ -1308,12 +1314,23 @@ function roofRainFill(d, len, c) {
   for (let i = 0; i < len; i++) { p = 0.94 * p + 0.06 * (r() * 2 - 1); q = 0.9 * q + 0.1 * p; d[i] = q * 2.6; }
   for (let k = 0; k < 40 * len / SR; k++) addDrop(d, Math.floor(r() * (len - 2000)), 700 + r() * 1100, 0.05 * r(), 0.02);
 }
+/* Máy xông tinh dầu siêu âm: máy thật rất êm (nhà sản xuất ghi ~18–26 dB). Nền là tiếng xì nhẹ của hơi sương, nhỏ to chậm;
+   thỉnh thoảng ùng ục khẽ: trung bình ~2 lần/giây, cách nhau không đều, đôi khi 2–3 bọt liền nhau; bọt trầm (200–600 Hz), cao độ nhích lên khi bọt vỡ. */
 function bubbleFill(d, len, c) {
-  const r = rng(91 + c); let p = 0;
-  for (let i = 0; i < len; i++) { p = 0.97 * p + 0.03 * (r() * 2 - 1); d[i] = p * 0.9; }
-  for (let k = 0; k < len / SR * 10; k++) {
-    const at = Math.floor(r() * (len - 8000)), f = 300 + r() * 700, dur = 0.05 + r() * 0.06, nn = Math.floor(dur * SR), a = 0.04 + 0.08 * r();
-    for (let i = 0; i < nn; i++) { const t = i / SR; d[at + i] += Math.sin(2 * Math.PI * f * (1 + 0.8 * t / dur) * t) * Math.exp(-t / (dur / 3)) * a; }
+  const r = rng(91 + c); let p = 0, h = 0;
+  for (let i = 0; i < len; i++) {
+    const t = i / SR;
+    p += 0.35 * ((r() * 2 - 1) - p); h += 0.6 * (p - h);                              // xì: nhiễu dải trung–cao, đã làm mềm
+    d[i] = (p - h) * 0.74 * (0.8 + 0.2 * Math.sin(2 * Math.PI * t / 4.5 + c));
+  }
+  const tail = Math.floor(0.12 * SR);
+  for (let at = r() * 0.5 * SR; at < len - tail;) {
+    const n = r() < 0.25 ? 2 + Math.floor(r() * 2) : 1;                              // một bọt, hoặc một chùm 2–3 bọt
+    for (let b = 0; b < n; b++) {
+      const s0 = Math.floor(at + b * (0.05 + r() * 0.04) * SR), f = 200 + r() * 400, dur = 0.04 + r() * 0.05, nn = Math.floor(dur * SR), a = 0.17 + 0.24 * r();
+      for (let i = 0; i < nn && s0 + i < len; i++) { const x = i / SR; d[s0 + i] += Math.sin(2 * Math.PI * f * (1 + 0.5 * x / dur) * x) * Math.exp(-x / (dur / 3)) * a; }
+    }
+    at += (0.15 + -Math.log(1 - r()) * 0.4) * SR;                                     // khoảng cách ngẫu nhiên, trung bình ~0,55 giây
   }
 }
 function musicboxFill(d, len, c) {              // giai điệu ru ngủ tự soạn, âm chuông ngân dài
@@ -1354,7 +1371,7 @@ const SLEEP_LOFI = [   // nhạc Lofi Sleep (đĩa than): nhịp chậm, hợp �
 ];
 lazyBuf({
   stars: () => mkBuf(8, cricketsFill), wind: () => mkLoopBuf(20, snowNightFill), roof: () => mkBuf(8, roofRainFill),
-  bubble: () => mkBuf(6, bubbleFill), musicbox: () => mkBuf(12, musicboxFill), fan: () => mkLoopBuf(6, fanFill),
+  bubble: () => mkLoopBuf(6, bubbleFill), musicbox: () => mkBuf(12, musicboxFill), fan: () => mkLoopBuf(6, fanFill),
   sunset: () => mkBuf(14, wavesFill),
 });
 
