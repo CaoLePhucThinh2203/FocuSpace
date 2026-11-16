@@ -7,9 +7,9 @@ const SPACES = [
   { img: "/previews/room-out.webp", alt: "Sân vườn", title: "Sân vườn", text: "Nơi nghỉ giữa giờ: 5 khung cảnh, xích đu, nhạc Lo-fi." },
 ];
 const FEATURES = [
-  { title: "Phòng có sẵn", text: "Bàn ghế và nhân vật đã đặt sẵn. Bạn chỉ thêm vài đồ vật nếu muốn, không phải sắp xếp từ đầu." },
-  { title: "Âm thanh theo vị trí", text: "Đặt Tivi bên trái thì tiếng Tivi nghe lệch về tai trái. Nhạc, radio, đĩa than và tiếng ngoài cửa sổ nghe đều hai tai. Bảng âm lượng chỉnh từng nguồn và âm lượng tổng." },
-  { title: "Pomodoro và hẹn giờ ngủ", text: "Pomodoro có 4 nhịp học (mặc định 25 phút học, 5 phút nghỉ), dùng chung ở Phòng học và Sân vườn. Hẹn giờ ngủ giảm âm dần trong 2 phút cuối rồi tắt." },
+  { title: "Vào là học ngay", text: "Phòng đã bày sẵn bàn ghế và nhân vật. Muốn thì thêm đồ vật, không thì cứ thế mà học." },
+  { title: "Âm thanh như phòng thật", text: "Đồ vật đặt bên nào, tiếng phát ra bên đó. Chỉnh to nhỏ từng âm thanh trong Bảng âm lượng." },
+  { title: "Hẹn giờ học và ngủ", text: "Pomodoro chia giờ học, giờ nghỉ (mặc định 25 phút học, 5 phút nghỉ). Hẹn giờ ngủ tự nhỏ dần rồi tắt âm thanh." },
 ];
 
 /** Trang chủ (FR-PAGE-04, UC.12). */
