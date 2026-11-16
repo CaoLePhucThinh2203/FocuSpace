@@ -8,12 +8,6 @@ const TEAM = [
   { name: "Đình Nhiên", role: "Sân vườn, theo dõi lượt dùng và lỗi", email: "nhien.truong240960@vnuk.udn.vn" },
   { name: "Tuấn Lộc", role: "Phòng ngủ, đăng nhập, trang Thống kê", email: "loc.dau240925@vnuk.udn.vn" },
 ];
-const POINTS = [
-  "Phòng có nhân vật, mưa rơi, lửa cháy, luôn có chuyển động nhẹ.",
-  "Phòng bày sẵn, vào là học được ngay.",
-  "Âm thanh nhẹ, phát theo vị trí đồ vật, đeo tai nghe lâu vẫn dễ chịu.",
-  "Pomodoro, nhạc nền và hẹn giờ ngủ ở cùng một trang.",
-];
 
 /** Giới thiệu & Liên hệ (FR-PAGE-05, UC.12). */
 export default function About() {
@@ -22,12 +16,7 @@ export default function About() {
     <main className="mx-auto grid max-w-4xl gap-12 px-4 py-10 [&>*]:min-w-0">
       <section aria-labelledby="h-goal">
         <h1 id="h-goal" className="font-display text-2xl font-bold sm:text-3xl">Về FocuSpace</h1>
-        <p className="mt-4 text-base text-muted">FocuSpace là phòng học ảo phong cách pixel, có nhạc Lo-fi, dành cho người hay đeo tai nghe học buổi tối.</p>
-        <ul className="mt-4 grid gap-3 sm:grid-cols-2">
-          {POINTS.map((t) => (
-            <li key={t} className="card p-4 text-muted">{t}</li>
-          ))}
-        </ul>
+        <p className="mt-4 text-base text-muted">FocuSpace là phòng học ảo mang phong cách pixel, có nhạc Lo-fi, có thể tùy chỉnh đồ vật và âm thanh; dành cho người muốn có âm thanh nền để học tập và làm việc, nhất là khi đeo tai nghe vào buổi tối.</p>
       </section>
 
       <section aria-labelledby="h-how">
