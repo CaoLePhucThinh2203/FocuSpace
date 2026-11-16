@@ -1,4 +1,18 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
+
+/** Font trình duyệt dùng thật để vẽ chữ của các phần tử (CDP, chỉ Chromium): mỗi phần tử → tên font và số ký tự. */
+async function renderedFonts(page: Page, selector: string) {
+  const cdp = await page.context().newCDPSession(page);
+  await cdp.send("DOM.enable"); await cdp.send("CSS.enable");
+  const { root } = await cdp.send("DOM.getDocument", { depth: -1 });
+  const { nodeIds } = await cdp.send("DOM.querySelectorAll", { nodeId: root.nodeId, selector });
+  const out: string[] = [];
+  for (const nodeId of nodeIds) {
+    const { fonts } = await cdp.send("CSS.getPlatformFontsForNode", { nodeId });
+    fonts.forEach((f) => out.push(f.familyName));
+  }
+  return out;
+}
 
 test.describe("UC.12 Trang chủ, Giới thiệu (Thịnh)", () => {
   test.fixme("AC-12.1 Vào phòng chuyển /room", async ({ page }) => {
@@ -53,5 +67,21 @@ test.describe("UC.12 Trang chủ, Giới thiệu (Thịnh)", () => {
     const loaded = await page.evaluate(() => [...document.fonts].filter((f) => f.status === "loaded").map((f) => `${f.family.replace(/"/g, "")} ${f.weight}`));
     expect(loaded).toContain("Be Vietnam Pro 400");
     expect(google).toEqual([]);
+  });
+
+  test("AC-12.6 chữ nét 500, 600 (menu, nút, tiêu đề bảng, giờ Pomodoro) hiện thật bằng Be Vietnam Pro, không rơi về font máy", async ({ page, browserName }) => {
+    test.skip(browserName !== "chromium", "đo font thật cần CDP của Chromium");
+    for (const [path, ready, sel] of [
+      ["/about", "main h1", "header a, main .btn, main th"],
+      ["/library", "main h1", "header a, main .btn"],
+      ["/room", "#roomName", ".room-name, .pomo-mini .time, .pomo-mini .btn"],
+    ] as const) {
+      await page.goto(path);
+      await expect(page.locator(ready).first()).toBeVisible();
+      await page.evaluate(() => document.fonts.ready);
+      const fams = await renderedFonts(page, sel);
+      expect(fams.length, path).toBeGreaterThan(0);
+      expect([...new Set(fams)].filter((f) => !f.startsWith("Be Vietnam Pro")), path).toEqual([]);
+    }
   });
 });
