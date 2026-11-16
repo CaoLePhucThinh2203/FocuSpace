@@ -3,16 +3,16 @@ import { useTitle } from "../../../lib/useTitle";
 import { GITHUB_URL } from "../../../lib/pages";
 
 const TEAM = [
-  { name: "Phúc Thịnh", role: "Phòng học, quản lý repo, Trang chủ, Thư viện, Tài khoản, Giới thiệu", email: "thinh.cao240924@vnuk.udn.vn" },
-  { name: "Tuấn Hưng", role: "Đồ vật, bảng đồ vật, âm thanh", email: "hung.nguyen240919@vnuk.udn.vn" },
-  { name: "Đình Nhiên", role: "Sân vườn, Google Analytics, Sentry", email: "nhien.truong240960@vnuk.udn.vn" },
+  { name: "Phúc Thịnh", role: "Phòng học, Trang chủ, Thư viện, Tài khoản, Giới thiệu; quản lý mã nguồn", email: "thinh.cao240924@vnuk.udn.vn" },
+  { name: "Tuấn Hưng", role: "Đồ vật và âm thanh", email: "hung.nguyen240919@vnuk.udn.vn" },
+  { name: "Đình Nhiên", role: "Sân vườn, theo dõi lượt dùng và lỗi", email: "nhien.truong240960@vnuk.udn.vn" },
   { name: "Tuấn Lộc", role: "Phòng ngủ, đăng nhập, trang Thống kê", email: "loc.dau240925@vnuk.udn.vn" },
 ];
-const PROBLEMS = [
-  ["Ảnh nền tĩnh dễ chán.", "Phòng có chuyển động (nhân vật, mưa, lửa) nên nhìn lâu không chán."],
-  ["Mất thời gian sắp xếp.", "Phòng có sẵn; bạn chỉ chỉnh âm thanh, thời tiết và thêm vài đồ vật."],
-  ["Âm thanh khó nghe lâu.", "Âm thanh phát ra theo vị trí đồ vật."],
-  ["Phải mở nhiều ứng dụng.", "Pomodoro, nhạc nền và hẹn giờ ngủ ở cùng một trang."],
+const POINTS = [
+  "Phòng có nhân vật, mưa rơi, lửa cháy, luôn có chuyển động nhẹ.",
+  "Phòng bày sẵn, vào là học được ngay.",
+  "Âm thanh nhẹ, phát theo vị trí đồ vật, đeo tai nghe lâu vẫn dễ chịu.",
+  "Pomodoro, nhạc nền và hẹn giờ ngủ ở cùng một trang.",
 ];
 
 /** Giới thiệu & Liên hệ (FR-PAGE-05, UC.12). */
@@ -22,10 +22,10 @@ export default function About() {
     <main className="mx-auto grid max-w-4xl gap-12 px-4 py-10 [&>*]:min-w-0">
       <section aria-labelledby="h-goal">
         <h1 id="h-goal" className="font-display text-2xl font-bold sm:text-3xl">Về FocuSpace</h1>
-        <p className="mt-4 text-base text-muted">FocuSpace là phòng học ảo dạng pixel, có nhạc Lo-fi, dành cho người hay đeo tai nghe học và làm việc buổi tối. Trang web giải quyết bốn vấn đề:</p>
+        <p className="mt-4 text-base text-muted">FocuSpace là phòng học ảo phong cách pixel, có nhạc Lo-fi, dành cho người hay đeo tai nghe học buổi tối.</p>
         <ul className="mt-4 grid gap-3 sm:grid-cols-2">
-          {PROBLEMS.map(([b, t]) => (
-            <li key={b} className="card p-4"><b className="text-amber">{b}</b> <span className="text-muted">{t}</span></li>
+          {POINTS.map((t) => (
+            <li key={t} className="card p-4 text-muted">{t}</li>
           ))}
         </ul>
       </section>
@@ -33,11 +33,11 @@ export default function About() {
       <section aria-labelledby="h-how">
         <h2 id="h-how" className="font-display text-2xl font-bold">Cách dùng nhanh</h2>
         <ol className="mt-4 grid list-decimal gap-2 pl-6 marker:font-display marker:text-amber">
-          <li>Mở <a href="/room" className="text-amber underline">Căn phòng</a> và nhấp một lần để bật âm thanh (nên đeo tai nghe).</li>
-          <li>Bấm cửa sổ để đổi thời tiết, bấm lò sưởi để chỉnh tiếng củi.</li>
-          <li>Kéo đồ vật từ thanh công cụ vào phòng; đặt đồ bên trái thì tiếng nghe lệch về tai trái.</li>
-          <li>Bấm <b>Bắt đầu</b> ở Pomodoro trên đầu trang. Giờ nghỉ thì bấm mũi tên trái để ra Sân vườn.</li>
-          <li>Đăng nhập ở trang <Link to="/account" className="text-amber underline">Tài khoản</Link> để đồng bộ phòng và xem thống kê.</li>
+          <li>Mở <a href="/room" className="text-amber underline">Căn phòng</a>, nhấp một lần để bật âm thanh.</li>
+          <li>Bấm cửa sổ, lò sưởi hoặc đồ vật để chỉnh.</li>
+          <li>Kéo thêm đồ vật từ thanh công cụ vào phòng.</li>
+          <li>Bấm <b>Bắt đầu</b> ở Pomodoro góc trên phải; giờ nghỉ thì ra Sân vườn.</li>
+          <li><Link to="/account" className="text-amber underline">Đăng nhập</Link> để lưu phòng và xem thống kê.</li>
         </ol>
       </section>
 
@@ -64,15 +64,15 @@ export default function About() {
 
       <section id="quyen-rieng-tu" aria-labelledby="h-privacy">
         <h2 id="h-privacy" className="font-display text-2xl font-bold">Quyền riêng tư</h2>
-        <p className="mt-2 text-muted">FocuSpace dùng Google Analytics để đếm lượt xem trang và một số thao tác (đổi phòng, bắt đầu Pomodoro…), dùng Sentry để ghi lỗi. Không gửi email, tên hay nội dung căn phòng của bạn tới các dịch vụ này.</p>
+        <p className="mt-2 text-muted">FocuSpace dùng Google Analytics để đếm lượt xem và Sentry để ghi lỗi. Email, tên và căn phòng của bạn không được gửi tới các dịch vụ này.</p>
       </section>
 
       <section id="lien-he" aria-labelledby="h-contact">
         <h2 id="h-contact" className="font-display text-2xl font-bold">Liên hệ</h2>
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
           <div className="card p-4">
-            <p className="text-xs uppercase tracking-wide text-muted">Email liên hệ</p>
-            <p className="mt-1"><a className="underline hover:text-amber" href="mailto:thinh.cao240924@vnuk.udn.vn">thinh.cao240924@vnuk.udn.vn</a> (trưởng nhóm)</p>
+            <p className="text-xs uppercase tracking-wide text-muted">Email</p>
+            <p className="mt-1"><a className="underline hover:text-amber" href="mailto:thinh.cao240924@vnuk.udn.vn">thinh.cao240924@vnuk.udn.vn</a> (Phúc Thịnh, trưởng nhóm)</p>
           </div>
           <div className="card p-4">
             <p className="text-xs uppercase tracking-wide text-muted">Mã nguồn GitHub</p>
