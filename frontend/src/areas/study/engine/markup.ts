@@ -2,7 +2,6 @@
 export const ROOM_MARKUP = `<div class="app grid h-full grid-rows-[auto_auto_1fr] gap-3 py-3 narrow:h-auto narrow:min-h-full">
   <header class="top flex min-w-0 flex-wrap items-center gap-x-4 gap-y-2">
     <div class="site-head flex min-w-0 items-center gap-4" id="siteHead"></div>
-    <div class="room-name text-[13px] text-muted">Phòng: <b class="font-semibold text-ink" id="roomName">Phòng học</b></div>
     <div class="spacer flex-1"></div>
     <div class="pomo-mini">
       <div class="pm-label"><span class="mode" id="pomoMiniMode">Focus</span><span class="pm-dots" id="pomoDots" role="img" aria-label="Vòng này: 0 / 4 phiên Focus"></span></div>
@@ -38,7 +37,10 @@ export const ROOM_MARKUP = `<div class="app grid h-full grid-rows-[auto_auto_1fr
       </button>
       <span class="drop-hint">Thả để xóa</span>
     </div>
-    <span class="mixchip"><span class="dot"></span><span id="mixCount">Đang phát 0 âm thanh</span></span>
+    <div class="room-status grid gap-1">
+      <div class="room-name text-[13px] text-muted">Phòng: <b class="font-semibold text-ink" id="roomName">Phòng học</b></div>
+      <span class="mixchip"><span class="dot"></span><span id="mixCount">Đang phát 0 âm thanh</span></span>
+    </div>
     <div class="tray" id="tray" hidden></div>
   </div>
 
