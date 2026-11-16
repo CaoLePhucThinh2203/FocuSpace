@@ -16,7 +16,7 @@ export default function About() {
     <main className="mx-auto grid max-w-4xl gap-12 px-4 py-10 [&>*]:min-w-0">
       <section aria-labelledby="h-goal">
         <h1 id="h-goal" className="font-display text-2xl font-bold sm:text-3xl">Về FocuSpace</h1>
-        <p className="mt-4 text-base text-muted">FocuSpace là phòng học ảo mang phong cách pixel, có nhạc Lo-fi, có thể tùy chỉnh đồ vật và âm thanh; dành cho người muốn có âm thanh nền để học tập và làm việc, nhất là khi đeo tai nghe vào buổi tối.</p>
+        <p className="mt-4 text-base text-muted">FocuSpace là phòng học ảo mang phong cách pixel, có nhạc Lo-fi, có thể tùy chỉnh đồ vật và âm thanh; dành cho người muốn có âm thanh nền để học tập và làm việc.</p>
       </section>
 
       <section aria-labelledby="h-how">
