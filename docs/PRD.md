@@ -8,7 +8,7 @@ Căn phòng Semi-Sandbox · Phòng học · Phòng ngủ · Sân vườn
 |---|---|
 | **Chủ sở hữu (Product Owner / PM)** | Cao Lê Phúc Thịnh (theo PRD Semi-Sandbox gốc) |
 | **Đội ngũ tham gia** | Tuấn Hưng (đồ vật, âm thanh) · Đình Nhiên (Sân vườn) · Tuấn Lộc (Phòng ngủ) · Phúc Thịnh (Phòng học, quản lý repo, các trang còn lại) · chi tiết docs/PLAN.md mục 2 |
-| **Phiên bản / trạng thái** | v5.15 (tải trước đủ 4 độ đậm font, chữ 500/600 không còn rơi về font máy, 17/11/2026) · v5.14 (đổi bài nhạc: báo đang chuẩn bị, chuyển 1,5 giây, giữ bài vừa nghe, 16/11/2026) · v5.13 (rù rù 1/5, máy xông bỏ tiếng xì, Thành phố bỏ tiếng nói chuyện, 16/11/2026) · v5.12 (tiếng mèo, máy xông còn 1/10, theo số đo thật, 16/11/2026) · v5.11 (văn phong giao diện đơn giản, 15/11/2026) · v5.10 (chữ chú thích Căn phòng 12 px, 15/11/2026) · v5.9 (font tự host, 15/11/2026) · v5.8 (thống nhất 25 đồ, 15/11/2026) · v5.7 (Pomodoro theo vòng 15/11/2026) · v5.6 (rút gọn 15/11/2026) · v5.0 phê duyệt 07/11/2026 · v5.1 – v5.4 duyệt ở buổi họp kế hoạch 13/11/2026 · v5.5 (sửa giao diện, âm thanh 15/11) chờ duyệt |
+| **Phiên bản / trạng thái** | v5.16 (văn phong lần 2: câu ngắn, tự nhiên hơn, 17/11/2026) · v5.15 (tải trước đủ 4 độ đậm font, chữ 500/600 không còn rơi về font máy, 17/11/2026) · v5.14 (đổi bài nhạc: báo đang chuẩn bị, chuyển 1,5 giây, giữ bài vừa nghe, 16/11/2026) · v5.13 (rù rù 1/5, máy xông bỏ tiếng xì, Thành phố bỏ tiếng nói chuyện, 16/11/2026) · v5.12 (tiếng mèo, máy xông còn 1/10, theo số đo thật, 16/11/2026) · v5.11 (văn phong giao diện đơn giản, 15/11/2026) · v5.10 (chữ chú thích Căn phòng 12 px, 15/11/2026) · v5.9 (font tự host, 15/11/2026) · v5.8 (thống nhất 25 đồ, 15/11/2026) · v5.7 (Pomodoro theo vòng 15/11/2026) · v5.6 (rút gọn 15/11/2026) · v5.0 phê duyệt 07/11/2026 · v5.1 – v5.4 duyệt ở buổi họp kế hoạch 13/11/2026 · v5.5 (sửa giao diện, âm thanh 15/11) chờ duyệt |
 | **Tài liệu liên quan** | Tài liệu Kiến trúc giải pháp · API Docs · docs/DATABASE.md · docs/PLAN.md · Final Project Brief CSB25022 · FocuSpace_Diagrams.drawio · Chương 1 Phân tích hệ thống (FocuSpace_Chuong2_PhanTich.docx) |
 
 > **Quy tắc nguồn:** Khi hai nguồn mâu thuẫn, nguồn mới hơn thắng: tài liệu này \> prototype FocuSpace-Semi-Sandbox.html \> PRD .docx cũ. Mọi hành vi giao diện mô tả theo prototype FocuSpace-Semi-Sandbox.html. Yêu cầu của đề bài đồ án môn Web (CSB25022) đứng trên mọi nguồn.
@@ -429,7 +429,7 @@ Mức ưu tiên: **P0** bắt buộc trong bản nộp, **P1** nên có, **P2** 
 
 - Một bộ đếm Pomodoro theo vòng, dùng chung ở Phòng học và Sân vườn: Focus → nghỉ ngắn, lặp lại; đủ số phiên của nhịp thì nghỉ dài rồi bắt đầu vòng mới. Hết mỗi giai đoạn: chuông nhẹ, chuyển giai đoạn kế tiếp và dừng chờ bấm Bắt đầu.
 
-- **Nhịp học (v5.7):** bấm số giờ ở Pomodoro mini mở bảng Nhịp học (điện thoại: bảng trượt từ dưới lên) với 4 lựa chọn: Cổ điển 25 / 5 phút, nghỉ dài 15 sau 4 phiên (mặc định); Sâu 50 / 10, nghỉ dài 30 sau 2 phiên; Nhẹ 15 / 3, nghỉ dài 10 sau 4 phiên; Tuỳ chỉnh (tự đặt Focus, nghỉ ngắn, nghỉ dài trong 1–120 phút, nghỉ dài sau 4 phiên). Đang dừng thì áp dụng ngay; đang chạy thì phiên hiện tại giữ nguyên, nhịp mới áp dụng từ phiên sau. Bảng có thanh tiến trình của vòng, nút "Bỏ qua lượt nghỉ" (khi đang nghỉ) và "Đặt lại vòng". Nhịp đã chọn lưu trên trình duyệt (khóa `focuspace.pomo.v1`). Không còn nút ▲▼ chỉnh từng phút.
+- **Nhịp học (v5.7):** bấm số giờ ở Pomodoro mini mở bảng Nhịp học (điện thoại: bảng trượt từ dưới lên) với 4 lựa chọn: Cổ điển 25 / 5 phút, nghỉ dài 15 sau 4 phiên (mặc định); Sâu 50 / 10, nghỉ dài 30 sau 2 phiên; Nhẹ 15 / 3, nghỉ dài 10 sau 4 phiên; Tùy chỉnh (tự đặt Focus, nghỉ ngắn, nghỉ dài trong 1–120 phút, nghỉ dài sau 4 phiên). Đang dừng thì áp dụng ngay; đang chạy thì phiên hiện tại giữ nguyên, nhịp mới áp dụng từ phiên sau. Bảng có thanh tiến trình của vòng, nút "Bỏ qua lượt nghỉ" (khi đang nghỉ) và "Đặt lại vòng". Nhịp đã chọn lưu trên trình duyệt (khóa `focuspace.pomo.v1`). Không còn nút ▲▼ chỉnh từng phút.
 
 - **Header:** Pomodoro mini hiện giai đoạn (Focus / Nghỉ ngắn / Nghỉ dài), chấm tiến độ trong vòng, số giờ và nút Bắt đầu / Tạm dừng. Vào Phòng ngủ thì Pomodoro tự tạm dừng (giữ số giờ còn lại) và ô Hẹn giờ ngủ thế chỗ; quay lại Phòng học hoặc Sân vườn bấm Bắt đầu để chạy tiếp.
 
@@ -437,7 +437,7 @@ Mức ưu tiên: **P0** bắt buộc trong bản nộp, **P1** nên có, **P2** 
 
 - Hiển thị ở Pomodoro mini (Phòng học, Sân vườn) và popover Đồng hồ Pomodoro (đồ vật; chỉ có Bắt đầu / Tạm dừng và Đặt lại vòng). Màn hình đồng hồ xanh lá khi Focus, xanh dương khi Nghỉ, dấu hai chấm nhấp nháy khi chạy.
 
-- Hẹn giờ ngủ (chỉ Phòng ngủ): ô trên header cùng kiểu Pomodoro mini (nhãn, số giờ, nút Bắt đầu / Tạm dừng); bấm số giờ mở bảng chọn Tắt / 15 / 30 / 60 phút, chọn xong hiện số phút và chờ bấm Bắt đầu; tạm dừng trong 2 phút cuối thì âm thanh trở lại mức bình thường; chọn Tắt để huỷ; popover đồng hồ treo tường có cùng các lựa chọn; không có nút chỉnh từng phút; 2 phút cuối âm tổng giảm dần về 0; hết giờ hiện “Đã hết giờ ngủ · chạm để bật lại” ngay trong ô Hẹn giờ ngủ.
+- Hẹn giờ ngủ (chỉ Phòng ngủ): ô trên header cùng kiểu Pomodoro mini (nhãn, số giờ, nút Bắt đầu / Tạm dừng); bấm số giờ mở bảng chọn Tắt / 15 / 30 / 60 phút, chọn xong hiện số phút và chờ bấm Bắt đầu; tạm dừng trong 2 phút cuối thì âm thanh trở lại mức bình thường; chọn Tắt để huỷ; popover đồng hồ treo tường có cùng các lựa chọn; không có nút chỉnh từng phút; 2 phút cuối âm tổng giảm dần về 0; hết giờ hiện “Hết giờ ngủ · chạm để bật lại âm thanh” ngay trong ô Hẹn giờ ngủ.
 
 **Luồng chính (Happy path)**
 
@@ -485,7 +485,7 @@ Mức ưu tiên: **P0** bắt buộc trong bản nộp, **P1** nên có, **P2** 
 
 **Luồng ngoại lệ / lỗi (Edge cases)**
 
-- Mất mạng: vẫn dùng và lưu cục bộ, chip báo “Chưa đồng bộ – đang ngoại tuyến”; có mạng lại thì tự đồng bộ.
+- Mất mạng: vẫn dùng và lưu cục bộ, chip báo “Đang ngoại tuyến”; có mạng lại thì tự đồng bộ.
 
 - Phiên đăng nhập hết hạn — ở Căn phòng: thử `POST /auth/refresh`; thất bại thì quay về chế độ khách, không xóa dữ liệu cục bộ (UC.09 ngoại lệ 3). Ở Thống kê và Tài khoản: chuyển về form đăng nhập ở trang Tài khoản (UC.10, UC.11 ngoại lệ 3).
 
@@ -529,7 +529,7 @@ Mức ưu tiên: **P0** bắt buộc trong bản nộp, **P1** nên có, **P2** 
 
 - Căn phòng giữ bố cục của prototype (Tính năng A), dùng header chung ở trên. Điện thoại dựng dọc (màn ≤ 720 px, màn cảm ứng): cả trang tự xoay 90° để Căn phòng luôn nằm ngang.
 
-- Trang chủ: tên và câu giới thiệu sản phẩm, hình xem trước ba không gian vẽ bằng code, nút “Vào phòng”, mục “Mô tả & Tính năng” gồm ba điểm nổi bật (Semi-Sandbox, âm thanh không gian 2D, Pomodoro và Hẹn giờ ngủ), liên kết tới Thư viện. (v5.5: bỏ ô “Pixel art · Lo-fi · Semi-Sandbox” và hai nút “Bắt đầu học ngay”, “Tìm hiểu thêm” ở cuối trang.)
+- Trang chủ: tên và câu giới thiệu sản phẩm, hình xem trước ba không gian vẽ bằng code, nút “Vào phòng”, mục “Tính năng chính” gồm ba điểm nổi bật (Phòng có sẵn, Âm thanh theo vị trí, Pomodoro và hẹn giờ ngủ), nút “Xem thư viện”. (v5.5: bỏ ô “Pixel art · Lo-fi · Semi-Sandbox” và hai nút “Bắt đầu học ngay”, “Tìm hiểu thêm” ở cuối trang.)
 
 - Giới thiệu & Liên hệ: mục tiêu dự án, cách dùng nhanh, thành viên nhóm và vai trò, email liên hệ của 4 thành viên, liên kết repo GitHub (https://github.com/CaoLePhucThinh2203/FocuSpace); mục Quyền riêng tư nói rõ GA4 và Sentry không nhận dữ liệu cá nhân (Q-14).
 
@@ -697,7 +697,7 @@ Mỗi gạch đầu dòng ở Tính năng A–M ứng với một hoặc vài m�
 | FR-AUD-06 | Âm thanh tổng hợp bằng code, dựng sau cú nhấp đầu tiên (mỗi nguồn một tác vụ); cảnh đổi hình ngay cả khi âm chưa dựng xong | P0 | UC.03 | — |
 | FR-AUD-07 | AudioContext chỉ bật sau cú nhấp/phím đầu tiên; không tạo được thì app vẫn chạy phần hình và ghi lỗi | P0 | UC.03 | AC-03.1 |
 | FR-AUD-08 | Đổi bài nhạc (tai nghe, radio, đĩa than): bài chưa dựng thì nút bài đang chọn hiện "Đang chuẩn bị…", bài cũ phát tiếp tới khi bài mới sẵn sàng; chuyển bằng đường cong giữ độ to đều trong 1,5 giây (bài cũ nhỏ dần, bài mới to dần từ đầu bài); ngoài các bài đang dùng, giữ thêm 1 bài vừa nghe trong bộ nhớ để quay lại phát ngay | P1 | UC.03 | AC-03.6 |
-| FR-TIME-01 | Pomodoro theo vòng: Focus → nghỉ ngắn, đủ số phiên thì nghỉ dài; 4 nhịp học (Cổ điển 25/5/15 ×4 mặc định, Sâu 50/10/30 ×2, Nhẹ 15/3/10 ×4, Tuỳ chỉnh 1–120 phút) chọn ở bảng Nhịp học khi bấm số giờ; đổi khi đang chạy áp dụng từ phiên sau; Bắt đầu, Tạm dừng, Bỏ qua lượt nghỉ, Đặt lại vòng; chuông khi hết giai đoạn; tích tắc chỉ khi đang chạy | P0 | UC.05 | AC-05.3, AC-05.4, AC-05.5, AC-05.6, AC-05.7 |
+| FR-TIME-01 | Pomodoro theo vòng: Focus → nghỉ ngắn, đủ số phiên thì nghỉ dài; 4 nhịp học (Cổ điển 25/5/15 ×4 mặc định, Sâu 50/10/30 ×2, Nhẹ 15/3/10 ×4, Tùy chỉnh 1–120 phút) chọn ở bảng Nhịp học khi bấm số giờ; đổi khi đang chạy áp dụng từ phiên sau; Bắt đầu, Tạm dừng, Bỏ qua lượt nghỉ, Đặt lại vòng; chuông khi hết giai đoạn; tích tắc chỉ khi đang chạy | P0 | UC.05 | AC-05.3, AC-05.4, AC-05.5, AC-05.6, AC-05.7 |
 | FR-TIME-02 | Một bộ đếm dùng chung cho Phòng học và Sân vườn (Pomodoro mini, popover Đồng hồ); vào Phòng ngủ thì tự tạm dừng; tính theo thời điểm kết thúc nên không trôi khi tab ẩn | P0 | UC.05 | AC-05.1, AC-05.2, AC-05.8 |
 | FR-TIME-03 | Hẹn giờ ngủ (chỉ Phòng ngủ): ô header cùng kiểu Pomodoro mini, bấm số giờ mở bảng Tắt / 15 / 30 / 60 phút, chọn xong bấm Bắt đầu / Tạm dừng; không có nút chỉnh; 2 phút cuối âm tổng giảm dần; hết giờ hiện thông báo trong ô Hẹn giờ ngủ, chạm để bật lại | P0 | UC.06 | AC-06.1, AC-06.2, AC-06.3 |
 | FR-SAVE-01 | Tự lưu LocalStorage sau 250 ms | P0 | UC.02–UC.04, UC.09 | AC-02.1 |
@@ -811,7 +811,7 @@ Mỗi tiêu chí viết theo dạng **Cho trước – Khi – Thì**, kiểm đ
 | AC-05.6 | UC.05 *(unit)* | Có Đồng hồ Pomodoro bật tiếng tích tắc | Bộ đếm chạy, rồi tạm dừng | Mỗi lần số giây giảm có đúng một tiếng tích tắc; tạm dừng thì im |
 | AC-05.7 | UC.05 | Nhịp Cổ điển, bắt đầu vòng | Lần lượt hết 8 giai đoạn | Focus → Nghỉ ngắn ×3, sau Focus thứ 4 là Nghỉ dài 15:00; hết Nghỉ dài bắt đầu vòng mới (0 / 4 phiên) |
 | AC-05.8 | UC.05, UC.01 | Pomodoro đang chạy ở Phòng học | Chuyển sang Phòng ngủ | Pomodoro tự tạm dừng, ẩn khỏi header, ô Hẹn giờ ngủ hiện; quay lại Phòng học thấy đúng số giờ còn lại lúc dừng |
-| AC-06.1 | UC.06 | Đang ở Phòng ngủ | Chọn Hẹn giờ ngủ 15 phút rồi bấm Bắt đầu | Bắt đầu đếm ngược; 2 phút cuối âm tổng giảm dần về 0; hết giờ ô Hẹn giờ ngủ hiện "Đã hết giờ ngủ · chạm để bật lại" |
+| AC-06.1 | UC.06 | Đang ở Phòng ngủ | Chọn Hẹn giờ ngủ 15 phút rồi bấm Bắt đầu | Bắt đầu đếm ngược; 2 phút cuối âm tổng giảm dần về 0; hết giờ ô Hẹn giờ ngủ hiện "Hết giờ ngủ · chạm để bật lại âm thanh" |
 | AC-06.2 | UC.06 | Đã hết giờ ngủ | Chạm vào thông báo | Âm tổng trở lại mức trước khi hẹn giờ |
 | AC-06.3 | UC.06 | Đang ở Phòng ngủ, hẹn giờ tắt | Bấm số giờ, chọn "15 phút", bấm "Bắt đầu"; rồi chọn "Tắt" | Bảng có 4 lựa chọn Tắt / 15 / 30 / 60 phút và đóng sau khi chọn; hiện 15:00 kèm nút Bắt đầu; bấm thì đếm ngược, nút đổi thành Tạm dừng; chọn Tắt thì về --:-- và nút ẩn |
 | AC-07.1 | UC.07 | CSDL đã chạy seeder | Mở /library | Hiển thị đủ 17 đồ vật đọc từ `GET /catalog/items` |
@@ -825,7 +825,7 @@ Mỗi tiêu chí viết theo dạng **Cho trước – Khi – Thì**, kiểm đ
 | AC-09.1 | UC.09 | Thành viên đăng nhập trên máy A và máy B | Đổi thời tiết ở máy A, chờ 2 giây, mở lại máy B | Máy B hiển thị đúng thời tiết mới |
 | AC-09.2 | UC.09 | Máy B đang giữ revision cũ | Máy B sửa phòng | Nhận 409, áp bản mới nhất, báo "Phòng đã được cập nhật từ thiết bị khác." |
 | AC-09.3 | UC.09 | Lần đầu đăng nhập, cả máy và tài khoản đều có phòng | — | Hộp thoại hỏi "Giữ phòng trên máy này" / "Dùng phòng đã lưu trên tài khoản"; bên không chọn bị ghi đè hoàn toàn (BR-10) |
-| AC-09.4 | UC.09 | Đã đăng nhập | Mất mạng rồi sửa phòng | Vẫn lưu cục bộ, chip "Chưa đồng bộ – đang ngoại tuyến"; có mạng lại thì tự đồng bộ |
+| AC-09.4 | UC.09 | Đã đăng nhập | Mất mạng rồi sửa phòng | Vẫn lưu cục bộ, chip "Đang ngoại tuyến"; có mạng lại thì tự đồng bộ |
 | AC-10.1 | UC.10 | Thành viên đã hoàn thành 2 phiên Focus | Mở /stats | Hiện 50 phút tập trung, 2 Pomodoro hoàn thành, biểu đồ cột theo ngày, bảng phiên gần nhất |
 | AC-10.2 | UC.10 | Đang ở /stats | Chọn "30 ngày" | Ô số liệu và biểu đồ cập nhật theo khoảng mới |
 | AC-10.3 | UC.10 | Chưa đăng nhập | Mở /stats | Hiện lời mời đăng nhập và liên kết tới Tài khoản (BR-11) |
@@ -835,7 +835,7 @@ Mỗi tiêu chí viết theo dạng **Cho trước – Khi – Thì**, kiểm đ
 | AC-12.1 | UC.12 | — | Mở / và bấm "Vào phòng" | Chuyển tới /room không tải lại toàn trang |
 | AC-12.2 | UC.12 | — | Mở /about | Hiện mục tiêu, cách dùng nhanh, thành viên nhóm, liên hệ |
 | AC-12.3 | UC.12 | — | Mở URL không tồn tại | Hiện trang "Không tìm thấy" kèm liên kết về Trang chủ |
-| AC-12.5 | UC.12 | — | Mở / | Không còn ô "Pixel art · Lo-fi · Semi-Sandbox"; tiêu đề "Mô tả & Tính năng"; không còn nút "Bắt đầu học ngay", "Tìm hiểu thêm" |
+| AC-12.5 | UC.12 | — | Mở / | Không còn ô "Pixel art · Lo-fi · Semi-Sandbox"; tiêu đề "Tính năng chính" (v5.16; trước đó "Mô tả & Tính năng"); không còn nút "Bắt đầu học ngay", "Tìm hiểu thêm" |
 | AC-12.6 | UC.12 | — | Mở /, /about, /library, /room | Mọi chữ hiện thật bằng font Be Vietnam Pro ở cả 4 độ đậm 400, 500, 600, 700 (kiểm tra font trình duyệt dùng để vẽ chữ, không chỉ khai báo CSS); không gọi Google Fonts |
 | AC-12.4 | UC.12 | Màn hình 375 px / ≥ 768 px | Mở bất kỳ trang nào | Dưới 768 px header thu thành nút ☰; từ 768 px 5 liên kết nằm một hàng; không có thanh cuộn ngang |
 | AC-NF.1 | — | Bản build production | Chạy Lighthouse mobile cho 6 trang | Performance, Accessibility, Best Practices, SEO đều ≥ 90 (6.1) |
@@ -958,7 +958,7 @@ Mọi câu hỏi mở đã chốt (Q-03, Q-04, Q-07 trước 07/11; còn lại �
 | v5.1–v5.4 | 10–13/11/2026 | Bổ sung theo đề bài CSB25022 (2.4, Tính năng J–M); đồng bộ Chương 1 (3.3 use case, cột UC); 5.4 Tiêu chí nghiệm thu; bảng 85 mã FR; lịch 27/10 → 27/11; chốt Q-01 → Q-17; Lighthouse cách 2. Duyệt ở buổi họp 13/11. |
 | v5.5 | 15/11/2026 | Sửa theo góp ý giao diện và âm thanh: một font Be Vietnam Pro; header dùng chung, menu 1 hàng từ 768 px; Trang chủ "Mô tả & Tính năng"; bỏ chip âm thanh, chip lưu; âm nền; 6 bài Lo-fi; chỉnh ±1/±10 phút cho Pomodoro, Hẹn giờ ngủ; điện thoại dựng dọc tự xoay ngang; Lighthouse /room dựng âm thanh sau cú nhấp đầu. FR và AC liên quan: FR-UI-02, FR-SAVE-01/03, FR-AUD-02/06, FR-TIME-01/03, FR-PAGE-02/03; AC-01.5, 03.5, 05.5, 05.6, 06.3, 12.4–12.6. |
 | v5.6 | 15/11/2026 | Rút gọn: bỏ bảng thông tin trùng ở đầu, ghi chú [Cần xác nhận] đã có lời giải; 7.2 dẫn sang PLAN; 8.1 thành bảng quyết định đã chốt; 6.2 cookie SameSite=None theo cách triển khai. |
-| v5.7 | 15/11/2026 | Pomodoro theo vòng của kỹ thuật Pomodoro: thêm nghỉ dài, chấm tiến độ, bảng Nhịp học (Cổ điển, Sâu, Nhẹ, Tuỳ chỉnh) mở từ số giờ ở header; bỏ nút ▲▼ ±1/±10 ở Pomodoro và Hẹn giờ ngủ; Hẹn giờ ngủ trên header cùng kiểu Pomodoro mini, bảng chọn Tắt / 15 / 30 / 60 phút (bỏ mức 45), chọn xong bấm Bắt đầu / Tạm dừng; vào Phòng ngủ thì Pomodoro tự tạm dừng, ô Hẹn giờ ngủ thế chỗ. Sửa US-07, BR-01, Tính năng G, FR-UI-02, FR-TIME-01→03, FR-SAVE-04, AC-05.3→05.5, AC-06.3; thêm AC-05.7, AC-05.8. |
+| v5.7 | 15/11/2026 | Pomodoro theo vòng của kỹ thuật Pomodoro: thêm nghỉ dài, chấm tiến độ, bảng Nhịp học (Cổ điển, Sâu, Nhẹ, Tùy chỉnh) mở từ số giờ ở header; bỏ nút ▲▼ ±1/±10 ở Pomodoro và Hẹn giờ ngủ; Hẹn giờ ngủ trên header cùng kiểu Pomodoro mini, bảng chọn Tắt / 15 / 30 / 60 phút (bỏ mức 45), chọn xong bấm Bắt đầu / Tạm dừng; vào Phòng ngủ thì Pomodoro tự tạm dừng, ô Hẹn giờ ngủ thế chỗ. Sửa US-07, BR-01, Tính năng G, FR-UI-02, FR-TIME-01→03, FR-SAVE-04, AC-05.3→05.5, AC-06.3; thêm AC-05.7, AC-05.8. |
 | v5.8 | 15/11/2026 | Thống nhất giới hạn đồ vật với code (G12): BR-06, FR-ITEM-05, Tính năng E, AC-04.2, Q-16 đổi 40 → 25 đồ mỗi phòng; đủ 25 đồ thì không thêm, chỉ hiện thông báo “Phòng đã đầy — hãy xóa bớt đồ để thêm mới”. Tính năng G, I: bỏ nhãn [Đề xuất] — `abandoned` gửi bằng `fetch keepalive` khi rời trang (N10); Bỏ qua lượt nghỉ ghi `reset`. |
 | v5.9 | 15/11/2026 | 6.1: font Be Vietnam Pro tự host, bỏ CSS Google Fonts chặn hiển thị; ảnh xem trước đồ vật bỏ siêu dữ liệu `caBX`. Không đổi FR, AC (AC-12.6 vẫn một font Be Vietnam Pro). |
 | v5.10 | 15/11/2026 | 6.1: chữ chú thích Căn phòng (nhãn vùng bấm, nhãn mũi tên, tooltip thanh công cụ, nhãn Focus / Hẹn giờ ngủ) 11 px → 12 px để đạt Lighthouse "legible font sizes"; khác prototype 1 px. Không đổi FR, AC. |
@@ -967,3 +967,4 @@ Mọi câu hỏi mở đã chốt (Q-03, Q-04, Q-07 trước 07/11; còn lại �
 | v5.13 | 16/11/2026 | 5.1 âm thanh: rù rù của mèo tăng lại gấp đôi (1/5 mức v5.11); máy xông bỏ tiếng xì hơi sương, chỉ còn tiếng ùng ục; khung cảnh Thành phố bỏ tiếng người nói chuyện, chỉ còn tiếng còi xe, 30–50 giây một lần (trước đây trung bình ~60 giây một tiếng còi). |
 | v5.14 | 16/11/2026 | Đổi bài nhạc (FR-AUD-08, AC-03.6): nút bài đang dựng hiện "Đang chuẩn bị…"; chuyển bài 1,5 giây theo đường cong giữ độ to đều (trước: 0,3 giây, tuyến tính, hụt giữa chừng); giữ thêm 1 bài vừa nghe trong bộ nhớ (khoảng 20–27 MB) để quay lại phát ngay. |
 | v5.15 | 17/11/2026 | 6.1, AC-12.6: tải trước thêm độ đậm 500, 600 (bộ Latin, tiếng Việt). Trước đó với `font-display: optional` chỉ 400 và 700 được tải trước, nên menu, nút, tên phòng, giờ Pomodoro (nét 500, 600) thường hiện bằng Segoe UI; AC-12.6 nay kiểm tra font thật trình duyệt dùng. |
+| v5.16 | 17/11/2026 | Văn phong lần 2 (câu ngắn, tự nhiên): Trang chủ "Không gian ảo giúp tập trung.", "Để trải nghiệm tốt nhất, hãy đeo tai nghe.", nút "Xem thư viện", mục "Tính năng chính"; Giới thiệu, Thư viện, Tài khoản, Thống kê gọn lại ("Có lỗi, hãy thử lại.", ô "Số lần vào phòng", cột "Thời lượng", Thống kê lỗi có nút Thử lại như Thư viện); Căn phòng: tên tab "FocuSpace — Căn phòng", chip "Đang ngoại tuyến", hộp thoại hợp nhất ngắn hơn, "Đang phát N âm thanh", hết giờ ngủ hiện "Hết giờ ngủ · chạm để bật lại âm thanh" (AC-06.1); bỏ dấu thống nhất "Tùy", "tỏa". |
