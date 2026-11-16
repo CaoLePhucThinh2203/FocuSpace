@@ -3189,7 +3189,7 @@ function volRow(id, v) { return `<div class="vol"><div class="row"><label class=
 function spatialRow(em) {
   const sp = em.sp;
   if (sp.bg) return `<div class="spatial"><span>Âm nền: nghe đều hai tai ở mọi vị trí</span></div>`;
-  return `<div class="spatial"><div class="meter-row"><span>Trái</span><span>${panLabel(sp.pan)}</span><span>Phải</span></div><div class="meter"><i style="left:${(sp.pan + 1) / 2 * 100}%"></i></div></div>`;   // v5.17: bỏ dòng số suy giảm và khoảng cách, chỉ giữ thanh Trái/Phải
+  return `<div class="spatial"><div class="meter-row"><span>Trái</span><span>Phải</span></div><div class="meter"><i style="left:${(sp.pan + 1) / 2 * 100}%"></i></div></div>`;   // v5.17: chỉ giữ thanh Trái/Phải, bỏ chữ "Trái 83%" ở giữa và dòng số suy giảm, khoảng cách
 }
 function bindSwitch(id, get, set) {
   const el = pop.querySelector("#" + id);
