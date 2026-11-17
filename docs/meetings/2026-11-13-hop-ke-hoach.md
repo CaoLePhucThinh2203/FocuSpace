@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Thời gian / hình thức** | 13/11/2026 · [Cần bổ sung: giờ, online/trực tiếp] |
+| **Thời gian / hình thức** | 13/11/2026 · buổi tối, online qua Discord |
 | **Tham dự** | Tuấn Hưng, Đình Nhiên, Tuấn Lộc, Phúc Thịnh |
 | **Người ghi** | Phúc Thịnh |
 | **Tiêu chí đề bài** | Task 1a — chốt phân vai và trách nhiệm cho giai đoạn lập trình (họp khởi động: `2026-10-27-khoi-dong.md`) |
@@ -10,7 +10,7 @@
 ## 1. Bối cảnh
 
 - Đồ án cuối kỳ CSB25022, sản phẩm FocuSpace (PRD v5.3). Prototype, PRD, Kiến trúc, DATABASE, API, Phân tích hệ thống đã có trong thư mục dự án.
-- Nhóm bắt đầu từ 27/10/2026. Đã xong S1 (27/10–07/11: wireframe Figma, prototype Căn phòng, PRD duyệt 07/11) và S2 (08–12/11: PLAN, Kiến trúc, API, DATABASE, Phân tích hệ thống, prototype 6 trang).
+- Nhóm bắt đầu từ 27/10/2026. Đã xong S1 (27/10–07/11: wireframe draw.io, prototype Căn phòng, PRD duyệt 07/11) và S2 (08–12/11: PLAN, Kiến trúc, API, DATABASE, Phân tích hệ thống, prototype 6 trang).
 - Còn **2 tuần** (S3–S5) để lập trình, hoàn thành toàn bộ trước **27/11/2026**.
 
 ## 2. Phân vai đã thống nhất
@@ -27,10 +27,9 @@ Chi tiết từng việc theo khu vực: `docs/PLAN.md` §2 và `docs/TASKS.md`.
 ## 3. Đã chốt sau buổi họp (13/11)
 
 - Phân công backend và việc chung (đánh dấu ⓓ trong `docs/TASKS.md`): Hưng — `item_types`, `/catalog/items`; Nhiên — `scenes`, `/catalog/scenes`, telemetry, GA4/Sentry; Lộc — auth, `/me`, `/me/stats`, Lighthouse, E2E responsive; Thịnh — `schema.prisma`, `/room-state`, đồng bộ, README, video.
-- Ghép cặp review chéo: Hưng + Nhiên → nhóm A, Lộc + Thịnh → nhóm B (tên nhóm: [Cần bổ sung]).
+- Ghép cặp review chéo: Hưng + Nhiên → nhóm A, Lộc + Thịnh → nhóm B. Nhóm được review: Hưng, Nhiên, Lộc — Nhóm 4 (PawPass); Thịnh — Nhóm 6 (Quản lí chi tiêu).
 - Trang Thống kê chuyển từ Phúc Thịnh sang Tuấn Lộc (Lộc đã làm API `/me/stats`); Thịnh còn 18 issue.
 - Phúc Thịnh tạo tài khoản GA4, Sentry rồi gửi mã cho Đình Nhiên; triển khai lên Vercel + Render + Neon ở S5.
-- Không tạo tài khoản demo/số liệu mẫu; nhóm tự dùng thật vài ngày trước khi quay video.
 
 ## 4. Quy ước làm việc
 
@@ -46,7 +45,7 @@ Chi tiết từng việc theo khu vực: `docs/PLAN.md` §2 và `docs/TASKS.md`.
 |---|---|---|
 | Tạo repo GitHub, mời thành viên, milestone, nhãn, Projects; tạo issue từ `docs/TASKS.md` | Phúc Thịnh | 14/11 |
 | Monorepo + CI chạy xanh | Phúc Thịnh | 15/11 |
-| Dán link Figma vào PRD 5.3; xuất PNG wireframe vào `docs/wireframes/` | Phúc Thịnh | 14/11 |
+| Xuất PNG wireframe draw.io vào `docs/wireframes/` | Phúc Thịnh | 14/11 |
 | Khung test khu vực mình | Mỗi người | 15/11 |
 | Viết bù self-report S1, S2 | Mỗi người | 15/11 |
 | Xong Phase 0–2 + schema, migration, seeder (hết S3) | Theo `docs/TASKS.md` | 17/11 |

@@ -23,7 +23,7 @@
 |---|---|---|---|
 | — | — | Họp khởi động 27/10, ghi biên bản, phân chia khu vực cho 4 thành viên (G1) | Xong |
 | — | — | Dựng prototype Căn phòng `prototype/FocuSpace-Semi-Sandbox.html` cùng cả nhóm (G8; Đình Nhiên làm phần Sân vườn, các khung cảnh) | Xong |
-| — | — | Thiết kế Phòng học và các trang còn lại trên Figma; wireframe Căn phòng, Thư viện (T4) | Xong |
+| — | — | Thiết kế Phòng học và các trang còn lại; wireframe Căn phòng, Thư viện bằng draw.io (T4) | Xong |
 | — | — | Viết PRD v5.0: yêu cầu chức năng, quy tắc nghiệp vụ, tiêu chí chấp nhận (duyệt 07/11) | Xong |
 
 ### Khó khăn và cách xử lý
@@ -147,11 +147,12 @@ Số commit trên `main`: 39.
 | — | #50 | Cảnh Thành phố ở Sân vườn: xe cả 2 làn nhích lên 1 px (`c69be2c`) | Xong |
 | G9 | #51 | Vẽ lại toàn bộ sơ đồ theo mẫu báo cáo (use case, 12 Activity, 12 Sequence, biểu đồ lớp tách 3 tầng, ERD, Lược đồ quan hệ, 2 WND); dựng lại Chương 1 Phân tích hệ thống, đặt biểu đồ lớp, ERD, Lược đồ quan hệ trên trang ngang (`aa6984c`, `43d5921`, `0e3aa8f`) | Xong |
 | T18 | #52 | README trình bày lại theo 5 tiêu chí đề bài (cách chạy, tổng quan và công cụ, tính năng kèm ảnh, ERD, thông tin bổ sung), văn phong báo cáo, thêm ảnh Thống kê có số liệu minh họa (`23ce686`, `ec20fda`, `171993b`) | Xong |
-| G3 | (nhánh `docs/self-report-s3-s5`) | Self-report S3–S5 cả nhóm từ git log, gộp 5 sprint của 4 người vào một file `docs/reports/self-report.md`; lịch sprint trong PLAN §3 | Chờ PR |
-| T16 | — | Góp ý UI/UX cho nhóm B (`docs/reviews/given/phuc-thinh.md`) | Chưa làm |
-| T17 | — | Tổng hợp 10 góp ý nhận được từ Triết, Phát, Long vào `docs/reviews/received.md`: 9 góp ý đã làm (mèo đổi màu, Trang chủ, tối ưu web, Pomodoro, nút Bắt đầu/Tạm dừng, Hẹn giờ ngủ, cảnh Thành phố, độ lớn âm thanh, nhạc Lo-fi; PR #10, #29, #30, #40–#44, #46–#50), 1 góp ý không làm kèm lý do (khung cảnh tuyết) | Xong |
+| G3 | #54 | Self-report 5 sprint của Phúc Thịnh (`docs/reports/Phuc-Thinh_Self-Report.md`); soạn từ git log khung self-report cho các thành viên | Xong |
+| T16 | — | Góp ý UI/UX cho Nhóm 6 (Quản lí chi tiêu) ngày 07/11: làm đơn giản hơn, thêm nhập nhanh bằng giọng nói, thiết kế lại giao diện (`docs/reviews/given/phuc-thinh.md`) | Xong |
+| T17 | #53 | Tổng hợp 10 góp ý nhận được từ Triết, Phát, Long vào `docs/reviews/received.md`: 9 góp ý đã làm (mèo đổi màu, Trang chủ, tối ưu web, Pomodoro, nút Bắt đầu/Tạm dừng, Hẹn giờ ngủ, cảnh Thành phố, độ lớn âm thanh, nhạc Lo-fi; PR #10, #29, #30, #40–#44, #46–#50), 1 góp ý không làm kèm lý do (khung cảnh tuyết) | Xong |
 | G5 | #10, #29, #30, #40–#44, #46–#50 | Sửa theo góp ý: các góp ý được làm đã có trong các PR trên, không cần PR mới | Xong |
-| T19 | — | Video demo ≤ 10 phút, 720p, đăng YouTube, ghi link vào README | Chưa làm |
+| G10 | — | Đặt mã GA4, DSN Sentry trên Vercel, build lại; kiểm tra GA4 Realtime (`page_view`, `login`) và Sentry frontend nhận lỗi thử | Xong |
+| T19 | #61, #62 | Video demo đăng YouTube (Tuấn Lộc quay), link trong README | Xong |
 | — | #45–#52 | Duyệt và merge PR | Xong |
 
 ### Khó khăn và cách xử lý

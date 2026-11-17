@@ -6,7 +6,7 @@
 |---|---|
 | **Địa chỉ triển khai** | https://focuspace-iota.vercel.app |
 | **Kiểm tra trạng thái API** | https://focuspace-api.onrender.com/api/v1/health |
-| **Video trình bày** | Desktop: https://www.youtube.com/watch?v=9J9uekvG_xA / Mobile: coming soon |
+| **Video trình bày** | https://www.youtube.com/watch?v=9J9uekvG_xA |
 | **Mã nguồn** | https://github.com/CaoLePhucThinh2203/FocuSpace |
 | **Thời gian thực hiện** | 27/10/2026 – 17/11/2026, chia thành 5 sprint |
 
@@ -63,7 +63,7 @@ PostgreSQL 16 (Neon)
 | Cơ sở dữ liệu | PostgreSQL 16 |
 | Kiểm thử | Vitest, Supertest, Playwright, Lighthouse |
 | Giám sát | Google Analytics 4, Sentry (frontend và backend), nhật ký JSON |
-| Thiết kế | Figma (wireframe), prototype HTML (`prototype/`), draw.io (biểu đồ phân tích) |
+| Thiết kế | draw.io (wireframe, biểu đồ phân tích), prototype HTML (`prototype/`) |
 | Quản lý quy trình | GitHub Issues, GitHub Projects, milestone S1–S5, Pull Request có người duyệt, Conventional Commits, GitHub Actions |
 | Triển khai | Vercel (frontend), Render (backend), Neon (PostgreSQL) |
 
@@ -145,15 +145,15 @@ Bảng đối chiếu chi tiết được trình bày tại [`docs/PLAN.md`](doc
 | Tiêu chí | Minh chứng |
 |---|---|
 | 1a Họp phân công vai trò | [`docs/meetings/`](docs/meetings/) |
-| 1b Wireframe | Figma [Cần bổ sung: link]; bản xuất tại [`docs/wireframes/`](docs/wireframes/) |
+| 1b Wireframe | Vẽ bằng draw.io: [`docs/wireframes/FocuSpace_Wireframes.drawio`](docs/wireframes/FocuSpace_Wireframes.drawio), bản PNG cùng thư mục |
 | 1c Kế hoạch và các mốc thời gian | [`docs/PLAN.md`](docs/PLAN.md) §3; milestone S1–S5 trên GitHub |
-| 1d, 1e Quản lý dự án trên GitHub | Issue theo [`docs/TASKS.md`](docs/TASKS.md); mỗi công việc một nhánh; Pull Request liên kết issue; Conventional Commits; CI |
+| 1d, 1e Quản lý dự án trên GitHub | 71 issue (#64–#134) lập từ [`docs/TASKS.md`](docs/TASKS.md) (nhóm quên dùng issue trong quá trình làm nên tạo bù ngày 18/11/2026), gắn milestone, nhãn khu vực và người phụ trách, mỗi issue dẫn tới Pull Request thực hiện; mỗi công việc một nhánh, Pull Request có review; Conventional Commits; CI GitHub Actions |
 | 2a–2d Giao diện người dùng | 6 trang tại [mục 3](#3-chức-năng-và-hình-ảnh-minh-họa-features-and-screenshots); Tailwind CSS 4; kéo thả, popover, biểu mẫu, bộ lọc, hộp thoại; tương thích 3 kích thước màn hình |
 | 3a–3c Cơ sở dữ liệu | ERD tại [mục 4](#4-sơ-đồ-cơ-sở-dữ-liệu-database-diagram--erd); PostgreSQL và Prisma; thao tác CRUD với tài khoản và trạng thái phòng; 2 trang động: Thư viện, Thống kê |
 | 4a Google Lighthouse | [`docs/reports/lighthouse/`](docs/reports/lighthouse/README.md): 5 trang đạt 100 điểm ở cả 4 hạng mục; Căn phòng đạt Performance 95, Accessibility 100, SEO 100, Best Practices 96 khi đo trên Vercel và đạt 100 khi đo lại tại máy cục bộ sau khi tăng cỡ chữ chú thích lên 12 px |
 | 4b Theo dõi và ghi nhật ký | Google Analytics 4, Sentry (frontend và backend), nhật ký JSON (pino); dữ liệu telemetry phiên học lưu trong cơ sở dữ liệu |
 | 5a, 5b Đánh giá chéo | [`docs/reviews/`](docs/reviews/) |
-| Self-report 5 sprint | [`docs/reports/self-report.md`](docs/reports/self-report.md) (mỗi thành viên một chương, đủ S1–S5) |
+| Self-report 5 sprint | Mỗi thành viên một file, đủ S1–S5: [Phúc Thịnh](docs/reports/Phuc-Thinh_Self-Report.md), [Tuấn Hưng](docs/reports/Tuan-Hung_Self-Report.md), [Tuấn Lộc](docs/reports/Tuan-Loc_Self-Report.md), [Đình Nhiên](docs/reports/DinhNhien_Self-Report.md) |
 
 ### Triển khai hệ thống
 
