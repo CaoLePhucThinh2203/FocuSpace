@@ -83,4 +83,4 @@ Quy trình bắt buộc theo `docs/references/PlanDesignWeb.docx` (Role + Skill 
 | 13/11/2026 (lần 3) | Chuyển từ `docs/` ra thư mục gốc; bỏ bản Word song song (chỉ giữ `.md`); đường dẫn mới: `docs/analysis/`, `docs/references/`, `docs/images/`, `prototype/web/`. |
 | 13/11/2026 (lần 4) | drawio thêm trang ERD; ảnh Kiến trúc Hình 2, 4 xuất từ drawio. |
 | 15/11/2026 | PA B cho Căn phòng: Skill 3 lấy `roomEngine.js` làm nguồn logic, chỉ tách hàm thuần có test; Skill 5 và Quy ước ghi đúng đường dẫn phần chung, Room Engine. |
-| 17/11/2026 | Vẽ lại sơ đồ theo mẫu báo cáo: drawio gồm UC, 12 Activity, 12 Sequence, 1 Class, ERD (Chen), Lược đồ quan hệ, 2 WND; ảnh xuất vào `docs/images/diagrams/`. |
+| 17/11/2026 | Vẽ lại sơ đồ theo mẫu báo cáo: drawio gồm UC, 12 Activity, 12 Sequence, Class (bản gộp + 3 trang theo tầng), ERD (Chen), Lược đồ quan hệ, 2 WND; ảnh xuất vào `docs/images/diagrams/`. |

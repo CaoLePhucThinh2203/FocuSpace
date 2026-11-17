@@ -101,7 +101,7 @@ erDiagram
 
 `item_types` và `scenes` là bảng danh mục, không có khóa ngoại: `Item.type` trong `room_states.data` (JSONB) và `out.scene` tham chiếu tới `code` về mặt logic, được kiểm tra bằng schema Zod dùng chung.
 
-### Ánh xạ với biểu đồ lớp (Chương 1, Hình 1.26)
+### Ánh xạ với biểu đồ lớp (Chương 1, Hình 1.28)
 
 | Lớp thực thể | Bảng / đối tượng | Ánh xạ thuộc tính |
 |---|---|---|

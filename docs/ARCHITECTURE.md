@@ -119,7 +119,7 @@ Hai khối lớn: **ứng dụng trong trình duyệt** chịu toàn bộ trải
 
 ### Ánh xạ lớp thiết kế ↔ thành phần
 
-| **Lớp (Chương 1, Hình 1.26)** | **Module mã nguồn** (`frontend/src/`, `backend/src/`) |
+| **Lớp (Chương 1, Hình 1.26 – 1.28)** | **Module mã nguồn** (`frontend/src/`, `backend/src/`) |
 |---|---|
 | GiaoDienCanPhong | `areas/study/pages/Room.tsx` (header chung, hộp thoại hợp nhất, ô thông báo), `areas/study/engine/markup.ts` + `room.css` (khung Căn phòng); thanh công cụ, khay, popover, Bảng âm lượng, khay Khung cảnh, ô Hẹn giờ ngủ dựng trong `engine/legacy/roomEngine.js` |
 | RoomEngine | `engine/legacy/roomEngine.js` (vẽ ba không gian, vòng lặp, khởi động) + `areas/study/engine/rooms.ts` (bảng chuyển phòng, quy tắc chuyển) |
@@ -156,13 +156,13 @@ AudioContext được tạo ở trạng thái tạm dừng và chỉ bật sau c
 
 ![Hình 4](images/diagrams/erd.png)
 
-*Hình 4 — Biểu đồ thực thể – liên kết (ERD), gồm hai thực thể danh mục LOAIDOVAT (item_types) và KHUNGCANH (scenes) (nguồn: `docs/analysis/FocuSpace_Diagrams.drawio`, trang ERD; cùng hình với Chương 1, Hình 1.27)*
+*Hình 4 — Biểu đồ thực thể – liên kết (ERD), gồm hai thực thể danh mục LOAIDOVAT (item_types) và KHUNGCANH (scenes) (nguồn: `docs/analysis/FocuSpace_Diagrams.drawio`, trang ERD; cùng hình với Chương 1, Hình 1.29)*
 
 ![Hình 5](images/diagrams/luoc-do-quan-he.png)
 
-*Hình 5 — Lược đồ quan hệ, mỗi quan hệ ghi kèm tên bảng vật lý (nguồn: trang Relational Schema; cùng hình với Chương 1, Hình 1.28; khớp từng cột với `docs/DATABASE.md` §3)*
+*Hình 5 — Lược đồ quan hệ, mỗi quan hệ ghi kèm tên bảng vật lý (nguồn: trang Relational Schema; cùng hình với Chương 1, Hình 1.30; khớp từng cột với `docs/DATABASE.md` §3)*
 
-### Ánh xạ lớp thực thể ↔ bảng (Chương 1, Hình 1.26)
+### Ánh xạ lớp thực thể ↔ bảng (Chương 1, Hình 1.28)
 
 | **Lớp thực thể** | **Bảng / đối tượng** | **Ánh xạ thuộc tính** |
 |---|---|---|
@@ -261,7 +261,7 @@ Triển khai: Render và Vercel tự deploy lại khi `main` có commit mới; m
 
 # Phụ lục A — Mô hình lớp thiết kế
 
-Biểu đồ lớp xuất từ FocuSpace_Diagrams.drawio (trang Class), cùng hình với Chương 1, Hình 1.26.
+Biểu đồ lớp gộp cả ba tầng, xuất từ FocuSpace_Diagrams.drawio (trang Class). Chương 1 in từng tầng thành một hình riêng cho dễ đọc: Hình 1.26 (giao diện, trang Class_GiaoDien), Hình 1.27 (điều khiển và dịch vụ, trang Class_DieuKhien_DichVu), Hình 1.28 (thực thể, trang Class_ThucThe).
 
 ![Hình A1](images/diagrams/class.png)
 
@@ -278,4 +278,4 @@ Biểu đồ gồm ba tầng. Tầng giao diện có GiaoDienCanPhong (trang Că
 | v1.4 | 14/11/2026 | Rút gọn: bỏ phần [Đề xuất] ngoài phạm vi đồ án (bản đồ năng lực, DR, kiến trúc tham chiếu khi mở rộng và Hình 5, WAF, metrics, báo giá); bảng ánh xạ lớp ↔ module theo thư mục khu vực thật; 3.5 và 4.2 ghi đúng cấu hình `render.yaml`, `vercel.json`, CI; cookie SameSite=None. |
 | v1.5 | 15/11/2026 | PA B: 3.2 và bảng ánh xạ lớp ↔ module ghi đúng phần giữ trong `roomEngine.js` và hàm thuần đã tách (rooms, pomodoro, sleepTimer, placement). |
 | v1.6 | 15/11/2026 | 3.4: font Be Vietnam Pro tự host thay Google Fonts (bỏ yêu cầu CSS chặn hiển thị, Lighthouse H12). |
-| v1.7 | 17/11/2026 | Vẽ lại sơ đồ theo mẫu báo cáo: Hình 2 xuất lại từ Sequence UC.09 mới; Hình 4 là ERD kiểu Chen, thêm Hình 5 Lược đồ quan hệ; Phụ lục A gộp ba biểu đồ lớp thành một. Ảnh sơ đồ chuyển vào `docs/images/diagrams/`. |
+| v1.7 | 17/11/2026 | Vẽ lại sơ đồ theo mẫu báo cáo: Hình 2 xuất lại từ Sequence UC.09 mới; Hình 4 là ERD kiểu Chen, thêm Hình 5 Lược đồ quan hệ; Phụ lục A gộp ba biểu đồ lớp thành một (Chương 1 in tách theo tầng: Hình 1.26 – 1.28; ERD, Lược đồ quan hệ đánh lại thành Hình 1.29, 1.30). Ảnh sơ đồ chuyển vào `docs/images/diagrams/`. |
