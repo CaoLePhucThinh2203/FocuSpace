@@ -36,8 +36,8 @@ Quy trình bắt buộc theo `docs/references/PlanDesignWeb.docx` (Role + Skill 
 | Phần | Tài liệu |
 |---|---|
 | Phân tích | `docs/analysis/FocuSpace_Diagrams.drawio` · `docs/analysis/FocuSpace_Chuong2_PhanTich.docx` (Chương 1 Phân tích hệ thống) |
-| Frontend | `frontend/src/engine/legacy/README.md` · `prototype/FocuSpace-Semi-Sandbox.html` · `docs/PRD.md` (5.4 AC) · `docs/ARCHITECTURE.md` · `docs/API.md` · `docs/wireframes/` (FocuSpace_Wireframes.drawio + PNG) · biểu đồ Sequence/Class tương ứng (C2, C3) |
-| Backend | `docs/PRD.md` · `docs/ARCHITECTURE.md` · `docs/DATABASE.md` · `docs/API.md` · biểu đồ Sequence/Class tương ứng (C1, C3) |
+| Frontend | `frontend/src/engine/legacy/README.md` · `prototype/FocuSpace-Semi-Sandbox.html` · `docs/PRD.md` (5.4 AC) · `docs/ARCHITECTURE.md` · `docs/API.md` · `docs/wireframes/` (FocuSpace_Wireframes.drawio + PNG) · biểu đồ Sequence tương ứng, biểu đồ lớp, WND (`docs/images/diagrams/`) |
+| Backend | `docs/PRD.md` · `docs/ARCHITECTURE.md` · `docs/DATABASE.md` · `docs/API.md` · biểu đồ Sequence tương ứng, biểu đồ lớp, ERD, Lược đồ quan hệ (`docs/images/diagrams/`) |
 | Kế hoạch | `docs/PLAN.md` · `docs/TASKS.md` · `docs/references/PlanDesignWeb.docx` (quy trình) · đề bài đồ án (`docs/references/Web Basic - Final Project Brief - CSB25022 - VNUK.docx`) |
 
 ## Constraints
@@ -71,7 +71,7 @@ Quy trình bắt buộc theo `docs/references/PlanDesignWeb.docx` (Role + Skill 
 - `docs/references/` — đề bài và quy trình, chỉ đọc.
 - `docs/analysis/FocuSpace_Chuong2_PhanTich.docx` — chỉ sửa khi người dùng yêu cầu.
 - `Focus_Space .mp4`.
-- `docs/analysis/FocuSpace_Diagrams.drawio` là nguồn của mọi biểu đồ (use case, Activity, Sequence, Class, ERD); ảnh trong `docs/images/` được xuất từ file này, không sửa ảnh bằng tay.
+- `docs/analysis/FocuSpace_Diagrams.drawio` là nguồn của mọi biểu đồ (use case, Activity, Sequence, Class, ERD, Lược đồ quan hệ, WND); ảnh trong `docs/images/diagrams/` được xuất từ file này, không sửa ảnh bằng tay.
 
 ## Lịch sử thay đổi
 
@@ -83,3 +83,4 @@ Quy trình bắt buộc theo `docs/references/PlanDesignWeb.docx` (Role + Skill 
 | 13/11/2026 (lần 3) | Chuyển từ `docs/` ra thư mục gốc; bỏ bản Word song song (chỉ giữ `.md`); đường dẫn mới: `docs/analysis/`, `docs/references/`, `docs/images/`, `prototype/web/`. |
 | 13/11/2026 (lần 4) | drawio thêm trang ERD; ảnh Kiến trúc Hình 2, 4 xuất từ drawio. |
 | 15/11/2026 | PA B cho Căn phòng: Skill 3 lấy `roomEngine.js` làm nguồn logic, chỉ tách hàm thuần có test; Skill 5 và Quy ước ghi đúng đường dẫn phần chung, Room Engine. |
+| 17/11/2026 | Vẽ lại sơ đồ theo mẫu báo cáo: drawio gồm UC, 12 Activity, 12 Sequence, 1 Class, ERD (Chen), Lược đồ quan hệ, 2 WND; ảnh xuất vào `docs/images/diagrams/`. |

@@ -119,7 +119,7 @@ Hai khối lớn: **ứng dụng trong trình duyệt** chịu toàn bộ trải
 
 ### Ánh xạ lớp thiết kế ↔ thành phần
 
-| **Lớp (Chương 1, Class C2/C3)** | **Module mã nguồn** (`frontend/src/`, `backend/src/`) |
+| **Lớp (Chương 1, Hình 1.26)** | **Module mã nguồn** (`frontend/src/`, `backend/src/`) |
 |---|---|
 | GiaoDienCanPhong | `areas/study/pages/Room.tsx` (header chung, hộp thoại hợp nhất, ô thông báo), `areas/study/engine/markup.ts` + `room.css` (khung Căn phòng); thanh công cụ, khay, popover, Bảng âm lượng, khay Khung cảnh, ô Hẹn giờ ngủ dựng trong `engine/legacy/roomEngine.js` |
 | RoomEngine | `engine/legacy/roomEngine.js` (vẽ ba không gian, vòng lặp, khởi động) + `areas/study/engine/rooms.ts` (bảng chuyển phòng, quy tắc chuyển) |
@@ -137,11 +137,11 @@ Hai khối lớn: **ứng dụng trong trình duyệt** chịu toàn bộ trải
 
 Router và seeder của mỗi khu vực được nạp tự động (`backend/src/lib/areas.ts`, `frontend/src/lib/areas.ts`), nên phần nền chạy được khi chưa có code của khu vực khác.
 
-Thông điệp trong biểu đồ Sequence (Chương 1 §1.4) dùng đúng tên phương thức của các lớp này. Hình các biểu đồ lớp: Phụ lục A.
+Thông điệp trong biểu đồ Sequence (Chương 1 §1.4) dùng đúng tên phương thức của các lớp này. Hình biểu đồ lớp: Phụ lục A.
 
 ### Luồng chính
 
-![Hình 2](images/seq-uc09-dong-bo.png)
+![Hình 2](images/diagrams/sequence-uc09.png)
 
 *Hình 2 — Mở ứng dụng, đồng bộ và xử lý xung đột (Sequence UC.09; cùng hình với Chương 1, Hình 1.22; nguồn: `docs/analysis/FocuSpace_Diagrams.drawio`, trang S9)*
 
@@ -154,13 +154,17 @@ AudioContext được tạo ở trạng thái tạm dừng và chỉ bật sau c
 
 ## 3.3 Kiến trúc dữ liệu (Data Architecture)
 
-![Hình 4](images/erd.png)
+![Hình 4](images/diagrams/erd.png)
 
-*Hình 4 — Sơ đồ quan hệ dữ liệu (ERD), gồm hai bảng danh mục item_types và scenes (nguồn: `docs/analysis/FocuSpace_Diagrams.drawio`, trang ERD; khớp từng cột với `docs/DATABASE.md` §3)*
+*Hình 4 — Biểu đồ thực thể – liên kết (ERD), gồm hai thực thể danh mục LOAIDOVAT (item_types) và KHUNGCANH (scenes) (nguồn: `docs/analysis/FocuSpace_Diagrams.drawio`, trang ERD; cùng hình với Chương 1, Hình 1.27)*
 
-### Ánh xạ lớp thực thể ↔ bảng (Chương 1, Class C1)
+![Hình 5](images/diagrams/luoc-do-quan-he.png)
 
-| **Lớp (Class C1)** | **Bảng / đối tượng** | **Ánh xạ thuộc tính** |
+*Hình 5 — Lược đồ quan hệ, mỗi quan hệ ghi kèm tên bảng vật lý (nguồn: trang Relational Schema; cùng hình với Chương 1, Hình 1.28; khớp từng cột với `docs/DATABASE.md` §3)*
+
+### Ánh xạ lớp thực thể ↔ bảng (Chương 1, Hình 1.26)
+
+| **Lớp thực thể** | **Bảng / đối tượng** | **Ánh xạ thuộc tính** |
 |---|---|---|
 | ThanhVien | users | id↔id, email↔email, matKhauBam↔password_hash, tenHienThi↔display_name, ngayTao↔created_at, ngayCapNhat↔updated_at, lanDangNhapCuoi↔last_login_at |
 | RefreshToken | refresh_tokens | id, tokenBam↔token_hash, familyId↔family_id, hetHan↔expires_at, thuHoiLuc↔revoked_at, ngayTao↔created_at |
@@ -257,25 +261,13 @@ Triển khai: Render và Vercel tự deploy lại khi `main` có commit mới; m
 
 # Phụ lục A — Mô hình lớp thiết kế
 
-Ba biểu đồ lớp xuất từ FocuSpace_Diagrams.drawio (trang C1–C3), cùng nội dung với Chương 1 §1.5.
+Biểu đồ lớp xuất từ FocuSpace_Diagrams.drawio (trang Class), cùng hình với Chương 1, Hình 1.26.
 
-![Hình A1](images/class-thuc-the.png)
+![Hình A1](images/diagrams/class.png)
 
-*Hình A1 — Lớp thực thể (Class C1)*
+*Hình A1 — Biểu đồ lớp của hệ thống*
 
-Lớp thực thể ánh xạ với bảng dữ liệu (users, refresh_tokens, room_states, item_types, scenes, ba bảng telemetry) và với đối tượng RoomState lưu dạng JSONB. Khach chỉ tồn tại phía trình duyệt; ThanhVien liên kết 0..1 với PhienSuDung khi đăng nhập. Bảng ánh xạ thuộc tính ở mục 3.3.
-
-![Hình A2](images/class-dieu-khien.png)
-
-*Hình A2 — Lớp giao diện và điều khiển trang Căn phòng (Class C2)*
-
-GiaoDienCanPhong là lớp giao diện (boundary) của trang Căn phòng; các lớp điều khiển RoomEngine, QuanLyDoVat, AmThanhKhongGian, BoDemPomodoro, HenGioNgu, BoLuuTruCucBo, DongBoClient, TelemetryQueue tạo thành Room Engine và tầng lưu trữ chạy trong trình duyệt. DongBoClient phụ thuộc AuthService (Class C3) để làm mới phiên khi mở app.
-
-![Hình A3](images/class-dich-vu.png)
-
-*Hình A3 — Lớp trang động và dịch vụ backend (Class C3)*
-
-Các lớp trang (TrangChu, TrangGioiThieu, TrangThuVien, TrangThongKe, TrangTaiKhoan) gọi 5 service backend qua API; Analytics (GA4) ghi lượt xem trang. Tên phương thức service khớp endpoint trong API Docs mục 1.
+Biểu đồ gồm ba tầng. Tầng giao diện có GiaoDienCanPhong (trang Căn phòng) và 5 lớp trang (TrangChu, TrangGioiThieu, TrangThuVien, TrangThongKe, TrangTaiKhoan). Tầng điều khiển và dịch vụ có các lớp của Room Engine chạy trong trình duyệt (RoomEngine, QuanLyDoVat, HenGioNgu, BoDemPomodoro, AmThanhKhongGian, BoLuuTruCucBo, TelemetryQueue, DongBoClient), Analytics (GA4) và 5 service backend (CatalogService, StatsService, TelemetryService, AuthService, RoomStateService). Tầng thực thể ánh xạ với bảng dữ liệu và với đối tượng RoomState lưu dạng JSONB (bảng ánh xạ ở mục 3.3); Khach chỉ tồn tại phía trình duyệt, ThanhVien kế thừa Khach. Tên phương thức khớp thông điệp trong biểu đồ Sequence và endpoint trong API Docs mục 1.
 
 # Lịch sử thay đổi
 
@@ -286,3 +278,4 @@ Các lớp trang (TrangChu, TrangGioiThieu, TrangThuVien, TrangThongKe, TrangTai
 | v1.4 | 14/11/2026 | Rút gọn: bỏ phần [Đề xuất] ngoài phạm vi đồ án (bản đồ năng lực, DR, kiến trúc tham chiếu khi mở rộng và Hình 5, WAF, metrics, báo giá); bảng ánh xạ lớp ↔ module theo thư mục khu vực thật; 3.5 và 4.2 ghi đúng cấu hình `render.yaml`, `vercel.json`, CI; cookie SameSite=None. |
 | v1.5 | 15/11/2026 | PA B: 3.2 và bảng ánh xạ lớp ↔ module ghi đúng phần giữ trong `roomEngine.js` và hàm thuần đã tách (rooms, pomodoro, sleepTimer, placement). |
 | v1.6 | 15/11/2026 | 3.4: font Be Vietnam Pro tự host thay Google Fonts (bỏ yêu cầu CSS chặn hiển thị, Lighthouse H12). |
+| v1.7 | 17/11/2026 | Vẽ lại sơ đồ theo mẫu báo cáo: Hình 2 xuất lại từ Sequence UC.09 mới; Hình 4 là ERD kiểu Chen, thêm Hình 5 Lược đồ quan hệ; Phụ lục A gộp ba biểu đồ lớp thành một. Ảnh sơ đồ chuyển vào `docs/images/diagrams/`. |

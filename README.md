@@ -110,7 +110,9 @@ Mọi trang dùng được trên điện thoại, máy tính bảng và máy tí
 
 ## 4. Sơ đồ cơ sở dữ liệu (ERD)
 
-![ERD](docs/images/erd.png)
+![ERD](docs/images/diagrams/erd.png)
+
+Lược đồ quan hệ (từng cột, khóa chính, khóa ngoại): [`docs/images/diagrams/luoc-do-quan-he.png`](docs/images/diagrams/luoc-do-quan-he.png).
 
 8 bảng: `users`, `refresh_tokens`, `room_states`, `usage_sessions`, `pomodoro_sessions`, `client_errors`, `item_types`, `scenes`. Chi tiết từng bảng, ràng buộc và truy vấn: [`docs/DATABASE.md`](docs/DATABASE.md). Schema: `backend/prisma/schema.prisma`; migration: `backend/prisma/migrations/`; seeder: `backend/prisma/seed.ts` (chỉ nạp danh mục đồ vật và khung cảnh, không tạo tài khoản hay số liệu mẫu).
 
