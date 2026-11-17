@@ -1,7 +1,7 @@
 # FocuSpace — Danh sách task theo thành viên (TASKS.md)
 
 > Cập nhật 15/11/2026 · nguồn: `docs/PLAN.md` §2–3 (phân vai; lịch từ 27/10/2026: S1 ✅ 27/10–07/11, S2 ✅ 08–12/11, S3 13–17/11, S4 18–22/11, S5 23–27/11; hạn **27/11/2026**), PRD 5.4 (AC).
-> Issue đánh dấu ✅ là việc đã làm ở S1–S2: vẫn tạo trên GitHub rồi đóng ngay (kèm link Figma/file) để milestone S1, S2 có lịch sử.
+> Issue đánh dấu ✅ là việc đã làm ở S1–S2: vẫn tạo trên GitHub rồi đóng ngay (kèm link file) để milestone S1, S2 có lịch sử.
 > Mỗi dòng = **1 GitHub Issue**: tiêu đề đúng như cột "Issue", gán người, milestone = sprint, nhãn `area:*`, `type:*`, `P0/P1`. Mở nhánh `feat/<số>-<mô-tả>`, PR có `Closes #<số>` và mã UC.
 > Cột **Xong khi** là điều kiện đóng issue (Definition of Done): test liên quan xanh, PR được 1 người khác duyệt, CI xanh.
 > Phần backend và việc chung (đánh dấu ⓓ) đã chốt 13/11/2026; trang Thống kê chuyển từ Thịnh (T15 cũ) sang Lộc (L13).
@@ -56,7 +56,7 @@ Mỗi người chỉ sửa thư mục của mình; sửa chỗ khác thì mở P
 
 | # | Sprint | Issue | UC / AC | Xong khi | Trạng thái |
 |---|---|---|---|---|---|
-| N1 | S1 ✅ | `docs(wireframe): wireframe Figma Trang chủ, Giới thiệu & Liên hệ` | UC.12 | ✅ Figma desktop + mobile, nhóm duyệt; PNG xuất vào `docs/wireframes/` | ✅ |
+| N1 | S1 ✅ | `docs(wireframe): wireframe Trang chủ, Giới thiệu & Liên hệ` | UC.12 | ✅ draw.io desktop + mobile, nhóm duyệt; PNG xuất vào `docs/wireframes/` | ✅ |
 | N2 | S3 | `test(garden): khung test Sân vườn, khung cảnh, telemetry` | UC.01, UC.02 | `test.fixme` cho AC-01.3, AC-02.3 | ✅ #9 |
 | N3 | S3 | `feat(shared): defaults Sân vườn + catalog 5 khung cảnh` | UC.02 | Test đủ 5 cảnh, mặc định Khu rừng | ✅ #3 |
 | N4 | S3 | `feat(db): bảng scenes + seeder khung cảnh` ⓓ | UC.07 | Seed 2 lần vẫn 5 dòng | ✅ #9 |
@@ -76,7 +76,7 @@ Mỗi người chỉ sửa thư mục của mình; sửa chỗ khác thì mở P
 
 | # | Sprint | Issue | UC / AC | Xong khi | Trạng thái |
 |---|---|---|---|---|---|
-| L1 | S1 ✅ | `docs(wireframe): wireframe Figma Thống kê, Tài khoản` | UC.08, UC.10, UC.11 | ✅ Figma desktop + mobile, nhóm duyệt | ✅ |
+| L1 | S1 ✅ | `docs(wireframe): wireframe Thống kê, Tài khoản` | UC.08, UC.10, UC.11 | ✅ draw.io desktop + mobile, nhóm duyệt | ✅ |
 | L2 | S3 | `test(api): khung integration test auth, me, stats` ⓓ | UC.08, UC.10, UC.11 | Liệt kê đủ mã trạng thái API §3.2 | ✅ #5, #31 |
 | L3 | S3 | `feat(engine): sleepTimer.ts Tắt/15/30/60, giảm dần 2 phút cuối` | UC.06 | Unit test BR-02; chọn xong chờ Bắt đầu, có Tạm dừng (PRD v5.7) | ✅ #5, #31 |
 | L4 | S3 | `feat(shared): migrate.ts dữ liệu prototype → v4` | UC.09 | Test: rỗng, JSON hỏng, bản phẳng `ver: 3`, > 25 đồ | ✅ #3 |
@@ -97,7 +97,7 @@ Mỗi người chỉ sửa thư mục của mình; sửa chỗ khác thì mở P
 | T1 | S3 | `chore(repo): repo GitHub, bảo vệ main, nhãn, milestone S1–S5, Projects` | Task 1d | Mọi thành viên có quyền; issue từ file này đã tạo | ✅ |
 | T2 | S3 | `chore(repo): monorepo workspaces, ESLint, Prettier, Vitest, Playwright, CI` | Task 1e | `npm run lint`, `npm test` xanh trên CI | ✅ #1 |
 | T3 | S3 | `chore(frontend): Vite React TS + Tailwind + React Router 6 route + 404` | UC.12 | `npm run dev` mở được 6 route trống | ✅ #1 |
-| T4 | S1 ✅ | `docs(wireframe): wireframe Figma Căn phòng, Thư viện` | UC.01–UC.07 | ✅ Figma desktop + mobile, nhóm duyệt | ✅ |
+| T4 | S1 ✅ | `docs(wireframe): wireframe Căn phòng, Thư viện` | UC.01–UC.07 | ✅ draw.io desktop + mobile, nhóm duyệt | ✅ |
 | T5 | S3 | `feat(shared): chốt giao diện RoomState, drawX(ctx,state,t), audio.register, telemetry.track` | — | 3 người còn lại duyệt PR | ✅ #3 |
 | T6 | S3 | `feat(shared): roomState.ts Zod schema v4 + defaults Phòng học` | UC.09 | Test giới hạn 25 đồ, ≤ 64 KB | ✅ #1 |
 | T7 | S3 | `feat(engine): rooms.ts chuyển phòng, pomodoro.ts` | UC.01, UC.05 | AC-01.2, AC-05.2 (unit) xanh; cả hai nằm ở `areas/study/engine/` | ✅ #31 |
@@ -109,19 +109,19 @@ Mỗi người chỉ sửa thư mục của mình; sửa chỗ khác thì mở P
 | T13 | S5 | `feat(pages): Tài khoản — form đăng nhập/đăng ký, đổi tên, đăng xuất, xóa` | UC.08, UC.11 | AC-08.1, AC-08.2, AC-11.1 → AC-11.3 xanh | ✅ #1 |
 | T14 | S5 | `feat(pages): Thư viện — 2 thẻ, bộ lọc, URL, đang tải/lỗi/rỗng` | UC.07 | AC-07.1 → AC-07.4 xanh | ✅ #1, #35 |
 | T16 | S5 | `docs(review): góp ý UI/UX cho nhóm B` | Task 5a | `docs/reviews/given/<nhóm>.md` | ☐ |
-| T17 | S5 | `docs(review): received.md + issue cho từng góp ý được làm` | Task 5b | Bảng góp ý → quyết định → PR/lý do | ☐ |
-| T18 | S5 | `docs: README.md (cách chạy, tổng quan, tính năng + ảnh, ERD, khác)` | Nộp bài | Đủ 5 mục theo đề bài | ◐ README hoàn chỉnh, còn link video |
-| T19 | S5 | `chore: dựng video demo ≤ 10 phút, 720p, đăng YouTube` | Nộp bài | Link trong README | ☐ |
+| T17 | S5 | `docs(review): received.md + issue cho từng góp ý được làm` | Task 5b | Bảng góp ý → quyết định → PR/lý do | ✅ #53 |
+| T18 | S5 | `docs: README.md (cách chạy, tổng quan, tính năng + ảnh, ERD, khác)` | Nộp bài | Đủ 5 mục theo đề bài | ✅ #52, link video #61, #62 |
+| T19 | S5 | `chore: dựng video demo ≤ 10 phút, 720p, đăng YouTube` | Nộp bài | Link trong README | ◐ bản Desktop đã đăng, link trong README; bản Mobile chưa có |
 
 ## Cả nhóm
 
 | # | Sprint | Issue | Người | Xong khi | Trạng thái |
 |---|---|---|---|---|---|
 | G1 | S1 ✅ | `docs(meeting): biên bản họp khởi động 27/10 và họp kế hoạch 13/11` | Thịnh | ✅ `docs/meetings/2026-10-27-khoi-dong.md`, `2026-11-13-hop-ke-hoach.md` | ✅ |
-| G2 | S1 ✅ | `docs(wireframe): duyệt bộ wireframe Figma 6 trang` | Cả nhóm | ✅ duyệt cùng PRD 07/11; link Figma ghi vào PRD 5.3 [Cần bổ sung] | ✅ (còn link Figma) |
-| G3 | S1→S5 | `docs(report): self-report sprint N` (5 issue, mỗi sprint 1) | Mỗi người | `docs/reports/sprint-N/<tên>.md`, thiếu bị trừ 10%; **S1, S2 viết bù trước 17/11** | ◐ S1–S3 xong, S4–S5 nộp cuối sprint |
+| G2 | S1 ✅ | `docs(wireframe): duyệt bộ wireframe 6 trang` | Cả nhóm | ✅ duyệt cùng PRD 07/11; `docs/wireframes/FocuSpace_Wireframes.drawio` + PNG | ✅ |
+| G3 | S1→S5 | `docs(report): self-report sprint N` (5 issue, mỗi sprint 1) | Mỗi người | `docs/reports/<Tên>_Self-Report.md` (mỗi người một file, đủ 5 sprint), thiếu bị trừ 10%; **S1, S2 viết bù trước 17/11** | ✅ #54–#60, #63 |
 | G4 | S5 | `docs(review): góp ý UI/UX cho nhóm A` | Hưng, Nhiên | `docs/reviews/given/<nhóm>.md` | ☐ |
-| G5 | S5 | `fix: sửa theo góp ý nhận được` | Chủ khu vực liên quan | Mỗi góp ý được làm có PR riêng | ☐ |
+| G5 | S5 | `fix: sửa theo góp ý nhận được` | Chủ khu vực liên quan | Mỗi góp ý được làm có PR riêng | ✅ 9/10 góp ý đã có trong PR trước đó (#10, #29, #30, #40–#44, #46–#50), 1 không làm kèm lý do (`docs/reviews/received.md`) |
 | G6 | S5 | `chore: quay phần demo khu vực mình cho video` | Mỗi người | Gửi clip cho Thịnh trước 26/11 | ☐ |
 | G7 | S5 | `chore: nộp bài` | Thịnh | Repo, README, video nộp trước hết 27/11 | ☐ |
 | G8 | S1 ✅ | `feat(prototype): prototype Căn phòng + 6 trang` | Thịnh; Nhiên dựng phần Sân vườn, 5 khung cảnh của prototype Căn phòng; cả nhóm góp ý | ✅ `prototype/FocuSpace-Semi-Sandbox.html`, `prototype/web/` | ✅ |

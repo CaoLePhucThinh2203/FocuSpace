@@ -103,7 +103,7 @@ FocuSpace là đồ án cuối kỳ làm theo nhóm của môn Web Design and De
 | Migration và seeder dữ liệu ban đầu | Prisma migrate; seeder nạp 17 loại đồ vật và 5 khung cảnh lấy từ prototype | BR-12 |
 | Tối ưu theo Google Lighthouse | Mục tiêu ≥ 90 cho cả 4 nhóm điểm ở mọi trang | 6.1 |
 | Google Analytics và công cụ ghi lỗi (Sentry) | GA4 cho lượt xem và sự kiện; Sentry cho lỗi frontend và backend | Tính năng M |
-| Wireframe cho mọi trang chính | Wireframe Figma cho 6 trang, kèm prototype tương tác của Căn phòng | 5.3 |
+| Wireframe cho mọi trang chính | Wireframe draw.io cho 6 trang, kèm prototype tương tác của Căn phòng | 5.3 |
 
 # 3. Người dùng mục tiêu & Bài toán
 
@@ -760,7 +760,7 @@ Mỗi gạch đầu dòng ở Tính năng A–M ứng với một hoặc vài m�
 
 ## 5.3 Trạng thái UI/UX (Wireframes & Mockups)
 
-Bản thiết kế đã duyệt là prototype tương tác prototype/FocuSpace-Semi-Sandbox.html (một file HTML, mở trực tiếp bằng trình duyệt). Các trang còn lại (Tính năng J–L) có wireframe bản desktop và mobile vẽ trên Figma trong S1 (27/10 – 07/11/2026), nhóm duyệt cùng PRD v5.0 ngày 07/11/2026 (liên kết Figma: \[Cần bổ sung\]). Bản draw.io bổ sung để in vào báo cáo: docs/wireframes/FocuSpace_Wireframes.drawio (7 trang: Trang chủ, Căn phòng, Thư viện, Thống kê, Tài khoản, Giới thiệu & Liên hệ, 404), PNG cùng thư mục. Hình 1 là biểu đồ use case; các hình 2–6 ở trên chụp từ prototype; hình dưới là Sân vườn ở trạng thái mặc định.
+Bản thiết kế đã duyệt là prototype tương tác prototype/FocuSpace-Semi-Sandbox.html (một file HTML, mở trực tiếp bằng trình duyệt). Các trang còn lại (Tính năng J–L) có wireframe bản desktop và mobile vẽ bằng draw.io trong S1 (27/10 – 07/11/2026), nhóm duyệt cùng PRD v5.0 ngày 07/11/2026: docs/wireframes/FocuSpace_Wireframes.drawio (7 trang: Trang chủ, Căn phòng, Thư viện, Thống kê, Tài khoản, Giới thiệu & Liên hệ, 404), PNG cùng thư mục. Hình 1 là biểu đồ use case; các hình 2–6 ở trên chụp từ prototype; hình dưới là Sân vườn ở trạng thái mặc định.
 
 ![Hình 7](images/prd-hinh-6.png)
 
@@ -971,3 +971,4 @@ Mọi câu hỏi mở đã chốt (Q-03, Q-04, Q-07 trước 07/11; còn lại �
 | v5.17 | 17/11/2026 | Trang Giới thiệu & Liên hệ (FR-PAGE-05, bố cục không đổi): mục Về FocuSpace chỉ còn 1 câu giới thiệu (bỏ 4 cặp "vấn đề → lời giải"); Cách dùng nhanh 5 bước ngắn; vai trò thành viên không dùng tên công cụ; Quyền riêng tư 2 câu; ô liên hệ "Email" ghi rõ trưởng nhóm Phúc Thịnh. Trang chủ: mục "Có 3 không gian" mô tả 3 phòng cùng một kiểu; 3 điểm nổi bật (Phòng dựng sẵn, Âm thanh theo vị trí, Pomodoro và hẹn giờ ngủ) mỗi thẻ còn một câu ngắn. Thư viện: ảnh đồ vật bỏ viền. Căn phòng: dòng "Phòng: …" chuyển xuống cạnh thanh công cụ, dòng dưới ghi "Đang có: N nguồn âm thanh", bỏ chấm xanh; popover đồ phát âm bỏ chữ "Trái 83%" ở giữa thanh Trái/Phải và dòng số suy giảm, khoảng cách (FR-ITEM-06). |
 | v5.18 | 17/11/2026 | FR-AUD-05, mô tả tiếng mèo: mèo không còn rù rù liên tục mà theo lượt — bật mèo hoặc vào phòng thì rù rù ngay 10–15 giây, sau đó im 3–5 phút rồi rù rù 10–15 giây, lặp lại, mỗi con một lịch riêng; bấm vào mèo thì sau tiếng "meo" rù rù luôn một lượt. Thời lượng ở `areas/items-audio/engine/catPurr.ts` (unit test), E2E `uc03-meo-ru-ru.spec.ts`. |
 | v5.19 | 17/11/2026 | Tiếng rù rù của mèo làm lại sau nhiều vòng nghe thử: bản cũ nghe dồn dập, như tiếng gõ trống hoặc tiếng điện. Nay mỗi nhịp là một đợt rung mềm gồm 7 âm trầm 110–460 Hz (âm 460 Hz rất nhỏ cho bớt đục) đổi cao độ ngẫu nhiên, khoảng 24 nhịp/giây không đều, có tiếng "br" (vào nhanh, rung con ~60 lần/giây), không nhiễu; nhịp thở 3,6 giây; độ to trung bình giữ như cũ. |
+| v5.20 | 17/11/2026 | Mục 5.3 và bảng đáp ứng đề bài: wireframe 6 trang vẽ bằng draw.io (`docs/wireframes/FocuSpace_Wireframes.drawio`), bỏ nhắc tới Figma. Không đổi yêu cầu chức năng. |

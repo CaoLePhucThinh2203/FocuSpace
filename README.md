@@ -63,7 +63,7 @@ PostgreSQL 16 (Neon)
 | Cơ sở dữ liệu | PostgreSQL 16 |
 | Kiểm thử | Vitest, Supertest, Playwright, Lighthouse |
 | Giám sát | Google Analytics 4, Sentry (frontend và backend), nhật ký JSON |
-| Thiết kế | Figma (wireframe), prototype HTML (`prototype/`), draw.io (biểu đồ phân tích) |
+| Thiết kế | draw.io (wireframe, biểu đồ phân tích), prototype HTML (`prototype/`) |
 | Quản lý quy trình | GitHub Issues, GitHub Projects, milestone S1–S5, Pull Request có người duyệt, Conventional Commits, GitHub Actions |
 | Triển khai | Vercel (frontend), Render (backend), Neon (PostgreSQL) |
 
@@ -145,7 +145,7 @@ Bảng đối chiếu chi tiết được trình bày tại [`docs/PLAN.md`](doc
 | Tiêu chí | Minh chứng |
 |---|---|
 | 1a Họp phân công vai trò | [`docs/meetings/`](docs/meetings/) |
-| 1b Wireframe | Figma [Cần bổ sung: link]; bản xuất tại [`docs/wireframes/`](docs/wireframes/) |
+| 1b Wireframe | Vẽ bằng draw.io: [`docs/wireframes/FocuSpace_Wireframes.drawio`](docs/wireframes/FocuSpace_Wireframes.drawio), bản PNG cùng thư mục |
 | 1c Kế hoạch và các mốc thời gian | [`docs/PLAN.md`](docs/PLAN.md) §3; milestone S1–S5 trên GitHub |
 | 1d, 1e Quản lý dự án trên GitHub | Issue theo [`docs/TASKS.md`](docs/TASKS.md); mỗi công việc một nhánh; Pull Request liên kết issue; Conventional Commits; CI |
 | 2a–2d Giao diện người dùng | 6 trang tại [mục 3](#3-chức-năng-và-hình-ảnh-minh-họa-features-and-screenshots); Tailwind CSS 4; kéo thả, popover, biểu mẫu, bộ lọc, hộp thoại; tương thích 3 kích thước màn hình |
@@ -153,7 +153,7 @@ Bảng đối chiếu chi tiết được trình bày tại [`docs/PLAN.md`](doc
 | 4a Google Lighthouse | [`docs/reports/lighthouse/`](docs/reports/lighthouse/README.md): 5 trang đạt 100 điểm ở cả 4 hạng mục; Căn phòng đạt Performance 95, Accessibility 100, SEO 100, Best Practices 96 khi đo trên Vercel và đạt 100 khi đo lại tại máy cục bộ sau khi tăng cỡ chữ chú thích lên 12 px |
 | 4b Theo dõi và ghi nhật ký | Google Analytics 4, Sentry (frontend và backend), nhật ký JSON (pino); dữ liệu telemetry phiên học lưu trong cơ sở dữ liệu |
 | 5a, 5b Đánh giá chéo | [`docs/reviews/`](docs/reviews/) |
-| Self-report 5 sprint | [`docs/reports/self-report.md`](docs/reports/self-report.md) (mỗi thành viên một chương, đủ S1–S5) |
+| Self-report 5 sprint | Mỗi thành viên một file, đủ S1–S5: [Phúc Thịnh](docs/reports/Phuc-Thinh_Self-Report.md), [Tuấn Hưng](docs/reports/Tuan-Hung_Self-Report.md), [Tuấn Lộc](docs/reports/Tuan-Loc_Self-Report.md), [Đình Nhiên](docs/reports/DinhNhien_Self-Report.md) |
 
 ### Triển khai hệ thống
 
