@@ -18,5 +18,7 @@ export interface FocuspaceHook {
   windowEm: { sp: SpatialInfo };
   outHeadEm: { cur: { s: { buffer: AudioBuffer | null }; g: { gain: { value: number } } } | null };
   lofiCache: { lofi: (AudioBuffer | null)[]; sleep: (AudioBuffer | null)[] };
+  setCatPurrSpeed(on: number, off?: number): void;
+  catPurrState(): { purring: boolean; gain: number; bursts: number }[];
 }
 export type HookWindow = Window & { __focuspace: FocuspaceHook };

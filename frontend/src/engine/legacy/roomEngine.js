@@ -12,6 +12,7 @@ import { RHYTHMS, RHYTHM_IDS, nextPhase, parseConfig, phaseSeconds, rhythmOf, se
 import { NAVS, canSwitch, lastIndoorAfter, pausesPomodoro } from "../../areas/study/engine/rooms";
 import * as SleepTimer from "../../areas/bedroom/engine/sleepTimer";
 import * as Placement from "../../areas/items-audio/engine/placement";
+import * as CatPurr from "../../areas/items-audio/engine/catPurr";
 import { startRoomTelemetry } from "../../areas/garden/telemetry";
 
 export function startRoomEngine() {
@@ -432,21 +433,39 @@ function meowFill(d, len, c) {   // tiếng "meo": cao độ vút lên rồi tr�
     d[i] = (v * 0.32 + br * 0.025 * (1 - u) * (1 - u)) * env;   // hơi thở tắt dần về cuối: hết tiếng rè "xì" ở đuôi tiếng meo
   }
 }
-/* Rù rù theo số đo mèo nhà (Schötz & Eklund; Eklund, Peters & Duthie): rung 21–27 Hz, kêu cả khi hít vào lẫn thở ra.
-   Một nhịp thở 2,5 giây (mèo nghỉ ~24 lần/phút): hít vào 40% ở 24 Hz, nhỏ hơn; thở ra 60% ở 22 Hz, to hơn; ngắt rất ngắn khi đổi chiều hơi thở. */
-const PURR_BREATH = 2.5, PURR_IN = 0.4;
-function softPurrFill(d, len, c) {
-  const r = rng(41 + c); let p = 0, q = 0, ph = 0;
-  for (let i = 0; i < len; i++) {
-    const t = i / SR, u = (t % PURR_BREATH) / PURR_BREATH, inhale = u < PURR_IN;
-    const x = inhale ? u / PURR_IN : (u - PURR_IN) / (1 - PURR_IN), phaseSec = (inhale ? PURR_IN : 1 - PURR_IN) * PURR_BREATH;
-    const edge = Math.min(1, Math.min(x, 1 - x) * phaseSec / 0.12);                  // ngắt ~0,1 giây lúc đổi chiều hơi thở
-    const breath = Math.sin(Math.PI / 2 * edge) * (inhale ? 0.7 : 1) * (0.85 + 0.15 * Math.sin(Math.PI * x));
-    ph += 2 * Math.PI * (inhale ? 24 : 22) / SR;
-    const am = Math.pow(0.5 + 0.5 * Math.sin(ph), 1.7);
-    p += 0.03 * ((r() * 2 - 1) - p); q += 0.25 * (p - q);
-    d[i] = (q * 3.6 * am + 0.017 * Math.sin(2 * ph) * am) * breath;   // cùng độ to trung bình với bản cũ
+/* Tiếng rù rù (PRD v5.19, bản "L1 br vừa" rồi "N1" bớt đục, người dùng chọn sau khi nghe thử, đối chiếu một bản ghi mèo thật):
+   - mỗi nhịp là một đợt rung mềm gồm 7 âm trầm 110–460 Hz (âm 460 Hz rất nhỏ để bớt đục — bản "N1"), cao độ và pha đổi ngẫu nhiên mỗi nhịp (không vùng vang cố định → không thành tiếng trống,
+     không ù đều → không thành tiếng điện); không có tiếng hơi/nhiễu;
+   - khoảng 24 nhịp/giây (hít vào 25,5), khoảng cách lệch ±14%, độ to lệch ±25% như mèo thật;
+   - "br": mỗi đợt vào nhanh (20% đầu) rồi ra mềm, bên trong có rung con ~60 lần/giây;
+   - nhịp thở 3,6 giây: hít vào 40% (nhỏ hơn), thở ra 60%, trũng nhẹ lúc đổi chiều hơi thở.
+   Hai kênh dùng cùng hạt ngẫu nhiên để nhịp trùng nhau ở hai tai. Bộ đệm lặp 7,2 giây = 2 nhịp thở. */
+const PURR = { rate: 24, rateIn: 25.5, jitter: 0.14, shimmer: 0.25, breath: 3.6, inFrac: 0.4, breathDepth: 0.25, dip: 0.4,
+  freqs: [110, 150, 195, 245, 310, 390, 460], tilt: 0.78, spread: 0.12, burst: 1.1, rise: 0.2, trillHz: 60, trillDepth: 0.5, gain: 0.227 };
+let purrMemo = null;   // hai kênh giống hệt nhau: dựng một lần, kênh sau chép lại
+function softPurrFill(d, len) {
+  if (purrMemo && purrMemo.length === len) { d.set(purrMemo); purrMemo = null; return; }
+  const P = PURR, r = rng(31), sec = len / SR;
+  const breathAt = t => {
+    const u = (t % P.breath) / P.breath, inhale = u < P.inFrac, x = inhale ? u / P.inFrac : (u - P.inFrac) / (1 - P.inFrac);
+    const turn = Math.min(x, 1 - x) * (inhale ? P.inFrac : 1 - P.inFrac) * P.breath;
+    return { inhale, e: (1 - P.breathDepth + P.breathDepth * Math.sin(Math.PI * x)) * (inhale ? 0.8 : 1) * (1 - P.dip * Math.exp(-turn / 0.1)) };
+  };
+  for (let t = 0; t < sec;) {
+    const { inhale, e } = breathAt(t), T = 1 / ((inhale ? P.rateIn : P.rate) * (1 + (r() * 2 - 1) * P.jitter));
+    const L = Math.floor(T * P.burst * SR), s0 = Math.floor(t * SR), a = e * (1 + (r() * 2 - 1) * P.shimmer) * P.gain;
+    const comp = P.freqs.map((f, k) => [2 * Math.PI * f * (1 + (r() * 2 - 1) * P.spread) / SR, r() * 2 * Math.PI, Math.pow(P.tilt, k) * (0.7 + 0.6 * r())]);
+    const th = 2 * Math.PI * P.trillHz * (1 + (r() * 2 - 1) * 0.15) / SR, tp = r() * 2 * Math.PI;
+    for (let k = 0; k < L && s0 + k < len; k++) {
+      const x = k / L;
+      const w = x < P.rise ? Math.sin(Math.PI / 2 * x / P.rise) ** 2 : Math.cos(Math.PI / 2 * (x - P.rise) / (1 - P.rise)) ** 2;
+      const trill = 1 - P.trillDepth * (0.5 + 0.5 * Math.cos(th * k + tp));
+      let v = 0; for (const [w0, p, g] of comp) v += g * Math.sin(w0 * k + p);
+      d[s0 + k] += v * w * trill * a;
+    }
+    t += T;
   }
+  purrMemo = Float32Array.from(d);
 }
 function softTickFill(f) {   // tiếng "tách" trầm và êm (~1,1 kHz), ngắn, nhỏ — thay tiếng tích tắc 3,1 kHz cũ
   return (d, len, c) => {
@@ -476,7 +495,7 @@ function lazyBuf(defs) {
 }
 lazyBuf({
   clear: () => mkBuf(8, birdsFill), rain: () => mkBuf(6, rainFill(false)), storm: () => mkBuf(12, stormFill),
-  fire: () => mkBuf(6, fireFill), tv: () => mkBuf(3, staticFill), cat: () => mkLoopBuf(5, softPurrFill), meow: () => mkBuf(0.75, meowFill), tick: () => mkBuf(0.06, softTickFill(1150)), tock: () => mkBuf(0.06, softTickFill(950)),
+  fire: () => mkBuf(6, fireFill), tv: () => mkBuf(3, staticFill), cat: () => mkLoopBuf(7.2, softPurrFill), meow: () => mkBuf(0.75, meowFill), tick: () => mkBuf(0.06, softTickFill(1150)), tock: () => mkBuf(0.06, softTickFill(950)),
   flip: () => mkBuf(0.35, flipFill), click: () => mkBuf(0.05, clickFill), bell: () => mkBuf(3.2, bellFill, 1),
 });
 
@@ -834,13 +853,37 @@ function wakeCat(o) {   // bấm mèo: mở mắt, nhìn người dùng, kêu "m
   if (catWake.has(o.data.id)) return;
   catWake.set(o.data.id, frame);
   const purr = v => { if (o.em && o.em.cur) ramp(o.em.cur.g.gain, v, v ? 2.5 : 0.15); };   // tắt tiếng rù rù khi mèo thức; ngủ tiếp thì rù rù trở lại thật chậm (2,5 giây), không bật lên đột ngột ngay sau tiếng meo
-  purr(0); setTimeout(() => purr(1), CAT_WAKE_END * 100);
+  purr(0);
+  setTimeout(() => {   // ngủ tiếp: rù rù luôn một lượt rồi mới quay lại lịch "im 3–5 phút" (PRD v5.18)
+    purr(1);
+    if (o.data.on && itemsById.get(o.data.id) === o) catPurrStart(o.em);
+  }, CAT_WAKE_END * 100);
   setTimeout(() => {
     if (o.em) o.em.oneShot(BUF.meow, 1.2);
     const b = document.createElement("span"); b.className = "meow"; b.textContent = "Meow!";
     o.el.appendChild(b); setTimeout(() => b.remove(), 1400);
   }, CAT_MEOW_AT * 100);
 }
+/* ---------- Mèo rù rù theo lượt (PRD v5.18; thời lượng ở areas/items-audio/engine/catPurr.ts) ----------
+   Bật mèo hoặc vào phòng thì rù rù ngay một lượt 10–15 giây, rồi im 3–5 phút, lặp lại; mỗi con một lịch riêng.
+   Hệ số to/nhỏ của lượt đặt ở em.input.gain, tách khỏi em.cur.g mà wakeCat dùng để tắt tiếng lúc mèo kêu "meo". */
+const catPurrSpeed = { on: 1, off: 1 };   // chỉ test E2E đổi để tua nhanh thời gian
+function catPurrStart(em) {
+  if (!ctx || !em || !em.input) return;
+  clearTimeout(em.pt);
+  const g = em.input.gain, fade = CatPurr.PURR_FADE_SEC / catPurrSpeed.on;
+  if (!em.purring) { g.cancelScheduledValues(ctx.currentTime); g.setValueAtTime(0, ctx.currentTime); }
+  const burst = () => {
+    em.purring = true; em.bursts = (em.bursts || 0) + 1;
+    ramp(g, 1, fade);
+    em.pt = setTimeout(() => {
+      em.purring = false; ramp(g, 0, fade);
+      em.pt = setTimeout(burst, CatPurr.purrOffSec() / catPurrSpeed.off * 1000);
+    }, CatPurr.purrOnSec() / catPurrSpeed.on * 1000);
+  };
+  burst();
+}
+function catPurrStop(em) { if (!em) return; clearTimeout(em.pt); em.pt = 0; em.purring = false; }
 function drawItemSprite(o) {
   const t = o.data.type, c = o.ctx;
   if (SPRITES[t]) SPRITES[t](c, o.data, frame);
@@ -2806,7 +2849,9 @@ function applyItemAudio(o) {
   if (!ctx || !o.em) return;
   o.em.play(itemBuffer(o.data), ["radio", "vinyl"].includes(o.data.type) ? LOFI_XF : 0.3);
   o.em.setLevel(o.data.on, o.data.vol);
-  if (o.data.type === "cat") o.em.pulse(false);   // tiếng mèo kêu có nhịp riêng, không cần nhấp nhô to nhỏ
+  if (o.data.type === "cat") {   // rù rù theo lượt: vừa bật (hoặc vừa có âm thanh) thì rù rù ngay, tắt thì dừng lịch
+    if (!o.data.on || !o.em.cur) catPurrStop(o.em); else if (!o.em.pt) catPurrStart(o.em);
+  }
 }
 function placeObj(o) {
   const t = TYPES[o.data.type];
@@ -3411,5 +3456,8 @@ requestAnimationFrame(loop);
 // Nhạc Lo-fi: bài đang chọn của tai nghe, radio, đĩa than đã được dựng nền qua lofiBuf() khi gắn âm thanh lúc khởi động
 // Hook kiểm thử
 window.__focuspace = { tel, spatial, state, D_MAX, W_HALF, LISTENERS, itemsById, windowEm, bedWindowEm, sceneEm, outHeadEm, setScene, sceneBuf, roomOut, fade, sleep, ROOM, switchRoom,
-  sleepRemaining: s => { sleep.running = true; sleep.endAt = Date.now() + s * 1000; }, pomo, get pomoCfg() { return pomoCfg; }, pomoSetRhythm, pomoSetCustom, pomoSkip, pomoReset, fireEm, lofiCache };
+  sleepRemaining: s => { sleep.running = true; sleep.endAt = Date.now() + s * 1000; }, pomo, get pomoCfg() { return pomoCfg; }, pomoSetRhythm, pomoSetCustom, pomoSkip, pomoReset, fireEm, lofiCache,
+  setCatPurrSpeed: (on, off = on) => { catPurrSpeed.on = on; catPurrSpeed.off = off; },
+  catPurrState: () => [...itemsById.values()].filter(o => o.data.type === "cat" && o.em)
+    .map(o => ({ purring: !!o.em.purring, gain: o.em.input ? o.em.input.gain.value : 0, bursts: o.em.bursts || 0 })) };
 }
