@@ -35,7 +35,7 @@
 Tham gia viết tài liệu kế hoạch và phân tích (S2).
 
 ### Tự đánh giá mức đóng góp (1–5)
-[Tự điền]
+3	- Thiết kế 17 đồ vật, bảng đồ vật, âm thanh từng đồ vật và Volume mixer; góp ý wireframe Căn phòng
 
 ---
 
@@ -56,7 +56,7 @@ Tham gia viết tài liệu kế hoạch và phân tích (S2).
 Theo `docs/TASKS.md`, cột Sprint = S3: khung test, seeder đồ vật, API danh mục.
 
 ### Tự đánh giá mức đóng góp (1–5)
-[Tự điền]
+4 - 	Góp nội dung đồ vật, âm thanh cho PRD (Tính năng E, F) và API danh mục; rà 17 đồ vật cho seeder
 
 ---
 
@@ -85,7 +85,7 @@ Số commit trên `main`: 15.
 S4 (15/11): tối ưu Lighthouse Căn phòng và các trang (H12), mèo đổi màu lông (H13), sửa lỗi đồ vật, âm thanh sau khi chạy thử.
 
 ### Tự đánh giá mức đóng góp (1–5)
-[Tự điền]
+5	 - Khu vực đồ vật, âm thanh trong PR #6, gồm 15 commit: khung test (H1, H2), seeder (H6), GET /catalog/items (H11), khung placement.ts (H4), khung âm thanh, khay, popover, Bảng âm lượng (H7–H10), bảng đo Lighthouse (H12), self-report (G3)
 
 ---
 
@@ -127,7 +127,7 @@ Số commit trên `main`: 16.
 S5 (16–17/11): góp ý UI/UX cho nhóm A cùng Đình Nhiên (G4), sửa theo góp ý nhận được (G5), quay clip demo phần đồ vật, âm thanh (G6).
 
 ### Tự đánh giá mức đóng góp (1–5)
-[Tự điền]
+5	 - 16 commit qua 13 PR: tối ưu Lighthouse (H12, có 6 PR sửa CLS ở Thư viện), nến phát sáng (#28), mèo đổi màu lông (H13, #30), AC-03.5 (#11), merge #34, #39
 
 ---
 
@@ -156,4 +156,4 @@ Số commit trên `main`: 0.
 - Chưa biết nhóm A là nhóm nào nên chưa góp ý UI/UX được (`docs/reviews/given/tuan-hung.md` ghi tên nhóm [Cần bổ sung]). Cách xử lý: hỏi Phúc Thịnh tên nhóm A, cùng Đình Nhiên review theo 3 tiêu chí của đề bài (usability, aesthetics, user-friendliness), hoàn thành G4, G6 trước 26/11.
 
 ### Tự đánh giá mức đóng góp (1–5)
-[Tự điền]
+3	- Không có commit. G5 đã có từ PR #30 làm ở S4; G4 và G6 chưa làm; âm thanh đồ vật do Thịnh làm tiếp (#46, #47, #49)
