@@ -12,7 +12,7 @@
 | 1a | Họp phân vai (0) | PLAN §2 | Biên bản họp `docs/meetings/` (27/10, 13/11) | ✅ S1 |
 | 1b | Wireframe (0,5) | PRD 5.3 (bố cục 6 trang) | Wireframe 6 trang vẽ bằng draw.io (`docs/wireframes/FocuSpace_Wireframes.drawio`), bản PNG cùng thư mục | ✅ S1 |
 | 1c | Kế hoạch, mốc, deadline (0,5) | PLAN §3, PRD 7.2 | Bảng sprint có ngày, người phụ trách; milestone trên GitHub | ✅ S2 (cập nhật 13/11) |
-| 1d | Repo GitHub, nhánh, ticket (0,5) | Kiến trúc 4.2, PLAN §4 | Repo, nhánh chủ đề, Issues, bảng GitHub Projects, mọi thành viên commit đều | S3 → S5 |
+| 1d | Repo GitHub, nhánh, ticket (0,5) | Kiến trúc 4.2, PLAN §4 | Repo, nhánh chủ đề, Issues, bảng GitHub Projects, mọi thành viên commit đều. Trong quá trình làm, nhóm quên dùng issue trên GitHub (chỉ theo dõi việc bằng `docs/TASKS.md` và Pull Request) nên ngày 18/11/2026 tạo bù 71 issue (#64–#134) kèm milestone S1–S5 | S3 → S5 |
 | 1e | GitHub Workflow, commit đúng chuẩn (0,5) | Kiến trúc 4.2, PLAN §4 | Conventional Commits có số issue, PR liên kết issue, CI GitHub Actions | S3 → S5 |
 | 2a | ≥ 3 trang theo wireframe, liên kết với nhau (1) | PRD Tính năng J | 6 trang: Trang chủ, Căn phòng, Thư viện, Thống kê, Tài khoản, Giới thiệu & Liên hệ | S4, S5 · P5, P7 |
 | 2b | Tailwind CSS (0,5) | PRD 6.3, Kiến trúc 3.2 | Tailwind cấu hình trong `frontend/`, giao diện dùng utility class | S4 · P5 |

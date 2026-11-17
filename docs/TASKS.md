@@ -2,7 +2,7 @@
 
 > Cập nhật 15/11/2026 · nguồn: `docs/PLAN.md` §2–3 (phân vai; lịch từ 27/10/2026: S1 ✅ 27/10–07/11, S2 ✅ 08–12/11, S3 13–17/11, S4 18–22/11, S5 23–27/11; hạn **27/11/2026**), PRD 5.4 (AC).
 > Issue đánh dấu ✅ là việc đã làm ở S1–S2: vẫn tạo trên GitHub rồi đóng ngay (kèm link file) để milestone S1, S2 có lịch sử.
-> Issue trên GitHub tạo bù ngày 18/11/2026 từ bảng này: #64–#134 (cột # ghi mã việc · số issue), gắn milestone S1–S5 theo ngày merge PR; việc đã xong được đóng kèm bình luận số PR, còn mở #129 (G7).
+> Trong quá trình làm, nhóm quên dùng issue trên GitHub (chỉ theo dõi việc bằng `docs/TASKS.md` và Pull Request) nên ngày 18/11/2026 tạo bù toàn bộ issue từ bảng này: #64–#134 (cột # ghi mã việc · số issue), gắn milestone S1–S5 theo ngày merge PR; việc đã xong được đóng kèm bình luận số PR, còn mở #129 (G7).
 > Mỗi dòng = **1 GitHub Issue**: tiêu đề đúng như cột "Issue", gán người, milestone = sprint, nhãn `area:*`, `type:*`, `P0/P1`. Mở nhánh `feat/<số>-<mô-tả>`, PR có `Closes #<số>` và mã UC.
 > Cột **Xong khi** là điều kiện đóng issue (Definition of Done): test liên quan xanh, PR được 1 người khác duyệt, CI xanh.
 > Phần backend và việc chung (đánh dấu ⓓ) đã chốt 13/11/2026; trang Thống kê chuyển từ Thịnh (T15 cũ) sang Lộc (L13).
