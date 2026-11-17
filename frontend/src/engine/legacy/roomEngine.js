@@ -1577,7 +1577,7 @@ const CITY = (() => {
   near.forEach(b => { for (let wx = b.x + 3; wx < b.x + b.w - 3; wx += 4) for (let wy = 96 - b.h + 4; wy < 92; wy += 5) wins.push({ x: wx, y: wy, lit: r() < 0.7, ph: r() * 8 | 0 }); });
   return { far, near, wins };
 })();
-const CARS = [{ y: 96, v: 1.7, off: 0, col: "#d9534f" }, { y: 96, v: 1.3, off: 190, col: "#e8b84a" }, { y: 100, v: -1.5, off: 60, col: "#4a8fd0" }, { y: 100, v: -1.1, off: 230, col: "#e8e8ee" }];
+const CARS = [{ y: 95, v: 1.7, off: 0, col: "#d9534f" }, { y: 95, v: 1.3, off: 190, col: "#e8b84a" }, { y: 99, v: -1.5, off: 60, col: "#4a8fd0" }, { y: 99, v: -1.1, off: 230, col: "#e8e8ee" }];   // 17/11: cả 2 làn nhích lên 1 px — bánh xe làn trên nằm trên vạch giữa đường, làn dưới không lòi khỏi mép đường
 const RIVER = [[92, 86, 4], [104, 70, 10], [124, 52, 17], [150, 36, 27], [180, 18, 40]];   // [y, tâm x, nửa rộng]
 function riverAt(y) {
   for (let i = 0; i < RIVER.length - 1; i++) {
