@@ -52,7 +52,7 @@ Tham gia viết tài liệu kế hoạch và phân tích (S2).
 Theo docs/TASKS.md, cột Sprint = S3: backend tài khoản, thống kê, trang Thống kê.
 
 ### Tự đánh giá mức đóng góp (1–5)
-*3* — Góp nội dung PRD và góp ý API cho khu vực của mình.
+*4* — Góp nội dung PRD và góp ý API cho khu vực của mình.
 
 ---
 
@@ -109,7 +109,7 @@ Số commit trên main: 4.
 S5 (16–17/11): sửa theo góp ý nhận được (G5), quay clip demo phần Phòng ngủ, Thống kê (G6).
 
 ### Tự đánh giá mức đóng góp (1–5)
-*3* — Hoàn thiện trang Thống kê và đặc tả UC.06; số việc ít hơn S3.
+*4* — Hoàn thiện trang Thống kê và đặc tả UC.06; số việc ít hơn S3.
 
 ---
 
@@ -133,4 +133,4 @@ Số commit trên main: 0.
 - Góp ý nhận được đến cuối sprint (17/11), không còn thời gian mở PR mới. Cách xử lý: đối chiếu từng góp ý với web; góp ý Hẹn giờ ngủ đã được làm ở #29 nên ghi vào received.md kèm số PR.
 
 ### Tự đánh giá mức đóng góp (1–5)
-*3* — Kiểm thử Phòng ngủ, Thống kê và Tài khoản, review và approve Pull Request trước khi nộp bài; không có commit trong sprint.
+*4* — Kiểm thử Phòng ngủ, Thống kê và Tài khoản, review và approve Pull Request trước khi nộp bài; không có commit trong sprint.
