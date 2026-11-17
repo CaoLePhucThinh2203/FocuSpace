@@ -149,7 +149,7 @@ Chi tiết: [`docs/PLAN.md`](docs/PLAN.md) §1.
 | 4a Lighthouse | [`docs/reports/lighthouse/`](docs/reports/lighthouse/README.md): 5 trang đạt 100 cả 4 hạng mục; Căn phòng Performance 95, Accessibility 100, SEO 100, Best Practices 96 khi đo trên Vercel, lên 100 khi đo lại ở máy sau khi nâng chữ chú thích lên 12 px |
 | 4b Tracking, logging | Google Analytics 4, Sentry (frontend + backend), log JSON pino; telemetry phiên học lưu trong CSDL |
 | 5a, 5b Review chéo | [`docs/reviews/`](docs/reviews/) |
-| Self-report 5 sprint | [`docs/reports/`](docs/reports/) (`sprint-1` … `sprint-5`, mỗi người một file) |
+| Self-report 5 sprint | [`docs/reports/self-report.md`](docs/reports/self-report.md) (mỗi người một chương, đủ S1–S5) |
 
 ### Triển khai
 
