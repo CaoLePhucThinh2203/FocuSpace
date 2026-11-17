@@ -30,7 +30,6 @@ Chi tiết từng việc theo khu vực: `docs/PLAN.md` §2 và `docs/TASKS.md`.
 - Ghép cặp review chéo: Hưng + Nhiên → nhóm A, Lộc + Thịnh → nhóm B. Nhóm được review: Lộc — Nhóm 4 (PawPass), Thịnh — Nhóm 6 (Quản lí chi tiêu); nhóm A của Hưng, Nhiên: [Cần bổ sung].
 - Trang Thống kê chuyển từ Phúc Thịnh sang Tuấn Lộc (Lộc đã làm API `/me/stats`); Thịnh còn 18 issue.
 - Phúc Thịnh tạo tài khoản GA4, Sentry rồi gửi mã cho Đình Nhiên; triển khai lên Vercel + Render + Neon ở S5.
-- Không tạo tài khoản demo/số liệu mẫu; nhóm tự dùng thật vài ngày trước khi quay video.
 
 ## 4. Quy ước làm việc
 
