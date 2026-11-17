@@ -125,6 +125,7 @@ Số commit trên main: 0.
 | — | — | Kiểm thử thủ công Phòng ngủ: cửa sổ đêm (Đêm sao, Mưa đêm, Tuyết rơi), rèm, đồng hồ treo tường, Hẹn giờ ngủ (chọn mức, Bắt đầu, Tạm dừng, giảm âm 2 phút cuối), tiếng mèo rù rù theo lượt (#49) | Xong |
 | — | — | Kiểm thử thủ công trang Thống kê: chưa có dữ liệu, có dữ liệu, lỗi tải và nút Thử lại (#48) | Xong |
 | — | — | Kiểm thử thủ công Tài khoản: đăng ký, đăng nhập, đăng xuất, đổi tên, xóa tài khoản, đồng bộ phòng sau khi đăng nhập | Xong |
+| — | [Tự điền] | Review Pull Request: đọc thay đổi, chạy thử trên máy, kiểm tra tính năng đúng PRD rồi approve | Xong |
 | G6 | — | Quay clip demo phần Phòng ngủ, Thống kê | [Tự điền] |
 
 ### Khó khăn và cách xử lý
@@ -132,4 +133,4 @@ Số commit trên main: 0.
 - Góp ý nhận được đến cuối sprint (17/11), không còn thời gian mở PR mới. Cách xử lý: đối chiếu từng góp ý với web; góp ý Hẹn giờ ngủ đã được làm ở #29 nên ghi vào received.md kèm số PR.
 
 ### Tự đánh giá mức đóng góp (1–5)
-*3* — Kiểm thử Phòng ngủ, Thống kê và Tài khoản trước khi nộp bài; không có commit trong sprint.
+*3* — Kiểm thử Phòng ngủ, Thống kê và Tài khoản, review và approve Pull Request trước khi nộp bài; không có commit trong sprint.
