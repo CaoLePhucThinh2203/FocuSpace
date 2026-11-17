@@ -147,7 +147,7 @@ Bảng đối chiếu chi tiết được trình bày tại [`docs/PLAN.md`](doc
 | 1a Họp phân công vai trò | [`docs/meetings/`](docs/meetings/) |
 | 1b Wireframe | Vẽ bằng draw.io: [`docs/wireframes/FocuSpace_Wireframes.drawio`](docs/wireframes/FocuSpace_Wireframes.drawio), bản PNG cùng thư mục |
 | 1c Kế hoạch và các mốc thời gian | [`docs/PLAN.md`](docs/PLAN.md) §3; milestone S1–S5 trên GitHub |
-| 1d, 1e Quản lý dự án trên GitHub | Issue theo [`docs/TASKS.md`](docs/TASKS.md); mỗi công việc một nhánh; Pull Request liên kết issue; Conventional Commits; CI |
+| 1d, 1e Quản lý dự án trên GitHub | 71 issue (#64–#134) lập từ [`docs/TASKS.md`](docs/TASKS.md), gắn milestone, nhãn khu vực và người phụ trách, mỗi issue dẫn tới Pull Request thực hiện; mỗi công việc một nhánh, Pull Request có review; Conventional Commits; CI GitHub Actions |
 | 2a–2d Giao diện người dùng | 6 trang tại [mục 3](#3-chức-năng-và-hình-ảnh-minh-họa-features-and-screenshots); Tailwind CSS 4; kéo thả, popover, biểu mẫu, bộ lọc, hộp thoại; tương thích 3 kích thước màn hình |
 | 3a–3c Cơ sở dữ liệu | ERD tại [mục 4](#4-sơ-đồ-cơ-sở-dữ-liệu-database-diagram--erd); PostgreSQL và Prisma; thao tác CRUD với tài khoản và trạng thái phòng; 2 trang động: Thư viện, Thống kê |
 | 4a Google Lighthouse | [`docs/reports/lighthouse/`](docs/reports/lighthouse/README.md): 5 trang đạt 100 điểm ở cả 4 hạng mục; Căn phòng đạt Performance 95, Accessibility 100, SEO 100, Best Practices 96 khi đo trên Vercel và đạt 100 khi đo lại tại máy cục bộ sau khi tăng cỡ chữ chú thích lên 12 px |
