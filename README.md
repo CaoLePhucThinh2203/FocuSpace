@@ -6,7 +6,7 @@
 |---|---|
 | **Địa chỉ triển khai** | https://focuspace-iota.vercel.app |
 | **Kiểm tra trạng thái API** | https://focuspace-api.onrender.com/api/v1/health |
-| **Video trình bày** | [Cần bổ sung: link YouTube] |
+| **Video trình bày** | Desktop: https://www.youtube.com/watch?v=9J9uekvG_xA / Mobile: coming soon |
 | **Mã nguồn** | https://github.com/CaoLePhucThinh2203/FocuSpace |
 | **Thời gian thực hiện** | 27/10/2026 – 17/11/2026, chia thành 5 sprint |
 
