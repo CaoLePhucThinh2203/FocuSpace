@@ -433,15 +433,15 @@ function meowFill(d, len, c) {   // tiếng "meo": cao độ vút lên rồi tr�
     d[i] = (v * 0.32 + br * 0.025 * (1 - u) * (1 - u)) * env;   // hơi thở tắt dần về cuối: hết tiếng rè "xì" ở đuôi tiếng meo
   }
 }
-/* Tiếng rù rù (PRD v5.19, bản "L1 br vừa" người dùng chọn sau khi nghe thử, đối chiếu một bản ghi mèo thật):
-   - mỗi nhịp là một đợt rung mềm gồm 6 âm trầm 110–390 Hz, cao độ và pha đổi ngẫu nhiên mỗi nhịp (không vùng vang cố định → không thành tiếng trống,
+/* Tiếng rù rù (PRD v5.19, bản "L1 br vừa" rồi "N1" bớt đục, người dùng chọn sau khi nghe thử, đối chiếu một bản ghi mèo thật):
+   - mỗi nhịp là một đợt rung mềm gồm 7 âm trầm 110–460 Hz (âm 460 Hz rất nhỏ để bớt đục — bản "N1"), cao độ và pha đổi ngẫu nhiên mỗi nhịp (không vùng vang cố định → không thành tiếng trống,
      không ù đều → không thành tiếng điện); không có tiếng hơi/nhiễu;
    - khoảng 24 nhịp/giây (hít vào 25,5), khoảng cách lệch ±14%, độ to lệch ±25% như mèo thật;
    - "br": mỗi đợt vào nhanh (20% đầu) rồi ra mềm, bên trong có rung con ~60 lần/giây;
    - nhịp thở 3,6 giây: hít vào 40% (nhỏ hơn), thở ra 60%, trũng nhẹ lúc đổi chiều hơi thở.
    Hai kênh dùng cùng hạt ngẫu nhiên để nhịp trùng nhau ở hai tai. Bộ đệm lặp 7,2 giây = 2 nhịp thở. */
 const PURR = { rate: 24, rateIn: 25.5, jitter: 0.14, shimmer: 0.25, breath: 3.6, inFrac: 0.4, breathDepth: 0.25, dip: 0.4,
-  freqs: [110, 150, 195, 245, 310, 390], tilt: 0.75, spread: 0.12, burst: 1.1, rise: 0.2, trillHz: 60, trillDepth: 0.5, gain: 0.239 };
+  freqs: [110, 150, 195, 245, 310, 390, 460], tilt: 0.78, spread: 0.12, burst: 1.1, rise: 0.2, trillHz: 60, trillDepth: 0.5, gain: 0.227 };
 let purrMemo = null;   // hai kênh giống hệt nhau: dựng một lần, kênh sau chép lại
 function softPurrFill(d, len) {
   if (purrMemo && purrMemo.length === len) { d.set(purrMemo); purrMemo = null; return; }
