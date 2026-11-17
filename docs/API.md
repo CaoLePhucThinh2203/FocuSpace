@@ -28,7 +28,7 @@ API phục vụ frontend FocuSpace (ứng dụng web chạy trong trình duyệt
 
 - **Nội dung trang động:** danh mục đồ vật, khung cảnh cho trang Thư viện và thống kê học tập của người dùng cho trang Thống kê.
 
-14 endpoint, kèm use case và phương thức service (theo Chương 1 Phân tích hệ thống, Class C3):
+14 endpoint, kèm use case và phương thức service (theo Chương 1 Phân tích hệ thống, biểu đồ lớp Hình 1.27):
 
 | **Mục** | **Endpoint** | **Use case** | **Phương thức service** |
 |---|---|---|---|

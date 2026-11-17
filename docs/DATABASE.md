@@ -1,6 +1,6 @@
 # FocuSpace — Thiết kế Database
 
-> Trạng thái: **Đã duyệt** ở buổi họp kế hoạch 13/11/2026 · rút gọn 14/11/2026. ERD: Kiến trúc Hình 4 (nguồn `docs/analysis/FocuSpace_Diagrams.drawio`, trang ERD), khớp từng cột với tài liệu này.
+> Trạng thái: **Đã duyệt** ở buổi họp kế hoạch 13/11/2026 · rút gọn 14/11/2026. ERD: Kiến trúc Hình 4; Lược đồ quan hệ: Kiến trúc Hình 5 (nguồn `docs/analysis/FocuSpace_Diagrams.drawio`, trang ERD và Relational Schema), khớp từng cột với tài liệu này.
 
 ## 1. Tổng quan
 
@@ -101,9 +101,9 @@ erDiagram
 
 `item_types` và `scenes` là bảng danh mục, không có khóa ngoại: `Item.type` trong `room_states.data` (JSONB) và `out.scene` tham chiếu tới `code` về mặt logic, được kiểm tra bằng schema Zod dùng chung.
 
-### Ánh xạ với biểu đồ lớp thực thể (Chương 1, Class C1)
+### Ánh xạ với biểu đồ lớp (Chương 1, Hình 1.28)
 
-| Lớp (Class C1) | Bảng / đối tượng | Ánh xạ thuộc tính |
+| Lớp thực thể | Bảng / đối tượng | Ánh xạ thuộc tính |
 |---|---|---|
 | ThanhVien | `users` | id↔id, email↔email, matKhauBam↔password_hash, tenHienThi↔display_name, ngayTao↔created_at, ngayCapNhat↔updated_at, lanDangNhapCuoi↔last_login_at |
 | RefreshToken | `refresh_tokens` | id↔id, tokenBam↔token_hash, familyId↔family_id, hetHan↔expires_at, thuHoiLuc↔revoked_at, ngayTao↔created_at |

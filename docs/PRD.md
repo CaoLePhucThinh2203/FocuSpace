@@ -143,7 +143,7 @@ FocuSpace là đồ án cuối kỳ làm theo nhóm của môn Web Design and De
 
 Hệ thống có hai tác nhân. **Khách** là người dùng chưa đăng nhập, dùng đầy đủ căn phòng ở chế độ local-first và được định danh bằng `clientId` ẩn danh. **Thành viên** là Khách đã đăng nhập bằng email/mật khẩu; quan hệ tổng quát hóa cho Thành viên kế thừa mọi use case của Khách, cộng thêm đồng bộ phòng, thống kê học tập và quản lý tài khoản. Hai use case dùng chung: «include» Tự động lưu cục bộ (UC.02, UC.03, UC.04) và «include» Ghi nhận số liệu sử dụng (UC.05, UC.06).
 
-![Hình 1](images/uc-tong-quat.png)
+![Hình 1](images/diagrams/uc-tong-quat.png)
 
 *Hình 1 — Biểu đồ use case tổng quát (nguồn: FocuSpace_Diagrams.drawio, trang UC-TQ)*
 
