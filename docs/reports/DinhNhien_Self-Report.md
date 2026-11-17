@@ -113,7 +113,7 @@ Số commit trên `main`: 3.
 - Giảm giới hạn 40 → 25 đồ sửa vào `shared/` và quy tắc `placement` của khu vực khác. Cách xử lý: đề xuất trong PR #24, gán Phúc Thịnh duyệt phần `shared/`, Tuấn Hưng duyệt phần `placement`; cập nhật PRD (BR-06, AC-04.2), API, DATABASE cùng PR (G12).
 
 ### Công việc của sprint tới
-S5 (16–17/11): self-report cả nhóm, README; kiểm tra GA4, Sentry (N11); góp ý UI/UX cho nhóm A cùng Tuấn Hưng (G4); sửa theo góp ý (G5); quay clip demo Sân vườn (G6).
+S5 (16–17/11): self-report cả nhóm, README; kiểm tra GA4, Sentry (N11); góp ý UI/UX cho Nhóm 4 (PawPass) cùng Tuấn Hưng (G4); sửa theo góp ý (G5); quay clip demo Sân vườn (G6).
 
 ### Tự đánh giá mức đóng góp (1–5)
 4
@@ -133,9 +133,8 @@ Số commit trên `main`: 3.
 | T18 | #45 | README hoàn chỉnh theo đề bài: cách chạy, công cụ, tính năng kèm ảnh, ERD, thông tin thêm (`676a2fa`) | Xong |
 | — | #49, #50 | Duyệt và merge PR | Xong |
 | N11 | — | Kiểm tra GA4 Realtime thấy `page_view`, Sentry nhận lỗi thử, không gửi dữ liệu cá nhân | Đang làm |
-| G4 | — | Góp ý UI/UX cho nhóm A cùng Tuấn Hưng (`docs/reviews/given/dinh-nhien.md`, hiện mới có khung) | Chưa làm |
+| G4 | — | Góp ý UI/UX cho Nhóm 4 (PawPass) cùng Tuấn Lộc, Tuấn Hưng (`docs/reviews/given/dinh-nhien.md`) | Xong |
 | G5 | #46, #50 | Sửa theo góp ý: góp ý số 8 (cảnh Thành phố sinh động hơn) đã làm ở #46, #50, không cần PR mới (`docs/reviews/received.md`) | Xong |
-| G6 | — | Quay clip demo phần Sân vườn, gửi Thịnh trước 26/11 | Xong |
 
 ### Thay đổi trong khu vực do thành viên khác làm
 | Issue | PR | Người làm | Thay đổi |
@@ -147,7 +146,6 @@ Số commit trên `main`: 3.
 - Tổng hợp self-report S3 cho cả nhóm từ git log khó vì nhiều commit không ghi mã issue và một PR gộp nhiều việc. Cách xử lý: đối chiếu từng commit với PR đã merge và `docs/TASKS.md`, ghi mã commit trong ngoặc để kiểm tra lại được (#45).
 - README cần ảnh minh họa cho từng tính năng theo đề bài. Cách xử lý: chụp màn hình từng trang và từng không gian của Căn phòng, lưu vào `docs/images/screenshots/` rồi chèn vào README (#45).
 - GA4 và Sentry vẫn chưa kiểm tra xong vì chưa xác nhận mã GA4, DSN đã đặt trên Vercel, Render (G10). Cách xử lý: nhắc Phúc Thịnh xác nhận biến môi trường, sau đó kiểm tra GA4 Realtime, gửi lỗi thử lên Sentry (N11).
-- Chưa biết nhóm A là nhóm nào nên chưa góp ý UI/UX được (`docs/reviews/given/dinh-nhien.md` ghi tên nhóm [Cần bổ sung]). Cách xử lý: hỏi Phúc Thịnh tên nhóm A, cùng Tuấn Hưng review theo 3 tiêu chí của đề bài trước 26/11 (G4).
 
 ### Tự đánh giá mức đóng góp (1–5)
 5

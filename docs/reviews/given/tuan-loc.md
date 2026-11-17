@@ -1,6 +1,8 @@
 # Góp ý UI/UX cho nhóm B — Tuấn Lộc
 
 > Nhóm được review: Nhóm 4 (PawPass) · Ngày: 12/11/2026 · Theo 3 tiêu chí đề bài: usability, aesthetics, user-friendliness.
+>
+> Review chung với Tuấn Hưng, Đình Nhiên.
 
 ## Điểm mạnh
 -Dễ sử dụng

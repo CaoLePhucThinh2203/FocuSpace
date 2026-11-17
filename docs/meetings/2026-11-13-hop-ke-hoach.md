@@ -27,7 +27,7 @@ Chi tiết từng việc theo khu vực: `docs/PLAN.md` §2 và `docs/TASKS.md`.
 ## 3. Đã chốt sau buổi họp (13/11)
 
 - Phân công backend và việc chung (đánh dấu ⓓ trong `docs/TASKS.md`): Hưng — `item_types`, `/catalog/items`; Nhiên — `scenes`, `/catalog/scenes`, telemetry, GA4/Sentry; Lộc — auth, `/me`, `/me/stats`, Lighthouse, E2E responsive; Thịnh — `schema.prisma`, `/room-state`, đồng bộ, README, video.
-- Ghép cặp review chéo: Hưng + Nhiên → nhóm A, Lộc + Thịnh → nhóm B. Nhóm được review: Lộc — Nhóm 4 (PawPass), Thịnh — Nhóm 6 (Quản lí chi tiêu); nhóm A của Hưng, Nhiên: [Cần bổ sung].
+- Ghép cặp review chéo: Hưng + Nhiên → nhóm A, Lộc + Thịnh → nhóm B. Nhóm được review: Hưng, Nhiên, Lộc — Nhóm 4 (PawPass); Thịnh — Nhóm 6 (Quản lí chi tiêu).
 - Trang Thống kê chuyển từ Phúc Thịnh sang Tuấn Lộc (Lộc đã làm API `/me/stats`); Thịnh còn 18 issue.
 - Phúc Thịnh tạo tài khoản GA4, Sentry rồi gửi mã cho Đình Nhiên; triển khai lên Vercel + Render + Neon ở S5.
 

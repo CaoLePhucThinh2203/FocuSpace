@@ -93,7 +93,7 @@ Cấu trúc thư mục thật và cách chạy xem `README.md`; công nghệ xem
 | P5 Giao diện & lưu cục bộ | Tailwind, 6 route + 404, NavBar/Footer, khung Căn phòng, LocalStorage `focuspace.room.v4`, responsive 3 cỡ | S4 | E2E theo UC, chụp 375/768/1280 px | ✅ |
 | P6 Backend & CSDL | `schema.prisma`, migration, seeder; 14 endpoint theo API Docs; rate limit, log, lỗi chuẩn | S3–S5 | Integration test (Supertest + PostgreSQL) | ✅ 14 endpoint, integration test trên PostgreSQL 16 tạm (15/11) |
 | P7 Tài khoản, đồng bộ & trang động | Tự refresh token, Tài khoản, đồng bộ `/room-state` + hộp thoại hợp nhất + 409, telemetry, Thư viện, Thống kê | S5 | E2E UC.07–UC.11 | ✅ (15/11) |
-| P8 Tối ưu, theo dõi & nộp bài | Lighthouse trước/sau ≥ 90 (title + meta, âm thanh sau cú nhấp đầu, font tự host — `docs/reports/lighthouse/`); GA4 + Sentry; triển khai Vercel + Render + Neon (Kiến trúc §3.5); sửa theo góp ý; README; video ≤ 10 phút | S5 | Đối chiếu bảng §1 và AC PRD 5.4 | Đã triển khai (14/11); Lighthouse 6 trang ≥ 95 cả 4 hạng mục (15/11); README hoàn chỉnh; góp ý nhận được đã xử lý (`docs/reviews/received.md`, #53); video Desktop đăng YouTube, link trong README. Còn: kiểm tra GA4/Sentry, video bản Mobile |
+| P8 Tối ưu, theo dõi & nộp bài | Lighthouse trước/sau ≥ 90 (title + meta, âm thanh sau cú nhấp đầu, font tự host — `docs/reports/lighthouse/`); GA4 + Sentry; triển khai Vercel + Render + Neon (Kiến trúc §3.5); sửa theo góp ý; README; video ≤ 10 phút | S5 | Đối chiếu bảng §1 và AC PRD 5.4 | Đã triển khai (14/11); Lighthouse 6 trang ≥ 95 cả 4 hạng mục (15/11); README hoàn chỉnh; góp ý nhận được đã xử lý (`docs/reviews/received.md`, #53); video đăng YouTube, link trong README. Còn: kiểm tra GA4/Sentry |
 
 ## Nguyên tắc chung
 

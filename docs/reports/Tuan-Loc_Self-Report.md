@@ -100,6 +100,7 @@ Số commit trên main: 4.
 | — | #12 | Đặc tả UC.06 Hẹn giờ ngủ (50172b1) | Xong |
 | L13 | #12 | Trang Thống kê khu vực bedroom (e4aebb3) | Xong |
 | — | #17, #25 | Cập nhật icon (5a9ea80, bfc73cf) | Xong |
+| — | #10, #15, #22, #23, #29, #31, #34, #38–#40, #42–#44 | Review và approve 13 Pull Request | Xong |
 
 ### Khó khăn và cách xử lý
 - Trang Thống kê cần dữ liệu từ telemetry (Đình Nhiên làm phần gửi lô), nên khi chưa học phiên nào thì trang trống. Cách xử lý: hiển thị trạng thái chưa có dữ liệu thay vì biểu đồ rỗng; kiểm tra số liệu bằng integration test /me/stats.
@@ -125,8 +126,8 @@ Số commit trên main: 0.
 | — | — | Kiểm thử thủ công Phòng ngủ: cửa sổ đêm (Đêm sao, Mưa đêm, Tuyết rơi), rèm, đồng hồ treo tường, Hẹn giờ ngủ (chọn mức, Bắt đầu, Tạm dừng, giảm âm 2 phút cuối), tiếng mèo rù rù theo lượt (#49) | Xong |
 | — | — | Kiểm thử thủ công trang Thống kê: chưa có dữ liệu, có dữ liệu, lỗi tải và nút Thử lại (#48) | Xong |
 | — | — | Kiểm thử thủ công Tài khoản: đăng ký, đăng nhập, đăng xuất, đổi tên, xóa tài khoản, đồng bộ phòng sau khi đăng nhập | Xong |
-| — | [Tự điền] | Review Pull Request: đọc thay đổi, chạy thử trên máy, kiểm tra tính năng đúng PRD rồi approve | Xong |
-| G6 | — | Quay clip demo phần Phòng ngủ, Thống kê | [Tự điền] |
+| — | #46–#53 | Review 8 Pull Request: đọc thay đổi, chạy thử trên máy, kiểm tra tính năng đúng PRD rồi approve | Xong |
+| G6, T19 | #61, #62 | Quay toàn bộ clip video trình bày bản Desktop (link trong README) | Xong |
 
 ### Khó khăn và cách xử lý
 - Sprint 5 có nhiều thay đổi ở Phòng ngủ và các trang (âm thanh mèo, văn phong, font, nút Thử lại ở Thống kê), dễ làm hỏng phần đã chạy đúng. Cách xử lý: kiểm thử lại toàn bộ tính năng khu vực mình phụ trách (Phòng ngủ, Thống kê, Tài khoản) sau khi các PR #46–#49 được merge.

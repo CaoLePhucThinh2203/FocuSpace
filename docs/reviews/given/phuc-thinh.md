@@ -1,6 +1,6 @@
 # Góp ý UI/UX cho nhóm B — Phúc Thịnh
 
-> Nhóm được review: Nhóm 6 (Quản lí chi tiêu) · Ngày: [Cần bổ sung] · Theo 3 tiêu chí đề bài: usability, aesthetics, user-friendliness.
+> Nhóm được review: Nhóm 6 (Quản lí chi tiêu) · Ngày: 07/11/2026 · Theo 3 tiêu chí đề bài: usability, aesthetics, user-friendliness.
 
 ## Điểm mạnh
 - Giao diện bắt mắt nhờ tông màu trắng kết hợp với các màu sắc nổi bật.

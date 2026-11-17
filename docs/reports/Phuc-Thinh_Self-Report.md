@@ -148,10 +148,10 @@ Số commit trên `main`: 39.
 | G9 | #51 | Vẽ lại toàn bộ sơ đồ theo mẫu báo cáo (use case, 12 Activity, 12 Sequence, biểu đồ lớp tách 3 tầng, ERD, Lược đồ quan hệ, 2 WND); dựng lại Chương 1 Phân tích hệ thống, đặt biểu đồ lớp, ERD, Lược đồ quan hệ trên trang ngang (`aa6984c`, `43d5921`, `0e3aa8f`) | Xong |
 | T18 | #52 | README trình bày lại theo 5 tiêu chí đề bài (cách chạy, tổng quan và công cụ, tính năng kèm ảnh, ERD, thông tin bổ sung), văn phong báo cáo, thêm ảnh Thống kê có số liệu minh họa (`23ce686`, `ec20fda`, `171993b`) | Xong |
 | G3 | #54 | Self-report 5 sprint của Phúc Thịnh (`docs/reports/Phuc-Thinh_Self-Report.md`); soạn từ git log khung self-report cho các thành viên | Xong |
-| T16 | — | Góp ý UI/UX cho Nhóm 6 (Quản lí chi tiêu): làm đơn giản hơn, thêm nhập nhanh bằng giọng nói, thiết kế lại giao diện (`docs/reviews/given/phuc-thinh.md`) | Xong |
+| T16 | — | Góp ý UI/UX cho Nhóm 6 (Quản lí chi tiêu) ngày 07/11: làm đơn giản hơn, thêm nhập nhanh bằng giọng nói, thiết kế lại giao diện (`docs/reviews/given/phuc-thinh.md`) | Xong |
 | T17 | #53 | Tổng hợp 10 góp ý nhận được từ Triết, Phát, Long vào `docs/reviews/received.md`: 9 góp ý đã làm (mèo đổi màu, Trang chủ, tối ưu web, Pomodoro, nút Bắt đầu/Tạm dừng, Hẹn giờ ngủ, cảnh Thành phố, độ lớn âm thanh, nhạc Lo-fi; PR #10, #29, #30, #40–#44, #46–#50), 1 góp ý không làm kèm lý do (khung cảnh tuyết) | Xong |
 | G5 | #10, #29, #30, #40–#44, #46–#50 | Sửa theo góp ý: các góp ý được làm đã có trong các PR trên, không cần PR mới | Xong |
-| T19 | #61, #62 | Video demo bản Desktop đăng YouTube, link trong README; bản Mobile chưa có | Xong (Desktop) |
+| T19 | #61, #62 | Video demo đăng YouTube (Tuấn Lộc quay), link trong README | Xong |
 | — | #45–#52 | Duyệt và merge PR | Xong |
 
 ### Khó khăn và cách xử lý

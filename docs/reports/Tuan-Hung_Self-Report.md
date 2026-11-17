@@ -111,7 +111,7 @@ Số commit trên `main`: 16.
 - Một số commit chưa đúng Conventional Commits (“đổi màu mèo”, “fix mobile library”, “thêm AC-03.5 âm nền”, “review”). Cách xử lý: từ sau ghi đủ loại commit, mã issue và mã UC như các commit `perf(...)(H12)` cùng ngày.
 
 ### Công việc của sprint tới
-S5 (16–17/11): góp ý UI/UX cho nhóm A cùng Đình Nhiên (G4), sửa theo góp ý nhận được (G5), quay clip demo phần đồ vật, âm thanh (G6).
+S5 (16–17/11): góp ý UI/UX cho Nhóm 4 (PawPass) cùng Đình Nhiên (G4), sửa theo góp ý nhận được (G5), quay clip demo phần đồ vật, âm thanh (G6).
 
 ### Tự đánh giá mức đóng góp (1–5)
 **5** — 16 commit qua 13 PR: tối ưu Lighthouse (H12) gồm dựng âm thanh sau cú nhấp đầu, font không chặn hiển thị, `robots.txt`, nhúng CSS, trả 404 đúng, tải trước ảnh LCP, Thư viện hết CLS qua 6 PR; nến phát sáng, bỏ tiếng rè sau tiếng meo (#28); mèo đổi màu lông theo góp ý (H13, #30); thêm AC-03.5 âm nền (#11); merge PR #34, #39.
@@ -126,13 +126,11 @@ Số commit trên `main`: 0.
 ### Việc đã làm
 | Issue | PR | Mô tả | Trạng thái |
 |---|---|---|---|
-| G4 | — | Góp ý UI/UX cho nhóm A cùng Đình Nhiên (`docs/reviews/given/tuan-hung.md`, hiện mới có khung) | Chưa làm |
+| G4 | — | Góp ý UI/UX cho Nhóm 4 (PawPass) cùng Tuấn Lộc, Đình Nhiên (`docs/reviews/given/tuan-hung.md`) | Xong |
 | G5 | #30 | Sửa theo góp ý: góp ý số 1 (mèo đổi màu) đã làm ở PR #30 trong S4, không cần PR mới (`docs/reviews/received.md`) | Xong |
-| G6 | — | Quay clip demo phần đồ vật, âm thanh, gửi Thịnh trước 26/11 | Chưa làm |
 
 ### Khó khăn và cách xử lý
-- Thời gian cuối kỳ gấp, sprint này không có commit. Cách xử lý: đọc lại PRD v5.12–v5.19 và các test mới để nắm hành vi hiện hành của đồ vật, âm thanh, dùng bản này khi quay clip demo (G6).
-- Chưa biết nhóm A là nhóm nào nên chưa góp ý UI/UX được (`docs/reviews/given/tuan-hung.md` ghi tên nhóm [Cần bổ sung]). Cách xử lý: hỏi Phúc Thịnh tên nhóm A, cùng Đình Nhiên review theo 3 tiêu chí của đề bài (usability, aesthetics, user-friendliness), hoàn thành G4, G6 trước 26/11.
+- Thời gian cuối kỳ gấp, sprint này không có commit. Cách xử lý: đọc lại PRD v5.12–v5.19 và các test mới để nắm hành vi hiện hành của đồ vật, âm thanh.
 
 ### Tự đánh giá mức đóng góp (1–5)
-**4** — Không có commit trong sprint. Góp ý mèo đổi màu (G5) đã đáp ứng bằng PR #30 từ S4; còn góp ý UI/UX cho nhóm A (G4) và clip demo đồ vật, âm thanh (G6) chưa làm.
+**4** — Không có commit trong sprint. Góp ý mèo đổi màu (G5) đã đáp ứng bằng PR #30 từ S4; góp ý UI/UX cho Nhóm 4 (PawPass) cùng Tuấn Lộc, Đình Nhiên (G4).
