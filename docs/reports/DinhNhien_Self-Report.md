@@ -132,7 +132,7 @@ Số commit trên `main`: 3.
 | G3 | #45 | Thêm cột Trạng thái cho từng issue trong `docs/TASKS.md`, cập nhật P5–P8 trong `docs/PLAN.md`, ghi phần Sân vườn trong prototype Căn phòng (`3d8e55c`) | Xong |
 | T18 | #45 | README hoàn chỉnh theo đề bài: cách chạy, công cụ, tính năng kèm ảnh, ERD, thông tin thêm (`676a2fa`) | Xong |
 | — | #49, #50 | Duyệt và merge PR | Xong |
-| N11 | — | Kiểm tra GA4 Realtime thấy `page_view`, Sentry nhận lỗi thử, không gửi dữ liệu cá nhân | Đang làm |
+| N11 | — | Kiểm tra trên bản triển khai (Phúc Thịnh thực hiện sau khi đặt mã GA4, DSN trên Vercel): GA4 Realtime thấy `page_view`, `login`; Sentry frontend nhận lỗi thử | Xong |
 | G4 | — | Góp ý UI/UX cho Nhóm 4 (PawPass) cùng Tuấn Lộc, Tuấn Hưng (`docs/reviews/given/dinh-nhien.md`) | Xong |
 | G5 | #46, #50 | Sửa theo góp ý: góp ý số 8 (cảnh Thành phố sinh động hơn) đã làm ở #46, #50, không cần PR mới (`docs/reviews/received.md`) | Xong |
 
@@ -145,7 +145,7 @@ Số commit trên `main`: 3.
 ### Khó khăn và cách xử lý
 - Tổng hợp self-report S3 cho cả nhóm từ git log khó vì nhiều commit không ghi mã issue và một PR gộp nhiều việc. Cách xử lý: đối chiếu từng commit với PR đã merge và `docs/TASKS.md`, ghi mã commit trong ngoặc để kiểm tra lại được (#45).
 - README cần ảnh minh họa cho từng tính năng theo đề bài. Cách xử lý: chụp màn hình từng trang và từng không gian của Căn phòng, lưu vào `docs/images/screenshots/` rồi chèn vào README (#45).
-- GA4 và Sentry vẫn chưa kiểm tra xong vì chưa xác nhận mã GA4, DSN đã đặt trên Vercel, Render (G10). Cách xử lý: nhắc Phúc Thịnh xác nhận biến môi trường, sau đó kiểm tra GA4 Realtime, gửi lỗi thử lên Sentry (N11).
+- GA4 và Sentry chưa gửi dữ liệu vì bản trên Vercel được build khi chưa có mã GA4, DSN (G10). Cách xử lý: Phúc Thịnh đặt `VITE_GA_ID`, `VITE_SENTRY_DSN` trên Vercel rồi build lại; kiểm tra GA4 Realtime và gửi lỗi thử lên Sentry (N11).
 
 ### Tự đánh giá mức đóng góp (1–5)
 5

@@ -66,7 +66,7 @@ Mỗi người chỉ sửa thư mục của mình; sửa chỗ khác thì mở P
 | N8 | S4 | `feat(api): GET /catalog/scenes` ⓓ | UC.07 | Integration test; AC-07.3 xanh | ✅ #9, #31 |
 | N9 | S4 | `feat(api): POST /telemetry/batch upsert idempotent` ⓓ | UC.05, UC.06 | Gửi trùng lô không nhân đôi dòng; 202/400/413/429 | ✅ #9, #31 |
 | N10 | S5 | `feat(persistence): telemetry.ts gom sự kiện, gửi lô 60 s / khi ẩn tab` ⓓ | UC.05, UC.06 | Phiên `completed`/`reset`/`abandoned` ghi đúng | ✅ #31 |
-| N11 | S5 | `feat(obs): Google Analytics 4 + Sentry frontend/backend` ⓓ | AC-NF.2 | Realtime GA4 thấy page_view; Sentry nhận lỗi thử; không gửi PII; mã GA4/DSN do Thịnh tạo (G10), lưu `.env` | ◐ #9 — còn kiểm tra GA4 Realtime, Sentry |
+| N11 | S5 | `feat(obs): Google Analytics 4 + Sentry frontend/backend` ⓓ | AC-NF.2 | Realtime GA4 thấy page_view; Sentry nhận lỗi thử; không gửi PII; mã GA4/DSN do Thịnh tạo (G10), lưu `.env` | ✅ #9 — GA4 Realtime thấy `page_view`, `login`; Sentry frontend nhận lỗi thử (issue JAVASCRIPT-REACT-1) |
 | N12 | S4 | `feat(render): Sân vườn — bồn hoa và dây hoa ở chân cửa sổ nhà gỗ` | UC.02 | Ảnh chụp 5 cảnh: chân 2 cửa sổ có bồn hoa + 2 vòng dây hoa; dùng màu hoa/lá sẵn có của prototype | ✅ #24 |
 | N13 | S4 | `feat(render): Núi băng — thêm núi thấp, hạ hàng thông, sửa phản chiếu hồ` | UC.02 | Ảnh chụp Núi băng: 2 núi tách rời, núi cao giữ nguyên, núi thấp theo phác thảo (đỉnh bằng, bậc hụt bên phải), thông thấp hơn, bóng dưới hồ khớp | ✅ #24 |
 | N14 | S4 | `feat(render): lối đá Thành phố, Khu rừng theo đường vòng của Đồi ven biển` | UC.02 | Lối đá thưa (5 viên) cùng đường với Đồi ven biển, màu đá giữ nguyên; Bãi biển không đổi | ✅ #24 |
@@ -126,6 +126,6 @@ Mỗi người chỉ sửa thư mục của mình; sửa chỗ khác thì mở P
 | G7 | S5 | `chore: nộp bài` | Thịnh | Repo, README, video nộp trước hết 27/11 | ☐ |
 | G8 | S1 ✅ | `feat(prototype): prototype Căn phòng + 6 trang` | Thịnh; Nhiên dựng phần Sân vườn, 5 khung cảnh của prototype Căn phòng; cả nhóm góp ý | ✅ `prototype/FocuSpace-Semi-Sandbox.html`, `prototype/web/` | ✅ |
 | G9 | S2 ✅ | `docs(plan): PRD, PLAN, Kiến trúc, API, DATABASE, Chương 1 Phân tích hệ thống` | Thịnh (cả nhóm góp nội dung khu vực mình) | ✅ các file trong `docs/` | ✅ |
-| G10 | S3 | `chore(obs): tạo tài khoản GA4, Sentry; gửi mã đo lường và DSN` | Thịnh | Nhiên nhận mã qua kênh riêng, không commit | ◐ cần xác nhận mã GA4, DSN đã đặt trên Vercel/Render |
+| G10 | S3 | `chore(obs): tạo tài khoản GA4, Sentry; gửi mã đo lường và DSN` | Thịnh | Nhiên nhận mã qua kênh riêng, không commit | ✅ `VITE_GA_ID`, `VITE_SENTRY_DSN` đặt trên Vercel, build lại; `SENTRY_DSN` trên Render |
 | G11 | S5 | `chore(deploy): triển khai Vercel (frontend) + Render (backend) + Neon (PostgreSQL)` | Thịnh | Link chạy được ghi trong README; migrate + seed trên Neon | ✅ #3 |
 | G12 | S3 | `feat(shared): giảm MAX_ITEMS_PER_ROOM 40 → 25 (BR-06), chặn thêm đồ khi đủ 25` | Nhiên đề xuất; Thịnh duyệt (`shared/`), Hưng duyệt (`placement`) | Test schema từ chối 26 đồ; AC-04.2 xanh; PRD (BR-06, AC-04.2), API Phụ lục A, DATABASE cập nhật cùng PR | ✅ #24 |

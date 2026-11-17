@@ -151,6 +151,7 @@ Số commit trên `main`: 39.
 | T16 | — | Góp ý UI/UX cho Nhóm 6 (Quản lí chi tiêu) ngày 07/11: làm đơn giản hơn, thêm nhập nhanh bằng giọng nói, thiết kế lại giao diện (`docs/reviews/given/phuc-thinh.md`) | Xong |
 | T17 | #53 | Tổng hợp 10 góp ý nhận được từ Triết, Phát, Long vào `docs/reviews/received.md`: 9 góp ý đã làm (mèo đổi màu, Trang chủ, tối ưu web, Pomodoro, nút Bắt đầu/Tạm dừng, Hẹn giờ ngủ, cảnh Thành phố, độ lớn âm thanh, nhạc Lo-fi; PR #10, #29, #30, #40–#44, #46–#50), 1 góp ý không làm kèm lý do (khung cảnh tuyết) | Xong |
 | G5 | #10, #29, #30, #40–#44, #46–#50 | Sửa theo góp ý: các góp ý được làm đã có trong các PR trên, không cần PR mới | Xong |
+| G10 | — | Đặt mã GA4, DSN Sentry trên Vercel, build lại; kiểm tra GA4 Realtime (`page_view`, `login`) và Sentry frontend nhận lỗi thử | Xong |
 | T19 | #61, #62 | Video demo đăng YouTube (Tuấn Lộc quay), link trong README | Xong |
 | — | #45–#52 | Duyệt và merge PR | Xong |
 
