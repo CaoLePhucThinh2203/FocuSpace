@@ -12,6 +12,7 @@ import { RHYTHMS, RHYTHM_IDS, nextPhase, parseConfig, phaseSeconds, rhythmOf, se
 import { NAVS, canSwitch, lastIndoorAfter, pausesPomodoro } from "../../areas/study/engine/rooms";
 import * as SleepTimer from "../../areas/bedroom/engine/sleepTimer";
 import * as Placement from "../../areas/items-audio/engine/placement";
+import * as CatPurr from "../../areas/items-audio/engine/catPurr";
 import { startRoomTelemetry } from "../../areas/garden/telemetry";
 
 export function startRoomEngine() {
@@ -834,13 +835,37 @@ function wakeCat(o) {   // bấm mèo: mở mắt, nhìn người dùng, kêu "m
   if (catWake.has(o.data.id)) return;
   catWake.set(o.data.id, frame);
   const purr = v => { if (o.em && o.em.cur) ramp(o.em.cur.g.gain, v, v ? 2.5 : 0.15); };   // tắt tiếng rù rù khi mèo thức; ngủ tiếp thì rù rù trở lại thật chậm (2,5 giây), không bật lên đột ngột ngay sau tiếng meo
-  purr(0); setTimeout(() => purr(1), CAT_WAKE_END * 100);
+  purr(0);
+  setTimeout(() => {   // ngủ tiếp: rù rù luôn một lượt rồi mới quay lại lịch "im 3–5 phút" (PRD v5.18)
+    purr(1);
+    if (o.data.on && itemsById.get(o.data.id) === o) catPurrStart(o.em);
+  }, CAT_WAKE_END * 100);
   setTimeout(() => {
     if (o.em) o.em.oneShot(BUF.meow, 1.2);
     const b = document.createElement("span"); b.className = "meow"; b.textContent = "Meow!";
     o.el.appendChild(b); setTimeout(() => b.remove(), 1400);
   }, CAT_MEOW_AT * 100);
 }
+/* ---------- Mèo rù rù theo lượt (PRD v5.18; thời lượng ở areas/items-audio/engine/catPurr.ts) ----------
+   Bật mèo hoặc vào phòng thì rù rù ngay một lượt 10–15 giây, rồi im 3–5 phút, lặp lại; mỗi con một lịch riêng.
+   Hệ số to/nhỏ của lượt đặt ở em.input.gain, tách khỏi em.cur.g mà wakeCat dùng để tắt tiếng lúc mèo kêu "meo". */
+const catPurrSpeed = { on: 1, off: 1 };   // chỉ test E2E đổi để tua nhanh thời gian
+function catPurrStart(em) {
+  if (!ctx || !em || !em.input) return;
+  clearTimeout(em.pt);
+  const g = em.input.gain, fade = CatPurr.PURR_FADE_SEC / catPurrSpeed.on;
+  if (!em.purring) { g.cancelScheduledValues(ctx.currentTime); g.setValueAtTime(0, ctx.currentTime); }
+  const burst = () => {
+    em.purring = true; em.bursts = (em.bursts || 0) + 1;
+    ramp(g, 1, fade);
+    em.pt = setTimeout(() => {
+      em.purring = false; ramp(g, 0, fade);
+      em.pt = setTimeout(burst, CatPurr.purrOffSec() / catPurrSpeed.off * 1000);
+    }, CatPurr.purrOnSec() / catPurrSpeed.on * 1000);
+  };
+  burst();
+}
+function catPurrStop(em) { if (!em) return; clearTimeout(em.pt); em.pt = 0; em.purring = false; }
 function drawItemSprite(o) {
   const t = o.data.type, c = o.ctx;
   if (SPRITES[t]) SPRITES[t](c, o.data, frame);
@@ -2806,7 +2831,9 @@ function applyItemAudio(o) {
   if (!ctx || !o.em) return;
   o.em.play(itemBuffer(o.data), ["radio", "vinyl"].includes(o.data.type) ? LOFI_XF : 0.3);
   o.em.setLevel(o.data.on, o.data.vol);
-  if (o.data.type === "cat") o.em.pulse(false);   // tiếng mèo kêu có nhịp riêng, không cần nhấp nhô to nhỏ
+  if (o.data.type === "cat") {   // rù rù theo lượt: vừa bật (hoặc vừa có âm thanh) thì rù rù ngay, tắt thì dừng lịch
+    if (!o.data.on || !o.em.cur) catPurrStop(o.em); else if (!o.em.pt) catPurrStart(o.em);
+  }
 }
 function placeObj(o) {
   const t = TYPES[o.data.type];
@@ -3411,5 +3438,8 @@ requestAnimationFrame(loop);
 // Nhạc Lo-fi: bài đang chọn của tai nghe, radio, đĩa than đã được dựng nền qua lofiBuf() khi gắn âm thanh lúc khởi động
 // Hook kiểm thử
 window.__focuspace = { tel, spatial, state, D_MAX, W_HALF, LISTENERS, itemsById, windowEm, bedWindowEm, sceneEm, outHeadEm, setScene, sceneBuf, roomOut, fade, sleep, ROOM, switchRoom,
-  sleepRemaining: s => { sleep.running = true; sleep.endAt = Date.now() + s * 1000; }, pomo, get pomoCfg() { return pomoCfg; }, pomoSetRhythm, pomoSetCustom, pomoSkip, pomoReset, fireEm, lofiCache };
+  sleepRemaining: s => { sleep.running = true; sleep.endAt = Date.now() + s * 1000; }, pomo, get pomoCfg() { return pomoCfg; }, pomoSetRhythm, pomoSetCustom, pomoSkip, pomoReset, fireEm, lofiCache,
+  setCatPurrSpeed: (on, off = on) => { catPurrSpeed.on = on; catPurrSpeed.off = off; },
+  catPurrState: () => [...itemsById.values()].filter(o => o.data.type === "cat" && o.em)
+    .map(o => ({ purring: !!o.em.purring, gain: o.em.input ? o.em.input.gain.value : 0, bursts: o.em.bursts || 0 })) };
 }
