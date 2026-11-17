@@ -21,9 +21,9 @@
 ### Việc đã làm
 | Issue | PR | Mô tả | Trạng thái |
 |---|---|---|---|
-| — | — | Thiết kế Sân vườn và 5 khung cảnh trên Figma/prototype | Xong |
+| — | — | Thiết kế Sân vườn và 5 khung cảnh trên prototype | Xong |
 | G8 | — | Cùng cả nhóm dựng prototype Căn phòng `prototype/FocuSpace-Semi-Sandbox.html`: phần Sân vườn và các khung cảnh | Xong |
-| N1 | — | Wireframe Figma Trang chủ, Giới thiệu & Liên hệ (desktop + mobile), PNG xuất vào `docs/wireframes/` | Xong |
+| N1 | — | Wireframe Trang chủ, Giới thiệu & Liên hệ bằng draw.io (desktop + mobile), PNG xuất vào `docs/wireframes/` | Xong |
 
 ### Khó khăn và cách xử lý
 - Cần đảm bảo nội dung Sân vườn trong PRD thống nhất với cấu trúc dữ liệu và danh sách khung cảnh được sử dụng trong seeder. Cách xử lý: chốt danh sách 5 khung cảnh ngay trong prototype (mỗi cảnh có tên, hình, âm nền), lấy prototype làm nguồn khi viết PRD và seeder.
@@ -135,7 +135,7 @@ Số commit trên `main`: 3.
 | N11 | — | Kiểm tra GA4 Realtime thấy `page_view`, Sentry nhận lỗi thử, không gửi dữ liệu cá nhân | Đang làm |
 | G4 | — | Góp ý UI/UX cho nhóm A cùng Tuấn Hưng (`docs/reviews/given/dinh-nhien.md`, hiện mới có khung) | Chưa làm |
 | G5 | #46, #50 | Sửa theo góp ý: góp ý số 8 (cảnh Thành phố sinh động hơn) đã làm ở #46, #50, không cần PR mới (`docs/reviews/received.md`) | Xong |
-| G6 | — | Quay clip demo phần Sân vườn, gửi Thịnh trước 26/11 | Xong (theo `sprint-5/dinh-nhien.md`; `docs/TASKS.md` còn ☐) |
+| G6 | — | Quay clip demo phần Sân vườn, gửi Thịnh trước 26/11 | Xong |
 
 ### Thay đổi trong khu vực do thành viên khác làm
 | Issue | PR | Người làm | Thay đổi |

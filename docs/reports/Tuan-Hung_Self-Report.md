@@ -21,7 +21,7 @@
 ### Việc đã làm
 | Issue | PR | Mô tả | Trạng thái |
 |---|---|---|---|
-| — | — | Thiết kế đồ vật, bảng đồ vật trên Figma/prototype (17 loại) | Xong |
+| — | — | Thiết kế đồ vật, bảng đồ vật trên prototype (17 loại) | Xong |
 | — | — | Thiết kế âm thanh đồ vật (Tivi, mèo, đồng hồ, radio…) và Volume mixer | Xong |
 | — | — | Góp ý wireframe Căn phòng | Xong |
 
@@ -33,7 +33,7 @@
 Tham gia viết tài liệu kế hoạch và phân tích (S2).
 
 ### Tự đánh giá mức đóng góp (1–5)
-**5** — Thiết kế 17 đồ vật và bảng đồ vật trên Figma/prototype, thiết kế âm thanh từng đồ vật (Tivi, mèo, đồng hồ, radio…) và Volume mixer, góp ý wireframe Căn phòng.
+**5** — Thiết kế 17 đồ vật và bảng đồ vật trên prototype, thiết kế âm thanh từng đồ vật (Tivi, mèo, đồng hồ, radio…) và Volume mixer, góp ý wireframe Căn phòng.
 
 ---
 

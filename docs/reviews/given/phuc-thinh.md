@@ -1,11 +1,14 @@
 # Góp ý UI/UX cho nhóm B — Phúc Thịnh
 
-> Nhóm được review: [Cần bổ sung] · Ngày: · Theo 3 tiêu chí đề bài: usability, aesthetics, user-friendliness.
+> Nhóm được review: Nhóm 6 (Quản lí chi tiêu) · Ngày: [Cần bổ sung] · Theo 3 tiêu chí đề bài: usability, aesthetics, user-friendliness.
 
 ## Điểm mạnh
 
 ## Đề xuất cải thiện
-| # | Trang | Vấn đề | Đề xuất | Mức độ |
-|---|---|---|---|---|
+| # | Đề xuất |
+|---|---|
+| 1 | Làm đơn giản hơn |
+| 2 | Thêm tính năng nhập nhanh bằng giọng nói |
+| 3 | Thiết kế lại giao diện |
 
 ## Ảnh chụp minh họa

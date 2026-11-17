@@ -21,8 +21,8 @@
 ### Việc đã làm
 | Issue | PR | Mô tả | Trạng thái |
 |---|---|---|---|
-| — | — | Thiết kế Phòng ngủ trên Figma/prototype | Xong |
-| — | — | Wireframe Figma Thống kê, Tài khoản (L1) | Xong |
+| — | — | Thiết kế Phòng ngủ trên prototype | Xong |
+| — | — | Wireframe Thống kê, Tài khoản bằng draw.io (L1) | Xong |
 
 ### Khó khăn và cách xử lý
 - Phòng ngủ dùng chung engine và đồ vật với Phòng học nên dễ trùng lặp. Cách xử lý: Phòng ngủ chọn không khí riêng (cửa sổ đêm: Đêm sao, Mưa đêm, Tuyết rơi; đồng hồ treo tường có Hẹn giờ ngủ, không có Pomodoro) để hai phòng khác nhau rõ ràng.
