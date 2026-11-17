@@ -1,12 +1,23 @@
 # FocuSpace
 
-**FocuSpace** là ứng dụng web mô phỏng một phòng học ảo theo phong cách pixel art, kết hợp nhạc Lo-fi và âm thanh không gian, nhằm hỗ trợ người dùng duy trì sự tập trung khi học tập và làm việc vào buổi tối với tai nghe. Đây là đồ án cuối kỳ môn Web Design and Development (CSB25022), Trường Đại học Việt Nam – Vương quốc Anh (VNUK), học kỳ 1 năm học 2026–2027.
+**FocuSpace** là web phòng học ảo mang phong cách pixel, có nhạc Lo-fi, có thể tùy chỉnh đồ vật và âm thanh; dành cho người muốn có âm thanh nền để học tập và làm việc.
+
+Đây là đồ án cuối kỳ môn Web Design and Development của Nhóm 2, thành viên bao gồm:
+
+| Họ và tên | MSSV |
+|---|---|
+| Cao Lê Phúc Thịnh | 24090024 |
+| Trương Đình Nhiên | 24090060 |
+| Đậu Tuấn Lộc | 24090025 |
+| Nguyễn Tuấn Hưng | 24090019 |
+
+
 
 | | |
 |---|---|
-| **Địa chỉ triển khai** | https://focuspace-iota.vercel.app |
+| **Địa chỉ web** | https://focuspace-iota.vercel.app |
 | **Kiểm tra trạng thái API** | https://focuspace-api.onrender.com/api/v1/health |
-| **Video trình bày** | https://www.youtube.com/watch?v=9J9uekvG_xA |
+| **Video demo** | https://www.youtube.com/watch?v=9J9uekvG_xA |
 | **Mã nguồn** | https://github.com/CaoLePhucThinh2203/FocuSpace |
 | **Thời gian thực hiện** | 27/10/2026 – 17/11/2026, chia thành 5 sprint |
 
