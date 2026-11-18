@@ -124,7 +124,7 @@ Mỗi người chỉ sửa thư mục của mình; sửa chỗ khác thì mở P
 | G4 · #126 | S5 | `docs(review): góp ý UI/UX cho nhóm A` | Hưng, Nhiên | `docs/reviews/given/<nhóm>.md` | ✅ Nhóm 4 (PawPass), review chung với Lộc (`tuan-hung.md`, `dinh-nhien.md`) |
 | G5 · #127 | S5 | `fix: sửa theo góp ý nhận được` | Chủ khu vực liên quan | Mỗi góp ý được làm có PR riêng | ✅ 9/10 góp ý đã có trong PR trước đó (#10, #29, #30, #40–#44, #46–#50), 1 không làm kèm lý do (`docs/reviews/received.md`) |
 | G6 · #128 | S5 | `chore: quay phần demo khu vực mình cho video` | Mỗi người | Gửi clip cho Thịnh trước 26/11 | ✅ Tuấn Lộc quay toàn bộ clip video |
-| G7 · #129 | S5 | `chore: nộp bài` | Thịnh | Repo, README, video nộp trước hết 27/11 | ☐ |
+| G7 · #129 | S5 | `chore: nộp bài` | Thịnh | Repo, README, video nộp trước hết 18/11 | ✅ đã nộp bài ngày 18/11/2026 |
 | G8 · #130 | S1 ✅ | `feat(prototype): prototype Căn phòng + 6 trang` | Thịnh; Nhiên dựng phần Sân vườn, 5 khung cảnh của prototype Căn phòng; cả nhóm góp ý | ✅ `prototype/FocuSpace-Semi-Sandbox.html`, `prototype/web/` | ✅ |
 | G9 · #131 | S2 ✅ | `docs(plan): PRD, PLAN, Kiến trúc, API, DATABASE, Chương 1 Phân tích hệ thống` | Thịnh (cả nhóm góp nội dung khu vực mình) | ✅ các file trong `docs/` | ✅ |
 | G10 · #132 | S3 | `chore(obs): tạo tài khoản GA4, Sentry; gửi mã đo lường và DSN` | Thịnh | Nhiên nhận mã qua kênh riêng, không commit | ✅ `VITE_GA_ID`, `VITE_SENTRY_DSN` đặt trên Vercel, build lại; `SENTRY_DSN` trên Render |
