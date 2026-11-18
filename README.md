@@ -23,7 +23,12 @@
 
 > **Lưu ý:** máy chủ backend sử dụng gói miễn phí của Render và tự chuyển sang trạng thái nghỉ sau 15 phút không có truy cập. Vì vậy, lần truy cập đầu tiên có thể mất khoảng một phút để máy chủ khởi động lại.
 
-**Mục lục:** [1. Hướng dẫn cài đặt và chạy](#1-hướng-dẫn-cài-đặt-và-chạy-ứng-dụng-how-to-run-the-application) · [2. Tổng quan và công cụ](#2-tổng-quan-dự-án-và-công-cụ-sử-dụng-project-overview-and-used-tools) · [3. Chức năng và hình ảnh](#3-chức-năng-và-hình-ảnh-minh-họa-features-and-screenshots) · [4. Sơ đồ cơ sở dữ liệu](#4-sơ-đồ-cơ-sở-dữ-liệu-database-diagram--erd) · [5. Thông tin bổ sung](#5-thông-tin-bổ-sung-additional-information)
+**Mục lục:** 
+- [1. Hướng dẫn cài đặt và chạy](#1-hướng-dẫn-cài-đặt-và-chạy-ứng-dụng-how-to-run-the-application)
+- [2. Tổng quan và công cụ](#2-tổng-quan-dự-án-và-công-cụ-sử-dụng-project-overview-and-used-tools)
+- [3. Chức năng và hình ảnh](#3-chức-năng-và-hình-ảnh-minh-họa-features-and-screenshots)
+- [4. Sơ đồ cơ sở dữ liệu](#4-sơ-đồ-cơ-sở-dữ-liệu-database-diagram--erd)
+- [5. Thông tin bổ sung](#5-thông-tin-bổ-sung-additional-information)
 
 ---
 
