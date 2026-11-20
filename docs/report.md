@@ -305,7 +305,7 @@ Backend có integration test (Vitest + Supertest) chạy trên một PostgreSQL 
 
 ### (a) Kiểm tra hiệu năng với Lighthouse
 
-Đo bằng Lighthouse trong Chrome DevTools trên bản triển khai https://focuspace-iota.vercel.app. Nhật ký tối ưu và file JSON các lần đo trong quá trình làm: [`reports/lighthouse/`](reports/lighthouse/README.md).
+Đo bằng Lighthouse trong Chrome DevTools trên bản triển khai https://focuspace-iota.vercel.app. Nhật ký tối ưu và file JSON các lần đo trong quá trình làm: [`lighthouse/`](lighthouse/README.md).
 
 **Kết quả trước khi tối ưu:**
 
