@@ -142,7 +142,7 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/sprint-repo
 
 **Tóm tắt những gì bạn đã đóng góp cho dự án:**
 
-Tôi thiết kế 17 đồ vật, bảng đồ vật, âm thanh từng đồ vật và Volume mixer trên prototype, rồi góp nội dung cho PRD, API và danh mục seeder. Trong giai đoạn lập trình, tôi làm seeder `item_types`, API `GET /catalog/items` kèm Zod và integration test, các khung test và khung âm thanh, khay, popover cho khu vực đồ vật. Phần tôi đóng góp nhiều nhất là tối ưu Lighthouse: đưa `/room` từ 60 lên 95 điểm Performance và Thư viện hết nhảy bố cục qua nhiều PR. Tôi cũng làm mèo đổi màu lông theo góp ý nhận được (31 commit trên `main` từ S3 đến S5).
+Tôi thiết kế 17 đồ vật, bảng đồ vật, âm thanh từng đồ vật và Volume mixer trên prototype, rồi góp nội dung cho PRD, API và danh mục seeder. Trong giai đoạn lập trình, tôi làm seeder `item_types`, API `GET /catalog/items` kèm Zod và integration test, các khung test và khung âm thanh, khay, popover cho khu vực đồ vật. Phần tôi đóng góp nhiều nhất là tối ưu Lighthouse: đưa `/room` từ 60 lên 95 điểm Performance và Thư viện hết nhảy bố cục qua nhiều PR. Tôi cũng làm mèo đổi màu lông theo góp ý nhận được (34 commit trên `main` từ S3 đến S5).
 
 Kỹ năng học được: tối ưu hiệu năng theo Lighthouse (đọc báo cáo, sửa TBT, CLS, LCP và tài nguyên chặn hiển thị); tạo âm thanh tổng hợp bằng Web Audio API; làm việc nhóm trên GitHub (nhánh, Pull Request, xử lý xung đột khi merge, Conventional Commits).
 

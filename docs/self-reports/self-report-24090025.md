@@ -137,7 +137,7 @@ Không có.
 
 **Tóm tắt những gì bạn đã đóng góp cho dự án:**
 
-Tôi thiết kế Phòng ngủ, vẽ wireframe Thống kê và Tài khoản, góp nội dung cho PRD và API phần tài khoản, thống kê. Ở backend, tôi làm toàn bộ phần tài khoản (đăng ký, đăng nhập, refresh xoay vòng, `/me`) và thống kê `/me/stats` tính theo múi giờ người dùng. Ở frontend, tôi làm trang Thống kê, các khung E2E và E2E responsive, đặc tả UC.06 Hẹn giờ ngủ. Cuối kỳ tôi kiểm thử thủ công khu vực của mình, review Pull Request và quay video demo (27 commit trên `main` từ S3 đến S5).
+Tôi thiết kế Phòng ngủ, vẽ wireframe Thống kê và Tài khoản, góp nội dung cho PRD và API phần tài khoản, thống kê. Ở backend, tôi làm toàn bộ phần tài khoản (đăng ký, đăng nhập, refresh xoay vòng, `/me`) và thống kê `/me/stats` tính theo múi giờ người dùng. Ở frontend, tôi làm trang Thống kê, các khung E2E và E2E responsive, đặc tả UC.06 Hẹn giờ ngủ. Cuối kỳ tôi kiểm thử thủ công khu vực của mình, review Pull Request và quay video demo (30 commit trên `main` từ S3 đến S5).
 
 Kỹ năng học được: xác thực người dùng (đăng ký, đăng nhập, JWT, refresh token xoay vòng, băm mật khẩu Argon2id); kiểm thử phần mềm (integration test, E2E bằng Playwright, kiểm thử thủ công).
 
