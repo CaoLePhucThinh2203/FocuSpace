@@ -9,7 +9,7 @@
 | **Nhóm** | Nhóm 2 — FocuSpace |
 | **Vai trò trong nhóm** | Fullstack: Sân vườn và 5 khung cảnh; API `/catalog/scenes`, `POST /telemetry/batch`; tích hợp Google Analytics 4, Sentry |
 
-Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/reports/DinhNhien_Self-Report.md`](../reports/DinhNhien_Self-Report.md)). Điểm tự đánh giá là điểm cũ (thang 1–5) của các sprint tương ứng nhân 2, làm tròn.
+Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/sprint-reports/DinhNhien_Self-Report.md`](../sprint-reports/DinhNhien_Self-Report.md)). Điểm tự đánh giá là điểm cũ (thang 1–5) của các sprint tương ứng nhân 2, làm tròn.
 
 ---
 

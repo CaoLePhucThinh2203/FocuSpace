@@ -50,7 +50,7 @@ Mỗi người chỉ sửa thư mục của mình; sửa chỗ khác thì mở P
 | H9 · #72 | S4 | `feat(items): khay đồ vật, kéo thả, bàn phím, xóa` | UC.04 | AC-04.1 → AC-04.5 xanh | ✅ #1, #31 (PA B) |
 | H10 · #73 | S4 | `feat(items): popover đồ vật + Volume mixer` | UC.03 | AC-03.4 xanh; pan cập nhật < 30 ms | ✅ #1 (PA B) |
 | H11 · #74 | S4 | `feat(api): GET /catalog/items lọc room, group` ⓓ | UC.07 | Integration test 200/400; `Cache-Control` 1 giờ | ✅ #6, #31 |
-| H12 · #75 | S5 | `perf(room): tối ưu Lighthouse Căn phòng (tách mã, title + meta, âm thanh dựng sau cú nhấp đầu)` ⓓ | AC-NF.1 | Báo cáo trước/sau trong `docs/reports/lighthouse/` (đã làm thêm cho Thư viện, font tự host, CLS — xem nhật ký trong báo cáo) | ✅ #19–#21, #26, #27, #32, #34, #36–#43 |
+| H12 · #75 | S5 | `perf(room): tối ưu Lighthouse Căn phòng (tách mã, title + meta, âm thanh dựng sau cú nhấp đầu)` ⓓ | AC-NF.1 | Báo cáo trước/sau trong `docs/lighthouse/` (đã làm thêm cho Thư viện, font tự host, CLS — xem nhật ký trong báo cáo) | ✅ #19–#21, #26, #27, #32, #34, #36–#43 |
 | H13 · #76 | S4 | `feat(items): mèo đổi màu lông (Cam, Xám tro, Kem) + rõ màu dưới ánh trăng Phòng ngủ` | UC.03, UC.04 | Bấm mèo → popover có hàng "Màu lông" 3 nút, đổi ngay và lưu như chọn thảm; mèo nằm trong vệt trăng giữ màu lông (đục bóng tối 55% theo hình mèo); `coat` 0–2 trong schema + migrate giữ `coat`, test xanh; Thịnh duyệt phần `shared/` | ✅ #30 |
 
 ## Đình Nhiên — Sân vườn
@@ -120,7 +120,7 @@ Mỗi người chỉ sửa thư mục của mình; sửa chỗ khác thì mở P
 |---|---|---|---|---|---|
 | G1 · #123 | S1 ✅ | `docs(meeting): biên bản họp khởi động 27/10 và họp kế hoạch 13/11` | Thịnh | ✅ `docs/meetings/2026-10-27-khoi-dong.md`, `2026-11-13-hop-ke-hoach.md` | ✅ |
 | G2 · #124 | S1 ✅ | `docs(wireframe): duyệt bộ wireframe 6 trang` | Cả nhóm | ✅ duyệt cùng PRD 07/11; `docs/wireframes/FocuSpace_Wireframes.drawio` + PNG | ✅ |
-| G3 · #125 | S1→S5 | `docs(report): self-report sprint N` (5 issue, mỗi sprint 1) | Mỗi người | `docs/reports/<Tên>_Self-Report.md` (mỗi người một file, đủ 5 sprint), thiếu bị trừ 10%; **S1, S2 viết bù trước 17/11** | ✅ #54–#60, #63 |
+| G3 · #125 | S1→S5 | `docs(report): self-report sprint N` (5 issue, mỗi sprint 1) | Mỗi người | `docs/sprint-reports/<Tên>_Self-Report.md` (mỗi người một file, đủ 5 sprint), thiếu bị trừ 10%; **S1, S2 viết bù trước 17/11** | ✅ #54–#60, #63 |
 | G4 · #126 | S5 | `docs(review): góp ý UI/UX cho nhóm A` | Hưng, Nhiên | `docs/reviews/given/<nhóm>.md` | ✅ Nhóm 4 (PawPass), review chung với Lộc (`tuan-hung.md`, `dinh-nhien.md`) |
 | G5 · #127 | S5 | `fix: sửa theo góp ý nhận được` | Chủ khu vực liên quan | Mỗi góp ý được làm có PR riêng | ✅ 9/10 góp ý đã có trong PR trước đó (#10, #29, #30, #40–#44, #46–#50), 1 không làm kèm lý do (`docs/reviews/received.md`) |
 | G6 · #128 | S5 | `chore: quay phần demo khu vực mình cho video` | Mỗi người | Gửi clip cho Thịnh trước 26/11 | ✅ Tuấn Lộc quay toàn bộ clip video |

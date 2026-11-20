@@ -9,7 +9,7 @@
 | **Nhóm** | Nhóm 2 — FocuSpace |
 | **Vai trò trong nhóm** | Fullstack: đồ vật, khay đồ vật, âm thanh; API `/catalog/items`; tối ưu Lighthouse |
 
-Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/reports/Tuan-Hung_Self-Report.md`](../reports/Tuan-Hung_Self-Report.md)). Điểm tự đánh giá là điểm cũ (thang 1–5) của các sprint tương ứng nhân 2.
+Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/sprint-reports/Tuan-Hung_Self-Report.md`](../sprint-reports/Tuan-Hung_Self-Report.md)). Điểm tự đánh giá là điểm cũ (thang 1–5) của các sprint tương ứng nhân 2.
 
 ---
 
@@ -95,7 +95,7 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/reports/Tua
 
 **Công việc đã làm** (thuộc [H12 #75](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/75)):
 
-- Bảng đo Lighthouse `/room` trước/sau, sau gộp vào `docs/reports/lighthouse/README.md`.
+- Bảng đo Lighthouse `/room` trước/sau, sau gộp vào `docs/lighthouse/README.md`.
 - `/room` Performance 60, TBT 6,2 s: dựng âm thanh sau cú nhấp đầu, font không chặn hiển thị ([PR #19](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/19)).
 - Thêm `robots.txt`, bỏ lỗi 401 khi khách tải trang ([PR #20](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/20)); nhúng CSS chính vào `index.html` ([PR #21](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/21)).
 - Trả 404 cho file không tồn tại ([PR #26](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/26)); tải trước ảnh LCP Trang chủ ([PR #27](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/27)).
@@ -104,7 +104,7 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/reports/Tua
 **Bằng chứng đóng góp:**
 
 - Commit: [`2fe5264`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/2fe5264), [`a8ebd6a`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/a8ebd6a), [`798acea`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/798acea), [`7a0b305`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/7a0b305), [`4f3cabc`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/4f3cabc), [`e3ddd5e`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/e3ddd5e), [`d82663b`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/d82663b).
-- Nhật ký tối ưu: [`docs/reports/lighthouse/README.md`](../reports/lighthouse/README.md). Kết quả trên desktop: `/room` 60 → 100, `/library` 83 → 98.
+- Nhật ký tối ưu: [`docs/lighthouse/README.md`](../lighthouse/README.md). Kết quả trên desktop: `/room` 60 → 100, `/library` 83 → 98.
 - Ảnh Lighthouse trước tối ưu: [`/room`](../images/screenshots/lighthouse-truoc-room.png), [`/library`](../images/screenshots/lighthouse-truoc-library.png); sau tối ưu: [`/room`](../images/screenshots/lighthouse-sau-desktop-room.png), [`/library`](../images/screenshots/lighthouse-sau-desktop-library.png).
 
 **Khó khăn gặp phải:**

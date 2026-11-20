@@ -22,13 +22,13 @@
 | 3b | Tích hợp PostgreSQL, CRUD (0,5) | API 4.2–4.11, DATABASE §4 | Tạo/đọc/sửa/xóa tài khoản và trạng thái phòng chạy thật | S3 → S5 · P6 |
 | 3c | ≥ 2 trang động từ CSDL (1) | PRD Tính năng K, L; API 4.12–4.14 | Thư viện (lọc theo phòng, nhóm), Thống kê (theo khoảng thời gian) | S5 · P7 |
 | Nộp | Migration + seeder | DATABASE §3.7, 3.8, §6 | `prisma/migrations/`, `prisma/seed.ts` nạp 17 đồ vật, 5 khung cảnh | S3 · P6 |
-| 4a | Google Lighthouse (0,5) | PRD 6.1 | Báo cáo trước/sau tối ưu trong `docs/reports/lighthouse/`, ≥ 90 | S5 · P8 |
+| 4a | Google Lighthouse (0,5) | PRD 6.1 | Báo cáo trước/sau tối ưu trong `docs/lighthouse/`, ≥ 90 | S5 · P8 |
 | 4b | Tracking & logging (0,5) | PRD Tính năng M, Kiến trúc 4.1 | Google Analytics 4, Sentry frontend + backend, log JSON | S5 · P8 |
 | 5a | Góp ý cho ≥ 2 nhóm khác (1) | PLAN §5 | Báo cáo góp ý trong `docs/reviews/given/` | S5 |
 | 5b | Sửa theo góp ý nhận được (1) | PLAN §5 | `docs/reviews/received.md`: góp ý → quyết định → PR hoặc lý do | S5 |
 | Nộp | README ở thư mục gốc | PLAN §6 (P8) | Cách chạy, tổng quan và công cụ, tính năng + ảnh, ERD, thông tin khác | S5 · P8 |
 | Nộp | Video demo ≤ 10 phút, MP4 ≥ 720p | PLAN §6 (P8) | Video trên YouTube (unlisted/public) thể hiện mọi tiêu chí | S5 · P8 |
-| Cá nhân | Self-report 5 sprint (thiếu −10%) | PLAN §3 | `docs/reports/<Tên>_Self-Report.md` — mỗi người một file, đủ 5 sprint (S1, S2 viết bù) | S1 → S5 |
+| Cá nhân | Self-report 5 sprint (thiếu −10%) | PLAN §3 | `docs/sprint-reports/<Tên>_Self-Report.md` — mỗi người một file, đủ 5 sprint (S1, S2 viết bù) | S1 → S5 |
 
 ## 2. Phân vai (Task 1a)
 
@@ -46,12 +46,12 @@ Quy ước phối hợp:
 - **Chủ sở hữu thư mục:** code chia theo khu vực ở `frontend/src/areas/{items-audio, garden, bedroom, study}/` và `backend/src/areas/` cùng tên (Hưng, Nhiên, Lộc, Thịnh); phần chung do Thịnh giữ. Mỗi người chỉ sửa thư mục của mình; sửa phần của người khác thì mở PR và gán người đó duyệt. Phần dùng chung (`shared/`, `frontend/src/{App.tsx, main.tsx, lib/, store/, styles/}`, `frontend/src/engine/legacy/roomEngine.js`, `backend/src/{app.ts, routes/, middleware/, lib/}`, `backend/prisma/`) do Phúc Thịnh giữ; mỗi người vẫn sửa khối của mình trong `roomEngine.js`, PR gán Thịnh duyệt.
 - **Căn phòng theo PA B (chốt 15/11/2026):** vẽ canvas, âm thanh, khay, popover giữ trong `frontend/src/engine/legacy/roomEngine.js` (nguồn logic hiện hành, đã có các thay đổi PRD v5.5–v5.8); chỉ quy tắc nghiệp vụ (BR/AC) được tách thành hàm thuần TypeScript trong `areas/<khu-vực>/engine/` kèm unit test, engine import và gọi lại (`frontend/src/engine/legacy/README.md`).
 - **Giao diện giữa các khu vực:** `RoomState` (`shared/src/roomState.ts`), hàm thuần của từng khu vực mà engine gọi lại (`rooms.ts`, `pomodoro.ts`, `sleepTimer.ts`, `placement.ts`), sự kiện telemetry `TelemetryApi` (`areas/garden/telemetry.ts`), thông báo ngắn từ engine qua sự kiện `focuspace:notice`.
-- Mỗi người: ≥ 1 commit mỗi ngày làm việc, self-report cuối mỗi sprint (`docs/reports/<Tên>_Self-Report.md`).
+- Mỗi người: ≥ 1 commit mỗi ngày làm việc, self-report cuối mỗi sprint (`docs/sprint-reports/<Tên>_Self-Report.md`).
 - Danh sách task chi tiết theo người và sprint: `docs/TASKS.md` (mỗi dòng = 1 GitHub Issue).
 
 ## 3. Lịch sprint và mốc (Task 1c)
 
-Dự án bắt đầu **27/10/2026** (họp khởi động), **hạn hoàn thành 27/11/2026**, nhóm nộp bài ngày 18/11/2026. Đề bài yêu cầu 5 sprint: S1–S2 là giai đoạn thiết kế và lập kế hoạch, S3–S5 là giai đoạn lập trình (13–17/11). Mỗi sprint là một milestone trên GitHub; mỗi thành viên nộp self-report (`docs/reports/<Tên>_Self-Report.md`, một file đủ 5 sprint: việc đã làm kèm link issue/PR hoặc file, khó khăn, công việc của sprint tới, tự đánh giá). Self-report S1, S2 viết bù trong S3 (link tới wireframe draw.io, prototype, tài liệu trong `docs/`). Họp online qua Discord vào buổi tối và họp tổng kết cuối mỗi sprint.
+Dự án bắt đầu **27/10/2026** (họp khởi động), **hạn hoàn thành 27/11/2026**, nhóm nộp bài ngày 18/11/2026. Đề bài yêu cầu 5 sprint: S1–S2 là giai đoạn thiết kế và lập kế hoạch, S3–S5 là giai đoạn lập trình (13–17/11). Mỗi sprint là một milestone trên GitHub; mỗi thành viên nộp self-report (`docs/sprint-reports/<Tên>_Self-Report.md`, một file đủ 5 sprint: việc đã làm kèm link issue/PR hoặc file, khó khăn, công việc của sprint tới, tự đánh giá). Self-report S1, S2 viết bù trong S3 (link tới wireframe draw.io, prototype, tài liệu trong `docs/`). Họp online qua Discord vào buổi tối và họp tổng kết cuối mỗi sprint.
 
 | Sprint | Ngày | Phase | Kết quả cuối sprint (mốc) | Hưng | Nhiên | Lộc | Thịnh |
 |---|---|---|---|---|---|---|---|
@@ -93,7 +93,7 @@ Cấu trúc thư mục thật và cách chạy xem `README.md`; công nghệ xem
 | P5 Giao diện & lưu cục bộ | Tailwind, 6 route + 404, NavBar/Footer, khung Căn phòng, LocalStorage `focuspace.room.v4`, responsive 3 cỡ | S4 | E2E theo UC, chụp 375/768/1280 px | ✅ |
 | P6 Backend & CSDL | `schema.prisma`, migration, seeder; 14 endpoint theo API Docs; rate limit, log, lỗi chuẩn | S3–S5 | Integration test (Supertest + PostgreSQL) | ✅ 14 endpoint, integration test trên PostgreSQL 16 tạm (15/11) |
 | P7 Tài khoản, đồng bộ & trang động | Tự refresh token, Tài khoản, đồng bộ `/room-state` + hộp thoại hợp nhất + 409, telemetry, Thư viện, Thống kê | S5 | E2E UC.07–UC.11 | ✅ (15/11) |
-| P8 Tối ưu, theo dõi & nộp bài | Lighthouse trước/sau ≥ 90 (title + meta, âm thanh sau cú nhấp đầu, font tự host — `docs/reports/lighthouse/`); GA4 + Sentry; triển khai Vercel + Render + Neon (Kiến trúc §3.5); sửa theo góp ý; README; video ≤ 10 phút | S5 | Đối chiếu bảng §1 và AC PRD 5.4 | Đã triển khai (14/11); Lighthouse 6 trang ≥ 95 cả 4 hạng mục (15/11); README hoàn chỉnh; góp ý nhận được đã xử lý (`docs/reviews/received.md`, #53); video đăng YouTube, link trong README. GA4 Realtime và Sentry frontend đã kiểm tra trên bản triển khai |
+| P8 Tối ưu, theo dõi & nộp bài | Lighthouse trước/sau ≥ 90 (title + meta, âm thanh sau cú nhấp đầu, font tự host — `docs/lighthouse/`); GA4 + Sentry; triển khai Vercel + Render + Neon (Kiến trúc §3.5); sửa theo góp ý; README; video ≤ 10 phút | S5 | Đối chiếu bảng §1 và AC PRD 5.4 | Đã triển khai (14/11); Lighthouse 6 trang ≥ 95 cả 4 hạng mục (15/11); README hoàn chỉnh; góp ý nhận được đã xử lý (`docs/reviews/received.md`, #53); video đăng YouTube, link trong README. GA4 Realtime và Sentry frontend đã kiểm tra trên bản triển khai |
 
 ## Nguyên tắc chung
 

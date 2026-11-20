@@ -9,7 +9,7 @@
 | **Nhóm** | Nhóm 2 — FocuSpace |
 | **Vai trò trong nhóm** | Fullstack: Phòng ngủ, Hẹn giờ ngủ; đăng ký, đăng nhập, API `/me`, `/me/stats`; trang Thống kê; kiểm thử E2E giao diện tương thích; quay video demo |
 
-Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/reports/Tuan-Loc_Self-Report.md`](../reports/Tuan-Loc_Self-Report.md)). Điểm tự đánh giá là điểm cũ (thang 1–5) của các sprint tương ứng nhân 2, làm tròn.
+Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/sprint-reports/Tuan-Loc_Self-Report.md`](../sprint-reports/Tuan-Loc_Self-Report.md)). Điểm tự đánh giá là điểm cũ (thang 1–5) của các sprint tương ứng nhân 2, làm tròn.
 
 ---
 
@@ -98,11 +98,11 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/reports/Tua
 
 **Công việc đã làm:**
 
-- Lập bảng báo cáo Lighthouse 6 trang ([L12 #103](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/103)), nay gộp vào `docs/reports/lighthouse/README.md`.
+- Lập bảng báo cáo Lighthouse 6 trang ([L12 #103](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/103)), nay gộp vào `docs/lighthouse/README.md`.
 
 **Bằng chứng đóng góp:**
 
-- Commit [`fdece3a`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/fdece3a); [`docs/reports/lighthouse/README.md`](../reports/lighthouse/README.md).
+- Commit [`fdece3a`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/fdece3a); [`docs/lighthouse/README.md`](../lighthouse/README.md).
 
 **Khó khăn gặp phải:**
 
