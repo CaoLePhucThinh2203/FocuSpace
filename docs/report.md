@@ -216,6 +216,10 @@ Tailwind CSS 4 cài bằng plugin `@tailwindcss/vite` trong `frontend/vite.confi
 | Chọn khoảng thời gian Thống kê | 7 ngày, 30 ngày, toàn bộ; nút Thử lại khi lỗi | `areas/bedroom/pages/Stats.tsx` | Tuấn Lộc |
 | Menu mobile | Thu gọn điều hướng thành nút menu trên điện thoại | `areas/study/components/SiteNav.tsx` | Phúc Thịnh |
 
+![Phòng đã đầy](images/screenshots/tinh-nang-phong-day.png)
+
+*Đặt đủ 25 đồ vật trong một phòng: không thêm được nữa, hiện thông báo “Phòng đã đầy — hãy xóa bớt đồ để thêm mới”.*
+
 Các tương tác được kiểm thử E2E bằng Playwright, mỗi use case một file `frontend/e2e/ucXX-*.spec.ts`; quy tắc nghiệp vụ (đặt đồ, Pomodoro, hẹn giờ ngủ, chuyển phòng) có unit test Vitest.
 
 ### (d) Giao diện trên nhiều thiết bị
@@ -443,7 +447,13 @@ Người góp ý: Hữu Triết, Bá Phát, Thành Long. Bản gốc: [`reviews/
 | Sửa lại độ lớn âm thanh | như trên | Đã implement | [#46](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/46), [#49](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/49): chỉnh tiếng mèo, máy xông theo số đo thật; mèo rù rù theo lượt |
 | Thêm nhạc Lo-fi | như trên | Đã implement | [#10](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/10), [#47](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/47): 6 bài Lo-fi, đổi bài mượt |
 
-[Cần bổ sung: ảnh chụp trước/sau của những thay đổi đã implement]
+Ảnh sau khi sửa theo góp ý, chụp trên bản triển khai. Nhóm không chụp lại giao diện trước khi sửa; phần thay đổi cụ thể xem trong từng Pull Request ở bảng trên.
+
+| | |
+|:---:|:---:|
+| ![Mèo đổi màu lông](images/screenshots/gop-y-meo-mau-long.png)<br>Góp ý 1: popover mèo có 3 màu lông Cam, Xám tro, Kem | ![Pomodoro nhịp học](images/screenshots/gop-y-pomodoro.png)<br>Góp ý 4, 5: Pomodoro theo vòng, 4 nhịp học, nút Bắt đầu, Đặt lại vòng |
+| ![Hẹn giờ ngủ](images/screenshots/gop-y-hen-gio-ngu.png)<br>Góp ý 6: Hẹn giờ ngủ chọn mức Tắt/15/30/60 phút rồi bấm Bắt đầu | ![Cảnh Thành phố và nhạc Lo-fi](images/screenshots/gop-y-thanh-pho-lofi.png)<br>Góp ý 8, 10: cảnh Thành phố buổi tối, tai nghe phát nhạc Lo-fi chọn bài |
+| ![Tuyết rơi ở Phòng ngủ](images/screenshots/gop-y-tuyet-roi-phong-ngu.png)<br>Góp ý 7 (không làm cảnh mới): cửa sổ Phòng ngủ đã có thời tiết Tuyết rơi | |
 
 ---
 
