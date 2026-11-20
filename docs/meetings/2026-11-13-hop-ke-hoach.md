@@ -36,7 +36,7 @@ Chi tiết từng việc theo khu vực: `docs/PLAN.md` §2 và `docs/TASKS.md`.
 - Lịch: S1 ✅ 27/10–07/11, S2 ✅ 08–12/11, S3 13–17/11, S4 18–22/11, S5 23–27/11; mỗi sprint là một milestone GitHub (S1, S2 tạo rồi đóng ngay).
 - Họp ngắn 15 phút mỗi tối; họp tổng kết cuối mỗi sprint, ghi biên bản vào `docs/meetings/`.
 - Mỗi việc = 1 issue = 1 nhánh = 1 PR có `Closes #<số>` và mã UC; commit theo Conventional Commits có số issue; PR cần 1 người khác duyệt và CI xanh.
-- Mỗi người commit đều mỗi ngày; nộp self-report cuối mỗi sprint (`docs/reports/sprint-N/<tên>.md`).
+- Mỗi người commit đều mỗi ngày; nộp self-report cuối mỗi sprint (`docs/sprint-reports/sprint-N/<tên>.md`).
 - Viết test trước (Phase 0), code tới khi test xanh.
 
 ## 5. Việc tiếp theo

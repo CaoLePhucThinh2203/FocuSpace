@@ -3,7 +3,18 @@
 Mục tiêu: ≥ 90 cả 4 hạng mục (Performance, Accessibility, Best Practices, SEO) ở mọi trang, cấu hình mobile (AC-NF.1, PRD 6.1).
 Cách đo chung: Lighthouse 12.6.1, cấu hình mobile mặc định, Chrome headless, bản triển khai https://focuspace-iota.vercel.app, mỗi trang 3 lần, ghi lần có Performance trung vị. File JSON đầy đủ của lần đo cuối nằm trong thư mục ngày đo (mở bằng [Lighthouse Viewer](https://googlechrome.github.io/lighthouse/viewer/)).
 
-## Kết quả cuối — 15/11/2026 (`2026-11-15/`)
+## Đo lại — 20/11/2026, sau khi bật Google Analytics 4 và Sentry
+
+Kết quả 15/11 bên dưới đo khi bản triển khai chưa có mã GA4 và DSN Sentry (bật ngày 17/11). Đo lại bằng Lighthouse trong Chrome DevTools, mỗi trang một lần, ảnh chụp trong `docs/images/screenshots/lighthouse-sau-*.png`:
+
+| Performance | `/` | `/room` | `/library` | `/stats` | `/account` | `/about` |
+|---|---|---|---|---|---|---|
+| Desktop | 96 | 100 | 98 | 98 | 97 | 96 |
+| Mobile | 83 | 100 | 83 | 82 | 82 | 83 |
+
+Accessibility, Best Practices, SEO đạt 100 ở mọi lần đo. Trên mobile, LCP 4,6 giây do `gtag.js` (GA4) và thư viện Sentry trong bundle chính; phân tích và ảnh chụp đầy đủ trong [`docs/report.md`](../report.md#a-kiểm-tra-hiệu-năng-với-lighthouse) (Task 4a).
+
+## Kết quả 15/11/2026, trước khi bật GA4 và Sentry (`2026-11-15/`)
 
 | Trang | Trước tối ưu (P) | Sau: P / A / BP / SEO | Performance 3 lần | FCP | LCP | TBT | CLS | File |
 |---|---|---|---|---|---|---|---|---|

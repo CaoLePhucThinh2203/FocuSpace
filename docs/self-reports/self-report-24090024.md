@@ -9,7 +9,7 @@
 | **Nhóm** | Nhóm 2 — FocuSpace |
 | **Vai trò trong nhóm** | Leader · Fullstack: Phòng học, Trang chủ, Thư viện, Tài khoản, Giới thiệu & Liên hệ, 404; đồng bộ trạng thái phòng; quản lý repo, CI, triển khai, duyệt PR |
 
-Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/reports/Phuc-Thinh_Self-Report.md`](../reports/Phuc-Thinh_Self-Report.md)). Điểm tự đánh giá là điểm cũ (thang 1–5) của các sprint tương ứng nhân 2.
+Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/sprint-reports/Phuc-Thinh_Self-Report.md`](../sprint-reports/Phuc-Thinh_Self-Report.md)). Điểm tự đánh giá là điểm cũ (thang 1–5) của các sprint tương ứng nhân 2.
 
 ---
 
@@ -108,7 +108,7 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/reports/Phu
 **Công việc đã làm:**
 
 - Tự host font Be Vietnam Pro, ảnh xem trước nhẹ hơn 98 KiB ([PR #40](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/40)); hết CLS do thanh cuộn ở Thư viện kèm E2E ([PR #41](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/41)); dọn mã ([PR #42](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/42)); chữ chú thích 12 px ([PR #43](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/43)) — thuộc [H12 #75](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/75).
-- Báo cáo Lighthouse 6 trang kèm JSON ([`docs/reports/lighthouse/`](../reports/lighthouse/README.md)).
+- Báo cáo Lighthouse 6 trang kèm JSON ([`docs/lighthouse/`](../lighthouse/README.md)).
 - Tải trước font nét 500, 600; E2E AC-12.6 đo font thật trình duyệt dùng ([PR #48](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/48)).
 - Tạo tài khoản GA4, Sentry ([G10 #132](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/132)); đặt mã GA4, DSN Sentry trên Vercel, build lại; kiểm tra GA4 Realtime (`page_view`, `login`) và Sentry frontend nhận lỗi thử.
 
@@ -140,7 +140,7 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/reports/Phu
 
 **Bằng chứng đóng góp:**
 
-- [`docs/reviews/given/phuc-thinh.md`](../reviews/given/phuc-thinh.md), [`docs/reviews/received.md`](../reviews/received.md), [PR #53](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/53).
+- [`docs/reviews/given/nhom-6-quan-li-chi-tieu.md`](../reviews/given/nhom-6-quan-li-chi-tieu.md), [`docs/reviews/received.md`](../reviews/received.md), [PR #53](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/53).
 
 **Khó khăn gặp phải:**
 

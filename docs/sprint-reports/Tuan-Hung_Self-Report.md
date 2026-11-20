@@ -1,5 +1,7 @@
 # Self-report — Tuấn Hưng
 
+> Bản theo 5 sprint (đề bài yêu cầu *Self-Report for all 5 sprints*). Cùng nội dung trình bày theo Task 1–5 theo mẫu của môn: [`docs/self-reports/self-report-24090019.md`](../self-reports/self-report-24090019.md).
+
 **Khu vực phụ trách:** Đồ vật, bảng đồ vật, âm thanh (`frontend/src/areas/items-audio/`, `backend/src/areas/items-audio/`, phần đồ vật và âm thanh trong `roomEngine.js`); tối ưu Lighthouse (H12).
 
 | Sprint | Thời gian | Giai đoạn | Số commit trên `main` |
@@ -72,7 +74,7 @@ Số commit trên `main`: 15.
 | H11 | #6 | `GET /catalog/items`: service lọc theo phòng, nhóm; kiểm tra tham số bằng Zod; `Cache-Control` 1 giờ; khung integration test (`9b51279`, `a0ae4bd`, `40ff6f4`) | Xong |
 | H4 | #6 | Khung `placement.ts` quy tắc đặt đồ BR-03→06 (`57eeb5a`) | Xong (bản hoàn chỉnh ở #31) |
 | H7–H10 | #6 | Khung AudioContext và Master, âm tổng hợp đồ vật và Lo-fi, sprites, khay kéo thả, popover và Bảng âm lượng (`00e8693`, `faf2a58`, `3413357`, `3a6653e`) | Xong (thay bằng PA B ngày 15/11) |
-| H12 | #6 | Bảng đo Lighthouse `/room` trước/sau (`2fe5264`), sau gộp vào `docs/reports/lighthouse/README.md` | Xong |
+| H12 | #6 | Bảng đo Lighthouse `/room` trước/sau (`2fe5264`), sau gộp vào `docs/lighthouse/README.md` | Xong |
 | G3 | #6 | Self-report S1, S2 (viết bù) và khung S3–S5 (`861b509`, `5e51789`) | Xong |
 
 ### Khó khăn và cách xử lý
@@ -126,7 +128,7 @@ Số commit trên `main`: 0.
 ### Việc đã làm
 | Issue | PR | Mô tả | Trạng thái |
 |---|---|---|---|
-| G4 | — | Góp ý UI/UX cho Nhóm 4 (PawPass) cùng Tuấn Lộc, Đình Nhiên (`docs/reviews/given/tuan-hung.md`) | Xong |
+| G4 | — | Góp ý UI/UX cho Nhóm 4 (PawPass) cùng Tuấn Lộc, Đình Nhiên (`docs/reviews/given/nhom-4-pawpass.md`) | Xong |
 | G5 | #30 | Sửa theo góp ý: góp ý số 1 (mèo đổi màu) đã làm ở PR #30 trong S4, không cần PR mới (`docs/reviews/received.md`) | Xong |
 
 ### Khó khăn và cách xử lý

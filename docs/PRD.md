@@ -183,7 +183,7 @@ Mã FR theo bảng mã yêu cầu chức năng ở cuối mục 5.1 (85 mã, 15 
 | Tỷ lệ phiên ngủ hẹn giờ chạy đến hết                       | Chưa đặt ngưỡng (Q-05)    | usage_sessions.sleep_timer\_\*          |
 | Tỷ lệ phiên có ghé Sân vườn                                | Chưa đặt ngưỡng (Q-05)    | usage_sessions.visited_out              |
 | Tỷ lệ rơi rụng: phiên \< 5 phút                            | Theo dõi, chưa đặt ngưỡng | usage_sessions                          |
-| Điểm Google Lighthouse (Performance, Accessibility, Best Practices, SEO) | ≥ 90 mỗi nhóm, ở mọi trang | Báo cáo Lighthouse (docs/reports/lighthouse/) |
+| Điểm Google Lighthouse (Performance, Accessibility, Best Practices, SEO) | ≥ 90 mỗi nhóm, ở mọi trang | Báo cáo Lighthouse (docs/lighthouse/) |
 | Lượt xem trang; tỷ lệ đi từ Trang chủ vào Căn phòng | Theo dõi, chưa đặt ngưỡng | Google Analytics 4 |
 | Lỗi JavaScript và lỗi API chưa xử lý | Không còn lỗi mới chưa xử lý khi nộp bài | Sentry |
 
@@ -856,7 +856,7 @@ Mỗi tiêu chí viết theo dạng **Cho trước – Khi – Thì**, kiểm đ
 
 - API: p95 \< 300 ms; khoảng 50 người dùng đồng thời (Q-10).
 
-- Google Lighthouse (cấu hình mobile): Performance, Accessibility, Best Practices và SEO đều ≥ 90 ở cả 6 trang; đo trước và sau khi tối ưu, lưu báo cáo vào docs/reports/lighthouse/.
+- Google Lighthouse (cấu hình mobile): Performance, Accessibility, Best Practices và SEO đều ≥ 90 ở cả 6 trang; đo trước và sau khi tối ưu, lưu báo cáo vào docs/lighthouse/.
 
 - Tách mã theo trang: engine vẽ và âm thanh chỉ tải ở Căn phòng; v5.5 (15/11/2026, Tuấn Hưng – H12): đo Lighthouse /room bản triển khai được Hiệu suất 60, Total Blocking Time 6,2 giây do dựng toàn bộ âm thanh lúc mở trang, nên đổi sang dựng âm thanh sau cú nhấp đầu tiên (trình duyệt vẫn chưa cho phát tiếng trước cú nhấp) và tải font Google không chặn hiển thị; thay quyết định cách 2 ngày 13/11/2026; hình xem trước ở Trang chủ chỉ vẽ khi cuộn tới; Tailwind chỉ giữ các class được dùng. v5.9 (15/11/2026, H12): font Be Vietnam Pro tự host trong `frontend/public/fonts/` (giấy phép OFL, 12 file woff2 theo bộ chữ Latin / Latin mở rộng / tiếng Việt, `font-display: optional`, tải trước đủ 4 độ đậm đang dùng 400, 500, 600, 700 của bộ Latin và tiếng Việt — v5.15; trước đó chỉ tải trước 400 và 700 nên chữ nét 500, 600 như menu, nút, giờ Pomodoro thường hiện bằng font máy) thay cho CSS Google Fonts chặn hiển thị — FCP giảm khoảng 0,6 giây; bỏ khối siêu dữ liệu `caBX` trong 17 ảnh xem trước đồ vật (−98 KiB, điểm ảnh giữ nguyên).
 
