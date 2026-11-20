@@ -1,7 +1,5 @@
 # Self-report — Đình Nhiên
 
-> Bản theo 5 sprint (đề bài yêu cầu *Self-Report for all 5 sprints*). Cùng nội dung trình bày theo Task 1–5 theo mẫu của môn: [`docs/self-reports/self-report-24090060.md`](../self-reports/self-report-24090060.md).
-
 **Khu vực phụ trách:** Sân vườn, 5 khung cảnh (`frontend/src/areas/garden/`, `backend/src/areas/garden/`, phần Sân vườn trong `roomEngine.js`); `GET /catalog/scenes`, `POST /telemetry/batch`, GA4 và Sentry.
 
 | Sprint | Thời gian | Giai đoạn | Số commit trên `main` |
@@ -135,7 +133,7 @@ Số commit trên `main`: 3.
 | T18 | #45 | README hoàn chỉnh theo đề bài: cách chạy, công cụ, tính năng kèm ảnh, ERD, thông tin thêm (`676a2fa`) | Xong |
 | — | #49, #50 | Duyệt và merge PR | Xong |
 | N11 | — | Kiểm tra trên bản triển khai (Phúc Thịnh thực hiện sau khi đặt mã GA4, DSN trên Vercel): GA4 Realtime thấy `page_view`, `login`; Sentry frontend nhận lỗi thử | Xong |
-| G4 | — | Góp ý UI/UX cho Nhóm 4 (PawPass) cùng Tuấn Lộc, Tuấn Hưng (`docs/reviews/given/nhom-4-pawpass.md`) | Xong |
+| G4 | — | Góp ý UI/UX cho Nhóm 4 (PawPass) cùng Tuấn Lộc, Tuấn Hưng (`docs/reviews/given/dinh-nhien.md`) | Xong |
 | G5 | #46, #50 | Sửa theo góp ý: góp ý số 8 (cảnh Thành phố sinh động hơn) đã làm ở #46, #50, không cần PR mới (`docs/reviews/received.md`) | Xong |
 
 ### Thay đổi trong khu vực do thành viên khác làm
