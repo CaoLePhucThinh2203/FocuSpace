@@ -347,7 +347,9 @@ Trước khi tối ưu, nhóm chỉ đo điểm Performance của hai trang có 
 - **Tracking ID / Measurement ID:** `G-TTSLLPTMYZ` (đặt qua biến môi trường `VITE_GA_ID` trên Vercel, không commit vào mã nguồn)
 - Nạp `gtag.js` khi có `VITE_GA_ID`, gửi `page_view` mỗi lần đổi trang và sự kiện `login`; không gửi dữ liệu cá nhân (`frontend/src/areas/garden/observability.ts`). Đã kiểm tra trên GA4 Realtime.
 
-[Cần bổ sung: ảnh chụp màn hình Google Analytics dashboard]
+![Google Analytics 4: tổng quan báo cáo](images/screenshots/ga4-tong-quan.webp)
+
+*GA4, 23/10 – 19/11/2026: 12 người dùng (Việt Nam), 173 sự kiện `page_view`, 2 sự kiện `login`; lượt xem nhiều nhất ở Căn phòng và Thư viện.*
 
 **Sentry (hoặc tương đương):**
 - [x] Đã tích hợp
