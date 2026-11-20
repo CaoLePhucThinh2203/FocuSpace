@@ -12,7 +12,7 @@ Kết quả 15/11 bên dưới đo khi bản triển khai chưa có mã GA4 và 
 | Desktop | 96 | 100 | 98 | 98 | 97 | 96 |
 | Mobile | 83 | 100 | 83 | 82 | 82 | 83 |
 
-Accessibility, Best Practices, SEO đạt 100 ở mọi lần đo. Trên mobile, LCP 4,6 giây do `gtag.js` (GA4) và thư viện Sentry trong bundle chính; phân tích và ảnh chụp đầy đủ trong [`docs/report.md`](../report.md#a-kiểm-tra-hiệu-năng-với-lighthouse) (Task 4a).
+Accessibility, Best Practices, SEO đạt 100 ở mọi lần đo. Trên mobile, LCP 4,6 giây do `gtag.js` (GA4) và thư viện Sentry trong bundle chính; phân tích và ảnh chụp đầy đủ trong [`README.md`](../../README.md#a-kiểm-tra-hiệu-năng-với-lighthouse) (Task 4a).
 
 ## Kết quả 15/11/2026, trước khi bật GA4 và Sentry (`2026-11-15/`)
 
