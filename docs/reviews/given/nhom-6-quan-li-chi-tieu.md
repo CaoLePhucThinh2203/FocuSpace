@@ -1,4 +1,4 @@
-# Góp ý UI/UX cho nhóm B — Phúc Thịnh
+# Góp ý UI/UX cho Nhóm 6 (Quản lí chi tiêu) — Phúc Thịnh
 
 > Nhóm được review: Nhóm 6 (Quản lí chi tiêu) · Ngày: 07/11/2026 · Theo 3 tiêu chí đề bài: usability, aesthetics, user-friendliness.
 

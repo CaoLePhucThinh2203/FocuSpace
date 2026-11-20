@@ -9,7 +9,7 @@
 | **Nhóm** | Nhóm 2 — FocuSpace |
 | **Vai trò trong nhóm** | Fullstack: Sân vườn và 5 khung cảnh; API `/catalog/scenes`, `POST /telemetry/batch`; tích hợp Google Analytics 4, Sentry |
 
-Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/reports/DinhNhien_Self-Report.md`](../reports/DinhNhien_Self-Report.md)). Điểm tự đánh giá là điểm cũ (thang 1–5) của các sprint tương ứng nhân 2, làm tròn.
+Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/sprint-reports/DinhNhien_Self-Report.md`](../sprint-reports/DinhNhien_Self-Report.md)). Điểm tự đánh giá là điểm cũ (thang 1–5) của các sprint tương ứng nhân 2, làm tròn.
 
 ---
 
@@ -123,7 +123,7 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/reports/Din
 
 **Bằng chứng đóng góp:**
 
-- [`docs/reviews/given/dinh-nhien.md`](../reviews/given/dinh-nhien.md), [`docs/reviews/received.md`](../reviews/received.md) (dòng 8), [PR #46](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/46), [PR #50](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/50).
+- [`docs/reviews/given/nhom-4-pawpass.md`](../reviews/given/nhom-4-pawpass.md), [`docs/reviews/received.md`](../reviews/received.md) (dòng 8), [PR #46](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/46), [PR #50](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/50).
 
 **Khó khăn gặp phải:**
 
