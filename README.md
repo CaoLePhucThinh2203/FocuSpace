@@ -169,7 +169,8 @@ Bảng đối chiếu chi tiết được trình bày tại [`docs/PLAN.md`](doc
 | 4a Google Lighthouse | [`docs/reports/lighthouse/`](docs/reports/lighthouse/README.md): 5 trang đạt 100 điểm ở cả 4 hạng mục; Căn phòng đạt Performance 95, Accessibility 100, SEO 100, Best Practices 96 khi đo trên Vercel và đạt 100 khi đo lại tại máy cục bộ sau khi tăng cỡ chữ chú thích lên 12 px |
 | 4b Theo dõi và ghi nhật ký | Google Analytics 4, Sentry (frontend và backend), nhật ký JSON (pino); dữ liệu telemetry phiên học lưu trong cơ sở dữ liệu |
 | 5a, 5b Đánh giá chéo | [`docs/reviews/`](docs/reviews/) |
-| Self-report 5 sprint | Mỗi thành viên một file, đủ S1–S5: [Phúc Thịnh](docs/reports/Phuc-Thinh_Self-Report.md), [Tuấn Hưng](docs/reports/Tuan-Hung_Self-Report.md), [Tuấn Lộc](docs/reports/Tuan-Loc_Self-Report.md), [Đình Nhiên](docs/reports/DinhNhien_Self-Report.md) |
+| Report nhóm | [`docs/report.md`](docs/report.md) theo mẫu report của môn |
+| Self-report | Theo mẫu của môn: [Phúc Thịnh](docs/self-reports/self-report-24090024.md), [Tuấn Hưng](docs/self-reports/self-report-24090019.md), [Tuấn Lộc](docs/self-reports/self-report-24090025.md), [Đình Nhiên](docs/self-reports/self-report-24090060.md). Bản 5 sprint cũ: [Phúc Thịnh](docs/reports/Phuc-Thinh_Self-Report.md), [Tuấn Hưng](docs/reports/Tuan-Hung_Self-Report.md), [Tuấn Lộc](docs/reports/Tuan-Loc_Self-Report.md), [Đình Nhiên](docs/reports/DinhNhien_Self-Report.md) |
 
 ### Triển khai hệ thống
 
