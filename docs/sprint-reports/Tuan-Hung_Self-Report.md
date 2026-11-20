@@ -128,11 +128,11 @@ Số commit trên `main`: 0.
 ### Việc đã làm
 | Issue | PR | Mô tả | Trạng thái |
 |---|---|---|---|
-| G4 | — | Góp ý UI/UX cho Nhóm 4 (PawPass) cùng Tuấn Lộc, Đình Nhiên (`docs/reviews/given/nhom-4-pawpass.md`) | Xong |
+| G4 | — | Góp ý UI/UX cho Nhóm 4 (PawPass) cùng Đình Nhiên (`docs/reviews/given/nhom-4-pawpass.md`) | Xong |
 | G5 | #30 | Sửa theo góp ý: góp ý số 1 (mèo đổi màu) đã làm ở PR #30 trong S4, không cần PR mới (`docs/reviews/received.md`) | Xong |
 
 ### Khó khăn và cách xử lý
 - Thời gian cuối kỳ gấp, sprint này không có commit. Cách xử lý: đọc lại PRD v5.12–v5.19 và các test mới để nắm hành vi hiện hành của đồ vật, âm thanh.
 
 ### Tự đánh giá mức đóng góp (1–5)
-**4** — Không có commit trong sprint. Góp ý mèo đổi màu (G5) đã đáp ứng bằng PR #30 từ S4; góp ý UI/UX cho Nhóm 4 (PawPass) cùng Tuấn Lộc, Đình Nhiên (G4).
+**4** — Không có commit trong sprint. Góp ý mèo đổi màu (G5) đã đáp ứng bằng PR #30 từ S4; góp ý UI/UX cho Nhóm 4 (PawPass) cùng Đình Nhiên (G4).

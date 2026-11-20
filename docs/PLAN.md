@@ -26,9 +26,9 @@
 | 4b | Tracking & logging (0,5) | PRD Tính năng M, Kiến trúc 4.1 | Google Analytics 4, Sentry frontend + backend, log JSON | S5 · P8 |
 | 5a | Góp ý cho ≥ 2 nhóm khác (1) | PLAN §5 | Báo cáo góp ý trong `docs/reviews/given/` | S5 |
 | 5b | Sửa theo góp ý nhận được (1) | PLAN §5 | `docs/reviews/received.md`: góp ý → quyết định → PR hoặc lý do | S5 |
-| Nộp | README ở thư mục gốc | PLAN §6 (P8) | Cách chạy, tổng quan và công cụ, tính năng + ảnh, ERD, thông tin khác | S5 · P8 |
+| Nộp | README ở thư mục gốc | PLAN §6 (P8) | Điền theo Report Template của môn (thông tin nhóm, cài đặt, Task 1–5, deliverables, self-report) | S5 · P8 |
 | Nộp | Video demo ≤ 10 phút, MP4 ≥ 720p | PLAN §6 (P8) | Video trên YouTube (unlisted/public) thể hiện mọi tiêu chí | S5 · P8 |
-| Cá nhân | Self-report 5 sprint (thiếu −10%) | PLAN §3 | `docs/sprint-reports/<Tên>_Self-Report.md` — mỗi người một file, đủ 5 sprint (S1, S2 viết bù); bản theo mẫu của môn (Task 1–5): `docs/self-reports/self-report-<MSSV>.md`; report nhóm theo mẫu: `docs/report.md` | S1 → S5 |
+| Cá nhân | Self-report 5 sprint (thiếu −10%) | PLAN §3 | `docs/sprint-reports/<Tên>_Self-Report.md` — mỗi người một file, đủ 5 sprint (S1, S2 viết bù); bản theo mẫu của môn (Task 1–5): `docs/self-reports/self-report-<MSSV>.md`; report nhóm theo mẫu: `README.md` | S1 → S5 |
 
 ## 2. Phân vai (Task 1a)
 

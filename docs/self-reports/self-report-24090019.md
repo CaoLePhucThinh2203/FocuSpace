@@ -123,7 +123,7 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/sprint-repo
 
 **Công việc đã làm:**
 
-- Góp ý UI/UX cho Nhóm 4 (PawPass) cùng Tuấn Lộc, Đình Nhiên: giữ người dùng ở trang cuối cùng khi tải lại ([G4 #126](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/126)).
+- Góp ý UI/UX cho Nhóm 4 (PawPass) cùng Đình Nhiên: giữ người dùng ở trang cuối cùng khi tải lại ([G4 #126](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/126)).
 - Sửa theo góp ý nhận được: góp ý số 1 (mèo đổi màu) đã làm ở PR #30 trong S4 ([G5 #127](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/127)).
 
 **Bằng chứng đóng góp:**
