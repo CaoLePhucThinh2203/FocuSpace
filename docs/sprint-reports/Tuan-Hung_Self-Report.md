@@ -128,7 +128,7 @@ Số commit trên `main`: 0.
 ### Việc đã làm
 | Issue | PR | Mô tả | Trạng thái |
 |---|---|---|---|
-| G4 | — | Góp ý UI/UX cho Nhóm 4 (PawPass) cùng Tuấn Lộc, Đình Nhiên (`docs/reviews/given/nhom-4-pawpass.md`) | Xong |
+| G4 | — | Góp ý UI/UX cho Nhóm 4 (PawPass) cùng Tuấn Lộc, Đình Nhiên (`docs/reviews/given/tuan-hung.md`) | Xong |
 | G5 | #30 | Sửa theo góp ý: góp ý số 1 (mèo đổi màu) đã làm ở PR #30 trong S4, không cần PR mới (`docs/reviews/received.md`) | Xong |
 
 ### Khó khăn và cách xử lý

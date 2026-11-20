@@ -123,7 +123,7 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/sprint-repo
 
 **Bằng chứng đóng góp:**
 
-- [`docs/reviews/given/nhom-4-pawpass.md`](../reviews/given/nhom-4-pawpass.md), [`docs/reviews/received.md`](../reviews/received.md) (dòng 8), [PR #46](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/46), [PR #50](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/50).
+- [`docs/reviews/given/dinh-nhien.md`](../reviews/given/dinh-nhien.md), [`docs/reviews/received.md`](../reviews/received.md) (dòng 8), [PR #46](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/46), [PR #50](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/50).
 
 **Khó khăn gặp phải:**
 

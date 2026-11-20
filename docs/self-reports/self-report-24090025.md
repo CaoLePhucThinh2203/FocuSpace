@@ -123,7 +123,7 @@ Không có.
 
 **Bằng chứng đóng góp:**
 
-- [`docs/reviews/given/nhom-4-pawpass.md`](../reviews/given/nhom-4-pawpass.md), [`docs/reviews/received.md`](../reviews/received.md) (dòng 6); commit [`1c68c6c`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/1c68c6c), [`3278510`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/3278510).
+- [`docs/reviews/given/tuan-loc.md`](../reviews/given/tuan-loc.md), [`docs/reviews/received.md`](../reviews/received.md) (dòng 6); commit [`1c68c6c`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/1c68c6c), [`3278510`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/3278510).
 
 **Khó khăn gặp phải:**
 
