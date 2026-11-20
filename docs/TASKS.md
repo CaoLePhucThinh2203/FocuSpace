@@ -109,7 +109,7 @@ Mỗi người chỉ sửa thư mục của mình; sửa chỗ khác thì mở P
 | T12 · #116 | S5 | `feat(api): GET/PUT /room-state + sync.ts + hộp thoại hợp nhất` ⓓ | UC.09 | AC-09.1 → AC-09.4 xanh | ✅ #1, #31 |
 | T13 · #117 | S5 | `feat(pages): Tài khoản — form đăng nhập/đăng ký, đổi tên, đăng xuất, xóa` | UC.08, UC.11 | AC-08.1, AC-08.2, AC-11.1 → AC-11.3 xanh | ✅ #1 |
 | T14 · #118 | S5 | `feat(pages): Thư viện — 2 thẻ, bộ lọc, URL, đang tải/lỗi/rỗng` | UC.07 | AC-07.1 → AC-07.4 xanh | ✅ #1, #35 |
-| T16 · #119 | S5 | `docs(review): góp ý UI/UX cho nhóm B` | Task 5a | `docs/reviews/given/<nhóm>.md` | ✅ Nhóm 6 (Quản lí chi tiêu), `docs/reviews/given/phuc-thinh.md` |
+| T16 · #119 | S5 | `docs(review): góp ý UI/UX cho nhóm B` | Task 5a | `docs/reviews/given/<nhóm>.md` | ✅ Nhóm 6 (Quản lí chi tiêu), `docs/reviews/given/nhom-6-quan-li-chi-tieu.md` |
 | T17 · #120 | S5 | `docs(review): received.md + issue cho từng góp ý được làm` | Task 5b | Bảng góp ý → quyết định → PR/lý do | ✅ #53 |
 | T18 · #121 | S5 | `docs: README.md (cách chạy, tổng quan, tính năng + ảnh, ERD, khác)` | Nộp bài | Đủ 5 mục theo đề bài | ✅ #52, link video #61, #62 |
 | T19 · #122 | S5 | `chore: dựng video demo ≤ 10 phút, 720p, đăng YouTube` | Nộp bài | Link trong README | ✅ #61, #62 (Tuấn Lộc quay) |
@@ -121,7 +121,7 @@ Mỗi người chỉ sửa thư mục của mình; sửa chỗ khác thì mở P
 | G1 · #123 | S1 ✅ | `docs(meeting): biên bản họp khởi động 27/10 và họp kế hoạch 13/11` | Thịnh | ✅ `docs/meetings/2026-10-27-khoi-dong.md`, `2026-11-13-hop-ke-hoach.md` | ✅ |
 | G2 · #124 | S1 ✅ | `docs(wireframe): duyệt bộ wireframe 6 trang` | Cả nhóm | ✅ duyệt cùng PRD 07/11; `docs/wireframes/FocuSpace_Wireframes.drawio` + PNG | ✅ |
 | G3 · #125 | S1→S5 | `docs(report): self-report sprint N` (5 issue, mỗi sprint 1) | Mỗi người | `docs/sprint-reports/<Tên>_Self-Report.md` (mỗi người một file, đủ 5 sprint), bản theo mẫu của môn `docs/self-reports/self-report-<MSSV>.md`, thiếu bị trừ 10%; **S1, S2 viết bù trước 17/11** | ✅ #54–#60, #63 |
-| G4 · #126 | S5 | `docs(review): góp ý UI/UX cho nhóm A` | Hưng, Nhiên | `docs/reviews/given/<nhóm>.md` | ✅ Nhóm 4 (PawPass), review chung với Lộc (`tuan-hung.md`, `dinh-nhien.md`) |
+| G4 · #126 | S5 | `docs(review): góp ý UI/UX cho nhóm A` | Hưng, Nhiên | `docs/reviews/given/<nhóm>.md` | ✅ Nhóm 4 (PawPass), review chung với Lộc (`nhom-4-pawpass.md`) |
 | G5 · #127 | S5 | `fix: sửa theo góp ý nhận được` | Chủ khu vực liên quan | Mỗi góp ý được làm có PR riêng | ✅ 9/10 góp ý đã có trong PR trước đó (#10, #29, #30, #40–#44, #46–#50), 1 không làm kèm lý do (`docs/reviews/received.md`) |
 | G6 · #128 | S5 | `chore: quay phần demo khu vực mình cho video` | Mỗi người | Gửi clip cho Thịnh trước 26/11 | ✅ Tuấn Lộc quay toàn bộ clip video |
 | G7 · #129 | S5 | `chore: nộp bài` | Thịnh | Repo, README, video nộp trước hết 18/11 | ✅ đã nộp bài ngày 18/11/2026 |
