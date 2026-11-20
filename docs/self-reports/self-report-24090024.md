@@ -154,7 +154,7 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/sprint-repo
 
 **Tóm tắt những gì bạn đã đóng góp cho dự án:**
 
-Là trưởng nhóm, tôi chủ trì họp, viết PRD, phần lớn tài liệu kế hoạch và Chương 1 Phân tích hệ thống. Tôi dựng toàn bộ code nền (monorepo, CI, schema, khung Express, cổng cắm khu vực) và triển khai lên Vercel, Render, Neon để cả nhóm làm song song. Tôi làm Phòng học, Pomodoro, đồng bộ trạng thái phòng và 4 trang Trang chủ, Thư viện, Tài khoản, Giới thiệu & Liên hệ, cùng PA B tách quy tắc nghiệp vụ có test và integration test backend. Cuối kỳ tôi hoàn thiện âm thanh, văn phong, sơ đồ phân tích, README, tổng hợp góp ý và duyệt phần lớn PR của nhóm (137 commit trên `main` từ S3 đến S5).
+Là trưởng nhóm, tôi chủ trì họp, viết PRD, phần lớn tài liệu kế hoạch và Chương 1 Phân tích hệ thống. Tôi dựng toàn bộ code nền (monorepo, CI, schema, khung Express, cổng cắm khu vực) và triển khai lên Vercel, Render, Neon để cả nhóm làm song song. Tôi làm Phòng học, Pomodoro, đồng bộ trạng thái phòng và 4 trang Trang chủ, Thư viện, Tài khoản, Giới thiệu & Liên hệ, cùng PA B tách quy tắc nghiệp vụ có test và integration test backend. Cuối kỳ tôi hoàn thiện âm thanh, văn phong, sơ đồ phân tích, README, tổng hợp góp ý và duyệt phần lớn PR của nhóm (147 commit trên `main` từ S3 đến S5).
 
 Kỹ năng học được: quản lý dự án trên GitHub (chia việc, duyệt Pull Request, CI GitHub Actions); thiết kế hệ thống và viết tài liệu (PRD, kiến trúc, API, cơ sở dữ liệu, sơ đồ phân tích); phát triển fullstack với React, Express, Prisma và triển khai lên Vercel, Render, Neon.
 

@@ -137,7 +137,7 @@ Không có.
 
 **Tóm tắt những gì bạn đã đóng góp cho dự án:**
 
-Tôi thiết kế và dựng phần Sân vườn cùng 5 khung cảnh trong prototype, vẽ wireframe Trang chủ và Giới thiệu & Liên hệ, và góp nội dung Sân vườn cho PRD, DATABASE. Ở backend, tôi làm seeder `scenes`, API `GET /catalog/scenes` và `POST /telemetry/batch` upsert idempotent. Tôi tích hợp Google Analytics 4 và Sentry, tinh chỉnh hình các khung cảnh Sân vườn và giảm giới hạn đồ vật mỗi phòng xuống 25. Cuối kỳ tôi tổng hợp self-report S3 cho cả nhóm và hoàn chỉnh README theo đề bài (14 commit trên `main` từ S3 đến S5).
+Tôi thiết kế và dựng phần Sân vườn cùng 5 khung cảnh trong prototype, vẽ wireframe Trang chủ và Giới thiệu & Liên hệ, và góp nội dung Sân vườn cho PRD, DATABASE. Ở backend, tôi làm seeder `scenes`, API `GET /catalog/scenes` và `POST /telemetry/batch` upsert idempotent. Tôi tích hợp Google Analytics 4 và Sentry, tinh chỉnh hình các khung cảnh Sân vườn và giảm giới hạn đồ vật mỗi phòng xuống 25. Cuối kỳ tôi tổng hợp self-report S3 cho cả nhóm và hoàn chỉnh README theo đề bài (17 commit trên `main` từ S3 đến S5).
 
 Kỹ năng học được: viết prompt để làm việc cùng Claude; các bước cơ bản khi làm một website, lập kế hoạch trước khi code; dùng GitHub (nhánh, Pull Request, commit).
 
