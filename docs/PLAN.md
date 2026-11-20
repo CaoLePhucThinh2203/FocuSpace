@@ -28,7 +28,7 @@
 | 5b | Sửa theo góp ý nhận được (1) | PLAN §5 | `docs/reviews/received.md`: góp ý → quyết định → PR hoặc lý do | S5 |
 | Nộp | README ở thư mục gốc | PLAN §6 (P8) | Cách chạy, tổng quan và công cụ, tính năng + ảnh, ERD, thông tin khác | S5 · P8 |
 | Nộp | Video demo ≤ 10 phút, MP4 ≥ 720p | PLAN §6 (P8) | Video trên YouTube (unlisted/public) thể hiện mọi tiêu chí | S5 · P8 |
-| Cá nhân | Self-report 5 sprint (thiếu −10%) | PLAN §3 | `docs/sprint-reports/<Tên>_Self-Report.md` — mỗi người một file, đủ 5 sprint (S1, S2 viết bù) | S1 → S5 |
+| Cá nhân | Self-report 5 sprint (thiếu −10%) | PLAN §3 | `docs/sprint-reports/<Tên>_Self-Report.md` — mỗi người một file, đủ 5 sprint (S1, S2 viết bù); bản theo mẫu của môn (Task 1–5): `docs/self-reports/self-report-<MSSV>.md`; report nhóm theo mẫu: `docs/report.md` | S1 → S5 |
 
 ## 2. Phân vai (Task 1a)
 
