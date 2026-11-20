@@ -1,7 +1,5 @@
 # Self-report — Đình Nhiên
 
-> Bản theo 5 sprint (đề bài yêu cầu *Self-Report for all 5 sprints*). Cùng nội dung trình bày theo Task 1–5 theo mẫu của môn: [`docs/self-reports/self-report-24090060.md`](../self-reports/self-report-24090060.md).
-
 **Khu vực phụ trách:** Sân vườn, 5 khung cảnh (`frontend/src/areas/garden/`, `backend/src/areas/garden/`, phần Sân vườn trong `roomEngine.js`); `GET /catalog/scenes`, `POST /telemetry/batch`, GA4 và Sentry.
 
 | Sprint | Thời gian | Giai đoạn | Số commit trên `main` |

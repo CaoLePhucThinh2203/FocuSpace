@@ -1,7 +1,5 @@
 # Self-report — Tuấn Hưng
 
-> Bản theo 5 sprint (đề bài yêu cầu *Self-Report for all 5 sprints*). Cùng nội dung trình bày theo Task 1–5 theo mẫu của môn: [`docs/self-reports/self-report-24090019.md`](../self-reports/self-report-24090019.md).
-
 **Khu vực phụ trách:** Đồ vật, bảng đồ vật, âm thanh (`frontend/src/areas/items-audio/`, `backend/src/areas/items-audio/`, phần đồ vật và âm thanh trong `roomEngine.js`); tối ưu Lighthouse (H12).
 
 | Sprint | Thời gian | Giai đoạn | Số commit trên `main` |
