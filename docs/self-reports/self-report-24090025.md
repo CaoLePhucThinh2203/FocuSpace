@@ -114,16 +114,16 @@ Không có.
 
 ## Task 5 — Peer Review
 
-**Tuần:** S3 và S5, ngày 12/11 – 14/11/2026 và 16/11 – 17/11/2026
+**Tuần:** S1, S3 và S5, ngày 07/11 (review trực tiếp), 14/11 (viết bản góp ý) và 16/11 – 17/11/2026
 
 **Công việc đã làm:**
 
-- Góp ý UI/UX cho Nhóm 4 (PawPass) cùng Tuấn Hưng, Đình Nhiên: điểm mạnh dễ sử dụng, tốc độ đẩy file ổn; đề xuất giữ người dùng ở trang cuối cùng khi tải lại ([L10 #101](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/101), [PR #5](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/5), [PR #8](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/8)).
+- Góp ý UI/UX cho Nhóm 6 (Quản lí chi tiêu) cùng Phúc Thịnh ngày 07/11, góp ý trực tiếp: điểm mạnh menu gọn, màu sắc bắt mắt, trình bày rõ ràng; đề xuất làm đơn giản hơn, thêm nhập nhanh bằng giọng nói, thiết kế lại giao diện ([L10 #101](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/101), [PR #5](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/5), [PR #8](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/8)).
 - Sửa theo góp ý nhận được: góp ý “sửa lại chế độ Hẹn giờ ngủ” đã làm ở PR #29 (chọn mức xong chờ Bắt đầu, có Tạm dừng, giảm âm dần 2 phút cuối) ([G5 #127](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/127)).
 
 **Bằng chứng đóng góp:**
 
-- [`docs/reviews/given/nhom-4-pawpass.md`](../reviews/given/nhom-4-pawpass.md), [`docs/reviews/received.md`](../reviews/received.md) (dòng 6); commit [`1c68c6c`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/1c68c6c), [`3278510`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/3278510).
+- [`docs/reviews/given/nhom-6-quan-li-chi-tieu.md`](../reviews/given/nhom-6-quan-li-chi-tieu.md), [`docs/reviews/received.md`](../reviews/received.md) (dòng 6); commit [`1c68c6c`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/1c68c6c), [`3278510`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/3278510).
 
 **Khó khăn gặp phải:**
 

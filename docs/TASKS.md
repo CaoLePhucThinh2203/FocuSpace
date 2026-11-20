@@ -121,7 +121,7 @@ Mỗi người chỉ sửa thư mục của mình; sửa chỗ khác thì mở P
 | G1 · #123 | S1 ✅ | `docs(meeting): biên bản họp khởi động 27/10 và họp kế hoạch 13/11` | Thịnh | ✅ `docs/meetings/2026-10-27-khoi-dong.md`, `2026-11-13-hop-ke-hoach.md` | ✅ |
 | G2 · #124 | S1 ✅ | `docs(wireframe): duyệt bộ wireframe 6 trang` | Cả nhóm | ✅ duyệt cùng PRD 07/11; `docs/wireframes/FocuSpace_Wireframes.drawio` + PNG | ✅ |
 | G3 · #125 | S1→S5 | `docs(report): self-report sprint N` (5 issue, mỗi sprint 1) | Mỗi người | `docs/sprint-reports/<Tên>_Self-Report.md` (mỗi người một file, đủ 5 sprint), bản theo mẫu của môn `docs/self-reports/self-report-<MSSV>.md`, thiếu bị trừ 10%; **S1, S2 viết bù trước 17/11** | ✅ #54–#60, #63 |
-| G4 · #126 | S5 | `docs(review): góp ý UI/UX cho nhóm A` | Hưng, Nhiên | `docs/reviews/given/<nhóm>.md` | ✅ Nhóm 4 (PawPass), review chung với Lộc (`nhom-4-pawpass.md`) |
+| G4 · #126 | S5 | `docs(review): góp ý UI/UX cho nhóm A` | Hưng, Nhiên | `docs/reviews/given/<nhóm>.md` | ✅ Nhóm 4 (PawPass) (`nhom-4-pawpass.md`) |
 | G5 · #127 | S5 | `fix: sửa theo góp ý nhận được` | Chủ khu vực liên quan | Mỗi góp ý được làm có PR riêng | ✅ 9/10 góp ý đã có trong PR trước đó (#10, #29, #30, #40–#44, #46–#50), 1 không làm kèm lý do (`docs/reviews/received.md`) |
 | G6 · #128 | S5 | `chore: quay phần demo khu vực mình cho video` | Mỗi người | Gửi clip cho Thịnh trước 26/11 | ✅ Tuấn Lộc quay toàn bộ clip video |
 | G7 · #129 | S5 | `chore: nộp bài` | Thịnh | Repo, README, video nộp trước hết 18/11 | ✅ đã nộp bài ngày 18/11/2026 |

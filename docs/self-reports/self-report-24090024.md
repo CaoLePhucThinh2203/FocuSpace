@@ -134,7 +134,7 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/sprint-repo
 
 **Công việc đã làm:**
 
-- Góp ý UI/UX cho Nhóm 6 (Quản lí chi tiêu) ngày 07/11: làm đơn giản hơn, thêm nhập nhanh bằng giọng nói, thiết kế lại giao diện ([T16 #119](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/119)).
+- Góp ý UI/UX cho Nhóm 6 (Quản lí chi tiêu) cùng Tuấn Lộc ngày 07/11: làm đơn giản hơn, thêm nhập nhanh bằng giọng nói, thiết kế lại giao diện ([T16 #119](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/119)).
 - Tổng hợp 10 góp ý nhận được từ Hữu Triết, Bá Phát, Thành Long vào `docs/reviews/received.md`: 9 góp ý đã làm, 1 góp ý không làm kèm lý do (khung cảnh tuyết) ([T17 #120](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/120), [PR #53](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/53)).
 - Sửa theo góp ý: mèo đổi màu, Trang chủ, tối ưu web, Pomodoro, nút Bắt đầu / Tạm dừng, Hẹn giờ ngủ, cảnh Thành phố, độ lớn âm thanh, nhạc Lo-fi ([G5 #127](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/127); PR #10, #29, #30, #40–#44, #46–#50).
 

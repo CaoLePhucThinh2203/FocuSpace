@@ -74,7 +74,7 @@ Số commit trên main: 23.
 | — | #5 | Khung E2E uc06, uc08, uc10, uc11 (8299e95, 93f896d, c49c58f, 3e59d0f) | Xong |
 | L11 | #5 | E2E responsive: không cuộn ngang, trang 404 (2a895cb) | Xong |
 | L12 | #5 | Bảng báo cáo Lighthouse 6 trang (fdece3a), nay gộp vào docs/lighthouse/README.md | Xong |
-| L10 | #5, #8 | Góp ý UI/UX cho nhóm 4 (PawPass) (1c68c6c, 3278510) | Xong |
+| L10 | #5, #8 | Góp ý UI/UX cho Nhóm 6 (Quản lí chi tiêu) cùng Phúc Thịnh (1c68c6c, 3278510) | Xong |
 | — | #5 | README khu vực bedroom phía frontend và backend (c234f21, 70c4916) | Xong |
 | G3 | #5 | Self-report S1, S2 (viết bù) và khung S3–S5 (8ffea0d, 38c00eb, 1de98b5, aeaae53, b589b04) | Xong |
 
