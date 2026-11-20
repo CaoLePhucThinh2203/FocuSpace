@@ -405,7 +405,7 @@ Khi build không có Sentry, bundle chính chỉ còn 176 KB. Trên mạng chậ
 **Nhóm được review #1:**
 
 - **Tên nhóm / Dự án:** Nhóm 6 — Quản lí chi tiêu (Phúc Thịnh review, 07/11/2026)
-- **Link dự án:** [Cần bổ sung]
+- **Link dự án:** không có, góp ý trực tiếp khi nhóm trình bày
 
 | Khía cạnh | Điểm mạnh | Gợi ý cải thiện |
 |---|---|---|
