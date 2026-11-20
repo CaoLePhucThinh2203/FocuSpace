@@ -1,5 +1,7 @@
 # Self-report — Phúc Thịnh
 
+> Bản theo 5 sprint (đề bài yêu cầu *Self-Report for all 5 sprints*). Cùng nội dung trình bày theo Task 1–5 theo mẫu của môn: [`docs/self-reports/self-report-24090024.md`](../self-reports/self-report-24090024.md).
+
 **Khu vực phụ trách:** Phòng học, repo, các trang còn lại (Trang chủ, Giới thiệu & Liên hệ, Thư viện, Tài khoản, 404); trưởng nhóm, duyệt và merge PR.
 
 | Sprint | Thời gian | Giai đoạn | Số commit trên `main` |

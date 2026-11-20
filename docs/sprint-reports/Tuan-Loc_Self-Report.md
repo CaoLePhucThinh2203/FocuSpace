@@ -1,5 +1,7 @@
 # Self-report — Tuấn Lộc
 
+> Bản theo 5 sprint (đề bài yêu cầu *Self-Report for all 5 sprints*). Cùng nội dung trình bày theo Task 1–5 theo mẫu của môn: [`docs/self-reports/self-report-24090025.md`](../self-reports/self-report-24090025.md).
+
 *Khu vực phụ trách:* Phòng ngủ, Thống kê, tài khoản (đăng ký, đăng nhập, /me, /me/stats).
 
 | Sprint | Thời gian | Giai đoạn | Số commit trên main |
