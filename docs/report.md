@@ -335,21 +335,21 @@ Trước khi tối ưu, nhóm đo hai trang có vấn đề là Căn phòng và 
 
 Desktop:
 
-| Metric | `/` | `/room` | `/library` | `/account` | `/about` |
-|---|---|---|---|---|---|
-| Performance | 96 | 100 | 98 | 97 | 96 |
-| Accessibility | 100 | 100 | 100 | 100 | 100 |
-| Best Practices | 100 | 100 | 100 | 100 | 100 |
-| SEO | 100 | 100 | 100 | 100 | 100 |
+| Metric | `/` | `/room` | `/library` | `/stats` | `/account` | `/about` |
+|---|---|---|---|---|---|---|
+| Performance | 96 | 100 | 98 | 98 | 97 | 96 |
+| Accessibility | 100 | 100 | 100 | 100 | 100 | 100 |
+| Best Practices | 100 | 100 | 100 | 100 | 100 | 100 |
+| SEO | 100 | 100 | 100 | 100 | 100 | 100 |
 
 Mobile:
 
-| Metric | `/` | `/room` | `/library` | `/stats` | `/about` |
-|---|---|---|---|---|---|
-| Performance | 83 | 100 | 83 | 82 | 83 |
-| Accessibility | 100 | 100 | 100 | 100 | 100 |
-| Best Practices | 100 | 100 | 100 | 100 | 100 |
-| SEO | 100 | 100 | 100 | 100 | 100 |
+| Metric | `/` | `/room` | `/library` | `/stats` | `/account` | `/about` |
+|---|---|---|---|---|---|---|
+| Performance | 83 | 100 | 83 | 82 | 82 | 83 |
+| Accessibility | 100 | 100 | 100 | 100 | 100 | 100 |
+| Best Practices | 100 | 100 | 100 | 100 | 100 | 100 |
+| SEO | 100 | 100 | 100 | 100 | 100 | 100 |
 
 So với trước tối ưu (cùng đo trên desktop): `/room` Performance 60 → 100 (TBT 6.180 ms → 20 ms), Best Practices 96 → 100, SEO 91 → 100; `/library` Performance 83 → 98 (CLS 0,327 → 0). Mọi trang đạt 100 ở Accessibility, Best Practices, SEO.
 
@@ -357,13 +357,14 @@ So với trước tối ưu (cùng đo trên desktop): `/room` Performance 60 �
 |:---:|:---:|
 | ![Desktop /](images/screenshots/lighthouse-sau-desktop-home.png)<br>Desktop `/` | ![Desktop /room](images/screenshots/lighthouse-sau-desktop-room.png)<br>Desktop `/room` |
 | ![Desktop /library](images/screenshots/lighthouse-sau-desktop-library.png)<br>Desktop `/library` | ![Desktop /account](images/screenshots/lighthouse-sau-desktop-account.png)<br>Desktop `/account` |
-| ![Desktop /about](images/screenshots/lighthouse-sau-desktop-about.png)<br>Desktop `/about` | ![Mobile /room](images/screenshots/lighthouse-sau-mobile-room.png)<br>Mobile `/room` |
-| ![Mobile /](images/screenshots/lighthouse-sau-mobile-home.png)<br>Mobile `/` | ![Mobile /library](images/screenshots/lighthouse-sau-mobile-library.png)<br>Mobile `/library` |
-| ![Mobile /stats](images/screenshots/lighthouse-sau-mobile-stats.png)<br>Mobile `/stats` | ![Mobile /about](images/screenshots/lighthouse-sau-mobile-about.png)<br>Mobile `/about` |
+| ![Desktop /stats](images/screenshots/lighthouse-sau-desktop-stats.png)<br>Desktop `/stats` | ![Desktop /about](images/screenshots/lighthouse-sau-desktop-about.png)<br>Desktop `/about` |
+| ![Mobile /](images/screenshots/lighthouse-sau-mobile-home.png)<br>Mobile `/` | ![Mobile /room](images/screenshots/lighthouse-sau-mobile-room.png)<br>Mobile `/room` |
+| ![Mobile /library](images/screenshots/lighthouse-sau-mobile-library.png)<br>Mobile `/library` | ![Mobile /stats](images/screenshots/lighthouse-sau-mobile-stats.png)<br>Mobile `/stats` |
+| ![Mobile /account](images/screenshots/lighthouse-sau-mobile-account.png)<br>Mobile `/account` | ![Mobile /about](images/screenshots/lighthouse-sau-mobile-about.png)<br>Mobile `/about` |
 
 **Vì sao Performance trên mobile còn 82–83:**
 
-Trên mobile, Lighthouse giả lập điện thoại tầm trung với mạng 4G chậm. Ở 4 trang `/`, `/library`, `/stats`, `/about`, chỉ số LCP là 4,6 giây; các chỉ số còn lại vẫn tốt (FCP 0,8 giây, TBT 70–90 ms, CLS 0–0,08). Lighthouse báo “Giảm JavaScript không dùng đến”, ước tính tiết kiệm 112 KiB.
+Trên mobile, Lighthouse giả lập điện thoại tầm trung với mạng 4G chậm. Ở 5 trang `/`, `/library`, `/stats`, `/account`, `/about`, chỉ số LCP là 4,6 giây; các chỉ số còn lại vẫn tốt (FCP 0,8 giây, TBT 70–130 ms, CLS 0–0,08). Lighthouse báo “Giảm JavaScript không dùng đến”, ước tính tiết kiệm 112 KiB.
 
 Nguyên nhân là mã theo dõi của bên thứ ba mà nhóm bật trên bản triển khai để đáp ứng Task 4b. Nhóm đo độ phủ JavaScript khi mở Trang chủ trên bản Vercel (Chrome, cùng cách Lighthouse tính mục này):
 
