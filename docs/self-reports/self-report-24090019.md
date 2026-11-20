@@ -104,8 +104,8 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/reports/Tua
 **Bằng chứng đóng góp:**
 
 - Commit: [`2fe5264`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/2fe5264), [`a8ebd6a`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/a8ebd6a), [`798acea`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/798acea), [`7a0b305`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/7a0b305), [`4f3cabc`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/4f3cabc), [`e3ddd5e`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/e3ddd5e), [`d82663b`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/d82663b).
-- Nhật ký tối ưu: [`docs/reports/lighthouse/README.md`](../reports/lighthouse/README.md). Kết quả: `/room` 60 → 95, `/library` 84 → 100.
-- Ảnh Lighthouse trước tối ưu: [`/room`](../images/screenshots/lighthouse-truoc-room.png), [`/library`](../images/screenshots/lighthouse-truoc-library.png).
+- Nhật ký tối ưu: [`docs/reports/lighthouse/README.md`](../reports/lighthouse/README.md). Kết quả trên desktop: `/room` 60 → 100, `/library` 83 → 98.
+- Ảnh Lighthouse trước tối ưu: [`/room`](../images/screenshots/lighthouse-truoc-room.png), [`/library`](../images/screenshots/lighthouse-truoc-library.png); sau tối ưu: [`/room`](../images/screenshots/lighthouse-sau-desktop-room.png), [`/library`](../images/screenshots/lighthouse-sau-desktop-library.png).
 
 **Khó khăn gặp phải:**
 

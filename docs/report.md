@@ -301,7 +301,7 @@ Backend có integration test (Vitest + Supertest) chạy trên một PostgreSQL 
 
 ### (a) Kiểm tra hiệu năng với Lighthouse
 
-Đo bằng Lighthouse 12.6.1, cấu hình mobile, trên bản triển khai https://focuspace-iota.vercel.app; mỗi trang đo 3 lần, ghi lần có Performance trung vị. Báo cáo đầy đủ và file JSON: [`reports/lighthouse/`](reports/lighthouse/README.md).
+Đo bằng Lighthouse trong Chrome DevTools trên bản triển khai https://focuspace-iota.vercel.app. Nhật ký tối ưu và file JSON các lần đo trong quá trình làm: [`reports/lighthouse/`](reports/lighthouse/README.md).
 
 **Kết quả trước khi tối ưu:**
 
@@ -331,33 +331,48 @@ Trước khi tối ưu, nhóm đo hai trang có vấn đề là Căn phòng và 
 | Lỗi 401 ghi vào console khi khách tải trang; thiếu `robots.txt`; file không tồn tại trả `index.html` | Khách chưa đăng nhập không gọi refresh; thêm `robots.txt`; Vercel trả 404 đúng ([#20](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/20), [#26](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/26)) |
 | `/room` Best Practices 96: chữ chú thích 11 px | Nâng lên 12 px ([#43](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/43)) |
 
-**Kết quả sau khi tối ưu (15/11/2026):**
+**Kết quả sau khi tối ưu (đã bật Google Analytics 4 và Sentry):**
 
-| Metric | `/` | `/room` | `/library` | `/stats` | `/account` | `/about` |
-|---|---|---|---|---|---|---|
-| Performance | 100 | 95 | 100 | 100 | 100 | 100 |
-| Accessibility | 100 | 100 | 100 | 100 | 100 | 100 |
-| Best Practices | 100 | 96 | 100 | 100 | 100 | 100 |
-| SEO | 100 | 100 | 100 | 100 | 100 | 100 |
+Desktop:
 
-`/room` Best Practices đạt 100 khi đo lại trên bản build ở máy sau khi nâng chữ chú thích lên 12 px.
+| Metric | `/` | `/room` | `/library` | `/account` | `/about` |
+|---|---|---|---|---|---|
+| Performance | 96 | 100 | 98 | 97 | 96 |
+| Accessibility | 100 | 100 | 100 | 100 | 100 |
+| Best Practices | 100 | 100 | 100 | 100 | 100 |
+| SEO | 100 | 100 | 100 | 100 | 100 |
 
-[Cần bổ sung: ảnh chụp màn hình Lighthouse — sau]
+Mobile:
 
-**Điểm Performance giảm sau khi bật Google Analytics 4 và Sentry (17/11/2026):**
+| Metric | `/` | `/room` | `/library` | `/stats` | `/about` |
+|---|---|---|---|---|---|
+| Performance | 83 | 100 | 83 | 82 | 83 |
+| Accessibility | 100 | 100 | 100 | 100 | 100 |
+| Best Practices | 100 | 100 | 100 | 100 | 100 |
+| SEO | 100 | 100 | 100 | 100 | 100 |
 
-Kết quả trên được đo ngày 15/11, khi bản triển khai chưa có mã GA4 và DSN Sentry. Ngày 17/11 nhóm đặt `VITE_GA_ID`, `VITE_SENTRY_DSN` trên Vercel để bật theo dõi (Task 4b). Đo lại Trang chủ sau đó: Performance còn 83, Accessibility, Best Practices, SEO vẫn 100. Lighthouse báo “Giảm JavaScript không dùng đến”, ước tính tiết kiệm 112 KiB.
+So với trước tối ưu (cùng đo trên desktop): `/room` Performance 60 → 100 (TBT 6.180 ms → 20 ms), Best Practices 96 → 100, SEO 91 → 100; `/library` Performance 83 → 98 (CLS 0,327 → 0). Mọi trang đạt 100 ở Accessibility, Best Practices, SEO.
 
-Nguyên nhân là mã theo dõi của bên thứ ba. Nhóm đo độ phủ JavaScript khi mở Trang chủ trên bản Vercel (Chrome, cùng cách Lighthouse tính mục này):
+| | |
+|:---:|:---:|
+| ![Desktop /](images/screenshots/lighthouse-sau-desktop-home.png)<br>Desktop `/` | ![Desktop /room](images/screenshots/lighthouse-sau-desktop-room.png)<br>Desktop `/room` |
+| ![Desktop /library](images/screenshots/lighthouse-sau-desktop-library.png)<br>Desktop `/library` | ![Desktop /account](images/screenshots/lighthouse-sau-desktop-account.png)<br>Desktop `/account` |
+| ![Desktop /about](images/screenshots/lighthouse-sau-desktop-about.png)<br>Desktop `/about` | ![Mobile /room](images/screenshots/lighthouse-sau-mobile-room.png)<br>Mobile `/room` |
+| ![Mobile /](images/screenshots/lighthouse-sau-mobile-home.png)<br>Mobile `/` | ![Mobile /library](images/screenshots/lighthouse-sau-mobile-library.png)<br>Mobile `/library` |
+| ![Mobile /stats](images/screenshots/lighthouse-sau-mobile-stats.png)<br>Mobile `/stats` | ![Mobile /about](images/screenshots/lighthouse-sau-mobile-about.png)<br>Mobile `/about` |
+
+**Vì sao Performance trên mobile còn 82–83:**
+
+Trên mobile, Lighthouse giả lập điện thoại tầm trung với mạng 4G chậm. Ở 4 trang `/`, `/library`, `/stats`, `/about`, chỉ số LCP là 4,6 giây; các chỉ số còn lại vẫn tốt (FCP 0,8 giây, TBT 70–90 ms, CLS 0–0,08). Lighthouse báo “Giảm JavaScript không dùng đến”, ước tính tiết kiệm 112 KiB.
+
+Nguyên nhân là mã theo dõi của bên thứ ba mà nhóm bật trên bản triển khai để đáp ứng Task 4b. Nhóm đo độ phủ JavaScript khi mở Trang chủ trên bản Vercel (Chrome, cùng cách Lighthouse tính mục này):
 
 | File | Kích thước | Không dùng khi mở trang | Nguồn |
 |---|---|---|---|
 | `googletagmanager.com/gtag/js` | 538 KB | 275 KB | Google Analytics 4, tải từ máy chủ của Google |
 | `assets/index-*.js` | 243 KB | 149 KB | Bundle chính; khoảng 73 KB trong đó là thư viện Sentry (`@sentry/react`) |
 
-Khi chưa bật Sentry, bundle chính chỉ còn 176 KB. Hai thư viện này cần thiết để đáp ứng tiêu chí theo dõi lỗi và hành vi người dùng, nên nhóm chấp nhận mức điểm thấp hơn. Có thể cải thiện bằng cách tải Sentry và GA4 sau khi trang đã hiện, đổi lại sẽ mất một phần dữ liệu theo dõi (lỗi xảy ra sớm, lượt xem của người vào rồi rời ngay).
-
-[Cần bổ sung: ảnh chụp màn hình Lighthouse sau khi bật GA4, Sentry]
+Khi build không có Sentry, bundle chính chỉ còn 176 KB. Trên mạng chậm, tải và chạy hai thư viện này làm nội dung lớn nhất hiện muộn hơn. Trên desktop, ảnh hưởng nhỏ nên các trang vẫn đạt 96–100. GA4 và Sentry cần thiết để theo dõi lỗi và hành vi người dùng, nên nhóm giữ chúng và chấp nhận mức điểm này. Có thể cải thiện bằng cách tải Sentry và GA4 sau khi trang đã hiện, đổi lại sẽ mất một phần dữ liệu theo dõi (lỗi xảy ra sớm, lượt xem của người vào rồi rời ngay).
 
 ### (b) Theo dõi lỗi và hành vi người dùng
 
