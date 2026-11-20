@@ -305,16 +305,20 @@ Backend có integration test (Vitest + Supertest) chạy trên một PostgreSQL 
 
 **Kết quả trước khi tối ưu:**
 
-Trước khi tối ưu, nhóm chỉ đo điểm Performance của hai trang có vấn đề; các hạng mục còn lại và các trang khác chưa đo.
+Trước khi tối ưu, nhóm đo hai trang có vấn đề là Căn phòng và Thư viện; các trang khác chưa đo.
 
 | Metric | `/room` | `/library` |
 |---|---|---|
-| Performance | 60 (TBT 6,2 s) | 84 (CLS 0,327) |
-| Accessibility | chưa đo | chưa đo |
-| Best Practices | chưa đo | chưa đo |
-| SEO | chưa đo | chưa đo |
+| Performance | 60 (TBT 6.180 ms) | 83 (CLS 0,327) |
+| Accessibility | 100 | 100 |
+| Best Practices | 96 | 100 |
+| SEO | 91 | 100 |
 
-[Cần bổ sung: ảnh chụp màn hình Lighthouse — trước]
+Ảnh dưới là một lần đo; nhật ký Lighthouse ghi `/library` 84 theo lần có Performance trung vị trong 3 lần đo.
+
+| | |
+|:---:|:---:|
+| ![Lighthouse /room trước tối ưu](images/screenshots/lighthouse-truoc-room.png)<br>`/room` trước tối ưu | ![Lighthouse /library trước tối ưu](images/screenshots/lighthouse-truoc-library.png)<br>`/library` trước tối ưu |
 
 **Các vấn đề đã xác định và cách khắc phục:**
 
@@ -338,7 +342,22 @@ Trước khi tối ưu, nhóm chỉ đo điểm Performance của hai trang có 
 
 `/room` Best Practices đạt 100 khi đo lại trên bản build ở máy sau khi nâng chữ chú thích lên 12 px.
 
-[Cần bổ sung: ảnh chụp màn hình Lighthouse — sau. Có thể mở file JSON trong `reports/lighthouse/2026-11-15/` bằng Lighthouse Viewer rồi chụp]
+[Cần bổ sung: ảnh chụp màn hình Lighthouse — sau]
+
+**Điểm Performance giảm sau khi bật Google Analytics 4 và Sentry (17/11/2026):**
+
+Kết quả trên được đo ngày 15/11, khi bản triển khai chưa có mã GA4 và DSN Sentry. Ngày 17/11 nhóm đặt `VITE_GA_ID`, `VITE_SENTRY_DSN` trên Vercel để bật theo dõi (Task 4b). Đo lại Trang chủ sau đó: Performance còn 83, Accessibility, Best Practices, SEO vẫn 100. Lighthouse báo “Giảm JavaScript không dùng đến”, ước tính tiết kiệm 112 KiB.
+
+Nguyên nhân là mã theo dõi của bên thứ ba. Nhóm đo độ phủ JavaScript khi mở Trang chủ trên bản Vercel (Chrome, cùng cách Lighthouse tính mục này):
+
+| File | Kích thước | Không dùng khi mở trang | Nguồn |
+|---|---|---|---|
+| `googletagmanager.com/gtag/js` | 538 KB | 275 KB | Google Analytics 4, tải từ máy chủ của Google |
+| `assets/index-*.js` | 243 KB | 149 KB | Bundle chính; khoảng 73 KB trong đó là thư viện Sentry (`@sentry/react`) |
+
+Khi chưa bật Sentry, bundle chính chỉ còn 176 KB. Hai thư viện này cần thiết để đáp ứng tiêu chí theo dõi lỗi và hành vi người dùng, nên nhóm chấp nhận mức điểm thấp hơn. Có thể cải thiện bằng cách tải Sentry và GA4 sau khi trang đã hiện, đổi lại sẽ mất một phần dữ liệu theo dõi (lỗi xảy ra sớm, lượt xem của người vào rồi rời ngay).
+
+[Cần bổ sung: ảnh chụp màn hình Lighthouse sau khi bật GA4, Sentry]
 
 ### (b) Theo dõi lỗi và hành vi người dùng
 
