@@ -344,7 +344,7 @@ Trước khi tối ưu, nhóm chỉ đo điểm Performance của hai trang có 
 
 **Google Analytics:**
 - [x] Đã tích hợp
-- **Tracking ID / Measurement ID:** [Cần bổ sung] (đặt qua biến môi trường `VITE_GA_ID` trên Vercel, không commit vào repo)
+- **Tracking ID / Measurement ID:** `G-TTSLLPTMYZ` (đặt qua biến môi trường `VITE_GA_ID` trên Vercel, không commit vào mã nguồn)
 - Nạp `gtag.js` khi có `VITE_GA_ID`, gửi `page_view` mỗi lần đổi trang và sự kiện `login`; không gửi dữ liệu cá nhân (`frontend/src/areas/garden/observability.ts`). Đã kiểm tra trên GA4 Realtime.
 
 [Cần bổ sung: ảnh chụp màn hình Google Analytics dashboard]
@@ -355,7 +355,9 @@ Trước khi tối ưu, nhóm chỉ đo điểm Performance của hai trang có 
 - **Project DSN / Config:** đặt qua biến môi trường `VITE_SENTRY_DSN` (Vercel) và `SENTRY_DSN` (Render), `sendDefaultPii: false`
 - Theo dõi lỗi JavaScript chưa bắt ở trình duyệt và lỗi phát sinh trong Express API. Đã gửi lỗi thử và thấy trên Sentry frontend.
 
-[Cần bổ sung: ảnh chụp màn hình Sentry dashboard hoặc error log]
+![Sentry: lỗi thử trên frontend](images/screenshots/sentry-issues.png)
+
+*Sentry project `javascript-react` (frontend) nhận lỗi thử “Kiem tra Sentry FocuSpace”.*
 
 ---
 
