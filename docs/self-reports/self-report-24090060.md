@@ -23,6 +23,7 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/sprint-repo
 - Wireframe Trang chủ, Giới thiệu & Liên hệ bằng draw.io (desktop + mobile) ([N1 #77](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/77)).
 - Góp nội dung Sân vườn cho PRD (Tính năng D) và danh sách khung cảnh cho seeder (DATABASE §3.8); góp ý đồ vật, âm thanh cho PRD (Tính năng E, F).
 - S5: tổng hợp self-report S3 cả nhóm từ git log và PR; thêm cột Trạng thái trong `docs/TASKS.md`, cập nhật `docs/PLAN.md`; README hoàn chỉnh theo đề bài kèm ảnh chụp ([G3 #125](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/125), [T18 #121](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/121), [PR #45](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/45)).
+- Khung self-report S1–S5 và góp ý UI/UX (G3 #125).
 
 **Bằng chứng đóng góp:**
 
@@ -31,9 +32,10 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/sprint-repo
 
 **Khó khăn gặp phải:**
 
-- 5 khung cảnh dùng chung một Sân vườn trên canvas 320×180, dễ vẽ lệch giữa các cảnh. Cách xử lý: giữ nguyên vật thể chung (cây, xích đu, nhà gỗ), mỗi cảnh chỉ đổi nền, màu và hiệu ứng.
-- Nội dung Sân vườn trong PRD và danh sách cảnh cho seeder viết ở hai nơi, dễ lệch. Cách xử lý: đối chiếu cả hai với prototype, thống nhất 5 cảnh, cảnh mặc định là Khu rừng.
-- Tổng hợp self-report từ git log khó vì nhiều commit không ghi mã việc. Cách xử lý: đối chiếu từng commit với PR đã merge và `docs/TASKS.md`, ghi mã commit để kiểm tra lại được.
+- Cần đảm bảo nội dung Sân vườn trong PRD thống nhất với danh sách khung cảnh dùng trong seeder, vì hai phần viết ở hai nơi, dễ lệch tên và thứ tự cảnh. Cách xử lý: chốt danh sách 5 khung cảnh ngay trong prototype (mỗi cảnh có tên, hình, âm nền), đối chiếu PRD và seeder với prototype, cảnh mặc định là Khu rừng.
+- 5 khung cảnh dùng chung một Sân vườn (cây, xích đu, nhà gỗ) trên canvas 320×180, dễ vẽ lệch giữa các cảnh. Cách xử lý: giữ nguyên các vật thể chung, mỗi cảnh chỉ đổi nền, màu và hiệu ứng (lá rơi, tuyết rơi).
+- Tổng hợp self-report S3 cho cả nhóm từ git log khó vì nhiều commit không ghi mã issue và một PR gộp nhiều việc. Cách xử lý: đối chiếu từng commit với PR đã merge và `docs/TASKS.md`, ghi mã commit trong ngoặc để kiểm tra lại được (#45).
+- README cần ảnh minh họa cho từng tính năng theo đề bài. Cách xử lý: chụp màn hình từng trang và từng không gian của Căn phòng, lưu vào `docs/images/screenshots/` rồi chèn vào README (#45).
 
 **Đánh giá bản thân:** 9 (quy đổi từ trung bình 5/5, 4/5, 5/5 ở S1, S2, S5)
 
@@ -59,8 +61,8 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/sprint-repo
 
 **Khó khăn gặp phải:**
 
-- Cảnh Thành phố: đèn cửa chính đè lên khung cửa sổ trái, cửa sổ tròn gác mất viền. Cách xử lý: đưa đèn lên tường phía trên cửa, vẽ khung trước rồi vẽ quầng sáng sau, kiểm tra 4 cảnh còn lại không đổi.
-- Giảm giới hạn 25 đồ phải sửa vào `shared/` và quy tắc `placement` của khu vực khác. Cách xử lý: đề xuất trong PR #24, gán Phúc Thịnh và Tuấn Hưng duyệt; cập nhật PRD, API, DATABASE cùng PR.
+- Cảnh Thành phố: đèn cửa chính đè lên khung cửa sổ trái, cửa sổ tròn gác mất viền và chữ thập. Cách xử lý: đưa đèn lên tường phía trên cửa, vẽ khung trước rồi vẽ quầng sáng sau (PA1 chọn 15/11), kiểm tra 4 cảnh còn lại không đổi (N15).
+- Giảm giới hạn 40 → 25 đồ sửa vào `shared/` và quy tắc `placement` của khu vực khác. Cách xử lý: đề xuất trong PR #24, gán Phúc Thịnh duyệt phần `shared/`, Tuấn Hưng duyệt phần `placement`; cập nhật PRD (BR-06, AC-04.2), API, DATABASE cùng PR (G12).
 
 **Đánh giá bản thân:** 9 (quy đổi từ trung bình 5/5, 4/5 ở S3, S4)
 
@@ -82,8 +84,8 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/sprint-repo
 
 **Khó khăn gặp phải:**
 
-- Phải chờ code nền (PR #1, #3) merge chiều 14/11 mới bắt đầu được. Cách xử lý: làm trong `areas/garden/` theo cổng cắm khu vực và gửi một PR (#9) trong tối 14/11 để kịp demo 15/11.
-- Seeder chỉ được nạp dữ liệu có trong prototype (BR-12). Cách xử lý: chỉ đưa 5 khung cảnh đã có, không thêm cảnh mới.
+- Phải chờ code nền (PR #1, #3) merge chiều 14/11 rồi mới bắt đầu được khu vực của mình. Cách xử lý: làm trong thư mục `areas/garden/` theo cổng cắm khu vực (#3) và gửi một PR (#9) trong tối 14/11 để kịp demo 15/11.
+- Seeder chỉ được nạp dữ liệu có trong prototype (BR-12). Cách xử lý: chỉ đưa 5 khung cảnh đã có vào seeder, không thêm cảnh mới.
 
 **Đánh giá bản thân:** 10 (quy đổi từ 5/5 ở S3)
 
@@ -106,7 +108,8 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/sprint-repo
 
 **Khó khăn gặp phải:**
 
-- GA4 và Sentry chưa gửi dữ liệu vì bản trên Vercel được build khi chưa có mã GA4, DSN. Cách xử lý: đặt `VITE_GA_ID`, `VITE_SENTRY_DSN` trên Vercel rồi build lại, kiểm tra GA4 Realtime và gửi lỗi thử lên Sentry.
+- GA4 và Sentry cần mã đo lường và DSN do Phúc Thịnh tạo (G10), chưa có nên chưa kiểm tra được trên bản triển khai. Cách xử lý: cắm sẵn code, mã lấy từ biến môi trường, không commit; kiểm tra khi có mã (N11).
+- GA4 và Sentry chưa gửi dữ liệu vì bản trên Vercel được build khi chưa có mã GA4, DSN (G10). Cách xử lý: Phúc Thịnh đặt `VITE_GA_ID`, `VITE_SENTRY_DSN` trên Vercel rồi build lại; kiểm tra GA4 Realtime và gửi lỗi thử lên Sentry (N11).
 
 **Đánh giá bản thân:** 10 (quy đổi từ 5/5 ở S3, S5)
 
@@ -139,7 +142,7 @@ Không có.
 
 Tôi thiết kế và dựng phần Sân vườn cùng 5 khung cảnh trong prototype, vẽ wireframe Trang chủ và Giới thiệu & Liên hệ, và góp nội dung Sân vườn cho PRD, DATABASE. Ở backend, tôi làm seeder `scenes`, API `GET /catalog/scenes` và `POST /telemetry/batch` upsert idempotent. Tôi tích hợp Google Analytics 4 và Sentry, tinh chỉnh hình các khung cảnh Sân vườn và giảm giới hạn đồ vật mỗi phòng xuống 25. Cuối kỳ tôi tổng hợp self-report S3 cho cả nhóm và hoàn chỉnh README theo đề bài (17 commit trên `main` từ S3 đến S5).
 
-Kỹ năng học được: viết prompt để làm việc cùng Claude; các bước cơ bản khi làm một website, lập kế hoạch trước khi code; dùng GitHub (nhánh, Pull Request, commit).
+Kỹ năng học được: viết prompt để làm việc cùng Claude; các bước cơ bản khi làm một website, lập kế hoạch trước khi code; dùng GitHub (nhánh, Pull Request, commit); làm việc trong một repo chung, chỉ sửa thư mục khu vực của mình và đề xuất qua PR khi cần sửa phần của người khác.
 
 **Ước tính % đóng góp so với cả nhóm:** ~25%
 
