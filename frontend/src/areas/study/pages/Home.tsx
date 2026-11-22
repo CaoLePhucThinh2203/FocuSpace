@@ -40,7 +40,7 @@ export default function Home() {
         <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {SPACES.map((s, i) => (
             <article key={s.title} className={`card overflow-hidden ${i === 2 ? "sm:col-span-2 lg:col-span-1" : ""}`}>
-              <img src={s.img} width={800} height={450} loading="lazy" alt={s.alt} className="pixel block h-auto w-full" />
+              <img src={s.img} width={800} height={450} loading="lazy" alt={s.alt} className="pixel block aspect-video h-auto w-full" />
               <div className="space-y-1 p-4">
                 <h3 className="font-display text-lg font-bold">{s.title}</h3>
                 <p className="text-muted">{s.text}</p>
