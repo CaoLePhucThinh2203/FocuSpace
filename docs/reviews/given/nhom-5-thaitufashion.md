@@ -4,6 +4,7 @@
 
 - **Nhóm được review:** Nhóm 5 (ThaiTuFashion)
 - **Link repo:** https://github.com/huynhsy986-droid/thai_tu_fashion
+- **Issue góp ý trên repo Nhóm 5:** https://github.com/huynhsy986-droid/thai_tu_fashion/issues/52
 - **Ngày review:** 25/11/2026
 - **Người review:** Tuấn Hưng, Đình Nhiên
 
