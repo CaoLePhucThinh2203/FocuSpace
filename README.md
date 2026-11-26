@@ -441,7 +441,9 @@ Nhóm review chi tiết 2 nhóm theo 3 tiêu chí của đề bài; mỗi góp �
 
 ### (b) Xử lý feedback từ các nhóm khác
 
-Người góp ý: Hữu Triết, Bá Phát, Thành Long. Bản gốc: [`reviews/received.md`](docs/reviews/received.md).
+Nhóm nhận góp ý theo 2 đợt, tổng 21 góp ý; mỗi góp ý có quyết định kèm PR hoặc lý do. Bản gốc: [`reviews/received.md`](docs/reviews/received.md).
+
+**Đợt 1 — trước khi nộp bài (đến 18/11/2026).** Người góp ý: Hữu Triết, Bá Phát, Thành Long.
 
 | Feedback | Nguồn (nhóm nào) | Quyết định | Lý do / Commit |
 |---|---|---|---|
@@ -463,6 +465,22 @@ Người góp ý: Hữu Triết, Bá Phát, Thành Long. Bản gốc: [`reviews/
 | ![Mèo đổi màu lông](docs/images/screenshots/gop-y-meo-mau-long.png)<br>Góp ý 1: popover mèo có 3 màu lông Cam, Xám tro, Kem | ![Pomodoro nhịp học](docs/images/screenshots/gop-y-pomodoro.png)<br>Góp ý 4, 5: Pomodoro theo vòng, 4 nhịp học, nút Bắt đầu, Đặt lại vòng |
 | ![Hẹn giờ ngủ](docs/images/screenshots/gop-y-hen-gio-ngu.png)<br>Góp ý 6: Hẹn giờ ngủ chọn mức Tắt/15/30/60 phút rồi bấm Bắt đầu | ![Cảnh Thành phố và nhạc Lo-fi](docs/images/screenshots/gop-y-thanh-pho-lofi.png)<br>Góp ý 8, 10: cảnh Thành phố buổi tối, tai nghe phát nhạc Lo-fi chọn bài |
 | ![Tuyết rơi ở Phòng ngủ](docs/images/screenshots/gop-y-tuyet-roi-phong-ngu.png)<br>Góp ý 7 (không làm cảnh mới): cửa sổ Phòng ngủ đã có thời tiết Tuyết rơi | |
+
+**Đợt 2 — sau bản chấm thử 22/11/2026 (sprint S6).** Hai nhóm gửi góp ý theo 3 tiêu chí của đề bài; nhóm trả lời từng ý ngay tại nơi góp ý: Nhóm 3 (Let's Talk) ở issue [#164](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/164) ([trả lời](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/164#issuecomment-7188234516)); Nhóm 4 (PawPass) ở issue [#9 bên PawPass](https://github.com/iceruychi-netizen/PawPass-Hosothucung/issues/9) ([trả lời](https://github.com/iceruychi-netizen/PawPass-Hosothucung/issues/9#issuecomment-7189142577)) và bản đăng lại trên repo nhóm, issue [#174](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/174).
+
+| Feedback | Nguồn (nhóm nào) | Quyết định | Lý do |
+|---|---|---|---|
+| Nhãn thường trực cho 3 nút biểu tượng trên màn hình cảm ứng | Nhóm 3, Nhóm 4 | Chưa làm, ưu tiên cho bản sau | Đã có tooltip và `aria-label`; thanh công cụ đè lên căn phòng theo thiết kế đã duyệt, nhãn cố định sẽ che căn phòng trên màn hình nhỏ. Hai nhóm cùng nêu nên đây là ý làm đầu tiên ở bản sau |
+| Hiện tên phòng kế tiếp trên hai mũi tên | Nhóm 3 | Đã có sẵn | Rê chuột hoặc Tab vào mũi tên hiện tên đích ("Ra sân vườn", "Sang phòng ngủ", "Về phòng học") |
+| Tăng cỡ chữ, độ tương phản trong bảng điều khiển; chữ nhỏ, màu nhạt trên nền tối | Nhóm 3, Nhóm 4 | Không làm | Màu theo bảng màu Lo-fi của thiết kế đã duyệt; Lighthouse Accessibility (có kiểm độ tương phản) ≥ 95 trên cả 6 trang |
+| Gợi ý cho ô "Hẹn giờ ngủ --:--" | Nhóm 3 | Đã có sẵn | Ô là nút có mũi tên ▾ và tooltip "Chọn hẹn giờ ngủ", bấm mở bảng Tắt / 15 / 30 / 60 phút |
+| Căn phòng xoay ngang khi cầm điện thoại dọc | Nhóm 4 | Giữ nguyên, ghi nhận gợi ý | Chủ ý thiết kế: căn phòng tỷ lệ 16:9, màn dọc chỉ còn một dải nhỏ; dòng gợi ý "Xoay ngang điện thoại" để dành cho bản sau |
+| Đồ vật trên bàn có vùng bấm nhỏ | Nhóm 4 | Không làm | Đồ vật vẽ đúng toạ độ pixel của thiết kế đã duyệt; mở vùng bấm lên 44×44 px làm vùng bấm các đồ trên bàn chồng nhau. Mọi đồ vật dùng được bằng bàn phím |
+| Không biết đồ vật kéo thả được | Nhóm 4 | Đã có một phần | Khay đồ vật ghi "Kéo vào phòng. Bấm vào đồ vật để chỉnh âm lượng."; gợi ý tự hiện ở lần đầu vào phòng để dành cho bản sau |
+| Khó theo dõi Pomodoro khi chuyển tab | Nhóm 4 | Đã có một phần | Hết phiên có chuông báo, nghe được cả khi ở tab khác; thời gian còn lại trên tiêu đề tab để dành cho bản sau |
+| Chưa rõ lựa chọn có được lưu khi chuyển phòng | Nhóm 4 | Đã có sẵn | Mọi thay đổi tự lưu vào trình duyệt sau khoảng 0,25 giây; đăng nhập thì đồng bộ lên tài khoản |
+
+Chi tiết từng ý (số thứ tự #11–#21): [`received.md` Đợt 2](docs/reviews/received.md#đợt-2--sau-bản-chấm-thử-22112026).
 
 ---
 

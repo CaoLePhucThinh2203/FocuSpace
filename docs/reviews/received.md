@@ -40,6 +40,7 @@ Hai nhóm gửi góp ý theo 3 tiêu chí của đề bài; nhóm trả lời t�
 - *Người góp ý:* Nguyễn Thế Dũng, ngày 26/11/2026
 - *Góp ý gốc:* [`docs/reviews/given/nhom-2-focuspace.md`](https://github.com/iceruychi-netizen/PawPass-Hosothucung/blob/main/docs/reviews/given/nhom-2-focuspace.md) trên repo PawPass (issue [#9 bên PawPass](https://github.com/iceruychi-netizen/PawPass-Hosothucung/issues/9))
 - *Nhóm trả lời:* [comment trong issue #9 bên PawPass](https://github.com/iceruychi-netizen/PawPass-Hosothucung/issues/9#issuecomment-7189142577)
+- *Bản đăng lại trên repo FocuSpace:* issue [#174](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/174), cùng nội dung, ứng với các mục #16, #17 bên dưới
 
 | # | Góp ý | Quyết định | PR hoặc lý do |
 |---|---|---|---|
