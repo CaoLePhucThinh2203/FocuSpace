@@ -53,4 +53,26 @@
 | 10 | User-friendliness | "Gợi ý cho bạn" trống với khách mới | Hiển thị sản phẩm mới hoặc bán chạy khi chưa có dữ liệu | Trung bình |
 | 11 | User-friendliness | Vẫn hiện "Nhận tin đợt drop mới" sau khi đăng nhập | Ẩn với người đã đăng nhập | Thấp |
 | 12 | User-friendliness | Người dùng bỏ qua nút "Xem thêm" | Tự tải thêm khi lướt xuống hoặc chia trang | Trung bình |
+## Ảnh và video minh họa
  
+**Hình 1.** Trang xác nhận đặt hàng: mã đơn "TT1100" nằm trong câu thông báo, có nút "Theo dõi đơn hàng". Minh họa cho đề xuất số 1, 2.
+ 
+![Hình 1 - Trang xác nhận đặt hàng](images/anh_1.jpg)
+ 
+**Hình 2.** Studio thử đồ: ảnh sản phẩm đặt đè lên model, hai áo (áo len xanh bạc hà và áo cardigan vàng) chồng lên nhau. Minh họa cho đề xuất số 3, 6.
+ 
+![Hình 2 - Studio thử đồ](images/anh_5.jpg)
+ 
+**Hình 3.** Menu thu gọn khi thu nhỏ cửa sổ (đường dẫn `#admin`): chữ của các mục chồng lên nhau, có mục "Khu quản trị". Minh họa cho đề xuất số 4, 7.
+ 
+![Hình 3 - Menu thu gọn trên máy tính](images/anh_4.jpg)
+ 
+**Hình 4.** Menu trên điện thoại: chữ của các mục chồng lên nhau, có mục "Khu quản trị". Minh họa cho đề xuất số 4, 7.
+ 
+![Hình 4 - Menu trên điện thoại](images/anh_2.jpg)
+ 
+**Hình 5.** Mục "Nhận tin đợt drop mới" ở cuối trang. Minh họa cho đề xuất số 11.
+ 
+![Hình 5 - Mục nhận tin đợt drop mới](images/anh_3.jpg)
+ 
+**Video 1.** Thanh thông báo trên cùng chuyển nội dung nhanh, bị giật: [`images/VID_1.mp4`](images/VID_1.mp4). Minh họa cho đề xuất số 8.
