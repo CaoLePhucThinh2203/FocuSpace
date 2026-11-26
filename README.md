@@ -138,6 +138,8 @@ Dự án chia 5 sprint, mỗi sprint là một milestone trên GitHub. S1–S2 t
 | Optimization & peer review | 17/11/2026 (S5) | Đúng hạn |
 | Nộp bài | 27/11/2026 | Nộp sớm ngày 18/11/2026 |
 
+Phát sinh sau khi nộp: **S6 — Sửa theo chấm thử (25–27/11/2026)**, sprint bổ sung để sửa theo bản chấm thử ngày 22/11 của giảng viên, không nằm trong kế hoạch 5 sprint ban đầu. Gồm [#160](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/160) (góp ý chi tiết Nhóm 5), [#161](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/161) (Sentry backend), [#162](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/162) (README, PLAN), [#168](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/168) và [#169](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/169) (cập nhật tài liệu góp ý).
+
 ### (d) GitHub Repository
 
 - **Repository link:** https://github.com/CaoLePhucThinh2203/FocuSpace
@@ -145,9 +147,13 @@ Dự án chia 5 sprint, mỗi sprint là một milestone trên GitHub. S1–S2 t
 ### (e) Quy trình làm việc trên GitHub
 
 - Nhánh `main` được bảo vệ: chỉ merge qua Pull Request, CI GitHub Actions (lint, typecheck, test với PostgreSQL 16, build) phải xanh và có ít nhất một người duyệt.
-- Mỗi việc một nhánh (`feat/…`, `fix/…`, `docs/…`, `perf/…`); PR dùng mẫu `.github/pull_request_template.md`, ghi mã use case (UC) và `Closes #<số>`.
-- Commit theo Conventional Commits: `<type>(<phạm vi>): <mô tả> (<mã việc>)`.
-- Trong quá trình làm, nhóm chỉ theo dõi việc bằng `docs/TASKS.md` và Pull Request, quên tạo issue trên GitHub. Ngày 18/11/2026 nhóm tạo bù 71 issue ([#64](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/64)–[#134](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/134)), gắn milestone S1–S5, nhãn khu vực và người phụ trách. Một số commit đầu S4 chưa đúng chuẩn (ví dụ “đổi màu mèo”, “fix mobile library”); các commit sau đó đã sửa lại.
+- Quy trình mỗi việc: **issue → nhánh → commit → Pull Request → duyệt → merge**.
+  1. Issue có nhãn loại (`type:*`), khu vực (`area:*`), milestone sprint và người phụ trách.
+  2. Nhánh đặt tên `<loại>/<số issue>-<mô tả>` (`feat/…`, `fix/…`, `docs/…`, `perf/…`), ví dụ `fix/161-sentry-error-handler`.
+  3. Commit theo Conventional Commits, có số issue: `<type>(<phạm vi>): <mô tả> (#<số>)`.
+  4. PR dùng mẫu `.github/pull_request_template.md`: tiêu đề theo nội dung, cùng dạng commit và có `(#<số>)`; dòng đầu `Closes #<số>` để tự đóng issue (hoặc `Related to #<số>` nếu issue đã đóng); ghi mã use case (UC); gắn nhãn, milestone như issue; người khác trong nhóm duyệt rồi mới merge.
+- Trong quá trình làm, nhóm chỉ theo dõi việc bằng `docs/TASKS.md` và Pull Request, quên tạo issue trên GitHub. Ngày 18/11/2026 nhóm tạo bù 71 issue ([#64](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/64)–[#134](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/134)), gắn milestone S1–S5, nhãn khu vực và người phụ trách. Một số commit đầu S4 chưa đúng chuẩn (ví dụ “đổi màu mèo”, “fix mobile library”), và nhiều PR trước bản chấm thử chưa nối issue, tiêu đề lấy theo tên nhánh.
+- Từ sprint S6 (sau bản chấm thử 22/11), mọi việc đi đủ quy trình trên: ví dụ [#165](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/165)–[#167](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/167) và [#172](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/172) (góp ý Nhóm 5, `Related to #160`), [#170](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/170) (`Closes #169`), [#171](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/171) (`Closes #168`), [#173](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/173) (`Closes #161`, commit test trước rồi mới sửa).
 
 **Ví dụ commit messages tiêu biểu của nhóm:**
 
@@ -156,6 +162,9 @@ perf(home): tải trước ảnh LCP của Trang chủ (H12)
 perf(layout): đặt Suspense trong Layout, hết nhảy bố cục khi tải trang (H12)
 fix(items): nến phát sáng, bỏ tiếng rè sau tiếng meo
 docs(plan): G7 đã nộp bài ngày 18/11/2026 (#129)
+test(api): thêm test lọc lỗi gửi Sentry (#161)
+fix(api): gắn Sentry error handler trước errorHandler, chỉ gửi lỗi 5xx (#161)
+docs(review): thêm link issue góp ý trên repo Nhóm 5 (#160)
 ```
 
 ![Danh sách Pull Request đã merge](docs/images/screenshots/github-pull-requests.jpg)
@@ -393,12 +402,17 @@ Khi build không có Sentry, bundle chính chỉ còn 176 KB. Trên mạng chậ
 **Sentry (hoặc tương đương):**
 - [x] Đã tích hợp
 - **Tool sử dụng:** Sentry (frontend và backend), kèm log JSON bằng pino ở backend
-- **Project DSN / Config:** đặt qua biến môi trường `VITE_SENTRY_DSN` (Vercel) và `SENTRY_DSN` (Render), `sendDefaultPii: false`
-- Theo dõi lỗi JavaScript chưa bắt ở trình duyệt và lỗi phát sinh trong Express API. Đã gửi lỗi thử và thấy trên Sentry frontend.
+- **Project DSN / Config:** hai project riêng: `javascript-react` (frontend, biến môi trường `VITE_SENTRY_DSN` trên Vercel) và `focuspace-backend` (backend, biến môi trường `SENTRY_DSN` trên Render); `sendDefaultPii: false`, DSN không commit vào mã nguồn
+- Frontend: theo dõi lỗi JavaScript chưa bắt ở trình duyệt. Backend: theo dõi lỗi 5xx phát sinh trong Express API; lỗi do người dùng (4xx như dữ liệu không hợp lệ, chưa đăng nhập) không gửi lên Sentry (`shouldReportError` trong `backend/src/middleware/error.ts`).
+- Đã gửi lỗi thử và thấy trên Sentry frontend và backend.
 
 ![Sentry: lỗi thử trên frontend](docs/images/screenshots/sentry-issues.png)
 
 *Sentry project `javascript-react` (frontend) nhận lỗi thử “Kiem tra Sentry FocuSpace”.*
+
+![Sentry: lỗi thử trên backend](docs/images/screenshots/sentry-backend.webp)
+
+*Sentry project `focuspace-backend` (backend) nhận lỗi 500 của `GET /api/v1/catalog/items` (cố tình làm hỏng kết nối cơ sở dữ liệu để thử); lỗi 401 của `GET /api/v1/room-state` không được gửi. Sửa theo bản chấm thử 22/11: gắn handler Sentry trước bộ xử lý lỗi của nhóm và đặt `SENTRY_DSN` trên Render ([#161](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/161), PR [#173](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/173)).*
 
 ---
 
@@ -406,23 +420,25 @@ Khi build không có Sentry, bundle chính chỉ còn 176 KB. Trên mạng chậ
 
 ### (a) Feedback cho các nhóm khác
 
-Nhóm review 2 nhóm, chia làm 2 cặp, góp ý trực tiếp với từng nhóm. Bản đầy đủ: [`docs/reviews/given/`](docs/reviews/given/).
+Nhóm review chi tiết 2 nhóm theo 3 tiêu chí của đề bài; mỗi góp ý ghi rõ trang, thành phần, vấn đề và cách sửa, có ảnh minh họa, và được đăng thành issue trên repo của nhóm được review. Bản đầy đủ: [`docs/reviews/given/`](docs/reviews/given/).
 
 **Nhóm được review #1:**
 
-- **Tên nhóm / Dự án:** Nhóm 6 — Quản lí chi tiêu (Phúc Thịnh, Tuấn Lộc review, 07/11/2026)
-- **Link dự án:** không có, góp ý trực tiếp khi nhóm trình bày
+- **Tên nhóm / Dự án:** Nhóm 5 — ThaiTuFashion (Tuấn Hưng, Đình Nhiên review, 25/11/2026)
+- **Link dự án:** https://github.com/huynhsy986-droid/thai_tu_fashion
+- **Bản góp ý:** [`nhom-5-thaitufashion.md`](docs/reviews/given/nhom-5-thaitufashion.md) (12 đề xuất, 5 ảnh và 1 video minh họa) · issue trên repo Nhóm 5: [thai_tu_fashion#52](https://github.com/huynhsy986-droid/thai_tu_fashion/issues/52)
 
 | Khía cạnh | Điểm mạnh | Gợi ý cải thiện |
 |---|---|---|
-| Usability | Menu gọn gàng | Thêm tính năng nhập nhanh bằng giọng nói |
-| Aesthetics | Độ tương phản màu tốt kết hợp các màu nổi bật, bắt mắt; phông chữ đẹp | Thiết kế lại giao diện vì nhìn vẫn khá đơn giản |
-| User-Friendliness | Trình bày rõ ràng | Quá nhiều thông tin, dễ rối mắt: nên làm đơn giản hơn |
+| Usability | Ô tìm kiếm gợi ý ngay khi gõ, hiểu từ khóa không dấu; chặn thêm vào giỏ khi chưa chọn size; bộ lọc Cửa hàng đầy đủ, có số lượng sản phẩm | Trang theo dõi đơn chỉ có nút "Huỷ đơn hàng": cho đổi size khi đơn chưa xử lý (mức độ Cao); mã đơn "TT1100" nằm lẫn trong câu thông báo: tách thành dòng riêng; Studio thử đồ để mũ che kính, hai áo chồng lên nhau: sắp lớp theo vùng cơ thể; `#admin` và "Khu quản trị" hiện với người dùng thường: gỡ khỏi giao diện; thu nhỏ cửa sổ thì biểu tượng Giỏ hàng bị đẩy ra ngoài: giữ ở mọi kích thước |
+| Aesthetics | Phong cách "Seoul mood" pastel rõ ràng; ảnh sản phẩm cùng một kiểu, lưới gọn; ảnh đầu trang có điểm "+" dẫn tới sản phẩm | Model thử đồ chỉ đặt ảnh sản phẩm đè lên: chỉnh cho vừa dáng; các mục `#account`, `#about`, `#contact` trên menu lệch phông chữ; thanh thông báo trên cùng chuyển quá nhanh, bị giật |
+| User-Friendliness | Nhiều cách tìm đồ (danh mục, dịp mặc, set phối sẵn, Smart Studio); có "Tìm size hợp với tôi" và "Bảng size"; giỏ hàng ghi rõ màu, size, giá | Điểm "+" chưa cho biết tên, giá khi rê chuột; "Gợi ý cho bạn" trống với khách mới; vẫn hiện "Nhận tin đợt drop mới" sau khi đăng nhập; nút "Xem thêm" dễ bị bỏ qua: tự tải thêm hoặc chia trang |
 
 **Nhóm được review #2:**
 
 - **Tên nhóm / Dự án:** Nhóm 4 — PawPass (Tuấn Hưng, Đình Nhiên review, 12/11/2026)
 - **Link dự án:** https://github.com/iceruychi-netizen/PawPass-Hosothucung
+- **Bản góp ý:** [`nhom-4-pawpass.md`](docs/reviews/given/nhom-4-pawpass.md) · issue trên repo PawPass: [PawPass-Hosothucung#16](https://github.com/iceruychi-netizen/PawPass-Hosothucung/issues/16)
 
 | Khía cạnh | Điểm mạnh | Gợi ý cải thiện |
 |---|---|---|
@@ -430,9 +446,13 @@ Nhóm review 2 nhóm, chia làm 2 cặp, góp ý trực tiếp với từng nhó
 | Aesthetics | Hình ảnh động vật gần gũi; hoạt ảnh sinh động; màu sắc bắt mắt | Bổ sung hình nhận diện cho chim, thỏ, hamster để đồng bộ giao diện |
 | User-Friendliness | Các chức năng dễ sử dụng; hoạt ảnh tương tác tăng sự thú vị | Tải lại trang bị đưa về trang đăng nhập (mức độ Cao); logo PawPass ở `#/account`, `#/search`, `#/pets` bấm không về trang chủ; tên tài khoản góc phải bấm không có phản hồi; không nên cho sửa email trực tiếp |
 
+*Ghi chú:* trước bản chấm thử, nhóm góp ý trực tiếp cho Nhóm 6 (Quản lí chi tiêu) khi nhóm này trình bày ngày 07/11/2026. Lúc đó web của Nhóm 6 chưa triển khai nên góp ý còn chung chung; sau bản chấm thử 22/11, nhóm chuyển góp ý chi tiết sang Nhóm 5 ([#160](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/160)). Bản cũ giữ làm lịch sử: [`nhom-6-quan-li-chi-tieu.md`](docs/reviews/given/nhom-6-quan-li-chi-tieu.md).
+
 ### (b) Xử lý feedback từ các nhóm khác
 
-Người góp ý: Hữu Triết, Bá Phát, Thành Long. Bản gốc: [`reviews/received.md`](docs/reviews/received.md).
+Nhóm nhận góp ý theo 2 đợt, tổng 21 góp ý; mỗi góp ý có quyết định kèm PR hoặc lý do. Bản gốc: [`reviews/received.md`](docs/reviews/received.md).
+
+**Đợt 1 — trước khi nộp bài (đến 18/11/2026).** Người góp ý: Hữu Triết, Bá Phát, Thành Long.
 
 | Feedback | Nguồn (nhóm nào) | Quyết định | Lý do / Commit |
 |---|---|---|---|
@@ -454,6 +474,22 @@ Người góp ý: Hữu Triết, Bá Phát, Thành Long. Bản gốc: [`reviews/
 | ![Mèo đổi màu lông](docs/images/screenshots/gop-y-meo-mau-long.png)<br>Góp ý 1: popover mèo có 3 màu lông Cam, Xám tro, Kem | ![Pomodoro nhịp học](docs/images/screenshots/gop-y-pomodoro.png)<br>Góp ý 4, 5: Pomodoro theo vòng, 4 nhịp học, nút Bắt đầu, Đặt lại vòng |
 | ![Hẹn giờ ngủ](docs/images/screenshots/gop-y-hen-gio-ngu.png)<br>Góp ý 6: Hẹn giờ ngủ chọn mức Tắt/15/30/60 phút rồi bấm Bắt đầu | ![Cảnh Thành phố và nhạc Lo-fi](docs/images/screenshots/gop-y-thanh-pho-lofi.png)<br>Góp ý 8, 10: cảnh Thành phố buổi tối, tai nghe phát nhạc Lo-fi chọn bài |
 | ![Tuyết rơi ở Phòng ngủ](docs/images/screenshots/gop-y-tuyet-roi-phong-ngu.png)<br>Góp ý 7 (không làm cảnh mới): cửa sổ Phòng ngủ đã có thời tiết Tuyết rơi | |
+
+**Đợt 2 — sau bản chấm thử 22/11/2026 (sprint S6).** Hai nhóm gửi góp ý theo 3 tiêu chí của đề bài; nhóm trả lời từng ý ngay tại nơi góp ý: Nhóm 3 (Let's Talk) ở issue [#164](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/164) ([trả lời](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/164#issuecomment-7188234516)); Nhóm 4 (PawPass) ở issue [#9 bên PawPass](https://github.com/iceruychi-netizen/PawPass-Hosothucung/issues/9) ([trả lời](https://github.com/iceruychi-netizen/PawPass-Hosothucung/issues/9#issuecomment-7189142577)) và bản đăng lại trên repo nhóm, issue [#174](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/174).
+
+| Feedback | Nguồn (nhóm nào) | Quyết định | Lý do |
+|---|---|---|---|
+| Nhãn thường trực cho 3 nút biểu tượng trên màn hình cảm ứng | Nhóm 3, Nhóm 4 | Chưa làm, ưu tiên cho bản sau | Đã có tooltip và `aria-label`; thanh công cụ đè lên căn phòng theo thiết kế đã duyệt, nhãn cố định sẽ che căn phòng trên màn hình nhỏ. Hai nhóm cùng nêu nên đây là ý làm đầu tiên ở bản sau |
+| Hiện tên phòng kế tiếp trên hai mũi tên | Nhóm 3 | Đã có sẵn | Rê chuột hoặc Tab vào mũi tên hiện tên đích ("Ra sân vườn", "Sang phòng ngủ", "Về phòng học") |
+| Tăng cỡ chữ, độ tương phản trong bảng điều khiển; chữ nhỏ, màu nhạt trên nền tối | Nhóm 3, Nhóm 4 | Không làm | Màu theo bảng màu Lo-fi của thiết kế đã duyệt; Lighthouse Accessibility (có kiểm độ tương phản) ≥ 95 trên cả 6 trang |
+| Gợi ý cho ô "Hẹn giờ ngủ --:--" | Nhóm 3 | Đã có sẵn | Ô là nút có mũi tên ▾ và tooltip "Chọn hẹn giờ ngủ", bấm mở bảng Tắt / 15 / 30 / 60 phút |
+| Căn phòng xoay ngang khi cầm điện thoại dọc | Nhóm 4 | Giữ nguyên, ghi nhận gợi ý | Chủ ý thiết kế: căn phòng tỷ lệ 16:9, màn dọc chỉ còn một dải nhỏ; dòng gợi ý "Xoay ngang điện thoại" để dành cho bản sau |
+| Đồ vật trên bàn có vùng bấm nhỏ | Nhóm 4 | Không làm | Đồ vật vẽ đúng toạ độ pixel của thiết kế đã duyệt; mở vùng bấm lên 44×44 px làm vùng bấm các đồ trên bàn chồng nhau. Mọi đồ vật dùng được bằng bàn phím |
+| Không biết đồ vật kéo thả được | Nhóm 4 | Đã có một phần | Khay đồ vật ghi "Kéo vào phòng. Bấm vào đồ vật để chỉnh âm lượng."; gợi ý tự hiện ở lần đầu vào phòng để dành cho bản sau |
+| Khó theo dõi Pomodoro khi chuyển tab | Nhóm 4 | Đã có một phần | Hết phiên có chuông báo, nghe được cả khi ở tab khác; thời gian còn lại trên tiêu đề tab để dành cho bản sau |
+| Chưa rõ lựa chọn có được lưu khi chuyển phòng | Nhóm 4 | Đã có sẵn | Mọi thay đổi tự lưu vào trình duyệt sau khoảng 0,25 giây; đăng nhập thì đồng bộ lên tài khoản |
+
+Chi tiết từng ý (số thứ tự #11–#21): [`received.md` Đợt 2](docs/reviews/received.md#đợt-2--sau-bản-chấm-thử-22112026).
 
 ---
 
