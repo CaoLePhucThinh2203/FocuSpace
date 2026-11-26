@@ -26,3 +26,10 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, _next) => {
   req.log?.error(err);
   res.status(500).json({ error: { code: "INTERNAL_ERROR", message: "Lỗi máy chủ, vui lòng thử lại." } });
 };
+
+/** Chỉ gửi lỗi máy chủ (5xx hoặc không rõ status) lên Sentry; lỗi do người dùng (4xx) thì bỏ qua (#161). */
+export function shouldReportError(err: unknown): boolean {
+  if (err instanceof ZodError) return false;
+  const status = (err as { status?: unknown } | null)?.status;
+  return typeof status === "number" ? status >= 500 : true;
+}
