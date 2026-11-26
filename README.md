@@ -393,12 +393,17 @@ Khi build không có Sentry, bundle chính chỉ còn 176 KB. Trên mạng chậ
 **Sentry (hoặc tương đương):**
 - [x] Đã tích hợp
 - **Tool sử dụng:** Sentry (frontend và backend), kèm log JSON bằng pino ở backend
-- **Project DSN / Config:** đặt qua biến môi trường `VITE_SENTRY_DSN` (Vercel) và `SENTRY_DSN` (Render), `sendDefaultPii: false`
-- Theo dõi lỗi JavaScript chưa bắt ở trình duyệt và lỗi phát sinh trong Express API. Đã gửi lỗi thử và thấy trên Sentry frontend.
+- **Project DSN / Config:** hai project riêng: `javascript-react` (frontend, biến môi trường `VITE_SENTRY_DSN` trên Vercel) và `focuspace-backend` (backend, biến môi trường `SENTRY_DSN` trên Render); `sendDefaultPii: false`, DSN không commit vào mã nguồn
+- Frontend: theo dõi lỗi JavaScript chưa bắt ở trình duyệt. Backend: theo dõi lỗi 5xx phát sinh trong Express API; lỗi do người dùng (4xx như dữ liệu không hợp lệ, chưa đăng nhập) không gửi lên Sentry (`shouldReportError` trong `backend/src/middleware/error.ts`).
+- Đã gửi lỗi thử và thấy trên Sentry frontend và backend.
 
 ![Sentry: lỗi thử trên frontend](docs/images/screenshots/sentry-issues.png)
 
 *Sentry project `javascript-react` (frontend) nhận lỗi thử “Kiem tra Sentry FocuSpace”.*
+
+![Sentry: lỗi thử trên backend](docs/images/screenshots/sentry-backend.webp)
+
+*Sentry project `focuspace-backend` (backend) nhận lỗi 500 của `GET /api/v1/catalog/items` (cố tình làm hỏng kết nối cơ sở dữ liệu để thử); lỗi 401 của `GET /api/v1/room-state` không được gửi. Sửa theo bản chấm thử 22/11: gắn handler Sentry trước bộ xử lý lỗi của nhóm và đặt `SENTRY_DSN` trên Render ([#161](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/161), PR [#173](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/173)).*
 
 ---
 
