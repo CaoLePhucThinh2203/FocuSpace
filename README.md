@@ -138,6 +138,8 @@ Dự án chia 5 sprint, mỗi sprint là một milestone trên GitHub. S1–S2 t
 | Optimization & peer review | 17/11/2026 (S5) | Đúng hạn |
 | Nộp bài | 27/11/2026 | Nộp sớm ngày 18/11/2026 |
 
+Phát sinh sau khi nộp: **S6 — Sửa theo chấm thử (25–27/11/2026)**, sprint bổ sung để sửa theo bản chấm thử ngày 22/11 của giảng viên, không nằm trong kế hoạch 5 sprint ban đầu. Gồm [#160](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/160) (góp ý chi tiết Nhóm 5), [#161](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/161) (Sentry backend), [#162](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/162) (README, PLAN), [#168](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/168) và [#169](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/169) (cập nhật tài liệu góp ý).
+
 ### (d) GitHub Repository
 
 - **Repository link:** https://github.com/CaoLePhucThinh2203/FocuSpace
@@ -145,9 +147,13 @@ Dự án chia 5 sprint, mỗi sprint là một milestone trên GitHub. S1–S2 t
 ### (e) Quy trình làm việc trên GitHub
 
 - Nhánh `main` được bảo vệ: chỉ merge qua Pull Request, CI GitHub Actions (lint, typecheck, test với PostgreSQL 16, build) phải xanh và có ít nhất một người duyệt.
-- Mỗi việc một nhánh (`feat/…`, `fix/…`, `docs/…`, `perf/…`); PR dùng mẫu `.github/pull_request_template.md`, ghi mã use case (UC) và `Closes #<số>`.
-- Commit theo Conventional Commits: `<type>(<phạm vi>): <mô tả> (<mã việc>)`.
-- Trong quá trình làm, nhóm chỉ theo dõi việc bằng `docs/TASKS.md` và Pull Request, quên tạo issue trên GitHub. Ngày 18/11/2026 nhóm tạo bù 71 issue ([#64](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/64)–[#134](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/134)), gắn milestone S1–S5, nhãn khu vực và người phụ trách. Một số commit đầu S4 chưa đúng chuẩn (ví dụ “đổi màu mèo”, “fix mobile library”); các commit sau đó đã sửa lại.
+- Quy trình mỗi việc: **issue → nhánh → commit → Pull Request → duyệt → merge**.
+  1. Issue có nhãn loại (`type:*`), khu vực (`area:*`), milestone sprint và người phụ trách.
+  2. Nhánh đặt tên `<loại>/<số issue>-<mô tả>` (`feat/…`, `fix/…`, `docs/…`, `perf/…`), ví dụ `fix/161-sentry-error-handler`.
+  3. Commit theo Conventional Commits, có số issue: `<type>(<phạm vi>): <mô tả> (#<số>)`.
+  4. PR dùng mẫu `.github/pull_request_template.md`: tiêu đề theo nội dung, cùng dạng commit và có `(#<số>)`; dòng đầu `Closes #<số>` để tự đóng issue (hoặc `Related to #<số>` nếu issue đã đóng); ghi mã use case (UC); gắn nhãn, milestone như issue; người khác trong nhóm duyệt rồi mới merge.
+- Trong quá trình làm, nhóm chỉ theo dõi việc bằng `docs/TASKS.md` và Pull Request, quên tạo issue trên GitHub. Ngày 18/11/2026 nhóm tạo bù 71 issue ([#64](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/64)–[#134](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/134)), gắn milestone S1–S5, nhãn khu vực và người phụ trách. Một số commit đầu S4 chưa đúng chuẩn (ví dụ “đổi màu mèo”, “fix mobile library”), và nhiều PR trước bản chấm thử chưa nối issue, tiêu đề lấy theo tên nhánh.
+- Từ sprint S6 (sau bản chấm thử 22/11), mọi việc đi đủ quy trình trên: ví dụ [#165](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/165)–[#167](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/167) và [#172](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/172) (góp ý Nhóm 5, `Related to #160`), [#170](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/170) (`Closes #169`), [#171](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/171) (`Closes #168`), [#173](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/173) (`Closes #161`, commit test trước rồi mới sửa).
 
 **Ví dụ commit messages tiêu biểu của nhóm:**
 
@@ -156,6 +162,9 @@ perf(home): tải trước ảnh LCP của Trang chủ (H12)
 perf(layout): đặt Suspense trong Layout, hết nhảy bố cục khi tải trang (H12)
 fix(items): nến phát sáng, bỏ tiếng rè sau tiếng meo
 docs(plan): G7 đã nộp bài ngày 18/11/2026 (#129)
+test(api): thêm test lọc lỗi gửi Sentry (#161)
+fix(api): gắn Sentry error handler trước errorHandler, chỉ gửi lỗi 5xx (#161)
+docs(review): thêm link issue góp ý trên repo Nhóm 5 (#160)
 ```
 
 ![Danh sách Pull Request đã merge](docs/images/screenshots/github-pull-requests.jpg)
