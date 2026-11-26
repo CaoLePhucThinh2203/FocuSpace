@@ -1,6 +1,8 @@
 # Góp ý UI/UX cho Nhóm 6 (Quản lí chi tiêu)
 
-> **Lưu làm lịch sử.** Góp ý này được trao đổi trực tiếp với Nhóm 6 ngày 07/11/2026. Từ sprint bổ sung S6, góp ý chi tiết thứ hai của nhóm chuyển sang Nhóm 5 (ThaiTuFashion), xem [`nhom-5-thaitufashion.md`](nhom-5-thaitufashion.md) ([#160](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/160)).
+> **Lưu làm lịch sử, không tính là góp ý chi tiết của Task 5(a).**
+> Góp ý này được nêu trực tiếp khi Nhóm 6 trình bày ngày 07/11/2026. Lúc đó website của Nhóm 6 còn nhiều lỗi và chưa được triển khai (deploy), nên nhóm không có bản chạy để xem lại từng màn hình; vì vậy góp ý dưới đây còn chung chung, chưa chỉ ra được trang và thành phần cụ thể.
+> Sau bản chấm thử ngày 22/11/2026, nhóm quyết định (25/11) dừng góp ý cho Nhóm 6 và chuyển góp ý chi tiết thứ hai sang **Nhóm 5 (ThaiTuFashion)**, nhóm đã có bản chạy để đánh giá đầy đủ: xem [`nhom-5-thaitufashion.md`](nhom-5-thaitufashion.md) ([#160](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/160)). Nội dung bên dưới giữ nguyên bản gốc.
 
 ## Thông tin chung
 - **Nhóm được review:** Nhóm 6 (Quản lí chi tiêu)
