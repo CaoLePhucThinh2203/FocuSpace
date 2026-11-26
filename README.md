@@ -411,29 +411,33 @@ Khi build không có Sentry, bundle chính chỉ còn 176 KB. Trên mạng chậ
 
 ### (a) Feedback cho các nhóm khác
 
-Nhóm review 2 nhóm, chia làm 2 cặp, góp ý trực tiếp với từng nhóm. Bản đầy đủ: [`docs/reviews/given/`](docs/reviews/given/).
+Nhóm review chi tiết 2 nhóm theo 3 tiêu chí của đề bài; mỗi góp ý ghi rõ trang, thành phần, vấn đề và cách sửa, có ảnh minh họa, và được đăng thành issue trên repo của nhóm được review. Bản đầy đủ: [`docs/reviews/given/`](docs/reviews/given/).
 
 **Nhóm được review #1:**
 
-- **Tên nhóm / Dự án:** Nhóm 6 — Quản lí chi tiêu (Phúc Thịnh, Tuấn Lộc review, 07/11/2026)
-- **Link dự án:** không có, góp ý trực tiếp khi nhóm trình bày
+- **Tên nhóm / Dự án:** Nhóm 5 — ThaiTuFashion (Tuấn Hưng, Đình Nhiên review, 25/11/2026)
+- **Link dự án:** https://github.com/huynhsy986-droid/thai_tu_fashion
+- **Bản góp ý:** [`nhom-5-thaitufashion.md`](docs/reviews/given/nhom-5-thaitufashion.md) (12 đề xuất, 5 ảnh và 1 video minh họa) · issue trên repo Nhóm 5: [thai_tu_fashion#52](https://github.com/huynhsy986-droid/thai_tu_fashion/issues/52)
 
 | Khía cạnh | Điểm mạnh | Gợi ý cải thiện |
 |---|---|---|
-| Usability | Menu gọn gàng | Thêm tính năng nhập nhanh bằng giọng nói |
-| Aesthetics | Độ tương phản màu tốt kết hợp các màu nổi bật, bắt mắt; phông chữ đẹp | Thiết kế lại giao diện vì nhìn vẫn khá đơn giản |
-| User-Friendliness | Trình bày rõ ràng | Quá nhiều thông tin, dễ rối mắt: nên làm đơn giản hơn |
+| Usability | Ô tìm kiếm gợi ý ngay khi gõ, hiểu từ khóa không dấu; chặn thêm vào giỏ khi chưa chọn size; bộ lọc Cửa hàng đầy đủ, có số lượng sản phẩm | Trang theo dõi đơn chỉ có nút "Huỷ đơn hàng": cho đổi size khi đơn chưa xử lý (mức độ Cao); mã đơn "TT1100" nằm lẫn trong câu thông báo: tách thành dòng riêng; Studio thử đồ để mũ che kính, hai áo chồng lên nhau: sắp lớp theo vùng cơ thể; `#admin` và "Khu quản trị" hiện với người dùng thường: gỡ khỏi giao diện; thu nhỏ cửa sổ thì biểu tượng Giỏ hàng bị đẩy ra ngoài: giữ ở mọi kích thước |
+| Aesthetics | Phong cách "Seoul mood" pastel rõ ràng; ảnh sản phẩm cùng một kiểu, lưới gọn; ảnh đầu trang có điểm "+" dẫn tới sản phẩm | Model thử đồ chỉ đặt ảnh sản phẩm đè lên: chỉnh cho vừa dáng; các mục `#account`, `#about`, `#contact` trên menu lệch phông chữ; thanh thông báo trên cùng chuyển quá nhanh, bị giật |
+| User-Friendliness | Nhiều cách tìm đồ (danh mục, dịp mặc, set phối sẵn, Smart Studio); có "Tìm size hợp với tôi" và "Bảng size"; giỏ hàng ghi rõ màu, size, giá | Điểm "+" chưa cho biết tên, giá khi rê chuột; "Gợi ý cho bạn" trống với khách mới; vẫn hiện "Nhận tin đợt drop mới" sau khi đăng nhập; nút "Xem thêm" dễ bị bỏ qua: tự tải thêm hoặc chia trang |
 
 **Nhóm được review #2:**
 
 - **Tên nhóm / Dự án:** Nhóm 4 — PawPass (Tuấn Hưng, Đình Nhiên review, 12/11/2026)
 - **Link dự án:** https://github.com/iceruychi-netizen/PawPass-Hosothucung
+- **Bản góp ý:** [`nhom-4-pawpass.md`](docs/reviews/given/nhom-4-pawpass.md) · issue trên repo PawPass: [PawPass-Hosothucung#16](https://github.com/iceruychi-netizen/PawPass-Hosothucung/issues/16)
 
 | Khía cạnh | Điểm mạnh | Gợi ý cải thiện |
 |---|---|---|
 | Usability | Các chức năng tương đối dễ sử dụng; tốc độ đẩy file khá ổn; hoạt ảnh chó, mèo tương tác được, gây hứng thú | Chọn loài “Khác” nhưng không có ô nhập tên loài/giống; hình mèo cam trông giống chó; logo chim, thỏ, hamster chưa có hình nhận diện |
 | Aesthetics | Hình ảnh động vật gần gũi; hoạt ảnh sinh động; màu sắc bắt mắt | Bổ sung hình nhận diện cho chim, thỏ, hamster để đồng bộ giao diện |
 | User-Friendliness | Các chức năng dễ sử dụng; hoạt ảnh tương tác tăng sự thú vị | Tải lại trang bị đưa về trang đăng nhập (mức độ Cao); logo PawPass ở `#/account`, `#/search`, `#/pets` bấm không về trang chủ; tên tài khoản góc phải bấm không có phản hồi; không nên cho sửa email trực tiếp |
+
+*Ghi chú:* trước bản chấm thử, nhóm góp ý trực tiếp cho Nhóm 6 (Quản lí chi tiêu) khi nhóm này trình bày ngày 07/11/2026. Lúc đó web của Nhóm 6 chưa triển khai nên góp ý còn chung chung; sau bản chấm thử 22/11, nhóm chuyển góp ý chi tiết sang Nhóm 5 ([#160](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/160)). Bản cũ giữ làm lịch sử: [`nhom-6-quan-li-chi-tieu.md`](docs/reviews/given/nhom-6-quan-li-chi-tieu.md).
 
 ### (b) Xử lý feedback từ các nhóm khác
 
