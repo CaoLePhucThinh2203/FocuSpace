@@ -114,20 +114,24 @@ Không có.
 
 ## Task 5 — Peer Review
 
-**Tuần:** S1, S3 và S5, ngày 07/11 (review trực tiếp), 14/11 (viết bản góp ý) và 16/11 – 17/11/2026
+**Tuần:** S1, S3, S5 và S6, ngày 07/11 (review trực tiếp), 14/11 (viết bản góp ý), 16/11 – 17/11 và 25/11 – 27/11/2026
 
 **Công việc đã làm:**
 
 - Góp ý UI/UX cho Nhóm 6 (Quản lí chi tiêu) cùng Phúc Thịnh ngày 07/11, góp ý trực tiếp: điểm mạnh menu gọn, màu sắc bắt mắt, trình bày rõ ràng; đề xuất làm đơn giản hơn, thêm nhập nhanh bằng giọng nói, thiết kế lại giao diện ([L10 #101](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/101), [PR #5](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/5), [PR #8](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/8)).
 - Sửa theo góp ý nhận được: góp ý “sửa lại chế độ Hẹn giờ ngủ” đã làm ở PR #29 (chọn mức xong chờ Bắt đầu, có Tạm dừng, giảm âm dần 2 phút cuối) ([G5 #127](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/127)).
+- S6: tổng hợp góp ý nhận được Đợt 2 (sau bản chấm thử 22/11) của Nhóm 3 Let's Talk và Nhóm 4 PawPass vào `received.md`, mục 11–21, mỗi góp ý có quyết định và lý do ([#168](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/168), [PR #171](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/171)).
+- S6: review và duyệt các PR của sprint: [PR #166](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/166) (góp ý Nhóm 5), [PR #170](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/170) (lý do dừng góp ý Nhóm 6), [PR #173](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/173) (Sentry backend), [PR #175](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/175) (README, PLAN).
 
 **Bằng chứng đóng góp:**
 
 - [`docs/reviews/given/nhom-6-quan-li-chi-tieu.md`](../reviews/given/nhom-6-quan-li-chi-tieu.md), [`docs/reviews/received.md`](../reviews/received.md) (dòng 6); commit [`1c68c6c`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/1c68c6c), [`3278510`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/3278510).
+- [`docs/reviews/received.md`](../reviews/received.md) (Đợt 2, mục 11–21); commit [`71a8fe1`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/71a8fe1); lượt duyệt ở PR #166, #170, #173, #175.
 
 **Khó khăn gặp phải:**
 
 - Góp ý nhận được đến cuối sprint (17/11), không còn thời gian mở PR mới. Cách xử lý: đối chiếu từng góp ý với web; góp ý Hẹn giờ ngủ đã có ở #29 nên ghi vào `received.md` kèm số PR.
+- Hai nhóm gửi góp ý Đợt 2 có ý trùng nhau (nhãn cho nút biểu tượng, chữ nhỏ trên nền tối). Cách xử lý: ghi riêng từng mục, đánh dấu mục trùng và thêm ghi chú cuối bảng để ưu tiên hai ý này ở bản sau.
 
 **Đánh giá bản thân:** 9 (quy đổi từ trung bình 5/5, 4/5 ở S3, S5)
 

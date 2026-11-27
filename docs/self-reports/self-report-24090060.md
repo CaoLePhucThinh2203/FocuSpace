@@ -93,23 +93,26 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/sprint-repo
 
 ## Task 4 — Optimization
 
-**Tuần:** S3 và S5, ngày 14/11 và 16/11 – 17/11/2026
+**Tuần:** S3, S5 và S6, ngày 14/11, 16/11 – 17/11 và 25/11 – 27/11/2026
 
 **Công việc đã làm:**
 
 - Cắm Google Analytics 4 và Sentry vào khu vực garden; mã đo lường và DSN lấy từ biến môi trường, không commit ([N11 #87](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/87)).
 - Kiểm tra trên bản triển khai sau khi Phúc Thịnh đặt mã GA4, DSN trên Vercel: GA4 Realtime thấy `page_view`, `login`; Sentry frontend nhận lỗi thử.
+- S6: cùng Phúc Thịnh sửa Sentry backend không nhận lỗi API ([#161](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/161), [PR #173](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/173)): viết unit test `backend/test/error.test.ts` cho hàm lọc lỗi gửi Sentry (4 trường hợp: lỗi Zod 400, ApiError 401/409, lỗi 413 bị bỏ qua; lỗi không rõ status và ApiError 503 được gửi), test đỏ trước khi sửa, xanh sau khi sửa.
 
 **Bằng chứng đóng góp:**
 
 - Commit [`72b5fab`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/72b5fab); file `frontend/src/areas/garden/observability.ts`.
 - Sentry nhận lỗi thử: [`docs/images/screenshots/sentry-issues.png`](../images/screenshots/sentry-issues.png).
 - GA4 tổng quan báo cáo: [`docs/images/screenshots/ga4-tong-quan.webp`](../images/screenshots/ga4-tong-quan.webp).
+- Commit [`13ed7f2`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/13ed7f2); file `backend/test/error.test.ts`; ảnh Sentry backend nhận lỗi 500: [`docs/images/screenshots/sentry-backend.webp`](../images/screenshots/sentry-backend.webp).
 
 **Khó khăn gặp phải:**
 
 - GA4 và Sentry cần mã đo lường và DSN do Phúc Thịnh tạo (G10), chưa có nên chưa kiểm tra được trên bản triển khai. Cách xử lý: cắm sẵn code, mã lấy từ biến môi trường, không commit; kiểm tra khi có mã (N11).
 - GA4 và Sentry chưa gửi dữ liệu vì bản trên Vercel được build khi chưa có mã GA4, DSN (G10). Cách xử lý: Phúc Thịnh đặt `VITE_GA_ID`, `VITE_SENTRY_DSN` trên Vercel rồi build lại; kiểm tra GA4 Realtime và gửi lỗi thử lên Sentry (N11).
+- Bản chấm thử 22/11 chỉ ra Sentry backend chưa nhận lỗi API, vì handler của Sentry gắn sau `errorHandler` nên không bao giờ chạy. Cách xử lý: viết test cho quy tắc "chỉ gửi lỗi 5xx" trước, rồi cùng Phúc Thịnh chuyển handler lên trước `errorHandler` (#161).
 
 **Đánh giá bản thân:** 10 (quy đổi từ 5/5 ở S3, S5)
 
@@ -117,20 +120,23 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/sprint-repo
 
 ## Task 5 — Peer Review
 
-**Tuần:** S5, ngày 16/11 – 17/11/2026
+**Tuần:** S5 và S6, ngày 16/11 – 17/11 và 25/11 – 27/11/2026
 
 **Công việc đã làm:**
 
 - Góp ý UI/UX cho Nhóm 4 (PawPass) cùng Tuấn Hưng: giữ người dùng ở trang cuối cùng khi tải lại ([G4 #126](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/126)).
 - Sửa theo góp ý nhận được: góp ý số 8 (cảnh Thành phố sinh động hơn) đã làm ở PR #46, #50 ([G5 #127](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/127)).
+- S6: cùng Tuấn Hưng góp ý chi tiết cho Nhóm 5 (ThaiTuFashion) theo bản chấm thử 22/11; phần tôi viết: đánh giá tính thẩm mỹ và tính thân thiện, kèm ảnh và video minh họa cho các đề xuất ([#160](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/160), [PR #166](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/166)).
+- S6: đăng góp ý cho Nhóm 4 (PawPass) thành issue trên repo của nhóm ngày 26/11 ([PawPass-Hosothucung#16](https://github.com/iceruychi-netizen/PawPass-Hosothucung/issues/16)).
 
 **Bằng chứng đóng góp:**
 
 - [`docs/reviews/given/nhom-4-pawpass.md`](../reviews/given/nhom-4-pawpass.md), [`docs/reviews/received.md`](../reviews/received.md) (dòng 8), [PR #46](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/46), [PR #50](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/50).
+- [`docs/reviews/given/nhom-5-thaitufashion.md`](../reviews/given/nhom-5-thaitufashion.md); commit [`e0fd19d`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/e0fd19d), [`b068994`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/b068994); issue [PawPass-Hosothucung#16](https://github.com/iceruychi-netizen/PawPass-Hosothucung/issues/16).
 
 **Khó khăn gặp phải:**
 
-Không có.
+- PR #166 lúc đầu xoá bản góp ý cũ cho Nhóm 6. Cách xử lý: khôi phục bản Nhóm 6 làm lịch sử ở PR #167, README §5(a) ghi lý do chuyển sang Nhóm 5 (#169).
 
 **Đánh giá bản thân:** 10 (quy đổi từ 5/5 ở S5)
 

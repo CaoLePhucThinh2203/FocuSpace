@@ -103,7 +103,7 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/sprint-repo
 
 ## Task 4 — Optimization
 
-**Tuần:** S4–S5, ngày 15/11 – 17/11/2026
+**Tuần:** S4–S5, ngày 15/11 – 17/11/2026; S6 (sửa theo bản chấm thử), ngày 25/11 – 27/11/2026
 
 **Công việc đã làm:**
 
@@ -111,6 +111,7 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/sprint-repo
 - Báo cáo Lighthouse 6 trang kèm JSON ([`docs/lighthouse/`](../lighthouse/README.md)).
 - Tải trước font nét 500, 600; E2E AC-12.6 đo font thật trình duyệt dùng ([PR #48](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/48)).
 - Tạo tài khoản GA4, Sentry ([G10 #132](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/132)); đặt mã GA4, DSN Sentry trên Vercel, build lại; kiểm tra GA4 Realtime (`page_view`, `login`) và Sentry frontend nhận lỗi thử.
+- S6: cùng Đình Nhiên sửa Sentry backend không nhận lỗi API ([#161](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/161), [PR #173](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/173)): gắn Sentry error handler trước `errorHandler`, chỉ gửi lỗi 5xx; tạo project Sentry `focuspace-backend`, đặt `SENTRY_DSN` trên Render và gửi lỗi 500 thử.
 
 **Bằng chứng đóng góp:**
 
@@ -118,11 +119,13 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/sprint-repo
 - Kết quả Lighthouse sau tối ưu: desktop 96–100 Performance, mọi trang 100 ở Accessibility, Best Practices, SEO ([ảnh trong `docs/images/screenshots/`](../images/screenshots/), file `lighthouse-sau-*.png`).
 - Sentry nhận lỗi thử: [`docs/images/screenshots/sentry-issues.png`](../images/screenshots/sentry-issues.png).
 - GA4 tổng quan báo cáo: [`docs/images/screenshots/ga4-tong-quan.webp`](../images/screenshots/ga4-tong-quan.webp).
+- Sentry backend nhận lỗi 500 của API: commit [`4fbcb5d`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/4fbcb5d), ảnh [`docs/images/screenshots/sentry-backend.webp`](../images/screenshots/sentry-backend.webp), comment bằng chứng trong [PR #173](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/173).
 
 **Khó khăn gặp phải:**
 
 - Thư viện bị CLS 0,35 trên Chrome desktop do thanh cuộn xuất hiện muộn. Cách xử lý: `scrollbar-gutter: stable`, Thư viện cao tối thiểu một màn hình, kèm E2E (#41).
 - Chữ nét 500, 600 vẫn hiện bằng font hệ thống dù đã tự host font. Cách xử lý: tải trước đủ 4 độ đậm, E2E đo font thật (#48).
+- Bản chấm thử 22/11 chỉ ra Sentry backend chưa nhận lỗi API: `errorHandler` trả response mà không gọi `next`, nên handler của Sentry gắn sau nó không bao giờ chạy; Render cũng chưa có `SENTRY_DSN`. Cách xử lý: chuyển handler vào `createApp()` trước `errorHandler`, thêm unit test, đặt DSN trên Render và gửi lỗi 500 thử (#161).
 
 **Đánh giá bản thân:** 10 (quy đổi từ 5/5 ở S4, S5)
 
@@ -130,21 +133,26 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/sprint-repo
 
 ## Task 5 — Peer Review
 
-**Tuần:** S1 và S5, ngày 07/11 và 16/11 – 17/11/2026
+**Tuần:** S1, S5 và S6, ngày 07/11, 16/11 – 17/11 và 25/11 – 27/11/2026
 
 **Công việc đã làm:**
 
 - Góp ý UI/UX cho Nhóm 6 (Quản lí chi tiêu) cùng Tuấn Lộc ngày 07/11: làm đơn giản hơn, thêm nhập nhanh bằng giọng nói, thiết kế lại giao diện ([T16 #119](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/119)).
 - Tổng hợp 10 góp ý nhận được từ Hữu Triết, Bá Phát, Thành Long vào `docs/reviews/received.md`: 9 góp ý đã làm, 1 góp ý không làm kèm lý do (khung cảnh tuyết) ([T17 #120](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/120), [PR #53](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/53)).
 - Sửa theo góp ý: mèo đổi màu, Trang chủ, tối ưu web, Pomodoro, nút Bắt đầu / Tạm dừng, Hẹn giờ ngủ, cảnh Thành phố, độ lớn âm thanh, nhạc Lo-fi ([G5 #127](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/127); PR #10, #29, #30, #40–#44, #46–#50).
+- S6: trả lời từng góp ý nhận được Đợt 2 của Nhóm 3 Let's Talk ([#164](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/164)) và Nhóm 4 PawPass ([issue #9 bên PawPass](https://github.com/iceruychi-netizen/PawPass-Hosothucung/issues/9), [#174](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/174)), kèm quyết định làm / không làm / đã có sẵn và lý do.
+- S6: ghi lý do dừng góp ý Nhóm 6 và chuyển góp ý chi tiết sang Nhóm 5 ([#169](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/169), [PR #170](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/170)); cập nhật README §1(c), §1(e), §4(b), §5(a), §5(b) và PLAN theo bản chấm thử ([#162](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/162), [PR #175](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/175)).
 
 **Bằng chứng đóng góp:**
 
 - [`docs/reviews/given/nhom-6-quan-li-chi-tieu.md`](../reviews/given/nhom-6-quan-li-chi-tieu.md), [`docs/reviews/received.md`](../reviews/received.md), [PR #53](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/53).
+- S6: [comment trả lời trong #164](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/164#issuecomment-7188234516), [comment trả lời trong issue #9 bên PawPass](https://github.com/iceruychi-netizen/PawPass-Hosothucung/issues/9#issuecomment-7189142577); [PR #170](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/170), [PR #175](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/175).
 
 **Khó khăn gặp phải:**
 
 - Góp ý “thêm khung cảnh tuyết” cần vẽ cảnh mới, làm âm nền và thêm vào seeder, không kịp hạn nộp. Cách xử lý: ghi Không làm kèm lý do trong `received.md` (đã có tuyết ở cảnh Núi băng và cửa sổ Phòng ngủ).
+- Góp ý cho Nhóm 6 ngày 07/11 còn chung chung vì web Nhóm 6 chưa triển khai; bản chấm thử yêu cầu góp ý chi tiết. Cách xử lý: chuyển góp ý chi tiết sang Nhóm 5, giữ bản Nhóm 6 làm lịch sử và ghi lý do trong README §5(a) (#169).
+- Đợt 2 có hai nhóm cùng nêu nhãn cho nút biểu tượng và chữ nhỏ trên nền tối, sát hạn nộp nên không kịp đổi bố cục. Cách xử lý: trả lời lý do ở từng nơi góp ý, ghi vào `received.md` và ưu tiên hai ý này cho bản sau.
 
 **Đánh giá bản thân:** 10 (quy đổi từ 5/5 ở S5)
 

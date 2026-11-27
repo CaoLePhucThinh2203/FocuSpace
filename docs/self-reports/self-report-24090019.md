@@ -119,20 +119,25 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/sprint-repo
 
 ## Task 5 — Peer Review
 
-**Tuần:** S5, ngày 16/11 – 17/11/2026
+**Tuần:** S5 và S6, ngày 16/11 – 17/11 và 25/11 – 27/11/2026
 
 **Công việc đã làm:**
 
 - Góp ý UI/UX cho Nhóm 4 (PawPass) cùng Đình Nhiên: giữ người dùng ở trang cuối cùng khi tải lại ([G4 #126](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/126)).
 - Sửa theo góp ý nhận được: góp ý số 1 (mèo đổi màu) đã làm ở PR #30 trong S4 ([G5 #127](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/127)).
+- S6: cùng Đình Nhiên góp ý chi tiết cho Nhóm 5 (ThaiTuFashion) theo bản chấm thử 22/11; phần tôi viết: đánh giá Usability ([#160](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/160), [PR #165](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/165)).
+- S6: khôi phục bản góp ý Nhóm 6 làm lịch sử ([PR #167](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/167)); sửa đề xuất mã đơn và theo dõi đơn hàng cho khớp ảnh, che thông tin cá nhân trong ảnh xác nhận đơn hàng, thêm link issue ([PR #172](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/172)).
+- S6: đăng góp ý cho Nhóm 5 thành issue trên repo của nhóm ngày 26/11 ([thai_tu_fashion#52](https://github.com/huynhsy986-droid/thai_tu_fashion/issues/52)).
 
 **Bằng chứng đóng góp:**
 
 - [`docs/reviews/given/nhom-4-pawpass.md`](../reviews/given/nhom-4-pawpass.md), [`docs/reviews/received.md`](../reviews/received.md) (dòng 1), [PR #30](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/30).
+- [`docs/reviews/given/nhom-5-thaitufashion.md`](../reviews/given/nhom-5-thaitufashion.md); commit [`81815aa`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/81815aa), [`2221423`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/2221423), [`bf1ba5e`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/bf1ba5e), [`b5309d5`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/b5309d5); issue [thai_tu_fashion#52](https://github.com/huynhsy986-droid/thai_tu_fashion/issues/52).
 
 **Khó khăn gặp phải:**
 
-- Thời gian cuối kỳ gấp, sprint này không có commit. Cách xử lý: đọc lại PRD v5.12–v5.19 và các test mới để nắm hành vi hiện hành của đồ vật, âm thanh.
+- S5: thời gian cuối kỳ gấp, sprint này không có commit. Cách xử lý: đọc lại PRD v5.12–v5.19 và các test mới để nắm hành vi hiện hành của đồ vật, âm thanh.
+- Ảnh xác nhận đơn hàng dùng làm minh họa có thông tin cá nhân. Cách xử lý: che thông tin trong ảnh trước khi đăng issue lên repo Nhóm 5 (PR #172).
 
 **Đánh giá bản thân:** 8 (quy đổi từ 4/5 ở S5)
 
