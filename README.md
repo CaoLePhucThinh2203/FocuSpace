@@ -167,9 +167,9 @@ fix(api): gắn Sentry error handler trước errorHandler, chỉ gửi lỗi 5x
 docs(review): thêm link issue góp ý trên repo Nhóm 5 (#160)
 ```
 
-![Danh sách Pull Request đã merge](docs/images/screenshots/github-pull-requests.jpg)
+![Danh sách Pull Request của sprint S6](docs/images/screenshots/github-pull-requests-s6.webp)
 
-*Danh sách Pull Request đã merge: mỗi PR có người duyệt (Approved) và CI đạt 3/3 kiểm tra.*
+*Các Pull Request của sprint S6: tiêu đề theo Conventional Commits có số issue, gắn nhãn loại, khu vực và milestone; mỗi PR có người duyệt (Approved) và CI đạt 3/3 kiểm tra.*
 
 ---
 
