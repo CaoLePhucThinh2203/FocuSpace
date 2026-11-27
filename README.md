@@ -158,18 +158,17 @@ Phát sinh sau khi nộp: **S6 — Sửa theo chấm thử (25–27/11/2026)**, 
 **Ví dụ commit messages tiêu biểu của nhóm:**
 
 ```
-perf(home): tải trước ảnh LCP của Trang chủ (H12)
-perf(layout): đặt Suspense trong Layout, hết nhảy bố cục khi tải trang (H12)
-fix(items): nến phát sáng, bỏ tiếng rè sau tiếng meo
 docs(plan): G7 đã nộp bài ngày 18/11/2026 (#129)
 test(api): thêm test lọc lỗi gửi Sentry (#161)
 fix(api): gắn Sentry error handler trước errorHandler, chỉ gửi lỗi 5xx (#161)
 docs(review): thêm link issue góp ý trên repo Nhóm 5 (#160)
+docs(review): bổ sung góp ý nhận được từ Nhóm 3 và Nhóm 4 vào received.md (#168)
+docs(readme): ghi rõ quy trình GitHub và sprint S6 ở §1(c), §1(e) (#162)
 ```
 
-![Danh sách Pull Request đã merge](docs/images/screenshots/github-pull-requests.jpg)
+![Danh sách Pull Request của sprint S6](docs/images/screenshots/github-pull-requests-s6.webp)
 
-*Danh sách Pull Request đã merge: mỗi PR có người duyệt (Approved) và CI đạt 3/3 kiểm tra.*
+*Các Pull Request của sprint S6: tiêu đề theo Conventional Commits có số issue, gắn nhãn loại, khu vực và milestone; mỗi PR có người duyệt (Approved) và CI đạt 3/3 kiểm tra.*
 
 ---
 
