@@ -136,8 +136,9 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/sprint-repo
 
 **Khó khăn gặp phải:**
 
-- Thời gian cuối kỳ gấp, sprint này không có commit. Cách xử lý: đọc lại PRD v5.12–v5.19 và các test mới để nắm hành vi hiện hành của đồ vật, âm thanh.
+- S5: thời gian cuối kỳ gấp, sprint này không có commit. Cách xử lý: đọc lại PRD v5.12–v5.19 và các test mới để nắm hành vi hiện hành của đồ vật, âm thanh.
 - Ảnh xác nhận đơn hàng dùng làm minh họa có thông tin cá nhân. Cách xử lý: che thông tin trong ảnh trước khi đăng issue lên repo Nhóm 5 (PR #172).
+
 **Đánh giá bản thân:** 8 (quy đổi từ 4/5 ở S5)
 
 ---
