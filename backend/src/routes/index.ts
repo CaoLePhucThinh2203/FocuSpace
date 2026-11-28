@@ -17,6 +17,13 @@ export async function apiRouter(db: Db) {
     }
   }));
 
+  // 4.1b Thử Sentry trên bản triển khai (#182): chỉ chạy khi SENTRY_TEST_ROUTE=1, còn lại rơi về 404.
+  // Đọc biến lúc có request để bật/tắt trên Render mà không sửa code.
+  r.get("/debug/sentry", (_req, _res, next) => {
+    if (process.env.SENTRY_TEST_ROUTE !== "1") return next();
+    throw new Error("Kiểm tra Sentry backend FocuSpace");
+  });
+
   // study (Thịnh): /room-state · items-audio (Hưng): /catalog/items · garden (Nhiên): /catalog/scenes, /telemetry/batch
   // bedroom (Lộc): /auth/*, /me, /me/stats — khu vực nào chưa có routes.ts thì endpoint đó trả 404.
   for (const { fn } of await loadAreaExports("routes", (n) => n.endsWith("Routes"))) r.use(fn(db));
