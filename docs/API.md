@@ -6,7 +6,7 @@ Tài liệu API REST — FocuSpace bản chính thức
 |------------------------|-------------------------------------------------------------------------|
 | **Sản phẩm**           | FocuSpace — web app pixel art Lo-fi Semi-Sandbox                        |
 | **Phiên bản API**      | v1                                                                      |
-| **Phiên bản tài liệu** | v1.4 (thống nhất với code 15/11/2026) · v1.3 (rút gọn 14/11/2026) · v1.0 phê duyệt 07/11/2026; v1.1 – v1.2 duyệt ở buổi họp kế hoạch 13/11/2026 |
+| **Phiên bản tài liệu** | v1.5 (thêm 4.1b thử Sentry 28/11/2026) · v1.4 (thống nhất với code 15/11/2026) · v1.3 (rút gọn 14/11/2026) · v1.0 phê duyệt 07/11/2026; v1.1 – v1.2 duyệt ở buổi họp kế hoạch 13/11/2026 |
 | **Nguồn**              | docs/API.md · docs/DATABASE.md · docs/PRD.md · prototype/FocuSpace-Semi-Sandbox.html · docs/analysis/FocuSpace_Diagrams.drawio, Chương 1 Phân tích hệ thống |
 
 # 1. Tổng quan & Giới thiệu
@@ -28,11 +28,12 @@ API phục vụ frontend FocuSpace (ứng dụng web chạy trong trình duyệt
 
 - **Nội dung trang động:** danh mục đồ vật, khung cảnh cho trang Thư viện và thống kê học tập của người dùng cho trang Thống kê.
 
-14 endpoint, kèm use case và phương thức service (theo Chương 1 Phân tích hệ thống, biểu đồ lớp Hình 1.27):
+14 endpoint (và 1 endpoint vận hành 4.1b chỉ bật tạm khi thử Sentry), kèm use case và phương thức service (theo Chương 1 Phân tích hệ thống, biểu đồ lớp Hình 1.27):
 
 | **Mục** | **Endpoint** | **Use case** | **Phương thức service** |
 |---|---|---|---|
 | 4.1 | GET /health | — (vận hành) | — |
+| 4.1b | GET /debug/sentry | — (vận hành, chỉ bật khi `SENTRY_TEST_ROUTE=1`) | — |
 | 4.2 | POST /auth/register | UC.08 Đăng ký / Đăng nhập | AuthService.dangKy |
 | 4.3 | POST /auth/login | UC.08 Đăng ký / Đăng nhập | AuthService.dangNhap |
 | 4.4 | POST /auth/refresh | UC.09 Đồng bộ phòng giữa các thiết bị (làm mới phiên khi mở app) | AuthService.lamMoiPhien |
@@ -179,6 +180,36 @@ Không có.
   "db": "down"
 }
 ```
+
+## 4.1b Thử Sentry trên bản triển khai
+
+|                  |                                                                                         |
+|------------------|-----------------------------------------------------------------------------------------|
+| **Method & URL** | GET /debug/sentry                                                                       |
+| **Mô tả**        | Cố ý gây lỗi máy chủ để kiểm tra Sentry backend nhận lỗi 5xx trên bản triển khai (Render). Chỉ chạy khi biến môi trường `SENTRY_TEST_ROUTE=1`; bật tạm khi thử, thử xong xoá biến. |
+| **Use case** | — (vận hành) |
+| **Phương thức service** | — |
+
+**Headers yêu cầu**
+
+Không có.
+
+**Response khi bật (`SENTRY_TEST_ROUTE=1`)**
+
+500 Internal Server Error, lỗi được gửi lên Sentry (project backend)
+
+```json
+{
+  "error": {
+    "code": "INTERNAL_ERROR",
+    "message": "Lỗi máy chủ, vui lòng thử lại."
+  }
+}
+```
+
+**Response khi tắt (mặc định)**
+
+404 Not Found, như một đường dẫn không tồn tại (`NOT_FOUND`).
 
 ## 4.2 Đăng ký tài khoản
 
@@ -1253,3 +1284,4 @@ Dùng trong GET /room-state (trường data) và PUT /room-state (trường data
 | v1.1–v1.2 | 10–13/11/2026 | Thêm endpoint danh mục (4.12, 4.13), thống kê (4.14); truy vết use case và phương thức service cho từng endpoint; chốt rate limit 5.1. Duyệt ở buổi họp 13/11. |
 | v1.3 | 15/11/2026 | Rút gọn: bỏ dòng chú thích bản Word cũ, bảng nhóm endpoint trùng với bảng tóm tắt ở mục 1; Base URL production theo cách triển khai Vercel + Render; 5.2 Versioning còn 2 ý. Không đổi request/response, mã lỗi. |
 | v1.4 | 15/11/2026 | Thống nhất với code: cookie `fs_rt` SameSite=None ở production, Lax ở máy dev (§2, 4.2); Phụ lục A `study.items`, `bed.items` ≤ 25 (BR-06, G12). Không đổi endpoint. |
+| v1.5 | 28/11/2026 | Thêm 4.1b `GET /debug/sentry` (vận hành, chỉ bật khi `SENTRY_TEST_ROUTE=1`) để thử Sentry backend trên Render theo bản chấm thử lần 2 (#182). Không đổi các endpoint khác. |
