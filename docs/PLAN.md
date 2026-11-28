@@ -63,6 +63,8 @@ Dự án bắt đầu **27/10/2026** (họp khởi động), **hạn hoàn thàn
 
 > Phát sinh sau nộp bài: S6 (25–27/11), sprint bổ sung để sửa theo bản chấm thử 22/11 của giảng viên, không nằm trong kế hoạch 5 sprint ban đầu. Gồm #160 (góp ý Nhóm 5 ThaiTuFashion), #161 (Sentry backend), #162 (README, PLAN); thêm #168 (`received.md` Đợt 2) và #169 (lý do dừng góp ý Nhóm 6) phát sinh trong sprint. Milestone GitHub: "S6 — Sửa theo chấm thử", hạn 27/11/2026.
 
+> Sau bản chấm thử lần 2 (27/11): S7 (28/11), sprint bổ sung làm 3 đề xuất cải tiến: #180 (nối 73 PR trước S6 với issue, sửa tiêu đề, nhãn, milestone), #181 (nhãn nút thanh công cụ trên màn hình cảm ứng, PR #185), #182 (Sentry backend nhận lỗi từ bản Render, PR #184); #183 cập nhật README, PLAN. Không chuyển sang Next.js (mục 3(c)): việc lớn, sát hạn, dễ ảnh hưởng các phần đang đạt. Milestone GitHub: "S7 — Sửa theo chấm thử lần 2".
+
 **Mốc demo cho giảng viên: Chủ nhật 15/11/2026** (chốt 13/11). Code nền đã có từ 13/11: monorepo, `shared/` có test, backend đủ 14 endpoint + Prisma + seeder, frontend React 6 trang nối API, Căn phòng chạy từ engine prototype (`frontend/src/engine/legacy/`) kèm đồng bộ `/room-state`. Từ 14/11: chạy thử, sửa lỗi; 15/11 chốt PA B (vẽ, âm thanh giữ trong engine, chỉ tách quy tắc nghiệp vụ thành hàm thuần có test). S3 (13–14/11) dựng code nền và phần của từng khu vực; S4 (15/11) chốt PA B, tách quy tắc nghiệp vụ có test, tối ưu Lighthouse, demo; S5 (16–17/11) hoàn thiện âm thanh, văn phong, vẽ lại sơ đồ, README, tổng hợp góp ý, video và nộp bài (trạng thái từng issue: cột Trạng thái trong `docs/TASKS.md`).
 
 Đường găng (critical path): giao diện giữa các khu vực (đầu S3) → `shared/roomState.ts` (S3) → render từng phòng (S4) → sync (S5). S5 nặng nhất, nên review chéo bắt đầu ngay khi có bản chạy được ở cuối S4. Nếu trễ, cắt theo PRD §8.2: dời P1 (xung đột hai thiết bị, xóa tài khoản) trước, giữ đủ tiêu chí chấm điểm.
@@ -114,3 +116,4 @@ Cấu trúc thư mục thật và cách chạy xem `README.md`; công nghệ xem
 | 15/11/2026 | Chốt PA B cho Căn phòng: giữ vẽ/âm thanh trong `roomEngine.js`, chỉ tách hàm thuần (rooms, pomodoro, sleepTimer, placement) có test; §2 ghi đúng đường dẫn thật; §6 cập nhật trạng thái P2–P4. |
 | 15/11/2026 (rà soát) | §3 bỏ câu "tách engine thành module" (đã thay bằng PA B), ghi rõ phần lập trình S3–S5 đã xong trong S3; S1 ghi Đình Nhiên dựng phần Sân vườn, 5 khung cảnh của prototype Căn phòng; §6 cập nhật trạng thái P5–P8. |
 | 26/11/2026 | §3 thêm ghi chú sprint bổ sung S6 (25–27/11) sửa theo bản chấm thử 22/11, không thêm dòng vào bảng sprint (#162). |
+| 28/11/2026 | §3 thêm ghi chú sprint bổ sung S7 (28/11) sửa theo bản chấm thử lần 2 27/11; ghi lý do không chuyển sang Next.js (#183). |
