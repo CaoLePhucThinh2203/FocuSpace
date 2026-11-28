@@ -15,7 +15,7 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/sprint-repo
 
 ## Task 1 — Planning & Setup
 
-**Tuần:** S1–S2, ngày 27/10 – 12/11/2026
+**Tuần:** S1–S2, ngày 27/10 – 12/11/2026; S7, ngày 28/11/2026
 
 **Công việc đã làm:**
 
