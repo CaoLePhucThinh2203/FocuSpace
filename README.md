@@ -140,6 +140,8 @@ Dự án chia 5 sprint, mỗi sprint là một milestone trên GitHub. S1–S2 t
 
 Phát sinh sau khi nộp: **S6 — Sửa theo chấm thử (25–27/11/2026)**, sprint bổ sung để sửa theo bản chấm thử ngày 22/11 của giảng viên, không nằm trong kế hoạch 5 sprint ban đầu. Gồm [#160](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/160) (góp ý chi tiết Nhóm 5), [#161](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/161) (Sentry backend), [#162](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/162) (README, PLAN), [#168](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/168) và [#169](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/169) (cập nhật tài liệu góp ý).
 
+Sau bản chấm thử lần 2 ngày 27/11: **S7 — Sửa theo chấm thử lần 2 (28/11/2026)**, làm 3 đề xuất cải tiến: [#180](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/180) (nối PR cũ với issue), [#181](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/181) (nhãn cho nút thanh công cụ trên màn hình cảm ứng), [#182](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/182) (Sentry backend nhận lỗi từ bản Render), và [#183](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/183) (README, PLAN). Đề xuất chuyển phần trang động sang Next.js nhóm không làm, lý do ở Task 3(c).
+
 ### (d) GitHub Repository
 
 - **Repository link:** https://github.com/CaoLePhucThinh2203/FocuSpace
@@ -152,8 +154,8 @@ Phát sinh sau khi nộp: **S6 — Sửa theo chấm thử (25–27/11/2026)**, 
   2. Nhánh đặt tên `<loại>/<số issue>-<mô tả>` (`feat/…`, `fix/…`, `docs/…`, `perf/…`), ví dụ `fix/161-sentry-error-handler`.
   3. Commit theo Conventional Commits, có số issue: `<type>(<phạm vi>): <mô tả> (#<số>)`.
   4. PR dùng mẫu `.github/pull_request_template.md`: tiêu đề theo nội dung, cùng dạng commit và có `(#<số>)`; dòng đầu `Closes #<số>` để tự đóng issue (hoặc `Related to #<số>` nếu issue đã đóng); ghi mã use case (UC); gắn nhãn, milestone như issue; người khác trong nhóm duyệt rồi mới merge.
-- Trong quá trình làm, nhóm chỉ theo dõi việc bằng `docs/TASKS.md` và Pull Request, quên tạo issue trên GitHub. Ngày 18/11/2026 nhóm tạo bù 71 issue ([#64](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/64)–[#134](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/134)), gắn milestone S1–S5, nhãn khu vực và người phụ trách. Một số commit đầu S4 chưa đúng chuẩn (ví dụ “đổi màu mèo”, “fix mobile library”), và nhiều PR trước bản chấm thử chưa nối issue, tiêu đề lấy theo tên nhánh.
-- Từ sprint S6 (sau bản chấm thử 22/11), mọi việc đi đủ quy trình trên: ví dụ [#165](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/165)–[#167](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/167) và [#172](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/172) (góp ý Nhóm 5, `Related to #160`), [#170](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/170) (`Closes #169`), [#171](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/171) (`Closes #168`), [#173](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/173) (`Closes #161`, commit test trước rồi mới sửa).
+- Trong quá trình làm, nhóm chỉ theo dõi việc bằng `docs/TASKS.md` và Pull Request, quên tạo issue trên GitHub. Ngày 18/11/2026 nhóm tạo bù 71 issue ([#64](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/64)–[#134](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/134)), gắn milestone S1–S5, nhãn khu vực và người phụ trách. Một số commit đầu S4 chưa đúng chuẩn (ví dụ “đổi màu mèo”, “fix mobile library”), và nhiều PR trước bản chấm thử chưa nối issue, tiêu đề lấy theo tên nhánh. Ngày 28/11/2026 nhóm đã nối 73 PR trước S6 với issue (`Related to #…` ở đầu mô tả), sửa tiêu đề theo Conventional Commits, gắn nhãn và milestone theo ngày merge; 11 PR đóng không merge có comment ghi lý do và PR thay thế ([#180](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/180), bảng đối chiếu trong issue). Lịch sử commit cũ giữ nguyên.
+- Từ sprint S6 (sau bản chấm thử 22/11), mọi việc đi đủ quy trình trên: ví dụ [#165](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/165)–[#167](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/167) và [#172](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/172) (góp ý Nhóm 5, `Related to #160`), [#170](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/170) (`Closes #169`), [#171](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/171) (`Closes #168`), [#173](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/173) (`Closes #161`, commit test trước rồi mới sửa); S7: [#184](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/184) (`Closes #182`), [#185](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/185) (`Closes #181`), cả hai đều commit test trước rồi mới code.
 
 **Ví dụ commit messages tiêu biểu của nhóm:**
 
@@ -307,6 +309,8 @@ Backend có integration test (Vitest + Supertest) chạy trên một PostgreSQL 
 |:---:|:---:|
 | ![Thư viện đồ vật](docs/images/screenshots/thu-vien-do-vat.jpg)<br>Thư viện – dữ liệu từ `item_types` | ![Thống kê](docs/images/screenshots/thong-ke-co-du-lieu.jpg)<br>Thống kê (số liệu minh họa) |
 
+*Về Next.js:* đề bài lớp yêu cầu dùng Next.js cho phần trang động; nhóm dùng Vite + React và API Express riêng (đã chốt từ kế hoạch S2, `docs/ARCHITECTURE.md`). Sau bản chấm thử lần 2, nhóm quyết định không chuyển sang Next.js: phải viết lại phần trang động và đổi kiến trúc sát hạn nộp, dễ làm hỏng các phần đang đạt (UI, cơ sở dữ liệu, tối ưu). Hai trang Thư viện, Thống kê vẫn đọc dữ liệu từ PostgreSQL qua API, có integration test.
+
 ---
 
 ## Task 4 — Optimization
@@ -411,7 +415,7 @@ Khi build không có Sentry, bundle chính chỉ còn 176 KB. Trên mạng chậ
 
 ![Sentry: lỗi thử trên backend](docs/images/screenshots/sentry-backend.webp)
 
-*Sentry project `focuspace-backend` (backend) nhận lỗi 500 của `GET /api/v1/catalog/items` (cố tình làm hỏng kết nối cơ sở dữ liệu để thử); lỗi 401 của `GET /api/v1/room-state` không được gửi. Sửa theo bản chấm thử 22/11: gắn handler Sentry trước bộ xử lý lỗi của nhóm và đặt `SENTRY_DSN` trên Render ([#161](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/161), PR [#173](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/173)).*
+*Sentry project `focuspace-backend` nhận lỗi 500 từ bản triển khai Render (`url` là `focuspace-api.onrender.com`, stack trace ở `/opt/render/project/src/…`, môi trường `production`) qua route thử lỗi `GET /api/v1/debug/sentry`, chỉ bật tạm bằng biến `SENTRY_TEST_ROUTE` rồi tắt ([#182](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/182), PR [#184](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/184)); lỗi 401 khi chưa đăng nhập không được gửi. Lỗi thử được đánh dấu Resolved sau khi kiểm tra. Trước đó, bản chấm thử 22/11 chỉ ra Sentry backend chưa nhận lỗi; nhóm sửa thứ tự handler ([#161](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/161), PR [#173](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/173)).*
 
 ---
 
@@ -474,11 +478,11 @@ Nhóm nhận góp ý theo 2 đợt, tổng 21 góp ý; mỗi góp ý có quyết
 | ![Hẹn giờ ngủ](docs/images/screenshots/gop-y-hen-gio-ngu.png)<br>Góp ý 6: Hẹn giờ ngủ chọn mức Tắt/15/30/60 phút rồi bấm Bắt đầu | ![Cảnh Thành phố và nhạc Lo-fi](docs/images/screenshots/gop-y-thanh-pho-lofi.png)<br>Góp ý 8, 10: cảnh Thành phố buổi tối, tai nghe phát nhạc Lo-fi chọn bài |
 | ![Tuyết rơi ở Phòng ngủ](docs/images/screenshots/gop-y-tuyet-roi-phong-ngu.png)<br>Góp ý 7 (không làm cảnh mới): cửa sổ Phòng ngủ đã có thời tiết Tuyết rơi | |
 
-**Đợt 2 — sau bản chấm thử 22/11/2026 (sprint S6).** Hai nhóm gửi góp ý theo 3 tiêu chí của đề bài; nhóm trả lời từng ý ngay tại nơi góp ý: Nhóm 3 (Let's Talk) ở issue [#164](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/164) ([trả lời](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/164#issuecomment-7188234516)); Nhóm 4 (PawPass) ở issue [#9 bên PawPass](https://github.com/iceruychi-netizen/PawPass-Hosothucung/issues/9) ([trả lời](https://github.com/iceruychi-netizen/PawPass-Hosothucung/issues/9#issuecomment-7189142577)) và bản đăng lại trên repo nhóm, issue [#174](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/174).
+**Đợt 2 — sau bản chấm thử 22/11/2026 (sprint S6, S7).** Hai nhóm gửi góp ý theo 3 tiêu chí của đề bài; nhóm trả lời từng ý ngay tại nơi góp ý: Nhóm 3 (Let's Talk) ở issue [#164](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/164) ([trả lời](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/164#issuecomment-7188234516)); Nhóm 4 (PawPass) ở issue [#9 bên PawPass](https://github.com/iceruychi-netizen/PawPass-Hosothucung/issues/9) ([trả lời](https://github.com/iceruychi-netizen/PawPass-Hosothucung/issues/9#issuecomment-7189142577)) và bản đăng lại trên repo nhóm, issue [#174](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/174).
 
 | Feedback | Nguồn (nhóm nào) | Quyết định | Lý do |
 |---|---|---|---|
-| Nhãn thường trực cho 3 nút biểu tượng trên màn hình cảm ứng | Nhóm 3, Nhóm 4 | Chưa làm, ưu tiên cho bản sau | Đã có tooltip và `aria-label`; thanh công cụ đè lên căn phòng theo thiết kế đã duyệt, nhãn cố định sẽ che căn phòng trên màn hình nhỏ. Hai nhóm cùng nêu nên đây là ý làm đầu tiên ở bản sau |
+| Nhãn thường trực cho 3 nút biểu tượng trên màn hình cảm ứng | Nhóm 3, Nhóm 4 | Đã implement (S7) | [#185](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/185): trên điện thoại, tablet mỗi nút có nhãn chữ dưới biểu tượng ("Âm thanh", "Trang trí", "Âm lượng", "Khung cảnh"); máy có chuột giữ tooltip như cũ (PRD v5.21, AC-01.6) |
 | Hiện tên phòng kế tiếp trên hai mũi tên | Nhóm 3 | Đã có sẵn | Rê chuột hoặc Tab vào mũi tên hiện tên đích ("Ra sân vườn", "Sang phòng ngủ", "Về phòng học") |
 | Tăng cỡ chữ, độ tương phản trong bảng điều khiển; chữ nhỏ, màu nhạt trên nền tối | Nhóm 3, Nhóm 4 | Không làm | Màu theo bảng màu Lo-fi của thiết kế đã duyệt; Lighthouse Accessibility (có kiểm độ tương phản) ≥ 95 trên cả 6 trang |
 | Gợi ý cho ô "Hẹn giờ ngủ --:--" | Nhóm 3 | Đã có sẵn | Ô là nút có mũi tên ▾ và tooltip "Chọn hẹn giờ ngủ", bấm mở bảng Tắt / 15 / 30 / 60 phút |
@@ -489,6 +493,12 @@ Nhóm nhận góp ý theo 2 đợt, tổng 21 góp ý; mỗi góp ý có quyết
 | Chưa rõ lựa chọn có được lưu khi chuyển phòng | Nhóm 4 | Đã có sẵn | Mọi thay đổi tự lưu vào trình duyệt sau khoảng 0,25 giây; đăng nhập thì đồng bộ lên tài khoản |
 
 Chi tiết từng ý (số thứ tự #11–#21): [`received.md` Đợt 2](docs/reviews/received.md#đợt-2--sau-bản-chấm-thử-22112026).
+
+Ảnh sau khi sửa (góp ý #11, #17), chụp trên máy với giả lập thiết bị cảm ứng:
+
+| | |
+|:---:|:---:|
+| ![Nhãn nút trên điện thoại](docs/images/screenshots/gop-y-nhan-nut-dien-thoai.webp)<br>Điện thoại (trang tự xoay ngang): nhãn "Âm thanh", "Trang trí", "Âm lượng" | ![Nhãn nút trên tablet](docs/images/screenshots/gop-y-nhan-nut-tablet.webp)<br>Tablet, Sân vườn: nhãn "Âm lượng", "Khung cảnh" |
 
 ---
 
