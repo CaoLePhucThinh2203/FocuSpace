@@ -23,17 +23,20 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/sprint-repo
 - Wireframe Thống kê, Tài khoản bằng draw.io ([L1 #92](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/92)).
 - Góp nội dung Phòng ngủ, Hẹn giờ ngủ cho PRD (Tính năng C, G).
 - Góp ý phần tài khoản, thống kê trong API (`/auth/*`, `/me`, `/me/stats`).
+- S7: cập nhật README §1(c), §1(e), §3(c), §4(b) và PLAN §3 theo bản chấm thử lần 2 ngày 27/11: ghi sprint S7, việc nối 73 PR cũ với issue, lý do không chuyển sang Next.js, ảnh Sentry nhận lỗi từ bản Render ([#183](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/183), [PR #187](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/187)).
 
 **Bằng chứng đóng góp:**
 
 - [`docs/wireframes/wf-thong-ke.png`](../wireframes/wf-thong-ke.png), [`docs/wireframes/wf-tai-khoan.png`](../wireframes/wf-tai-khoan.png); [`docs/PRD.md`](../PRD.md) Tính năng C, G; [`docs/API.md`](../API.md).
 - Repo GitHub tạo sau S2 nên giai đoạn này không có commit.
+- S7: [`README.md`](../../README.md) §1(c), §1(e), §3(c), §4(b); [`docs/PLAN.md`](../PLAN.md) §3; [PR #187](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/187).
 
 **Khó khăn gặp phải:**
 
 - Phòng ngủ dùng chung engine và đồ vật với Phòng học nên dễ trùng lặp. Cách xử lý: Phòng ngủ chọn không khí riêng (cửa sổ đêm, Hẹn giờ ngủ thay cho Pomodoro).
 - Trang Thống kê chưa có dữ liệu thật để thiết kế. Cách xử lý: thiết kế wireframe theo các chỉ số trong PRD, để trống phần số liệu.
 - Phần tài khoản và thống kê liên quan nhiều tài liệu do người khác viết. Cách xử lý: góp ý trực tiếp vào phần endpoint để khớp với wireframe đã làm.
+- S7: VS Code tự định dạng lại cả README khi lưu (Prettier) và nhánh mang theo các commit gộp cũ từ `main` trên máy, làm PR #187 có diff rất lớn. Cách xử lý: tắt tự định dạng cho Markdown, làm sạch `main` trên máy theo `origin/main`; nhánh PR được dựng lại chỉ còn đúng phần nội dung thêm.
 
 **Đánh giá bản thân:** 8 (quy đổi từ 4/5 ở S1, S2)
 
@@ -114,7 +117,7 @@ Không có.
 
 ## Task 5 — Peer Review
 
-**Tuần:** S1, S3, S5 và S6, ngày 07/11 (review trực tiếp), 14/11 (viết bản góp ý), 16/11 – 17/11 và 25/11 – 27/11/2026
+**Tuần:** S1, S3, S5, S6 và S7, ngày 07/11 (review trực tiếp), 14/11 (viết bản góp ý), 16/11 – 17/11, 25/11 – 27/11 và 28/11/2026
 
 **Công việc đã làm:**
 
@@ -122,16 +125,20 @@ Không có.
 - Sửa theo góp ý nhận được: góp ý “sửa lại chế độ Hẹn giờ ngủ” đã làm ở PR #29 (chọn mức xong chờ Bắt đầu, có Tạm dừng, giảm âm dần 2 phút cuối) ([G5 #127](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/127)).
 - S6: tổng hợp góp ý nhận được Đợt 2 (sau bản chấm thử 22/11) của Nhóm 3 Let's Talk và Nhóm 4 PawPass vào `received.md`, mục 11–21, mỗi góp ý có quyết định và lý do ([#168](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/168), [PR #171](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/171)).
 - S6: review và duyệt các PR của sprint: [PR #166](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/166) (góp ý Nhóm 5), [PR #170](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/170) (lý do dừng góp ý Nhóm 6), [PR #173](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/173) (Sentry backend), [PR #175](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/175) (README, PLAN).
+- S7: review và duyệt [PR #184](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/184) (route thử Sentry trên bản Render, #182) và [PR #185](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/185) (nhãn chữ cho nút thanh công cụ trên thiết bị cảm ứng, #181).
+- S7: cập nhật README §5(b): góp ý #11, #17 (nhãn cho 3 nút biểu tượng, Nhóm 3 và Nhóm 4 cùng nêu) chuyển thành "Đã implement", thêm ảnh điện thoại, tablet sau khi sửa ([#183](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/183), [PR #187](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/187)).
 
 **Bằng chứng đóng góp:**
 
 - [`docs/reviews/given/nhom-6-quan-li-chi-tieu.md`](../reviews/given/nhom-6-quan-li-chi-tieu.md), [`docs/reviews/received.md`](../reviews/received.md) (dòng 6); commit [`1c68c6c`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/1c68c6c), [`3278510`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/3278510).
 - [`docs/reviews/received.md`](../reviews/received.md) (Đợt 2, mục 11–21); commit [`71a8fe1`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/71a8fe1); lượt duyệt ở PR #166, #170, #173, #175.
+- S7: lượt duyệt ở PR #184, #185; README §5(b) Đợt 2 và ảnh [`gop-y-nhan-nut-dien-thoai.webp`](../images/screenshots/gop-y-nhan-nut-dien-thoai.webp), [`gop-y-nhan-nut-tablet.webp`](../images/screenshots/gop-y-nhan-nut-tablet.webp).
 
 **Khó khăn gặp phải:**
 
 - Góp ý nhận được đến cuối sprint (17/11), không còn thời gian mở PR mới. Cách xử lý: đối chiếu từng góp ý với web; góp ý Hẹn giờ ngủ đã có ở #29 nên ghi vào `received.md` kèm số PR.
 - Hai nhóm gửi góp ý Đợt 2 có ý trùng nhau (nhãn cho nút biểu tượng, chữ nhỏ trên nền tối). Cách xử lý: ghi riêng từng mục, đánh dấu mục trùng và thêm ghi chú cuối bảng để ưu tiên hai ý này ở bản sau.
+- S7: PR #185 đổi giao diện Căn phòng khác prototype. Cách xử lý: khi duyệt, đối chiếu PRD v5.21 (AC-01.6), xem ảnh điện thoại, tablet và kết quả E2E trong PR trước khi approve.
 
 **Đánh giá bản thân:** 9 (quy đổi từ trung bình 5/5, 4/5 ở S3, S5)
 
