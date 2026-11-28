@@ -30,7 +30,7 @@ Hai nhóm gửi góp ý theo 3 tiêu chí của đề bài; nhóm trả lời t�
 
 | # | Góp ý | Quyết định | PR hoặc lý do |
 |---|---|---|---|
-| 11 | Nhãn thường trực cho 3 nút biểu tượng (Usability) | Chưa làm, ghi nhận cho bản sau | Mỗi nút đã có tooltip khi rê chuột và aria-label cho trình đọc màn hình. Trên điện thoại không rê chuột được nên không thấy tooltip, nhưng thanh công cụ đè lên căn phòng theo thiết kế đã duyệt, thêm nhãn cố định sẽ che căn phòng trên màn hình nhỏ; sát hạn nộp nên chưa đổi bố cục |
+| 11 | Nhãn thường trực cho 3 nút biểu tượng (Usability) | Làm (sau bản chấm thử lần 2, sprint S7) | [#181](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/181): trên điện thoại, tablet (thiết bị không có chuột) mỗi nút có nhãn chữ dưới biểu tượng "Âm thanh", "Trang trí", "Âm lượng" (Sân vườn có "Khung cảnh"); máy có chuột giữ tooltip khi rê chuột như cũ (PRD v5.21, AC-01.6) |
 | 12 | Hiện tên phòng kế tiếp trên hai mũi tên (Usability) | Đã có sẵn | Rê chuột hoặc Tab vào mũi tên đã hiện tên đích ("Ra sân vườn", "Sang phòng ngủ", "Về phòng học"); trên điện thoại bấm là chuyển ngay, tên phòng hiện ở đầu trang |
 | 13 | Tăng cỡ chữ, độ tương phản trong bảng điều khiển (Aesthetics) | Không làm | Màu lấy theo bảng màu Lo-fi của thiết kế đã duyệt; Lighthouse Accessibility (có kiểm độ tương phản) đạt ≥ 95 trên cả 6 trang; đây là chú thích phụ nên giữ cỡ nhỏ để không lấn phần điều khiển chính |
 | 14 | Gợi ý cho "Hẹn giờ ngủ --:--" (User-friendliness) | Đã có sẵn | Ô "--:--" là nút có mũi tên ▾ và tooltip "Chọn hẹn giờ ngủ", bấm mở bảng Tắt / 15 / 30 / 60 phút; popover đồng hồ treo tường trong Phòng ngủ cũng ghi "Đặt hẹn giờ ngủ tại đây" |
@@ -46,10 +46,10 @@ Hai nhóm gửi góp ý theo 3 tiêu chí của đề bài; nhóm trả lời t�
 |---|---|---|---|
 | 15 | Căn phòng xoay ngang 90° khi cầm điện thoại dọc | Giữ nguyên, ghi nhận gợi ý cho bản sau | Chủ ý thiết kế: căn phòng pixel art tỷ lệ 16:9, màn dọc chỉ còn một dải nhỏ nên web tự xoay để căn phòng đủ lớn. Dòng gợi ý "Xoay ngang điện thoại" là hợp lý, chưa kịp thêm trước hạn nộp |
 | 16 | Đồ vật trên bàn có vùng bấm nhỏ | Không làm | Đồ vật vẽ đúng toạ độ pixel của thiết kế đã duyệt (hệ 320×180); mở vùng bấm lên 44×44 px làm vùng bấm ly cà phê, đèn bàn, tai nghe chồng nhau, dễ bấm nhầm. Mọi đồ vật dùng được bằng bàn phím (Tab, Enter) |
-| 17 | 3 nút biểu tượng không có chữ trên màn hình cảm ứng | Chưa làm, ghi nhận cho bản sau | Trùng góp ý #11 của Nhóm 3, cùng lý do; nhóm ưu tiên ý này ở bản sau vì 2 nhóm cùng nêu |
+| 17 | 3 nút biểu tượng không có chữ trên màn hình cảm ứng | Làm (sau bản chấm thử lần 2, sprint S7) | Trùng góp ý #11 của Nhóm 3, làm cùng [#181](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/181) đúng như đề xuất "hiện chữ dưới biểu tượng trên màn hình cảm ứng" |
 | 18 | Không biết đồ vật kéo thả được | Đã có một phần | Khay đồ vật có dòng "Kéo vào phòng. Bấm vào đồ vật để chỉnh âm lượng."; bảng đèn bàn ghi "Kéo để dời dọc mặt bàn"; mỗi đồ vật có nhãn "kéo để di chuyển" cho trình đọc màn hình. Gợi ý tự hiện ở lần đầu vào phòng ghi nhận cho bản sau |
 | 19 | Khó theo dõi Pomodoro khi chuyển tab | Đã có một phần | Hết mỗi phiên có tiếng chuông báo (nghe được cả khi ở tab khác) và tự sang phiên nghỉ. Thời gian còn lại trên tiêu đề tab chưa có, ghi nhận cho bản sau |
 | 20 | Chưa rõ lựa chọn có được lưu khi chuyển phòng | Đã có sẵn | Mọi thay đổi tự lưu vào trình duyệt sau khoảng 0,25 giây, chuyển phòng hay tải lại trang đều giữ nguyên; đăng nhập thì đồng bộ lên tài khoản. Nhãn "Đã lưu" từng có nhưng đã bỏ để header gọn |
 | 21 | Chữ nhỏ, màu nhạt trên nền tối | Không làm | Trùng góp ý #13 của Nhóm 3, cùng lý do (bảng màu thiết kế đã duyệt, Lighthouse Accessibility ≥ 95) |
 
-*Các ý trùng giữa 2 nhóm:* nhãn cho 3 nút biểu tượng (#11, #17) và chữ nhỏ trên nền tối (#13, #21). Hai ý này được ưu tiên đầu tiên khi làm phiên bản sau.
+*Các ý trùng giữa 2 nhóm:* nhãn cho 3 nút biểu tượng (#11, #17) và chữ nhỏ trên nền tối (#13, #21). Ý nhãn cho 3 nút đã làm ở sprint S7 ([#181](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/181)); ý chữ nhỏ trên nền tối ưu tiên cho bản sau.

@@ -120,6 +120,13 @@
   .tb-tip { @apply pointer-events-none absolute top-[calc(100%+8px)] left-1/2 z-[60] -translate-x-1/2 whitespace-nowrap border border-line bg-panel px-[7px] py-[2px] text-[12px] text-ink opacity-0 transition-opacity duration-150 narrow:hidden; }
   .tb-btn:hover .tb-tip, .tb-btn:focus-visible .tb-tip { @apply opacity-100; }
   .toolbar.tray-open .tb-tip { @apply hidden; }
+  /* Nhãn chữ dưới biểu tượng trên thiết bị cảm ứng (#181, góp ý #11, #17). Máy có chuột giữ như prototype: chỉ có tooltip khi rê chuột. */
+  .tb-label { @apply hidden; }
+  @media (hover: none) {
+    #toolbar .tb-btn { @apply h-auto w-auto min-w-[42px] grid-rows-[22px_auto] gap-[2px] px-[5px] pt-[5px] pb-[3px]; }
+    #toolbar .tb-label { @apply block whitespace-nowrap text-[12px] leading-none; }
+    #toolbar .tb-tip { @apply hidden; }
+  }
   /* Giữ đúng prototype gốc: nền và chữ cùng màu đỏ */
   .drop-hint { @apply hidden self-center whitespace-nowrap bg-danger px-2 py-0 text-[12px] font-bold text-danger -translate-y-1/2 narrow:-translate-x-1/2 narrow:translate-y-0; }
   .toolbar.is-drop .drop-hint { @apply block; }

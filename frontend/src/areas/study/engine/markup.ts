@@ -21,18 +21,22 @@ export const ROOM_MARKUP = `<div class="app grid h-full grid-rows-[auto_auto_1fr
     <div class="toolbar" id="toolbar" role="toolbar" aria-label="Công cụ phòng">
       <button type="button" class="tb-btn" data-tray="sound" aria-pressed="false" aria-label="Đồ vật phát âm thanh">
         <svg viewBox="0 0 12 12" fill="currentColor" shape-rendering="crispEdges"><rect x="5" y="1" width="5" height="2"/><rect x="5" y="3" width="1" height="6"/><rect x="9" y="3" width="1" height="5"/><rect x="3" y="8" width="3" height="3"/><rect x="7" y="7" width="3" height="3"/></svg>
+        <span class="tb-label" aria-hidden="true">Âm thanh</span>
         <span class="tb-tip">Đồ vật phát âm thanh</span>
       </button>
       <button type="button" class="tb-btn" data-tray="decor" aria-pressed="false" aria-label="Đồ vật trang trí">
         <svg viewBox="0 0 12 12" fill="currentColor" shape-rendering="crispEdges"><rect x="5" y="0" width="2" height="2"/><rect x="2" y="2" width="3" height="2"/><rect x="7" y="2" width="3" height="2"/><rect x="5" y="3" width="2" height="5"/><rect x="3" y="8" width="6" height="1"/><rect x="4" y="9" width="4" height="3"/></svg>
+        <span class="tb-label" aria-hidden="true">Trang trí</span>
         <span class="tb-tip">Đồ vật trang trí</span>
       </button>
       <button type="button" class="tb-btn" data-tray="mixer" aria-pressed="false" aria-label="Bảng âm lượng">
         <svg viewBox="0 0 12 12" fill="currentColor" shape-rendering="crispEdges"><rect x="0" y="4" width="2" height="4"/><rect x="2" y="3" width="1" height="6"/><rect x="3" y="2" width="1" height="8"/><rect x="4" y="1" width="1" height="10"/><rect x="6" y="4" width="1" height="4"/><rect x="8" y="2" width="1" height="8"/><rect x="10" y="4" width="1" height="4"/></svg>
+        <span class="tb-label" aria-hidden="true">Âm lượng</span>
         <span class="tb-tip">Bảng âm lượng</span>
       </button>
       <button type="button" class="tb-btn" data-tray="scene" aria-pressed="false" aria-label="Khung cảnh" hidden>
         <svg viewBox="0 0 12 12" fill="currentColor" shape-rendering="crispEdges"><rect x="0" y="1" width="12" height="1"/><rect x="0" y="10" width="12" height="1"/><rect x="0" y="1" width="1" height="10"/><rect x="11" y="1" width="1" height="10"/><rect x="8" y="3" width="2" height="2"/><rect x="2" y="8" width="8" height="2"/><rect x="3" y="7" width="3" height="1"/><rect x="4" y="6" width="1" height="1"/><rect x="7" y="7" width="2" height="1"/></svg>
+        <span class="tb-label" aria-hidden="true">Khung cảnh</span>
         <span class="tb-tip">Khung cảnh</span>
       </button>
       <span class="drop-hint">Thả để xóa</span>
