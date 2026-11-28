@@ -15,7 +15,7 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/sprint-repo
 
 ## Task 1 — Planning & Setup
 
-**Tuần:** S1–S3, ngày 27/10 – 14/11/2026
+**Tuần:** S1–S3, ngày 27/10 – 14/11/2026; S7 (sửa theo bản chấm thử lần 2), ngày 28/11/2026
 
 **Công việc đã làm:**
 
@@ -27,11 +27,13 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/sprint-repo
 - Tạo repo GitHub, đưa tài liệu lên; monorepo npm workspaces, ESLint, Prettier, `.env.example`; GitHub Actions lint, test, build với PostgreSQL 16 ([T1 #105](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/105), [T2 #106](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/106), [PR #1](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/1)).
 - Cổng cắm khu vực `areas/*/index.ts` để 4 người làm song song ([T5 #109](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/109), [PR #3](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/3)).
 - Triển khai Vercel + Render + Neon, `render.yaml`, Vercel chuyển tiếp `/api` sang Render ([G11 #133](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/133), [PR #3](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/3)).
+- S7: nối 73 PR đã merge trước S6 với issue (`Related to #…` ở đầu mô tả), sửa tiêu đề theo Conventional Commits, gắn nhãn và milestone theo ngày merge; ghi lý do và PR thay thế cho 11 PR đóng không merge ([#180](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/180)). Lập milestone S7 và các issue [#180](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/180), [#181](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/181), [#182](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/182), [#183](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/183), [#186](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/186) theo đề xuất cải tiến của bản chấm thử lần 2.
 
 **Bằng chứng đóng góp:**
 
 - Biên bản họp: [`docs/meetings/`](../meetings/); tài liệu: [`docs/PRD.md`](../PRD.md), [`docs/PLAN.md`](../PLAN.md), [`docs/ARCHITECTURE.md`](../ARCHITECTURE.md), [`docs/API.md`](../API.md), [`docs/DATABASE.md`](../DATABASE.md).
 - Commit: [`18852b1`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/18852b1), [`9c481db`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/9c481db), [`305904a`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/305904a), [`adc118e`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/adc118e), [`87813a7`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/87813a7).
+- S7: comment tổng kết và bảng đối chiếu PR → issue trong [#180](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/180); [danh sách Pull Request đã đóng](https://github.com/CaoLePhucThinh2203/FocuSpace/pulls?q=is%3Apr+is%3Aclosed) có tiêu đề, nhãn, milestone mới.
 
 **Khó khăn gặp phải:**
 
@@ -39,6 +41,7 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/sprint-repo
 - Nhiều tài liệu viết song song dễ lệch tên bảng, tên trường, mã lỗi. Cách xử lý: lấy PRD làm nguồn, đối chiếu chéo khi viết API và DATABASE.
 - Code nền đưa lên trong một PR lớn (#1), 3 bạn phải chờ. Cách xử lý: PR #3 tách cổng cắm khu vực để mỗi người làm trong thư mục riêng.
 - Frontend (Vercel) và backend (Render) khác tên miền làm cookie đăng nhập không chạy. Cách xử lý: Vercel chuyển tiếp `/api` sang Render.
+- S7: bản chấm thử lần 2 trừ điểm 1(e) vì phần lớn PR trước S6 chưa nối issue, tiêu đề lấy theo tên nhánh. Cách xử lý: đối chiếu PR với issue theo cột kết quả trong `docs/TASKS.md`, lập bảng cho nhóm duyệt rồi mới sửa hàng loạt; lịch sử commit cũ giữ nguyên (#180).
 
 **Đánh giá bản thân:** 10 (quy đổi từ 5/5 ở S1, S2, S3)
 
@@ -103,7 +106,7 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/sprint-repo
 
 ## Task 4 — Optimization
 
-**Tuần:** S4–S5, ngày 15/11 – 17/11/2026; S6 (sửa theo bản chấm thử), ngày 25/11 – 27/11/2026
+**Tuần:** S4–S5, ngày 15/11 – 17/11/2026; S6 (sửa theo bản chấm thử), ngày 25/11 – 27/11/2026; S7, ngày 28/11/2026
 
 **Công việc đã làm:**
 
@@ -112,6 +115,7 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/sprint-repo
 - Tải trước font nét 500, 600; E2E AC-12.6 đo font thật trình duyệt dùng ([PR #48](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/48)).
 - Tạo tài khoản GA4, Sentry ([G10 #132](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/132)); đặt mã GA4, DSN Sentry trên Vercel, build lại; kiểm tra GA4 Realtime (`page_view`, `login`) và Sentry frontend nhận lỗi thử.
 - S6: cùng Đình Nhiên sửa Sentry backend không nhận lỗi API ([#161](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/161), [PR #173](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/173)): gắn Sentry error handler trước `errorHandler`, chỉ gửi lỗi 5xx; tạo project Sentry `focuspace-backend`, đặt `SENTRY_DSN` trên Render và gửi lỗi 500 thử.
+- S7: thêm route thử lỗi `GET /api/v1/debug/sentry`, chỉ chạy khi có biến `SENTRY_TEST_ROUTE`; bật tạm trên Render để Sentry backend nhận lỗi 500 từ bản triển khai thật, rồi tắt ([#182](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/182), [PR #184](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/184)).
 
 **Bằng chứng đóng góp:**
 
@@ -120,12 +124,14 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/sprint-repo
 - Sentry nhận lỗi thử: [`docs/images/screenshots/sentry-issues.png`](../images/screenshots/sentry-issues.png).
 - GA4 tổng quan báo cáo: [`docs/images/screenshots/ga4-tong-quan.webp`](../images/screenshots/ga4-tong-quan.webp).
 - Sentry backend nhận lỗi 500 của API: commit [`4fbcb5d`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/4fbcb5d), ảnh [`docs/images/screenshots/sentry-backend.webp`](../images/screenshots/sentry-backend.webp), comment bằng chứng trong [PR #173](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/173).
+- S7: commit [`cfd3226`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/cfd3226) (test), [`45c6a19`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/45c6a19) (route), [`c0a70b9`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/c0a70b9) (API.md 4.1b); lỗi FOCUSPACE-BACKEND-2 có url `focuspace-api.onrender.com`, ảnh [`docs/images/screenshots/sentry-backend.webp`](../images/screenshots/sentry-backend.webp).
 
 **Khó khăn gặp phải:**
 
 - Thư viện bị CLS 0,35 trên Chrome desktop do thanh cuộn xuất hiện muộn. Cách xử lý: `scrollbar-gutter: stable`, Thư viện cao tối thiểu một màn hình, kèm E2E (#41).
 - Chữ nét 500, 600 vẫn hiện bằng font hệ thống dù đã tự host font. Cách xử lý: tải trước đủ 4 độ đậm, E2E đo font thật (#48).
 - Bản chấm thử 22/11 chỉ ra Sentry backend chưa nhận lỗi API: `errorHandler` trả response mà không gọi `next`, nên handler của Sentry gắn sau nó không bao giờ chạy; Render cũng chưa có `SENTRY_DSN`. Cách xử lý: chuyển handler vào `createApp()` trước `errorHandler`, thêm unit test, đặt DSN trên Render và gửi lỗi 500 thử (#161).
+- S7: cách thử cũ (tạm làm hỏng `DATABASE_URL` trên Render) không tạo được lỗi 500, vì lệnh khởi động chạy `prisma migrate deploy` trước và health check trả 503 nên Render giữ bản cũ. Cách xử lý: thêm route thử lỗi bật bằng biến môi trường, backend không ngừng chạy (#182).
 
 **Đánh giá bản thân:** 10 (quy đổi từ 5/5 ở S4, S5)
 
@@ -133,7 +139,7 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/sprint-repo
 
 ## Task 5 — Peer Review
 
-**Tuần:** S1, S5 và S6, ngày 07/11, 16/11 – 17/11 và 25/11 – 27/11/2026
+**Tuần:** S1, S5, S6 và S7, ngày 07/11, 16/11 – 17/11, 25/11 – 27/11 và 28/11/2026
 
 **Công việc đã làm:**
 
@@ -142,17 +148,20 @@ Nội dung soạn lại theo mẫu từ self-report 5 sprint ([`docs/sprint-repo
 - Sửa theo góp ý: mèo đổi màu, Trang chủ, tối ưu web, Pomodoro, nút Bắt đầu / Tạm dừng, Hẹn giờ ngủ, cảnh Thành phố, độ lớn âm thanh, nhạc Lo-fi ([G5 #127](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/127); PR #10, #29, #30, #40–#44, #46–#50).
 - S6: trả lời từng góp ý nhận được Đợt 2 của Nhóm 3 Let's Talk ([#164](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/164)) và Nhóm 4 PawPass ([issue #9 bên PawPass](https://github.com/iceruychi-netizen/PawPass-Hosothucung/issues/9), [#174](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/174)), kèm quyết định làm / không làm / đã có sẵn và lý do.
 - S6: ghi lý do dừng góp ý Nhóm 6 và chuyển góp ý chi tiết sang Nhóm 5 ([#169](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/169), [PR #170](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/170)); cập nhật README §1(c), §1(e), §4(b), §5(a), §5(b) và PLAN theo bản chấm thử ([#162](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/162), [PR #175](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/175)).
+- S7: làm góp ý nhận được #11 (Nhóm 3) và #17 (Nhóm 4): trên điện thoại, tablet mỗi nút thanh công cụ có nhãn chữ dưới biểu tượng ("Âm thanh", "Trang trí", "Âm lượng", "Khung cảnh"); xem bản thử trên /room trước khi làm, viết E2E AC-01.6 trước rồi mới code; cập nhật PRD v5.21 và `received.md` ([#181](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/181), [PR #185](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/185)).
 
 **Bằng chứng đóng góp:**
 
 - [`docs/reviews/given/nhom-6-quan-li-chi-tieu.md`](../reviews/given/nhom-6-quan-li-chi-tieu.md), [`docs/reviews/received.md`](../reviews/received.md), [PR #53](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/53).
 - S6: [comment trả lời trong #164](https://github.com/CaoLePhucThinh2203/FocuSpace/issues/164#issuecomment-7188234516), [comment trả lời trong issue #9 bên PawPass](https://github.com/iceruychi-netizen/PawPass-Hosothucung/issues/9#issuecomment-7189142577); [PR #170](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/170), [PR #175](https://github.com/CaoLePhucThinh2203/FocuSpace/pull/175).
+- S7: commit [`2148de3`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/2148de3) (E2E), [`a3480f5`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/a3480f5) (nhãn), [`cabe705`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/cabe705) (PRD), [`773dc7d`](https://github.com/CaoLePhucThinh2203/FocuSpace/commit/773dc7d) (`received.md`); ảnh [`gop-y-nhan-nut-dien-thoai.webp`](../images/screenshots/gop-y-nhan-nut-dien-thoai.webp), [`gop-y-nhan-nut-tablet.webp`](../images/screenshots/gop-y-nhan-nut-tablet.webp).
 
 **Khó khăn gặp phải:**
 
 - Góp ý “thêm khung cảnh tuyết” cần vẽ cảnh mới, làm âm nền và thêm vào seeder, không kịp hạn nộp. Cách xử lý: ghi Không làm kèm lý do trong `received.md` (đã có tuyết ở cảnh Núi băng và cửa sổ Phòng ngủ).
 - Góp ý cho Nhóm 6 ngày 07/11 còn chung chung vì web Nhóm 6 chưa triển khai; bản chấm thử yêu cầu góp ý chi tiết. Cách xử lý: chuyển góp ý chi tiết sang Nhóm 5, giữ bản Nhóm 6 làm lịch sử và ghi lý do trong README §5(a) (#169).
 - Đợt 2 có hai nhóm cùng nêu nhãn cho nút biểu tượng và chữ nhỏ trên nền tối, sát hạn nộp nên không kịp đổi bố cục. Cách xử lý: trả lời lý do ở từng nơi góp ý, ghi vào `received.md` và ưu tiên hai ý này cho bản sau.
+- S7: prototype đã duyệt ẩn chú thích nút trên màn hẹp, nên thêm nhãn là đổi thiết kế. Cách xử lý: chỉ hiện nhãn trên thiết bị không có chuột (`@media (hover: none)`), máy có chuột giữ như prototype; ghi rõ trong PRD v5.21 là khác prototype (#181).
 
 **Đánh giá bản thân:** 10 (quy đổi từ 5/5 ở S5)
 
